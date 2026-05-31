@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚽ WC 2026 · Прогнози</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:100vh;color:#fff}
+
+/* AUTH */
+.auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:linear-gradient(135deg,#0d1b2a 0%,#1a237e 60%,#b71c1c 100%)}
+.auth-logo{font-size:5rem;margin-bottom:.5rem;text-align:center;filter:drop-shadow(0 0 20px rgba(249,168,37,.6))}
+.auth-title{font-size:2.2rem;font-weight:900;text-align:center;letter-spacing:1px;background:linear-gradient(90deg,#fff,#90caf9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.auth-sub{color:rgba(255,255,255,.5);margin-bottom:2rem;text-align:center;font-size:.9rem}
+.auth-card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:2rem;width:100%;max-width:400px}
+.auth-tabs{display:flex;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;margin-bottom:1.5rem}
+.auth-tab{flex:1;text-align:center;padding:9px;cursor:pointer;border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);transition:all .2s}
+.auth-tab.active{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.form-group input,.form-group select{width:100%;padding:11px 14px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;color:#fff;font-size:15px;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{border-color:#1565c0}
+.form-group input::placeholder{color:rgba(255,255,255,.25)}
+.form-group select option{background:#1a237e;color:#fff}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.3px}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff}
+.btn-primary:hover{background:linear-gradient(135deg,#1976d2,#1565c0);transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.4)}
+.error-msg{color:#ef9a9a;font-size:13px;margin-top:10px;text-align:center;padding:8px;background:rgba(198,40,40,.15);border-radius:8px}
+.admin-hint{margin-top:1rem;text-align:center;font-size:12px;color:rgba(255,255,255,.3)}
+
+/* HEADER */
+.app-header{background:rgba(0,0,0,.5);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:0 1.25rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100}
+.app-logo{font-size:1.1rem;font-weight:900;padding:.9rem 0;white-space:nowrap;color:#fff;letter-spacing:.5px}
+.app-logo span{color:#f9a825}
+.app-nav{display:flex;gap:3px;flex:1;overflow-x:auto;padding:6px 0;scrollbar-width:none}
+.app-nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:7px 14px;border:none;background:transparent;color:rgba(255,255,255,.55);cursor:pointer;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap;transition:all .2s}
+.nav-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-btn.active{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff}
+.user-info{display:flex;align-items:center;gap:8px;white-space:nowrap;margin-left:auto}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#c62828,#e53935);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.user-name{font-size:13px;font-weight:700;max-width:100px;overflow:hidden;text-overflow:ellipsis}
+.logout-btn{padding:5px 10px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.3);border-radius:7px;color:#ef9a9a;cursor:pointer;font-size:12px;transition:all .2s;font-weight:600}
+.logout-btn:hover{background:rgba(198,40,40,.4);color:#fff}
+
+/* CONTENT */
+.main-content{max-width:1000px;margin:0 auto;padding:1.5rem}
+.page-title{font-size:1.4rem;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px}
+
+/* GROUP TABS */
+.group-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.group-tab{padding:6px 14px;border:1.5px solid rgba(255,255,255,.12);border-radius:20px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.3px;transition:all .2s}
+.group-tab:hover{background:rgba(255,255,255,.09);color:#fff}
+.group-tab.active{background:#1565c0;border-color:#1565c0;color:#fff}
+
+/* MATCH CARDS */
+.matchday-label{font-size:11px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.35);letter-spacing:1.5px;padding:.75rem 0 .4rem;margin-top:.25rem}
+.match-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.6rem;display:flex;align-items:center;gap:.75rem;transition:background .2s}
+.match-card:hover{background:rgba(255,255,255,.07)}
+.match-card.predicted{border-left:3px solid #4caf50}
+.match-card.locked{opacity:.8}
+.team{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.team.right{flex-direction:row-reverse}
+.team-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-flag{font-size:1.4rem;flex-shrink:0}
+.score-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.score-input{width:44px;height:44px;text-align:center;font-size:18px;font-weight:800;background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.12);border-radius:9px;color:#fff;outline:none;transition:border-color .2s;-moz-appearance:textfield}
+.score-input::-webkit-inner-spin-button,.score-input::-webkit-outer-spin-button{-webkit-appearance:none}
+.score-input:focus{border-color:#1565c0}
+.score-input:disabled{background:rgba(0,0,0,.2);color:rgba(255,255,255,.4);cursor:not-allowed}
+.score-sep{font-size:18px;font-weight:800;color:rgba(255,255,255,.3)}
+.result-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0}
+.result-score{font-size:20px;font-weight:900;color:#f9a825;min-width:60px;text-align:center}
+.result-label{font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.3);letter-spacing:.5px}
+.pts-badge{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:800;white-space:nowrap}
+.pts-3{background:rgba(27,94,32,.8);color:#a5d6a7;border:1px solid rgba(76,175,80,.3)}
+.pts-1{background:rgba(13,71,161,.8);color:#90caf9;border:1px solid rgba(21,101,192,.3)}
+.pts-0{background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)}
+
+/* SAVE BTN */
+.save-btn{padding:11px 28px;background:linear-gradient(135deg,#1565c0,#0d47a1);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:1.25rem}
+.save-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.4)}
+.info-bar{padding:.6rem 1rem;background:rgba(255,255,255,.04);border-radius:8px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:1rem}
+
+/* LEADERBOARD */
+.lb-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
+.lb-head{display:grid;grid-template-columns:48px 1fr 70px 70px 80px;padding:10px 18px;background:rgba(0,0,0,.3);font-size:11px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.35);letter-spacing:.5px}
+.lb-row{display:grid;grid-template-columns:48px 1fr 70px 70px 80px;padding:13px 18px;border-top:1px solid rgba(255,255,255,.05);align-items:center;transition:background .2s}
+.lb-row:hover{background:rgba(255,255,255,.04)}
+.lb-row.me{background:rgba(21,101,192,.12);border-left:3px solid #1565c0}
+.lb-rank{font-size:15px;font-weight:800}
+.rank-1{color:#f9a825}
+.rank-2{color:#bdbdbd}
+.rank-3{color:#a1887f}
+.lb-user{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;min-width:0}
+.lb-me-tag{color:#90caf9;font-size:11px;font-weight:600;margin-left:4px}
+.lb-stat{text-align:center;font-size:14px}
+.lb-total{text-align:center;font-size:19px;font-weight:900;color:#f9a825}
+.lb-empty{text-align:center;padding:3rem;color:rgba(255,255,255,.3);font-size:14px}
+
+/* GROUPS */
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.group-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
+.group-card-hd{background:linear-gradient(135deg,#1565c0,#0d47a1);padding:9px 14px;font-weight:800;font-size:13px;letter-spacing:1px}
+.g-table{width:100%;border-collapse:collapse}
+.g-table th{padding:7px 10px;font-size:10px;text-align:center;color:rgba(255,255,255,.35);font-weight:800;text-transform:uppercase;background:rgba(0,0,0,.2)}
+.g-table th:first-child{text-align:left;width:50%}
+.g-table td{padding:9px 10px;font-size:12px;text-align:center;border-top:1px solid rgba(255,255,255,.04)}
+.g-table td:first-child{text-align:left;font-weight:700;font-size:13px}
+.qualify-row{background:rgba(76,175,80,.07)}
+.qualify-row td:first-child::after{content:' ✓';color:#4caf50;font-size:10px}
+
+/* CHAMPION */
+.champ-wrap{max-width:550px;margin:1.5rem auto;text-align:center}
+.champ-icon{font-size:5rem;margin-bottom:.5rem;filter:drop-shadow(0 0 15px rgba(249,168,37,.5))}
+.champ-title{font-size:1.7rem;font-weight:900;margin-bottom:.4rem}
+.champ-sub{color:rgba(255,255,255,.5);margin-bottom:1.75rem;font-size:.9rem}
+.champ-current{padding:1.25rem;background:rgba(249,168,37,.08);border:2px solid #f9a825;border-radius:14px;margin-bottom:1.5rem}
+.champ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:1.5rem}
+.champ-btn{padding:10px 6px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);border-radius:10px;color:#fff;cursor:pointer;font-size:12px;text-align:center;transition:all .2s;width:100%}
+.champ-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+.champ-btn.selected{border-color:#f9a825;background:rgba(249,168,37,.12);color:#f9a825;font-weight:700}
+.champ-flag{font-size:1.5rem;display:block;margin-bottom:3px}
+
+/* ADMIN */
+.admin-box{background:rgba(198,40,40,.06);border:1px solid rgba(198,40,40,.18);border-radius:14px;padding:1.25rem;margin-bottom:1.25rem}
+.admin-note{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:1.25rem;line-height:1.6}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:rgba(27,94,32,.95);border:1px solid rgba(76,175,80,.4);backdrop-filter:blur(10px);border-radius:12px;padding:12px 20px;color:#a5d6a7;font-weight:700;font-size:14px;z-index:999;animation:toastIn .3s ease}
+@keyframes toastIn{from{transform:translateX(120px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .team-name{font-size:12px}
+  .match-card{padding:.7rem .8rem;gap:.5rem}
+  .score-input{width:38px;height:38px;font-size:16px}
+  .lb-head,.lb-row{grid-template-columns:36px 1fr 55px 55px 60px;padding:9px 12px}
+  .champ-grid{grid-template-columns:repeat(3,1fr)}
+  .app-logo{font-size:.95rem}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+// ===================== DATA =====================
+
+const FLAGS = {
+  'Mexico':'🇲🇽','South Africa':'🇿🇦','South Korea':'🇰🇷','Czechia':'🇨🇿',
+  'Canada':'🇨🇦','Bosnia-Herzegovina':'🇧🇦','Qatar':'🇶🇦','Switzerland':'🇨🇭',
+  'Brazil':'🇧🇷','Morocco':'🇲🇦','Haiti':'🇭🇹','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+  'United States':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Turkey':'🇹🇷',
+  'Germany':'🇩🇪','Curacao':'🇨🇼','Ivory Coast':'🇨🇮','Ecuador':'🇪🇨',
+  'Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳',
+  'Belgium':'🇧🇪','Egypt':'🇪🇬','Iran':'🇮🇷','New Zealand':'🇳🇿',
+  'Spain':'🇪🇸','Cape Verde':'🇨🇻','Saudi Arabia':'🇸🇦','Uruguay':'🇺🇾',
+  'France':'🇫🇷','Senegal':'🇸🇳','Iraq':'🇮🇶','Norway':'🇳🇴',
+  'Argentina':'🇦🇷','Algeria':'🇩🇿','Austria':'🇦🇹','Jordan':'🇯🇴',
+  'Portugal':'🇵🇹','Congo DR':'🇨🇩','Uzbekistan':'🇺🇿','Colombia':'🇨🇴',
+  'England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Croatia':'🇭🇷','Ghana':'🇬🇭','Panama':'🇵🇦',
+};
+
+const GROUPS = {
+  A:['Mexico','South Africa','South Korea','Czechia'],
+  B:['Canada','Bosnia-Herzegovina','Qatar','Switzerland'],
+  C:['Brazil','Morocco','Haiti','Scotland'],
+  D:['United States','Paraguay','Australia','Turkey'],
+  E:['Germany','Curacao','Ivory Coast','Ecuador'],
+  F:['Netherlands','Japan','Sweden','Tunisia'],
+  G:['Belgium','Egypt','Iran','New Zealand'],
+  H:['Spain','Cape Verde','Saudi Arabia','Uruguay'],
+  I:['France','Senegal','Iraq','Norway'],
+  J:['Argentina','Algeria','Austria','Jordan'],
+  K:['Portugal','Congo DR','Uzbekistan','Colombia'],
+  L:['England','Croatia','Ghana','Panama'],
+};
+
+const ALL_TEAMS = Object.values(GROUPS).flat();
+
+function generateMatches() {
+  const ms = []; let id = 1;
+  for (const [g, t] of Object.entries(GROUPS)) {
+    const pairs = [[0,1],[2,3],[0,2],[1,3],[0,3],[1,2]];
+    const mdays = [1,1,2,2,3,3];
+    pairs.forEach(([a,b],i) => ms.push({id:id++,group:g,matchday:mdays[i],team1:t[a],team2:t[b],result:null}));
+  }
+  return ms;
+}
+
+// ===================== STATE =====================
+
+const LS = {
+  get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+  set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+  del: k => localStorage.removeItem(k),
+};
+
+let S = {
+  users: LS.get('wc26_users') || [],
+  currentUser: LS.get('wc26_current') || null,
+  matches: LS.get('wc26_matches') || generateMatches(),
+  predictions: LS.get('wc26_preds') || {},
+  champions: LS.get('wc26_champs') || {},
+  tab: 'predictions',
+  authTab: 'login',
+  activeGroup: 'A',
+  authError: '',
+  toast: null,
+};
+
+function persist() {
+  LS.set('wc26_users', S.users);
+  LS.set('wc26_matches', S.matches);
+  LS.set('wc26_preds', S.predictions);
+  LS.set('wc26_champs', S.champions);
+  if (S.currentUser) LS.set('wc26_current', S.currentUser);
+  else LS.del('wc26_current');
+}
+
+// Ensure admin user
+if (!S.users.find(u => u.username === 'admin')) {
+  S.users.push({username:'admin', password:'admin2026'});
+  persist();
+}
+
+// ===================== SCORING =====================
+
+function outcome(s1, s2) {
+  return s1 > s2 ? 1 : s1 < s2 ? 2 : 0;
+}
+
+function userScore(username) {
+  const preds = S.predictions[username] || {};
+  let exact = 0, correct = 0;
+  for (const m of S.matches) {
+    const p = preds[m.id];
+    if (!p || m.result === null || p.s1 === '' || p.s2 === '') continue;
+    const ps1 = parseInt(p.s1), ps2 = parseInt(p.s2);
+    const rs1 = m.result.s1, rs2 = m.result.s2;
+    if (ps1 === rs1 && ps2 === rs2) exact++;
+    else if (outcome(ps1, ps2) === outcome(rs1, rs2)) correct++;
+  }
+  const champ = S.champions[username];
+  // Champion bonus — placeholder until final result tracked
+  return {exact, correct, total: exact * 3 + correct * 1, champ};
+}
+
+function leaderboard() {
+  return S.users.map(u => ({username: u.username, ...userScore(u.username)}))
+    .sort((a, b) => b.total - a.total || b.exact - a.exact);
+}
+
+// ===================== RENDER =====================
+
+function render() {
+  document.getElementById('root').innerHTML = S.currentUser ? renderApp() : renderAuth();
+  bind();
+}
+
+// --- AUTH ---
+function renderAuth() {
+  return `<div class="auth-screen">
+    <div class="auth-logo">⚽</div>
+    <div class="auth-title">WORLD CUP 2026</div>
+    <div class="auth-sub">🇨🇦 Canada &nbsp;·&nbsp; 🇲🇽 Mexico &nbsp;·&nbsp; 🇺🇸 USA · Платформа за прогнози</div>
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <div class="auth-tab ${S.authTab==='login'?'active':''}" data-atab="login">Вход</div>
+        <div class="auth-tab ${S.authTab==='register'?'active':''}" data-atab="register">Регистрация</div>
+      </div>
+      ${S.authTab === 'login' ? `
+      <form id="loginForm">
+        <div class="form-group"><label>Потребителско име</label>
+          <input type="text" id="lu" placeholder="username" autocomplete="username"/></div>
+        <div class="form-group"><label>Парола</label>
+          <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
+        <button type="submit" class="btn btn-primary">🚀 Влез</button>
+      </form>
+      <div class="admin-hint">Админ: <strong>admin</strong> / <strong>admin2026</strong></div>
+      ` : `
+      <form id="regForm">
+        <div class="form-group"><label>Потребителско име</label>
+          <input type="text" id="ru" placeholder="избери username"/></div>
+        <div class="form-group"><label>Парола</label>
+          <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
+        <div class="form-group"><label>Потвърди парола</label>
+          <input type="password" id="rp2" placeholder="••••••••"/></div>
+        <button type="submit" class="btn btn-primary">✅ Регистрирай се</button>
+      </form>
+      `}
+      ${S.authError ? `<div class="error-msg">⚠️ ${S.authError}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+// --- MAIN APP ---
+function renderApp() {
+  const isAdmin = S.currentUser === 'admin';
+  const tabs = [
+    {id:'predictions',l:'🔮 Прогнози'},
+    {id:'leaderboard',l:'🏅 Класиране'},
+    {id:'groups',l:'🌍 Групи'},
+    {id:'champion',l:'🏆 Шампион'},
+    ...(isAdmin ? [{id:'admin',l:'⚙️ Админ'}] : []),
+  ];
+  return `
+  <div class="app-header">
+    <div class="app-logo">⚽ <span>WC</span> 2026</div>
+    <nav class="app-nav">
+      ${tabs.map(t=>`<button class="nav-btn ${S.tab===t.id?'active':''}" data-tab="${t.id}">${t.l}</button>`).join('')}
+    </nav>
+    <div class="user-info">
+      <div class="user-avatar">${S.currentUser[0].toUpperCase()}</div>
+      <span class="user-name">${S.currentUser}</span>
+      <button class="logout-btn" id="logoutBtn">Изход</button>
+    </div>
+  </div>
+  <div class="main-content">${renderTab()}</div>
+  ${S.toast ? `<div class="toast">${S.toast}</div>` : ''}`;
+}
+
+function renderTab() {
+  if (S.tab === 'predictions') return renderPredictions();
+  if (S.tab === 'leaderboard') return renderLeaderboard();
+  if (S.tab === 'groups') return renderGroups();
+  if (S.tab === 'champion') return renderChampion();
+  if (S.tab === 'admin') return renderAdmin();
+  return '';
+}
+
+// --- PREDICTIONS ---
+function renderPredictions() {
+  const preds = S.predictions[S.currentUser] || {};
+  const gm = S.matches.filter(m => m.group === S.activeGroup);
+  const totalPred = Object.keys(preds).length;
+  const totalM = S.matches.length;
+  return `
+  <div class="page-title">🔮 Моите прогнози</div>
+  <div class="info-bar">
+    💡 <strong style="color:#a5d6a7">+3 точки</strong> за точен резултат &nbsp;·&nbsp;
+    <strong style="color:#90caf9">+1 точка</strong> за правилен изход (П/Р/З) &nbsp;·&nbsp;
+    Прогнозирал: <strong>${totalPred}/${totalM}</strong> мача
+  </div>
+  <div class="group-tabs">
+    ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">Група ${g}</div>`).join('')}
+  </div>
+  ${[1,2,3].map(md => {
+    const mds = gm.filter(m => m.matchday === md);
+    return `<div class="matchday-label">Кръг ${md}</div>${mds.map(m => renderMatchCard(m, preds[m.id], false)).join('')}`;
+  }).join('')}
+  <div><button class="save-btn" id="savePreds">💾 Запази прогнозите за Група ${S.activeGroup}</button></div>`;
+}
+
+function renderMatchCard(m, pred, isAdmin) {
+  const hasPred = pred && pred.s1 !== '' && pred.s2 !== '';
+  const hasResult = m.result !== null;
+  const locked = hasResult && !isAdmin;
+  let pts = '';
+  if (hasPred && hasResult && !isAdmin) {
+    const ps1 = parseInt(pred.s1), ps2 = parseInt(pred.s2);
+    const rs1 = m.result.s1, rs2 = m.result.s2;
+    if (ps1 === rs1 && ps2 === rs2) pts = `<span class="pts-badge pts-3">🎯 +3т</span>`;
+    else if (outcome(ps1,ps2) === outcome(rs1,rs2)) pts = `<span class="pts-badge pts-1">✓ +1т</span>`;
+    else pts = `<span class="pts-badge pts-0">✗ 0т</span>`;
+  }
+  const prefix = isAdmin ? 'adm' : 'pr';
+  return `
+  <div class="match-card ${hasPred&&!isAdmin?'predicted':''} ${locked?'locked':''}">
+    <div class="team">
+      <span class="team-flag">${FLAGS[m.team1]||'🏳️'}</span>
+      <span class="team-name">${m.team1}</span>
+    </div>
+    <div class="score-wrap">
+      <input class="score-input" type="number" min="0" max="30"
+        data-${prefix}="${m.id}" data-side="s1"
+        value="${isAdmin ? (m.result?m.result.s1:'') : (pred?pred.s1:'')}"
+        placeholder="–" ${locked?'disabled':''}>
+      <span class="score-sep">:</span>
+      <input class="score-input" type="number" min="0" max="30"
+        data-${prefix}="${m.id}" data-side="s2"
+        value="${isAdmin ? (m.result?m.result.s2:'') : (pred?pred.s2:'')}"
+        placeholder="–" ${locked?'disabled':''}>
+    </div>
+    <div class="team right">
+      <span class="team-flag">${FLAGS[m.team2]||'🏳️'}</span>
+      <span class="team-name">${m.team2}</span>
+    </div>
+    ${hasResult && !isAdmin ? `
+    <div class="result-wrap">
+      <div class="result-label">Резултат</div>
+      <div class="result-score">${m.result.s1}:${m.result.s2}</div>
+      ${pts}
+    </div>` : ''}
+    ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">✓</span>` : ''}
+  </div>`;
+}
+
+// --- LEADERBOARD ---
+function renderLeaderboard() {
+  const lb = leaderboard();
+  const medals = ['🥇','🥈','🥉'];
+  return `
+  <div class="page-title">🏅 Класиране</div>
+  <div class="lb-wrap">
+    <div class="lb-head">
+      <div>#</div><div>Потребител</div>
+      <div style="text-align:center">Точни<br>резултати</div>
+      <div style="text-align:center">Правилни<br>изходи</div>
+      <div style="text-align:center">Общо</div>
+    </div>
+    ${lb.length === 0 ? `<div class="lb-empty">Все още няма регистрирани потребители</div>` :
+      lb.map((u,i) => `
+      <div class="lb-row ${u.username===S.currentUser?'me':''}">
+        <div class="lb-rank ${i<3?'rank-'+(i+1):''}">${i<3?medals[i]:i+1}</div>
+        <div class="lb-user">
+          <div class="user-avatar" style="width:28px;height:28px;font-size:12px">${u.username[0].toUpperCase()}</div>
+          ${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(аз)</span>':''}
+        </div>
+        <div class="lb-stat" style="color:#a5d6a7">${u.exact}</div>
+        <div class="lb-stat" style="color:#90caf9">${u.correct}</div>
+        <div class="lb-total">${u.total}</div>
+      </div>`).join('')}
+  </div>`;
+}
+
+// --- GROUPS ---
+function renderGroups() {
+  return `
+  <div class="page-title">🌍 Групова фаза — Таблици</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:1rem">✓ = директна квалификация (топ 2 от всяка група + 8 най-добри трети места)</div>
+  <div class="groups-grid">${Object.entries(GROUPS).map(([g,t])=>renderGroupCard(g,t)).join('')}</div>`;
+}
+
+function renderGroupCard(gName, teams) {
+  const stats = {};
+  teams.forEach(t => { stats[t] = {p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}; });
+  S.matches.filter(m => m.group === gName && m.result).forEach(m => {
+    const s1 = m.result.s1, s2 = m.result.s2;
+    stats[m.team1].p++; stats[m.team2].p++;
+    stats[m.team1].gf += s1; stats[m.team1].ga += s2;
+    stats[m.team2].gf += s2; stats[m.team2].ga += s1;
+    if (s1 > s2) { stats[m.team1].w++; stats[m.team1].pts+=3; stats[m.team2].l++; }
+    else if (s2 > s1) { stats[m.team2].w++; stats[m.team2].pts+=3; stats[m.team1].l++; }
+    else { stats[m.team1].d++; stats[m.team1].pts++; stats[m.team2].d++; stats[m.team2].pts++; }
+  });
+  const sorted = [...teams].sort((a,b) => {
+    if (stats[b].pts !== stats[a].pts) return stats[b].pts - stats[a].pts;
+    const gdB = stats[b].gf - stats[b].ga, gdA = stats[a].gf - stats[a].ga;
+    if (gdB !== gdA) return gdB - gdA;
+    return stats[b].gf - stats[a].gf;
+  });
+  return `
+  <div class="group-card">
+    <div class="group-card-hd">ГРУПА ${gName}</div>
+    <table class="g-table">
+      <thead><tr><th>Отбор</th><th>И</th><th>П</th><th>Р</th><th>З</th><th>Т.</th></tr></thead>
+      <tbody>${sorted.map((t,i) => `
+        <tr class="${i<2?'qualify-row':''}">
+          <td>${FLAGS[t]||''} ${t}</td>
+          <td>${stats[t].p}</td><td>${stats[t].w}</td><td>${stats[t].d}</td><td>${stats[t].l}</td>
+          <td><strong>${stats[t].pts}</strong></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// --- CHAMPION ---
+function renderChampion() {
+  const my = S.champions[S.currentUser] || null;
+  return `
+  <div class="champ-wrap">
+    <div class="champ-icon">🏆</div>
+    <div class="champ-title">Победител на турнира</div>
+    <div class="champ-sub">Кой ще вдигне трофея? Правилна прогноза = <strong style="color:#f9a825">+5 точки</strong></div>
+    ${my ? `<div class="champ-current">
+      <div style="font-size:2.5rem">${FLAGS[my]||'🏳️'}</div>
+      <div style="font-weight:800;font-size:18px;margin-top:8px">${my}</div>
+      <div style="color:rgba(255,255,255,.4);font-size:12px;margin-top:4px">Твоята прогноза</div>
+    </div>` : `<div style="color:rgba(255,255,255,.35);margin-bottom:1.5rem;font-size:14px">⚠️ Не си избрал победител</div>`}
+    <div class="champ-grid">
+      ${ALL_TEAMS.map(t => `
+      <button class="champ-btn ${my===t?'selected':''}" data-champ="${t}">
+        <span class="champ-flag">${FLAGS[t]||'🏳️'}</span>${t}
+      </button>`).join('')}
+    </div>
+  </div>`;
+}
+
+// --- ADMIN ---
+function renderAdmin() {
+  const gm = S.matches.filter(m => m.group === S.activeGroup);
+  const done = S.matches.filter(m => m.result).length;
+  return `
+  <div class="page-title">⚙️ Администрация — Въвеждане на резултати</div>
+  <div class="admin-box">
+    <div class="admin-note">
+      Въведи реалните резултати от мачовете. Точките на всички играчи ще се изчислят автоматично.<br>
+      Въведени резултати: <strong style="color:#f9a825">${done} / ${S.matches.length}</strong> мача
+    </div>
+    <div class="group-tabs">
+      ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">Група ${g}</div>`).join('')}
+    </div>
+    ${[1,2,3].map(md => {
+      const mds = gm.filter(m => m.matchday === md);
+      return `<div class="matchday-label">Кръг ${md}</div>${mds.map(m=>renderMatchCard(m,null,true)).join('')}`;
+    }).join('')}
+    <div><button class="save-btn" id="saveResults">💾 Запази резултатите за Група ${S.activeGroup}</button></div>
+  </div>`;
+}
+
+// ===================== EVENTS =====================
+
+function bind() {
+  // Auth tabs
+  document.querySelectorAll('[data-atab]').forEach(el => el.addEventListener('click', () => {
+    S.authTab = el.dataset.atab; S.authError = ''; render();
+  }));
+
+  // Login
+  const lf = document.getElementById('loginForm');
+  if (lf) lf.addEventListener('submit', e => {
+    e.preventDefault();
+    const u = document.getElementById('lu').value.trim();
+    const p = document.getElementById('lp').value;
+    const user = S.users.find(x => x.username === u && x.password === p);
+    if (user) { S.currentUser = u; S.authError = ''; persist(); render(); }
+    else { S.authError = 'Грешно потребителско име или парола'; render(); }
+  });
+
+  // Register
+  const rf = document.getElementById('regForm');
+  if (rf) rf.addEventListener('submit', e => {
+    e.preventDefault();
+    const u = document.getElementById('ru').value.trim();
+    const p = document.getElementById('rp').value;
+    const p2 = document.getElementById('rp2').value;
+    if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
+    else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
+    else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
+    else if (p !== p2) S.authError = 'Паролите не съвпадат';
+    else {
+      S.users.push({username: u, password: p});
+      S.currentUser = u; S.authError = ''; persist(); render(); return;
+    }
+    render();
+  });
+
+  // Logout
+  const lb = document.getElementById('logoutBtn');
+  if (lb) lb.addEventListener('click', () => { S.currentUser = null; persist(); render(); });
+
+  // Nav tabs
+  document.querySelectorAll('[data-tab]').forEach(el => el.addEventListener('click', () => {
+    S.tab = el.dataset.tab; render();
+  }));
+
+  // Group tabs
+  document.querySelectorAll('[data-group]').forEach(el => el.addEventListener('click', () => {
+    S.activeGroup = el.dataset.group; render();
+  }));
+
+  // Save predictions
+  const sp = document.getElementById('savePreds');
+  if (sp) sp.addEventListener('click', () => {
+    if (!S.predictions[S.currentUser]) S.predictions[S.currentUser] = {};
+    document.querySelectorAll('[data-pr]').forEach(inp => {
+      const mid = parseInt(inp.dataset.pr);
+      if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
+      S.predictions[S.currentUser][mid][inp.dataset.side] = inp.value;
+    });
+    persist(); toast('✅ Прогнозите за Група ' + S.activeGroup + ' са запазени!');
+  });
+
+  // Save admin results
+  const sr = document.getElementById('saveResults');
+  if (sr) sr.addEventListener('click', () => {
+    document.querySelectorAll('[data-adm]').forEach(inp => {
+      const mid = parseInt(inp.dataset.adm);
+      const match = S.matches.find(m => m.id === mid);
+      if (!match || inp.value === '') return;
+      if (!match.result) match.result = {s1:0, s2:0};
+      match.result[inp.dataset.side] = parseInt(inp.value);
+    });
+    // Validate - remove results where one side is missing
+    S.matches.forEach(m => {
+      if (m.result && (m.result.s1 === undefined || m.result.s2 === undefined ||
+          isNaN(m.result.s1) || isNaN(m.result.s2))) m.result = null;
+    });
+    persist(); toast('✅ Резултатите за Група ' + S.activeGroup + ' са запазени!'); render();
+  });
+
+  // Champion
+  document.querySelectorAll('[data-champ]').forEach(btn => btn.addEventListener('click', () => {
+    S.champions[S.currentUser] = btn.dataset.champ;
+    persist(); toast('🏆 ' + btn.dataset.champ + ' — прогнозата е запазена!'); render();
+  }));
+}
+
+function toast(msg) {
+  S.toast = msg;
+  render();
+  setTimeout(() => { S.toast = null; render(); }, 3000);
+}
+
+// ===================== INIT =====================
+render();
+</script>
+</body>
+</html>
