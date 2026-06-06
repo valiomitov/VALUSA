@@ -140,6 +140,14 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
   .champ-grid{grid-template-columns:repeat(3,1fr)}
   .app-logo{font-size:.95rem}
 }
+
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(10,18,35,.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);z-index:200;padding:6px 0 env(safe-area-inset-bottom,6px)}
+.bottom-nav-inner{display:flex;justify-content:space-around;align-items:center}
+.bnav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 12px;border:none;background:transparent;color:rgba(255,255,255,.45);cursor:pointer;border-radius:10px;transition:all .2s;min-width:56px}
+.bnav-btn.active{color:#1976d2}
+.bnav-icon{font-size:1.3rem;padding:4px 8px}
+.bnav-label{font-size:10px;font-weight:700}
+@media(max-width:600px){body{padding-bottom:70px}.app-header .app-nav,.app-header .user-name{display:none}.bottom-nav{display:block}.main-content{padding:1rem .75rem}.team-name{font-size:12px}.match-card{padding:.65rem .75rem}.score-input{width:40px;height:40px;font-size:17px}.lb-head,.lb-row{grid-template-columns:32px 1fr 50px 50px 56px;padding:9px 10px}.champ-grid{grid-template-columns:repeat(3,1fr)}.groups-grid{grid-template-columns:1fr}.save-btn{width:100%}}
 </style>
 </head>
 <body>
@@ -278,7 +286,6 @@ function renderAuth() {
           <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
         <button type="submit" class="btn btn-primary">🚀 Влез</button>
       </form>
-      <div class="admin-hint">Админ: <strong>admin</strong> / <strong>admin2026</strong></div>
       ` : `
       <form id="regForm">
         <div class="form-group"><label>Потребителско име</label>
@@ -318,9 +325,22 @@ function renderApp() {
     </div>
   </div>
   <div class="main-content">${renderTab()}</div>
-  ${S.toast ? `<div class="toast">${S.toast}</div>` : ''}`;
+  ${S.toast ? `<div class="toast">${S.toast}</div>` : ''}
+  ${renderBottomNav()}`;
 }
 
+
+function renderBottomNav() {
+  const isAdmin = S.currentUser === 'admin';
+  const items = [
+    {id:'predictions', icon:'🔮', label:'Прогнози'},
+    {id:'leaderboard', icon:'🏅', label:'Класиране'},
+    {id:'groups', icon:'🌍', label:'Групи'},
+    {id:'champion', icon:'🏆', label:'Шампион'},
+    ...(isAdmin ? [{id:'admin', icon:'⚙️', label:'Админ'}] : []),
+  ];
+  return `<nav class="bottom-nav"><div class="bottom-nav-inner">${items.map(it=>`<button class="bnav-btn ${S.tab===it.id?'active':''}" data-tab="${it.id}"><span class="bnav-icon">${it.icon}</span><span class="bnav-label">${it.label}</span></button>`).join('')}</div></nav>`;
+}
 function renderTab() {
   if (S.tab === 'predictions') return renderPredictions();
   if (S.tab === 'leaderboard') return renderLeaderboard();
