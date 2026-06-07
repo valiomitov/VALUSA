@@ -319,7 +319,6 @@ const GH = {
       const r = await fetch(GH.rawUrl(), { cache: 'no-store' });
       if (!r.ok) return null;
       const data = await r.json();
-      if (data._tok) GH.setTok(b64ToUtf8(data._tok));
       return data;
     } catch(e) { return null; }
   },
@@ -333,7 +332,6 @@ const GH = {
       predictions: S.predictions,
       champions: S.champions,
       sessionLog: S.sessionLog,
-      _tok: utf8ToB64(tok),
       _ts: Date.now()
     };
     try {
