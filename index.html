@@ -381,6 +381,8 @@ function renderAuth() {
       <form id="regForm">
         <div class="form-group"><label>Потребителско име</label>
           <input type="text" id="ru" placeholder="избери username"/></div>
+        <div class="form-group"><label>Email</label>
+          <input type="email" id="re" placeholder="your@email.com" autocomplete="email"/></div>
         <div class="form-group"><label>Парола</label>
           <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
         <div class="form-group"><label>Потвърди парола</label>
@@ -402,6 +404,7 @@ function renderApp() {
     {id:'groups',l:'🌍 Групи'},
     {id:'champion',l:'🏆 Шампион'},
     {id:'rules',l:'📋 Правила'},
+    {id:'profile',l:'👤 Профил'},
     ...(isAdmin ? [{id:'admin',l:'⚙️ Админ'}] : []),
   ];
   return `
@@ -430,6 +433,7 @@ function renderBottomNav() {
     {id:'groups', icon:'🌍', label:'Групи'},
     {id:'champion', icon:'🏆', label:'Шампион'},
     {id:'rules', icon:'📋', label:'Правила'},
+    {id:'profile', icon:'👤', label:'Профил'},
     ...(isAdmin ? [{id:'admin', icon:'⚙️', label:'Админ'}] : []),
   ];
   return `<nav class="bottom-nav"><div class="bottom-nav-inner">${items.map(it=>`<button class="bnav-btn ${S.tab===it.id?'active':''}" data-tab="${it.id}"><span class="bnav-icon">${it.icon}</span><span class="bnav-label">${it.label}</span></button>`).join('')}</div></nav>`;
@@ -520,6 +524,7 @@ function renderTab() {
   if (S.tab === 'groups') return renderGroups();
   if (S.tab === 'champion') return renderChampion();
   if (S.tab === 'admin') return renderAdmin();
+  if (S.tab === 'profile') return renderProfile();
   if (S.tab === 'rules') return renderRules();
   return '';
 }
@@ -594,6 +599,34 @@ function renderMatchCard(m, pred, isAdmin) {
 }
 
 // --- LEADERBOARD ---
+
+function renderProfile() {
+  const user = S.users.find(u => u.username === S.currentUser) || {};
+  return `
+  <div class="page-title">👤 Профил</div>
+  <div class="admin-box" style="max-width:480px;margin:0 auto">
+    <div class="admin-note">👤 Потребител: <strong>${user.username}</strong></div>
+    <div class="admin-note" style="margin-top:6px">📧 Email: <strong>${user.email || '—'}</strong></div>
+    <hr style="border-color:rgba(255,255,255,.1);margin:16px 0">
+    <div style="font-weight:700;margin-bottom:12px">🔐 Смяна на парола</div>
+    <form id="pwForm">
+      <div class="form-group"><label>Стара парола</label>
+        <input type="password" id="pwOld" placeholder="..."></div>
+      <div class="form-group"><label>Нова парола</label>
+        <input type="password" id="pwNew" placeholder="минимум 4 символа"></div>
+      <div class="form-group"><label>Потвърди</label>
+        <input type="password" id="pwNew2" placeholder="повтори новата парола"></div>
+      <button type="submit" class="save-btn" style="width:100%">Запази новата парола</button>
+    </form>
+    <hr style="border-color:rgba(255,255,255,.1);margin:16px 0">
+    <div style="font-weight:700;margin-bottom:10px">🔑 Sync Key (за споделяне)</div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <input id="skProfInp" placeholder="ghp_..." value="${GH.tok()}" style="flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:8px 12px;color:#fff;min-width:180px">
+      <button class="save-btn" style="padding:8px 16px" onclick="const v=document.getElementById('skProfInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('✅ Sync Key запазен!');}">Save</button>
+    </div>
+  </div>`;
+}
+
 function renderLeaderboard() {
   const lb = leaderboard();
   const medals = ['🥇','🥈','🥉'];
@@ -873,12 +906,13 @@ function bind() {
     const u = document.getElementById('ru').value.trim();
     const p = document.getElementById('rp').value;
     const p2 = document.getElementById('rp2').value;
+      const e = (document.getElementById('re') || {value:''}).value.trim();
     if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
     else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
     else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
     else if (p !== p2) S.authError = 'Паролите не съвпадат';
     else {
-      S.users.push({username: u, password: p, registeredAt: Date.now()});
+      S.users.push({username: u, password: p, email: e, registeredAt: Date.now()});
       S.sessionLog.push({username: u, action:'register', time: Date.now()});
       S.currentUser = u; S.authError = ''; persist(); render(); return;
     }
@@ -974,3 +1008,21 @@ loadFromGitHub().then(ok => { if(ok) { LS.set('wc26_users', S.users); LS.set('wc
 </script>
 </body>
 </html>
+  // Profile password change
+  const pwf = document.getElementById('pwForm');
+  if (pwf) pwf.addEventListener('submit', e => {
+    e.preventDefault();
+    const oldP = document.getElementById('pwOld').value;
+    const newP = document.getElementById('pwNew').value;
+    const newP2 = document.getElementById('pwNew2').value;
+    const user = S.users.find(u => u.username === S.currentUser);
+    if (!user) return;
+    if (user.password !== oldP) { toast('❌ Грешна стара парола!'); return; }
+    if (newP.length < 4) { toast('❌ Минимум 4 символа!'); return; }
+    if (newP !== newP2) { toast('❌ Паролите не съвпадат!'); return; }
+    user.password = newP;
+    persist();
+    toast('✅ Паролата е променена!');
+  });
+
+
