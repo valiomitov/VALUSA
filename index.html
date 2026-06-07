@@ -236,6 +236,61 @@ const LS = {
   del: k => localStorage.removeItem(k),
 };
 
+// =================== GITHUB SYNC ===================
+const GH = {
+  api: 'https://api.github.com/repos/valiomitov/VALUSA/contents/data.json',
+  raw: 'https://raw.githubusercontent.com/valiomitov/VALUSA/main/data.json',
+  sha: null,
+  tok: () => localStorage.getItem('wc26_ght') || '',
+};
+
+async function loadFromGitHub() {
+  try {
+    const r = await fetch(GH.raw + '?_=' + Date.now());
+    if (!r.ok) return false;
+    const d = await r.json();
+    if (d.users && Array.isArray(d.users)) S.users = d.users;
+    if (d.predictions) S.predictions = d.predictions;
+    if (d.champions) S.champions = d.champions;
+    if (d.sessionLog && Array.isArray(d.sessionLog)) S.sessionLog = d.sessionLog;
+    if (d.matchResults) {
+      Object.entries(d.matchResults).forEach(([id, res]) => {
+        const m = S.matches.find(m => m.id === parseInt(id));
+        if (m) m.result = res;
+      });
+    }
+    return true;
+  } catch(e) { return false; }
+}
+
+let _ghSyncing = false;
+async function syncToGitHub() {
+  const tok = GH.tok();
+  if (!tok || _ghSyncing) return;
+  _ghSyncing = true;
+  try {
+    if (!GH.sha) {
+      const meta = await fetch(GH.api, { headers: { Authorization: 'token ' + tok } });
+      if (meta.ok) { const mj = await meta.json(); GH.sha = mj.sha || null; }
+    }
+    const mr = {};
+    S.matches.forEach(m => { if (m.result) mr[m.id] = m.result; });
+    const data = { users: S.users, predictions: S.predictions, champions: S.champions, sessionLog: S.sessionLog, matchResults: mr };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    const body = { message: 'sync', content };
+    if (GH.sha) body.sha = GH.sha;
+    const resp = await fetch(GH.api, {
+      method: 'PUT',
+      headers: { Authorization: 'token ' + tok, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (resp.ok) { const rj = await resp.json(); GH.sha = rj.content.sha; }
+    else if (resp.status === 409) { GH.sha = null; setTimeout(syncToGitHub, 3000); }
+    else { GH.sha = null; }
+  } catch(e) { GH.sha = null; }
+  finally { _ghSyncing = false; }
+}
+
 let S = {
   users: LS.get('wc26_users') || [],
   currentUser: LS.get('wc26_current') || null,
@@ -258,6 +313,7 @@ function persist() {
   LS.set('wc26_log', S.sessionLog);
   if (S.currentUser) LS.set('wc26_current', S.currentUser);
   else LS.del('wc26_current');
+  syncToGitHub();
 }
 
 // Ensure admin user
@@ -543,7 +599,13 @@ function renderLeaderboard() {
   const medals = ['🥇','🥈','🥉'];
   return `
   <div class="page-title">🏅 Класиране</div>
-  <div class="lb-wrap">
+  ${!GH.tok() ? `<div style="background:rgba(255,165,0,.12);border:1px solid rgba(255,165,0,.35);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+  <span style="font-size:18px">🔑</span>
+  <span style="flex:1;font-size:13px">Въведи Sync Key за споделяне с приятели (попитай от админа):</span>
+  <input id="skInp" placeholder="ghp_..." style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:6px 10px;color:#fff;width:240px;font-size:13px">
+  <button class="save-btn" style="padding:6px 14px;font-size:13px" onclick="const v=document.getElementById('skInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('✅ Sync Key запазен!');render();}">Save</button>
+</div>` : ''}
+<div class="lb-wrap">
     <div class="lb-head">
       <div>#</div><div>Потребител</div>
       <div style="text-align:center;font-size:10px">Знак<br><span style="color:#90caf9">10т</span></div>
@@ -884,6 +946,7 @@ function toast(msg) {
 
 // ===================== INIT =====================
 render();
+loadFromGitHub().then(ok => { if(ok) { LS.set('wc26_users', S.users); LS.set('wc26_preds', S.predictions); render(); } });
 
 // ===================== AUTO REFRESH =====================
 (function() {
