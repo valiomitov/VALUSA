@@ -153,6 +153,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 .bnav-label{font-size:10px;font-weight:700}
 @media(max-width:600px){body{padding-bottom:70px}.app-header .app-nav,.app-header .user-name{display:none}.bottom-nav{display:block}.main-content{padding:1rem .75rem}.team-name{font-size:12px}.match-card{padding:.65rem .75rem}.score-input{width:40px;height:40px;font-size:17px}.lb-head,.lb-row{grid-template-columns:28px 1fr 40px 40px 40px 52px;padding:9px 10px}.champ-grid{grid-template-columns:repeat(3,1fr)}.groups-grid{grid-template-columns:1fr}.save-btn{width:100%}}
 </style>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 <div id="root"></div>
@@ -237,89 +240,76 @@ const LS = {
 };
 
 // =================== GITHUB SYNC ===================
-const GH = {
-  api: 'https://api.github.com/repos/valiomitov/VALUSA/contents/data.json',
-  raw: 'https://raw.githubusercontent.com/valiomitov/VALUSA/main/data.json',
-  sha: null,
-  tok: () => localStorage.getItem('wc26_ght') || '',
+// ===================== FIREBASE =====================
+const firebaseConfig = {
+  apiKey: "AIzaSyBJT5Yzkwam3sQAGoDFvDivqoZEgSReMXo",
+  authDomain: "wc2026-60200.firebaseapp.com",
+  projectId: "wc2026-60200",
+  storageBucket: "wc2026-60200.firebasestorage.app",
+  messagingSenderId: "1044411786613",
+  appId: "1:1044411786613:web:09ee399294bb5ec10b9f3c"
 };
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const ADMIN_EMAIL = 'valio.mitov@gmail.com';
 
-async function loadFromGitHub() {
+async function loadAllData() {
   try {
-    const r = await fetch(GH.raw + '?_=' + Date.now());
-    if (!r.ok) return false;
-    const d = await r.json();
-    if (d.users && Array.isArray(d.users)) S.users = d.users;
-    if (d.predictions) S.predictions = d.predictions;
-    if (d.champions) S.champions = d.champions;
-    if (d.sessionLog && Array.isArray(d.sessionLog)) S.sessionLog = d.sessionLog;
-    if (d.matchResults) {
-      Object.entries(d.matchResults).forEach(([id, res]) => {
+    const resDoc = await db.collection('settings').doc('matchResults').get();
+    if (resDoc.exists) {
+      Object.entries(resDoc.data()).forEach(([id, res]) => {
         const m = S.matches.find(m => m.id === parseInt(id));
         if (m) m.result = res;
       });
     }
-    return true;
-  } catch(e) { return false; }
+  } catch(e) {}
+  try {
+    const snap = await db.collection('userData').get();
+    snap.forEach(doc => {
+      const d = doc.data();
+      S.allUsersData[doc.id] = d;
+      const uname = d.username || doc.id;
+      if (d.predictions) S.predictions[uname] = d.predictions;
+      if (d.champion) S.champions[uname] = d.champion;
+    });
+  } catch(e) {}
 }
 
-let _ghSyncing = false;
-async function syncToGitHub() {
-  const tok = GH.tok();
-  if (!tok || _ghSyncing) return;
-  _ghSyncing = true;
+async function syncToFirestore() {
+  if (!S.userUID) return;
   try {
-    if (!GH.sha) {
-      const meta = await fetch(GH.api, { headers: { Authorization: 'token ' + tok } });
-      if (meta.ok) { const mj = await meta.json(); GH.sha = mj.sha || null; }
-    }
     const mr = {};
     S.matches.forEach(m => { if (m.result) mr[m.id] = m.result; });
-    const data = { users: S.users, predictions: S.predictions, champions: S.champions, sessionLog: S.sessionLog, matchResults: mr };
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-    const body = { message: 'sync', content };
-    if (GH.sha) body.sha = GH.sha;
-    const resp = await fetch(GH.api, {
-      method: 'PUT',
-      headers: { Authorization: 'token ' + tok, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (resp.ok) { const rj = await resp.json(); GH.sha = rj.content.sha; }
-    else if (resp.status === 409) { GH.sha = null; setTimeout(syncToGitHub, 3000); }
-    else { GH.sha = null; }
-  } catch(e) { GH.sha = null; }
-  finally { _ghSyncing = false; }
+    await db.collection('userData').doc(S.userUID).set({
+      username: S.currentUser, email: S.userEmail, photoURL: S.userPhoto || '',
+      predictions: S.predictions[S.currentUser] || {},
+      champion: S.champions[S.currentUser] || null,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge: true});
+    if (S.isAdmin) await db.collection('settings').doc('matchResults').set(mr);
+  } catch(e) { console.error('Firestore sync:', e); }
 }
 
+
 let S = {
-  users: LS.get('wc26_users') || [],
-  currentUser: LS.get('wc26_current') || null,
-  matches: LS.get('wc26_matches') || generateMatches(),
-  predictions: LS.get('wc26_preds') || {},
-  champions: LS.get('wc26_champs') || {},
-  sessionLog: LS.get('wc26_log') || [],
+  currentUser: null,
+  userUID: null,
+  userEmail: null,
+  userPhoto: null,
+  isAdmin: false,
+  matches: generateMatches(),
+  predictions: {},
+  champions: {},
+  sessionLog: [],
+  allUsersData: {},
   tab: 'predictions',
-  authTab: 'login',
   activeGroup: 'A',
-  authError: '',
   toast: null,
 };
 
 function persist() {
-  LS.set('wc26_users', S.users);
-  LS.set('wc26_matches', S.matches);
-  LS.set('wc26_preds', S.predictions);
-  LS.set('wc26_champs', S.champions);
-  LS.set('wc26_log', S.sessionLog);
-  if (S.currentUser) LS.set('wc26_current', S.currentUser);
-  else LS.del('wc26_current');
-  syncToGitHub();
-}
-
-// Ensure admin user
-if (!S.users.find(u => u.username === 'admin')) {
-  S.users.push({username:'admin', password:'admin2026'});
-  persist();
+  syncToFirestore();
 }
 
 // ===================== SCORING =====================
@@ -347,7 +337,7 @@ function userScore(username) {
 }
 
 function leaderboard() {
-  return S.users.filter(u => u.username !== 'admin').map(u => ({username: u.username, ...userScore(u.username)}))
+  return Object.values(S.allUsersData).map(d => ({username: d.username || '?', ...userScore(d.username || '?')}))
     .sort((a, b) => b.total - a.total || b.exact - a.exact);
 }
 
@@ -363,41 +353,18 @@ function renderAuth() {
   return `<div class="auth-screen">
     <div class="auth-logo">⚽</div>
     <div class="auth-title">WORLD CUP 2026</div>
-    <div class="auth-sub">🇨🇦 Canada &nbsp;·&nbsp; 🇲🇽 Mexico &nbsp;·&nbsp; 🇺🇸 USA · Платформа за прогнози</div>
-    <div class="auth-card">
-      <div class="auth-tabs">
-        <div class="auth-tab ${S.authTab==='login'?'active':''}" data-atab="login">Вход</div>
-        <div class="auth-tab ${S.authTab==='register'?'active':''}" data-atab="register">Регистрация</div>
-      </div>
-      ${S.authTab === 'login' ? `
-      <form id="loginForm">
-        <div class="form-group"><label>Потребителско име</label>
-          <input type="text" id="lu" placeholder="username" autocomplete="username"/></div>
-        <div class="form-group"><label>Парола</label>
-          <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
-        <button type="submit" class="btn btn-primary">🚀 Влез</button>
-      </form>
-      ` : `
-      <form id="regForm">
-        <div class="form-group"><label>Потребителско име</label>
-          <input type="text" id="ru" placeholder="избери username"/></div>
-        <div class="form-group"><label>Email</label>
-          <input type="email" id="re" placeholder="your@email.com" autocomplete="email"/></div>
-        <div class="form-group"><label>Парола</label>
-          <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
-        <div class="form-group"><label>Потвърди парола</label>
-          <input type="password" id="rp2" placeholder="••••••••"/></div>
-        <button type="submit" class="btn btn-primary">✅ Регистрирай се</button>
-      </form>
-      `}
-      ${S.authError ? `<div class="error-msg">⚠️ ${S.authError}</div>` : ''}
+    <div class="auth-card" style="text-align:center;padding:2rem 1.5rem">
+      <p style="color:rgba(255,255,255,.7);margin:0 0 1.5rem">Влез с Google акаунт за да участваш в прогнозите</p>
+      <button id="googleSignIn" style="background:#fff;color:#333;border:none;padding:12px 28px;border-radius:8px;font-size:16px;cursor:pointer;display:flex;align-items:center;gap:10px;margin:0 auto;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,.3)">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 010-3.04V5.41H1.83a8 8 0 000 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.31z"/></svg>
+        Влез с Google
+      </button>
     </div>
   </div>`;
 }
-
 // --- MAIN APP ---
 function renderApp() {
-  const isAdmin = S.currentUser === 'admin';
+  const isAdmin = S.isAdmin;
   const tabs = [
     {id:'predictions',l:'🔮 Прогнози'},
     {id:'leaderboard',l:'🏅 Класиране'},
@@ -414,7 +381,7 @@ function renderApp() {
       ${tabs.map(t=>`<button class="nav-btn ${S.tab===t.id?'active':''}" data-tab="${t.id}">${t.l}</button>`).join('')}
     </nav>
     <div class="user-info">
-      <div class="user-avatar">${S.currentUser[0].toUpperCase()}</div>
+      <div class="user-avatar">${(S.currentUser||"?")[0].toUpperCase()}</div>
       <span class="user-name">${S.currentUser}</span>
       <button class="logout-btn" id="logoutBtn">Изход</button>
     </div>
@@ -426,7 +393,7 @@ function renderApp() {
 
 
 function renderBottomNav() {
-  const isAdmin = S.currentUser === 'admin';
+  const isAdmin = S.isAdmin;
   const items = [
     {id:'predictions', icon:'🔮', label:'Прогнози'},
     {id:'leaderboard', icon:'🏅', label:'Класиране'},
@@ -523,7 +490,7 @@ function renderTab() {
   if (S.tab === 'leaderboard') return renderLeaderboard();
   if (S.tab === 'groups') return renderGroups();
   if (S.tab === 'champion') return renderChampion();
-  if (S.tab === 'admin') return renderAdmin();
+  if (S.isAdmin) return renderAdmin();
   if (S.tab === 'profile') return renderProfile();
   if (S.tab === 'rules') return renderRules();
   return '';
@@ -601,43 +568,21 @@ function renderMatchCard(m, pred, isAdmin) {
 // --- LEADERBOARD ---
 
 function renderProfile() {
-  const user = S.users.find(u => u.username === S.currentUser) || {};
   return `
   <div class="page-title">👤 Профил</div>
-  <div class="admin-box" style="max-width:480px;margin:0 auto">
-    <div class="admin-note">👤 Потребител: <strong>${user.username}</strong></div>
-    <div class="admin-note" style="margin-top:6px">📧 Email: <strong>${user.email || '—'}</strong></div>
-    <hr style="border-color:rgba(255,255,255,.1);margin:16px 0">
-    <div style="font-weight:700;margin-bottom:12px">🔐 Смяна на парола</div>
-    <form id="pwForm">
-      <div class="form-group"><label>Стара парола</label>
-        <input type="password" id="pwOld" placeholder="..."></div>
-      <div class="form-group"><label>Нова парола</label>
-        <input type="password" id="pwNew" placeholder="минимум 4 символа"></div>
-      <div class="form-group"><label>Потвърди</label>
-        <input type="password" id="pwNew2" placeholder="повтори новата парола"></div>
-      <button type="submit" class="save-btn" style="width:100%">Запази новата парола</button>
-    </form>
-    <hr style="border-color:rgba(255,255,255,.1);margin:16px 0">
-    <div style="font-weight:700;margin-bottom:10px">🔑 Sync Key (за споделяне)</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <input id="skProfInp" placeholder="ghp_..." value="${GH.tok()}" style="flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:8px 12px;color:#fff;min-width:180px">
-      <button class="save-btn" style="padding:8px 16px" onclick="const v=document.getElementById('skProfInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('✅ Sync Key запазен!');}">Save</button>
-    </div>
+  <div class="admin-box" style="max-width:480px;margin:0 auto;text-align:center">
+    ${S.userPhoto ? `<img src="${S.userPhoto}" style="width:80px;height:80px;border-radius:50%;margin:0 auto 1rem;display:block;border:3px solid rgba(255,255,255,.2)">` : `<div class="user-avatar" style="width:80px;height:80px;font-size:2rem;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center">${(S.currentUser||"?")[0].toUpperCase()}</div>`}
+    <div style="font-size:1.2rem;color:#fff;font-weight:600;margin-bottom:4px">${S.currentUser || ''}</div>
+    <div style="color:rgba(255,255,255,.6);margin-bottom:1.5rem;font-size:.9rem">${S.userEmail || ''}</div>
+    <div class="admin-note" style="margin-bottom:1.5rem">Паролата се управлява от Google. За да я смениш, отиди в настройките на Google акаунта си.</div>
+    <button onclick="firebase.auth().signOut()" class="save-btn" style="background:#c0392b;margin:0 auto;display:block">🚪 Изход</button>
   </div>`;
 }
-
 function renderLeaderboard() {
   const lb = leaderboard();
   const medals = ['🥇','🥈','🥉'];
   return `
   <div class="page-title">🏅 Класиране</div>
-  ${!GH.tok() ? `<div style="background:rgba(255,165,0,.12);border:1px solid rgba(255,165,0,.35);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-  <span style="font-size:18px">🔑</span>
-  <span style="flex:1;font-size:13px">Въведи Sync Key за споделяне с приятели (попитай от админа):</span>
-  <input id="skInp" placeholder="ghp_..." style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:6px 10px;color:#fff;width:240px;font-size:13px">
-  <button class="save-btn" style="padding:6px 14px;font-size:13px" onclick="const v=document.getElementById('skInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('✅ Sync Key запазен!');render();}">Save</button>
-</div>` : ''}
 <div class="lb-wrap">
     <div class="lb-head">
       <div>#</div><div>Потребител</div>
@@ -764,7 +709,7 @@ function renderAdmin() {
           <th style="padding:6px 10px">\u{041F}\u{0440}\u{043E}\u{0433}\u{043D}\u{043E}\u{0437}\u{0438}</th>
         </tr></thead>
         <tbody>
-        ${S.users.filter(u=>u.username!=='admin').map((u,i) => {
+        ${Object.values(S.allUsersData).map((d,i) => { const u = {username: d.username || '?'}; return ({...d,username:u.username}); }).map((u,i) => {
           const lastLogin = [...S.sessionLog].reverse().find(l=>l.username===u.username && l.action==='login');
           const predCount = Object.keys(S.predictions[u.username]||{}).filter(k=>{const p=S.predictions[u.username][k];return p&&p.s1!==''&&p.s2!=='';}).length;
           const regDate = u.registeredAt ? new Date(u.registeredAt).toLocaleString('bg-BG',{timeZone:'Europe/Sofia'}) : '\u2014';
@@ -883,45 +828,17 @@ async function autoFetchResults(silent=false) {
 }
 
 function bind() {
-  // Auth tabs
-  document.querySelectorAll('[data-atab]').forEach(el => el.addEventListener('click', () => {
-    S.authTab = el.dataset.atab; S.authError = ''; render();
-  }));
-
-  // Login
-  const lf = document.getElementById('loginForm');
-  if (lf) lf.addEventListener('submit', e => {
-    e.preventDefault();
-    const u = document.getElementById('lu').value.trim();
-    const p = document.getElementById('lp').value;
-    const user = S.users.find(x => x.username === u && x.password === p);
-    if (user) { S.currentUser = u; S.authError = ''; S.sessionLog.push({username: u, action:'login', time: Date.now()}); persist(); render(); }
-    else { S.authError = 'Грешно потребителско име или парола'; render(); }
+  // Google Sign-In
+  const gBtn = document.getElementById('googleSignIn');
+  if (gBtn) gBtn.addEventListener('click', () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).catch(e => console.error('Sign-in error:', e));
   });
 
-  // Register
-  const rf = document.getElementById('regForm');
-  if (rf) rf.addEventListener('submit', e => {
-    e.preventDefault();
-    const u = document.getElementById('ru').value.trim();
-    const p = document.getElementById('rp').value;
-    const p2 = document.getElementById('rp2').value;
-      const em = (document.getElementById('re') || {value:''}).value.trim();
-    if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
-    else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
-    else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
-    else if (p !== p2) S.authError = 'Паролите не съвпадат';
-    else {
-      S.users.push({username: u, password: p, email: em, registeredAt: Date.now()});
-      S.sessionLog.push({username: u, action:'register', time: Date.now()});
-      S.currentUser = u; S.authError = ''; persist(); render(); return;
-    }
-    render();
-  });
 
   // Logout
   const lb = document.getElementById('logoutBtn');
-  if (lb) lb.addEventListener('click', () => { S.sessionLog.push({username: S.currentUser, action:'logout', time: Date.now()}); S.currentUser = null; persist(); render(); });
+  if (lb) lb.addEventListener('click', () => { auth.signOut(); });
 
   // Nav tabs
   document.querySelectorAll('[data-tab]').forEach(el => el.addEventListener('click', () => {
@@ -970,23 +887,6 @@ function bind() {
     S.champions[S.currentUser] = btn.dataset.champ;
     persist(); toast('🏆 ' + btn.dataset.champ + ' — прогнозата е запазена!'); render();
   }));
-  // Profile password change
-  const pwf = document.getElementById('pwForm');
-  if (pwf) pwf.addEventListener('submit', e => {
-    e.preventDefault();
-    const oldP = document.getElementById('pwOld').value;
-    const newP = document.getElementById('pwNew').value;
-    const newP2 = document.getElementById('pwNew2').value;
-    const user = S.users.find(u => u.username === S.currentUser);
-    if (!user) return;
-    if (user.password !== oldP) { toast('❌ Грешна стара парола!'); return; }
-    if (newP.length < 4) { toast('❌ Минимум 4 символа!'); return; }
-    if (newP !== newP2) { toast('❌ Паролите не съвпадат!'); return; }
-    user.password = newP;
-    persist();
-    toast('✅ Паролата е променена!');
-  });
-}
 
 function toast(msg) {
   S.toast = msg;
@@ -995,9 +895,28 @@ function toast(msg) {
 }
 
 // ===================== INIT =====================
-render();
-loadFromGitHub().then(ok => { if(ok) { LS.set('wc26_users', S.users); LS.set('wc26_preds', S.predictions); render(); } });
-
+auth.onAuthStateChanged(async (fbUser) => {
+  if (fbUser) {
+    S.currentUser = fbUser.displayName || fbUser.email.split('@')[0];
+    S.userUID = fbUser.uid;
+    S.userEmail = fbUser.email;
+    S.userPhoto = fbUser.photoURL || '';
+    S.isAdmin = fbUser.email === ADMIN_EMAIL;
+    // Save/update user profile in Firestore
+    try {
+      await db.collection('userData').doc(fbUser.uid).set({
+        username: S.currentUser, email: S.userEmail, photoURL: S.userPhoto
+      }, {merge: true});
+    } catch(e) {}
+    await loadAllData();
+    render();
+  } else {
+    S.currentUser = null; S.userUID = null; S.userEmail = null;
+    S.userPhoto = null; S.isAdmin = false;
+    S.predictions = {}; S.champions = {}; S.allUsersData = {};
+    render();
+  }
+});
 // ===================== AUTO REFRESH =====================
 (function() {
   const WC_START = new Date('2026-06-11T00:00:00+03:00').getTime();
