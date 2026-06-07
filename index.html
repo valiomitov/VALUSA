@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>â½ WC 2026 Â· ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</title>
+<title>⚽ WC 2026 · Прогнози</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:100vh;color:#fff}
@@ -113,7 +113,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 .g-table td{padding:9px 10px;font-size:12px;text-align:center;border-top:1px solid rgba(255,255,255,.04)}
 .g-table td:first-child{text-align:left;font-weight:700;font-size:13px}
 .qualify-row{background:rgba(76,175,80,.07)}
-.qualify-row td:first-child::after{content:' â';color:#4caf50;font-size:10px}
+.qualify-row td:first-child::after{content:' ✓';color:#4caf50;font-size:10px}
 
 /* CHAMPION */
 .champ-wrap{max-width:550px;margin:1.5rem auto;text-align:center}
@@ -160,18 +160,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 // ===================== DATA =====================
 
 const FLAGS = {
-  'Mexico':'ð²ð½','South Africa':'ð¿ð¦','South Korea':'ð°ð·','Czechia':'ð¨ð¿',
-  'Canada':'ð¨ð¦','Bosnia-Herzegovina':'ð§ð¦','Qatar':'ð¶ð¦','Switzerland':'ð¨ð­',
-  'Brazil':'ð§ð·','Morocco':'ð²ð¦','Haiti':'ð­ð¹','Scotland':'ð´ó §ó ¢ó ³ó £ó ´ó ¿',
-  'United States':'ðºð¸','Paraguay':'ðµð¾','Australia':'ð¦ðº','Turkey':'ð¹ð·',
-  'Germany':'ð©ðª','Curacao':'ð¨ð¼','Ivory Coast':'ð¨ð®','Ecuador':'ðªð¨',
-  'Netherlands':'ð³ð±','Japan':'ð¯ðµ','Sweden':'ð¸ðª','Tunisia':'ð¹ð³',
-  'Belgium':'ð§ðª','Egypt':'ðªð¬','Iran':'ð®ð·','New Zealand':'ð³ð¿',
-  'Spain':'ðªð¸','Cape Verde':'ð¨ð»','Saudi Arabia':'ð¸ð¦','Uruguay':'ðºð¾',
-  'France':'ð«ð·','Senegal':'ð¸ð³','Iraq':'ð®ð¶','Norway':'ð³ð´',
-  'Argentina':'ð¦ð·','Algeria':'ð©ð¿','Austria':'ð¦ð¹','Jordan':'ð¯ð´',
-  'Portugal':'ðµð¹','Congo DR':'ð¨ð©','Uzbekistan':'ðºð¿','Colombia':'ð¨ð´',
-  'England':'ð´ó §ó ¢ó ¥ó ®ó §ó ¿','Croatia':'ð­ð·','Ghana':'ð¬ð­','Panama':'ðµð¦',
+  'Mexico':'🇲🇽','South Africa':'🇿🇦','South Korea':'🇰🇷','Czechia':'🇨🇿',
+  'Canada':'🇨🇦','Bosnia-Herzegovina':'🇧🇦','Qatar':'🇶🇦','Switzerland':'🇨🇭',
+  'Brazil':'🇧🇷','Morocco':'🇲🇦','Haiti':'🇭🇹','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+  'United States':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Turkey':'🇹🇷',
+  'Germany':'🇩🇪','Curacao':'🇨🇼','Ivory Coast':'🇨🇮','Ecuador':'🇪🇨',
+  'Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳',
+  'Belgium':'🇧🇪','Egypt':'🇪🇬','Iran':'🇮🇷','New Zealand':'🇳🇿',
+  'Spain':'🇪🇸','Cape Verde':'🇨🇻','Saudi Arabia':'🇸🇦','Uruguay':'🇺🇾',
+  'France':'🇫🇷','Senegal':'🇸🇳','Iraq':'🇮🇶','Norway':'🇳🇴',
+  'Argentina':'🇦🇷','Algeria':'🇩🇿','Austria':'🇦🇹','Jordan':'🇯🇴',
+  'Portugal':'🇵🇹','Congo DR':'🇨🇩','Uzbekistan':'🇺🇿','Colombia':'🇨🇴',
+  'England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Croatia':'🇭🇷','Ghana':'🇬🇭','Panama':'🇵🇦',
 };
 
 
@@ -194,7 +194,7 @@ function getKickoff(matchId) { return MATCH_TIMES[matchId] ? new Date(MATCH_TIME
 function fmtBG(matchId) {
   const d = getKickoff(matchId); if(!d) return '';
   return d.toLocaleDateString('bg-BG',{day:'2-digit',month:'2-digit',timeZone:'Europe/Sofia'}) + ' ' +
-    d.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Sofia'}) + ' Ñ.';
+    d.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Sofia'}) + ' ч.';
 }
 function isLocked(matchId) {
   const k = getKickoff(matchId); if(!k) return false;
@@ -361,36 +361,36 @@ function render() {
 // --- AUTH ---
 function renderAuth() {
   return `<div class="auth-screen">
-    <div class="auth-logo">â½</div>
+    <div class="auth-logo">⚽</div>
     <div class="auth-title">WORLD CUP 2026</div>
-    <div class="auth-sub">ð¨ð¦ Canada &nbsp;Â·&nbsp; ð²ð½ Mexico &nbsp;Â·&nbsp; ðºð¸ USA Â· ÐÐ»Ð°ÑÑÐ¾ÑÐ¼Ð° Ð·Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</div>
+    <div class="auth-sub">🇨🇦 Canada &nbsp;·&nbsp; 🇲🇽 Mexico &nbsp;·&nbsp; 🇺🇸 USA · Платформа за прогнози</div>
     <div class="auth-card">
       <div class="auth-tabs">
-        <div class="auth-tab ${S.authTab==='login'?'active':''}" data-atab="login">ÐÑÐ¾Ð´</div>
-        <div class="auth-tab ${S.authTab==='register'?'active':''}" data-atab="register">Ð ÐµÐ³Ð¸ÑÑÑÐ°ÑÐ¸Ñ</div>
+        <div class="auth-tab ${S.authTab==='login'?'active':''}" data-atab="login">Вход</div>
+        <div class="auth-tab ${S.authTab==='register'?'active':''}" data-atab="register">Регистрация</div>
       </div>
       ${S.authTab === 'login' ? `
       <form id="loginForm">
-        <div class="form-group"><label>ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ Ð¸Ð¼Ðµ</label>
+        <div class="form-group"><label>Потребителско име</label>
           <input type="text" id="lu" placeholder="username" autocomplete="username"/></div>
-        <div class="form-group"><label>ÐÐ°ÑÐ¾Ð»Ð°</label>
-          <input type="password" id="lp" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢" autocomplete="current-password"/></div>
-        <button type="submit" class="btn btn-primary">ð ÐÐ»ÐµÐ·</button>
+        <div class="form-group"><label>Парола</label>
+          <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
+        <button type="submit" class="btn btn-primary">🚀 Влез</button>
       </form>
       ` : `
       <form id="regForm">
-        <div class="form-group"><label>ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ Ð¸Ð¼Ðµ</label>
-          <input type="text" id="ru" placeholder="Ð¸Ð·Ð±ÐµÑÐ¸ username"/></div>
+        <div class="form-group"><label>Потребителско име</label>
+          <input type="text" id="ru" placeholder="избери username"/></div>
         <div class="form-group"><label>Email</label>
           <input type="email" id="re" placeholder="your@email.com" autocomplete="email"/></div>
-        <div class="form-group"><label>ÐÐ°ÑÐ¾Ð»Ð°</label>
-          <input type="password" id="rp" placeholder="Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°"/></div>
-        <div class="form-group"><label>ÐÐ¾ÑÐ²ÑÑÐ´Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°</label>
-          <input type="password" id="rp2" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢"/></div>
-        <button type="submit" class="btn btn-primary">â Ð ÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð¹ ÑÐµ</button>
+        <div class="form-group"><label>Парола</label>
+          <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
+        <div class="form-group"><label>Потвърди парола</label>
+          <input type="password" id="rp2" placeholder="••••••••"/></div>
+        <button type="submit" class="btn btn-primary">✅ Регистрирай се</button>
       </form>
       `}
-      ${S.authError ? `<div class="error-msg">â ï¸ ${S.authError}</div>` : ''}
+      ${S.authError ? `<div class="error-msg">⚠️ ${S.authError}</div>` : ''}
     </div>
   </div>`;
 }
@@ -399,24 +399,24 @@ function renderAuth() {
 function renderApp() {
   const isAdmin = S.currentUser === 'admin';
   const tabs = [
-    {id:'predictions',l:'ð® ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸'},
-    {id:'leaderboard',l:'ð ÐÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ'},
-    {id:'groups',l:'ð ÐÑÑÐ¿Ð¸'},
-    {id:'champion',l:'ð Ð¨Ð°Ð¼Ð¿Ð¸Ð¾Ð½'},
-    {id:'rules',l:'ð ÐÑÐ°Ð²Ð¸Ð»Ð°'},
-    {id:'profile',l:'ð¤ ÐÑÐ¾ÑÐ¸Ð»'},
-    ...(isAdmin ? [{id:'admin',l:'âï¸ ÐÐ´Ð¼Ð¸Ð½'}] : []),
+    {id:'predictions',l:'🔮 Прогнози'},
+    {id:'leaderboard',l:'🏅 Класиране'},
+    {id:'groups',l:'🌍 Групи'},
+    {id:'champion',l:'🏆 Шампион'},
+    {id:'rules',l:'📋 Правила'},
+    {id:'profile',l:'👤 Профил'},
+    ...(isAdmin ? [{id:'admin',l:'⚙️ Админ'}] : []),
   ];
   return `
   <div class="app-header">
-    <div class="app-logo">â½ <span>WC</span> 2026</div>
+    <div class="app-logo">⚽ <span>WC</span> 2026</div>
     <nav class="app-nav">
       ${tabs.map(t=>`<button class="nav-btn ${S.tab===t.id?'active':''}" data-tab="${t.id}">${t.l}</button>`).join('')}
     </nav>
     <div class="user-info">
       <div class="user-avatar">${S.currentUser[0].toUpperCase()}</div>
       <span class="user-name">${S.currentUser}</span>
-      <button class="logout-btn" id="logoutBtn">ÐÐ·ÑÐ¾Ð´</button>
+      <button class="logout-btn" id="logoutBtn">Изход</button>
     </div>
   </div>
   <div class="main-content">${renderTab()}</div>
@@ -428,89 +428,89 @@ function renderApp() {
 function renderBottomNav() {
   const isAdmin = S.currentUser === 'admin';
   const items = [
-    {id:'predictions', icon:'ð®', label:'ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸'},
-    {id:'leaderboard', icon:'ð', label:'ÐÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ'},
-    {id:'groups', icon:'ð', label:'ÐÑÑÐ¿Ð¸'},
-    {id:'champion', icon:'ð', label:'Ð¨Ð°Ð¼Ð¿Ð¸Ð¾Ð½'},
-    {id:'rules', icon:'ð', label:'ÐÑÐ°Ð²Ð¸Ð»Ð°'},
-    {id:'profile', icon:'ð¤', label:'ÐÑÐ¾ÑÐ¸Ð»'},
-    ...(isAdmin ? [{id:'admin', icon:'âï¸', label:'ÐÐ´Ð¼Ð¸Ð½'}] : []),
+    {id:'predictions', icon:'🔮', label:'Прогнози'},
+    {id:'leaderboard', icon:'🏅', label:'Класиране'},
+    {id:'groups', icon:'🌍', label:'Групи'},
+    {id:'champion', icon:'🏆', label:'Шампион'},
+    {id:'rules', icon:'📋', label:'Правила'},
+    {id:'profile', icon:'👤', label:'Профил'},
+    ...(isAdmin ? [{id:'admin', icon:'⚙️', label:'Админ'}] : []),
   ];
   return `<nav class="bottom-nav"><div class="bottom-nav-inner">${items.map(it=>`<button class="bnav-btn ${S.tab===it.id?'active':''}" data-tab="${it.id}"><span class="bnav-icon">${it.icon}</span><span class="bnav-label">${it.label}</span></button>`).join('')}</div></nav>`;
 }
 
 function renderRules() {
   return `
-  <div class="page-title">ð ÐÑÐ°Ð²Ð¸Ð»Ð° Ð·Ð° ÑÐ¾ÑÐºÑÐ²Ð°Ð½Ðµ</div>
+  <div class="page-title">📋 Правила за точкуване</div>
   <div style="max-width:580px;margin:0 auto">
 
     <div style="background:rgba(165,214,167,.08);border:1.5px solid rgba(165,214,167,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">ð¯</div>
+      <div style="font-size:3rem;flex-shrink:0">🎯</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#a5d6a7">20 ÑÐ¾ÑÐºÐ¸</div>
-        <div style="font-weight:700;margin-bottom:.3rem">Ð¢Ð¾ÑÐµÐ½ ÑÐµÐ·ÑÐ»ÑÐ°Ñ</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÑÐ¾ÑÐ½Ð¸Ñ Ð±ÑÐ¾Ð¹ Ð³Ð¾Ð»Ð¾Ð²Ðµ Ð¸ Ð·Ð° Ð´Ð²Ð°ÑÐ° Ð¾ÑÐ±Ð¾ÑÐ°.</div>
-        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">ÐÑÐ¸Ð¼ÐµÑ: ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð° 2:1 â Ð ÐµÐ°Ð»ÐµÐ½ 2:1 â</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#a5d6a7">20 точки</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Точен резултат</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш точния брой голове и за двата отбора.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 2:1 ✓</div>
       </div>
     </div>
 
     <div style="background:rgba(255,224,130,.06);border:1.5px solid rgba(249,168,37,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">ð</div>
+      <div style="font-size:3rem;flex-shrink:0">📐</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#ffe082">15 ÑÐ¾ÑÐºÐ¸</div>
-        <div style="font-weight:700;margin-bottom:.3rem">ÐÑÐ°Ð²Ð¸Ð»ÐµÐ½ Ð·Ð½Ð°Ðº + ÐÐ¾Ð»Ð¾Ð²Ð° ÑÐ°Ð·Ð»Ð¸ÐºÐ°</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÐºÐ¾Ð¹ Ð¿Ð¾Ð±ÐµÐ¶Ð´Ð°Ð²Ð° (Ð¸Ð»Ð¸ ÑÐ°Ð²ÐµÐ½) Ð ÑÐ¾ÑÐ½Ð°ÑÐ° ÑÐ°Ð·Ð»Ð¸ÐºÐ° Ð² Ð³Ð¾Ð»Ð¾Ð²Ðµ.</div>
-        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">ÐÑÐ¸Ð¼ÐµÑ: ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð° 2:1 â Ð ÐµÐ°Ð»ÐµÐ½ 3:2 â (Ð¿Ð¾Ð±ÐµÐ´Ð° Ñ 1 Ð³Ð¾Ð»)</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#ffe082">15 точки</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Правилен знак + Голова разлика</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш кой побеждава (или равен) И точната разлика в голове.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 3:2 ✓ (победа с 1 гол)</div>
       </div>
     </div>
 
     <div style="background:rgba(144,202,249,.06);border:1.5px solid rgba(21,101,192,.3);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">â</div>
+      <div style="font-size:3rem;flex-shrink:0">✅</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#90caf9">10 ÑÐ¾ÑÐºÐ¸</div>
-        <div style="font-weight:700;margin-bottom:.3rem">ÐÑÐ°Ð²Ð¸Ð»ÐµÐ½ Ð·Ð½Ð°Ðº (1 / X / 2)</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÑÐ°Ð¼Ð¾ Ð·Ð½Ð°ÐºÐ° â Ð¿Ð¾Ð±ÐµÐ´Ð° Ð´Ð¾Ð¼Ð°ÐºÐ¸Ð½, ÑÐ°Ð²ÐµÐ½, Ð¸Ð»Ð¸ Ð¿Ð¾Ð±ÐµÐ´Ð° Ð³Ð¾ÑÑ.</div>
-        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">ÐÑÐ¸Ð¼ÐµÑ: ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð° 2:1 â Ð ÐµÐ°Ð»ÐµÐ½ 3:0 â (Ð¸ Ð´Ð²ÐµÑÐµ ÑÐ° Ð¿Ð¾Ð±ÐµÐ´Ð°)</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#90caf9">10 точки</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Правилен знак (1 / X / 2)</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш само знака — победа домакин, равен, или победа гост.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 3:0 ✓ (и двете са победа)</div>
       </div>
     </div>
 
     <div style="background:rgba(249,168,37,.06);border:1.5px solid rgba(249,168,37,.2);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">ð</div>
+      <div style="font-size:3rem;flex-shrink:0">🏆</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#f9a825">30 ÑÐ¾ÑÐºÐ¸</div>
-        <div style="font-weight:700;margin-bottom:.3rem">ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ» Ð½Ð° ÑÑÑÐ½Ð¸ÑÐ°</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÐºÐ¾Ð¹ ÑÐµ Ð²Ð´Ð¸Ð³Ð½Ðµ ÑÑÐ¾ÑÐµÑ. ÐÐ¾Ð±Ð°Ð²ÑÑ ÑÐµ ÑÐ»ÐµÐ´ ÑÐ¸Ð½Ð°Ð»Ð°.</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#f9a825">30 точки</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Победител на турнира</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш кой ще вдигне трофея. Добавят се след финала.</div>
       </div>
     </div>
 
     <div style="background:rgba(198,40,40,.08);border:1px solid rgba(198,40,40,.2);border-radius:14px;padding:1rem;margin-bottom:.75rem">
-      <div style="font-weight:700;margin-bottom:.3rem">â° ÐÑÐ°ÐµÐ½ ÑÑÐ¾Ðº</div>
-      <div style="color:rgba(255,255,255,.6);font-size:.9rem">ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° ÑÐµ <strong>Ð·Ð°ÐºÐ»ÑÑÐ²Ð° Ð°Ð²ÑÐ¾Ð¼Ð°ÑÐ¸ÑÐ½Ð¾ 30 Ð¼Ð¸Ð½</strong> Ð¿ÑÐµÐ´Ð¸ Ð½Ð°ÑÐ°Ð»Ð¾ÑÐ¾ Ð½Ð° Ð²ÑÐµÐºÐ¸ Ð¼Ð°Ñ.</div>
+      <div style="font-weight:700;margin-bottom:.3rem">⏰ Краен срок</div>
+      <div style="color:rgba(255,255,255,.6);font-size:.9rem">Прогнозата се <strong>заключва автоматично 30 мин</strong> преди началото на всеки мач.</div>
     </div>
 
     <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1rem">
-      <div style="font-weight:700;margin-bottom:.75rem;text-align:center">ÐÑÑÐ·Ð¾ ÑÑÐ°Ð²Ð½ÐµÐ½Ð¸Ðµ</div>
+      <div style="font-weight:700;margin-bottom:.75rem;text-align:center">Бързо сравнение</div>
       <table style="width:100%;border-collapse:collapse;font-size:.85rem">
         <thead><tr style="color:rgba(255,255,255,.4)">
-          <th style="padding:6px;text-align:left">ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°</th>
-          <th style="padding:6px;text-align:left">Ð ÐµÐ°Ð»ÐµÐ½</th>
-          <th style="padding:6px;text-align:right">Ð¢Ð¾ÑÐºÐ¸</th>
+          <th style="padding:6px;text-align:left">Прогноза</th>
+          <th style="padding:6px;text-align:left">Реален</th>
+          <th style="padding:6px;text-align:right">Точки</th>
         </tr></thead>
         <tbody>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">2:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20Ñ</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15Ñ</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:#90caf9;font-weight:700">+10Ñ</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">0:1</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0Ñ</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">1:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20Ñ</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">2:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15Ñ</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0Ñ</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">2:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:#90caf9;font-weight:700">+10т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">0:1</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">1:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">2:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0т</td></tr>
         </tbody>
 
     <div style="background:rgba(255,112,67,.08);border:1.5px solid rgba(255,112,67,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">ð¥</div>
+      <div style="font-size:3rem;flex-shrink:0">🔥</div>
       <div style="flex:1">
-        <div style="font-size:1.15rem;font-weight:800;color:#ff7043;margin-bottom:.3rem">30 Ñ â ÑÐ¾ÑÐµÐ½ ÑÐµÐ·ÑÐ»ÑÐ°Ñ Ñ 5+ Ð³Ð¾Ð»Ð°</div>
-        <div style="color:rgba(255,255,255,.65);font-size:.9rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÑÐ¾ÑÐ½Ð¸Ñ ÑÐµÐ·ÑÐ»ÑÐ°Ñ Ð½Ð° Ð¼Ð°Ñ, Ð² ÐºÐ¾Ð¹ÑÐ¾ Ð¸Ð¼Ð° Ð¿Ð¾ ne 5 Ð³Ð¾Ð»Ð° Ð¾Ð±ÑÐ¾ (Ð½Ð°Ð¿Ñ. 3:3, 4:1, 3:2...).</div>
+        <div style="font-size:1.15rem;font-weight:800;color:#ff7043;margin-bottom:.3rem">30 т — точен резултат с 5+ гола</div>
+        <div style="color:rgba(255,255,255,.65);font-size:.9rem">Познават точния резултат на мач, в който има по ne 5 гола общо (напр. 3:3, 4:1, 3:2...).</div>
       </div>
     </div>
       </table>
@@ -536,20 +536,20 @@ function renderPredictions() {
   const totalPred = Object.keys(preds).length;
   const totalM = S.matches.length;
   return `
-  <div class="page-title">ð® ÐÐ¾Ð¸ÑÐµ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</div>
+  <div class="page-title">🔮 Моите прогнози</div>
   <div class="info-bar">
-    â° ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° ÑÐµ Ð·Ð°ÐºÐ»ÑÑÐ²Ð° 30 Ð¼Ð¸Ð½ Ð¿ÑÐµÐ´Ð¸ Ð½Ð°ÑÐ°Ð»Ð¾ÑÐ¾ Â· ð¥ <strong style="color:#ff7043">30Ñ</strong> ÑÐ¾ÑÐµÐ½ (5+ Ð³Ð¾Ð»Ð°) &nbsp;Â·&nbsp; ð¡ <strong style="color:#a5d6a7">20Ñ</strong> ÑÐ¾ÑÐµÐ½ ÑÐµÐ·ÑÐ»ÑÐ°Ñ &nbsp;Â·&nbsp;
-    <strong style="color:#90caf9">10Ñ</strong> Ð·Ð½Ð°Ðº &nbsp;Â·&nbsp;
-    ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐ°Ð»: <strong>${totalPred}/${totalM}</strong> Ð¼Ð°ÑÐ°
+    ⏰ Прогнозата се заключва 30 мин преди началото · 🔥 <strong style="color:#ff7043">30т</strong> точен (5+ гола) &nbsp;·&nbsp; 💡 <strong style="color:#a5d6a7">20т</strong> точен резултат &nbsp;·&nbsp;
+    <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp;
+    Прогнозирал: <strong>${totalPred}/${totalM}</strong> мача
   </div>
   <div class="group-tabs">
-    ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">ÐÑÑÐ¿Ð° ${g}</div>`).join('')}
+    ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">Група ${g}</div>`).join('')}
   </div>
   ${[1,2,3].map(md => {
     const mds = gm.filter(m => m.matchday === md);
-    return `<div class="matchday-label">ÐÑÑÐ³ ${md}</div>${mds.map(m => renderMatchCard(m, preds[m.id], false)).join('')}`;
+    return `<div class="matchday-label">Кръг ${md}</div>${mds.map(m => renderMatchCard(m, preds[m.id], false)).join('')}`;
   }).join('')}
-  <div><button class="save-btn" id="savePreds">ð¾ ÐÐ°Ð¿Ð°Ð·Ð¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ Ð·Ð° ÐÑÑÐ¿Ð° ${S.activeGroup}</button></div>`;
+  <div><button class="save-btn" id="savePreds">💾 Запази прогнозите за Група ${S.activeGroup}</button></div>`;
 }
 
 function renderMatchCard(m, pred, isAdmin) {
@@ -560,41 +560,41 @@ function renderMatchCard(m, pred, isAdmin) {
   if (hasPred && hasResult && !isAdmin) {
     const ps1 = parseInt(pred.s1), ps2 = parseInt(pred.s2);
     const rs1 = m.result.s1, rs2 = m.result.s2;
-    if(ps1===rs1&&ps2===rs2) pts=(rs1+rs2>=5)?`<span class="pts-badge pts-5">ð¥ +30Ñ</span>`:`<span class="pts-badge pts-3">ð¯ +20Ñ</span>`;
-    else if(outcome(ps1,ps2)===outcome(rs1,rs2)&&(ps1-ps2)===(rs1-rs2)) pts=`<span class="pts-badge pts-2">ð +15Ñ</span>`;
-    else if(outcome(ps1,ps2)===outcome(rs1,rs2)) pts=`<span class="pts-badge pts-1">â +10Ñ</span>`;
-    else pts=`<span class="pts-badge pts-0">â 0Ñ</span>`;
+    if(ps1===rs1&&ps2===rs2) pts=(rs1+rs2>=5)?`<span class="pts-badge pts-5">🔥 +30т</span>`:`<span class="pts-badge pts-3">🎯 +20т</span>`;
+    else if(outcome(ps1,ps2)===outcome(rs1,rs2)&&(ps1-ps2)===(rs1-rs2)) pts=`<span class="pts-badge pts-2">📐 +15т</span>`;
+    else if(outcome(ps1,ps2)===outcome(rs1,rs2)) pts=`<span class="pts-badge pts-1">✓ +10т</span>`;
+    else pts=`<span class="pts-badge pts-0">✗ 0т</span>`;
   }
   const prefix = isAdmin ? 'adm' : 'pr';
   return `
-  ${!isAdmin && MATCH_TIMES[m.id] ? `<div class="kickoff-time">${fmtBG(m.id)}${isLocked(m.id)&&!hasResult?' ð':''}</div>` : ''}
+  ${!isAdmin && MATCH_TIMES[m.id] ? `<div class="kickoff-time">${fmtBG(m.id)}${isLocked(m.id)&&!hasResult?' 🔒':''}</div>` : ''}
   <div class="match-card ${hasPred&&!isAdmin?'predicted':''} ${locked?'locked':''}">
     <div class="team">
-      <span class="team-flag">${FLAGS[m.team1]||'ð³ï¸'}</span>
+      <span class="team-flag">${FLAGS[m.team1]||'🏳️'}</span>
       <span class="team-name">${m.team1}</span>
     </div>
     <div class="score-wrap">
       <input class="score-input" type="number" min="0" max="30"
         data-${prefix}="${m.id}" data-side="s1"
         value="${isAdmin ? (m.result?m.result.s1:'') : (pred?pred.s1:'')}"
-        placeholder="â" ${locked?'disabled':''}>
+        placeholder="–" ${locked?'disabled':''}>
       <span class="score-sep">:</span>
       <input class="score-input" type="number" min="0" max="30"
         data-${prefix}="${m.id}" data-side="s2"
         value="${isAdmin ? (m.result?m.result.s2:'') : (pred?pred.s2:'')}"
-        placeholder="â" ${locked?'disabled':''}>
+        placeholder="–" ${locked?'disabled':''}>
     </div>
     <div class="team right">
-      <span class="team-flag">${FLAGS[m.team2]||'ð³ï¸'}</span>
+      <span class="team-flag">${FLAGS[m.team2]||'🏳️'}</span>
       <span class="team-name">${m.team2}</span>
     </div>
     ${hasResult && !isAdmin ? `
     <div class="result-wrap">
-      <div class="result-label">Ð ÐµÐ·ÑÐ»ÑÐ°Ñ</div>
+      <div class="result-label">Резултат</div>
       <div class="result-score">${m.result.s1}:${m.result.s2}</div>
       ${pts}
     </div>` : ''}
-    ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">â</span>` : ''}
+    ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">✓</span>` : ''}
   </div>`;
 }
 
@@ -603,56 +603,56 @@ function renderMatchCard(m, pred, isAdmin) {
 function renderProfile() {
   const user = S.users.find(u => u.username === S.currentUser) || {};
   return `
-  <div class="page-title">ð¤ ÐÑÐ¾ÑÐ¸Ð»</div>
+  <div class="page-title">👤 Профил</div>
   <div class="admin-box" style="max-width:480px;margin:0 auto">
-    <div class="admin-note">ð¤ ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»: <strong>${user.username}</strong></div>
-    <div class="admin-note" style="margin-top:6px">ð§ Email: <strong>${user.email || 'â'}</strong></div>
+    <div class="admin-note">👤 Потребител: <strong>${user.username}</strong></div>
+    <div class="admin-note" style="margin-top:6px">📧 Email: <strong>${user.email || '—'}</strong></div>
     <hr style="border-color:rgba(255,255,255,.1);margin:16px 0">
-    <div style="font-weight:700;margin-bottom:12px">ð Ð¡Ð¼ÑÐ½Ð° Ð½Ð° Ð¿Ð°ÑÐ¾Ð»Ð°</div>
+    <div style="font-weight:700;margin-bottom:12px">🔐 Смяна на парола</div>
     <form id="pwForm">
-      <div class="form-group"><label>Ð¡ÑÐ°ÑÐ° Ð¿Ð°ÑÐ¾Ð»Ð°</label>
+      <div class="form-group"><label>Стара парола</label>
         <input type="password" id="pwOld" placeholder="..."></div>
-      <div class="form-group"><label>ÐÐ¾Ð²Ð° Ð¿Ð°ÑÐ¾Ð»Ð°</label>
-        <input type="password" id="pwNew" placeholder="Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°"></div>
-      <div class="form-group"><label>ÐÐ¾ÑÐ²ÑÑÐ´Ð¸</label>
-        <input type="password" id="pwNew2" placeholder="Ð¿Ð¾Ð²ÑÐ¾ÑÐ¸ Ð½Ð¾Ð²Ð°ÑÐ° Ð¿Ð°ÑÐ¾Ð»Ð°"></div>
-      <button type="submit" class="save-btn" style="width:100%">ÐÐ°Ð¿Ð°Ð·Ð¸ Ð½Ð¾Ð²Ð°ÑÐ° Ð¿Ð°ÑÐ¾Ð»Ð°</button>
+      <div class="form-group"><label>Нова парола</label>
+        <input type="password" id="pwNew" placeholder="минимум 4 символа"></div>
+      <div class="form-group"><label>Потвърди</label>
+        <input type="password" id="pwNew2" placeholder="повтори новата парола"></div>
+      <button type="submit" class="save-btn" style="width:100%">Запази новата парола</button>
     </form>
     <hr style="border-color:rgba(255,255,255,.1);margin:16px 0">
-    <div style="font-weight:700;margin-bottom:10px">ð Sync Key (Ð·Ð° ÑÐ¿Ð¾Ð´ÐµÐ»ÑÐ½Ðµ)</div>
+    <div style="font-weight:700;margin-bottom:10px">🔑 Sync Key (за споделяне)</div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <input id="skProfInp" placeholder="ghp_..." value="${GH.tok()}" style="flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:8px 12px;color:#fff;min-width:180px">
-      <button class="save-btn" style="padding:8px 16px" onclick="const v=document.getElementById('skProfInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('â Sync Key Ð·Ð°Ð¿Ð°Ð·ÐµÐ½!');}">Save</button>
+      <button class="save-btn" style="padding:8px 16px" onclick="const v=document.getElementById('skProfInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('✅ Sync Key запазен!');}">Save</button>
     </div>
   </div>`;
 }
 
 function renderLeaderboard() {
   const lb = leaderboard();
-  const medals = ['ð¥','ð¥','ð¥'];
+  const medals = ['🥇','🥈','🥉'];
   return `
-  <div class="page-title">ð ÐÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ</div>
+  <div class="page-title">🏅 Класиране</div>
   ${!GH.tok() ? `<div style="background:rgba(255,165,0,.12);border:1px solid rgba(255,165,0,.35);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-  <span style="font-size:18px">ð</span>
-  <span style="flex:1;font-size:13px">ÐÑÐ²ÐµÐ´Ð¸ Sync Key Ð·Ð° ÑÐ¿Ð¾Ð´ÐµÐ»ÑÐ½Ðµ Ñ Ð¿ÑÐ¸ÑÑÐµÐ»Ð¸ (Ð¿Ð¾Ð¿Ð¸ÑÐ°Ð¹ Ð¾Ñ Ð°Ð´Ð¼Ð¸Ð½Ð°):</span>
+  <span style="font-size:18px">🔑</span>
+  <span style="flex:1;font-size:13px">Въведи Sync Key за споделяне с приятели (попитай от админа):</span>
   <input id="skInp" placeholder="ghp_..." style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:6px 10px;color:#fff;width:240px;font-size:13px">
-  <button class="save-btn" style="padding:6px 14px;font-size:13px" onclick="const v=document.getElementById('skInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('â Sync Key Ð·Ð°Ð¿Ð°Ð·ÐµÐ½!');render();}">Save</button>
+  <button class="save-btn" style="padding:6px 14px;font-size:13px" onclick="const v=document.getElementById('skInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('✅ Sync Key запазен!');render();}">Save</button>
 </div>` : ''}
 <div class="lb-wrap">
     <div class="lb-head">
-      <div>#</div><div>ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»</div>
-      <div style="text-align:center;font-size:10px">ÐÐ½Ð°Ðº<br><span style="color:#90caf9">10Ñ</span></div>
-      <div style="text-align:center;font-size:10px">+Ð Ð°Ð·Ð».<br><span style="color:#ffe082">15Ñ</span></div>
-      <div style="text-align:center;font-size:10px">Ð¢Ð¾ÑÐµÐ½<br><span style="color:#a5d6a7">20Ñ</span></div>
-      <div style="text-align:center">ÐÐ±ÑÐ¾</div>
+      <div>#</div><div>Потребител</div>
+      <div style="text-align:center;font-size:10px">Знак<br><span style="color:#90caf9">10т</span></div>
+      <div style="text-align:center;font-size:10px">+Разл.<br><span style="color:#ffe082">15т</span></div>
+      <div style="text-align:center;font-size:10px">Точен<br><span style="color:#a5d6a7">20т</span></div>
+      <div style="text-align:center">Общо</div>
     </div>
-    ${lb.length === 0 ? `<div class="lb-empty">ÐÑÐµ Ð¾ÑÐµ Ð½ÑÐ¼Ð° ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð½Ð¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸</div>` :
+    ${lb.length === 0 ? `<div class="lb-empty">Все още няма регистрирани потребители</div>` :
       lb.map((u,i) => `
       <div class="lb-row ${u.username===S.currentUser?'me':''}">
         <div class="lb-rank ${i<3?'rank-'+(i+1):''}">${i<3?medals[i]:i+1}</div>
         <div class="lb-user">
           <div class="user-avatar" style="width:28px;height:28px;font-size:12px">${u.username[0].toUpperCase()}</div>
-          ${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(Ð°Ð·)</span>':''}
+          ${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(аз)</span>':''}
         </div>
         <div class="lb-stat" style="color:#90caf9">${u.sign||0}</div>
         <div class="lb-stat" style="color:#ffe082">${u.signDiff||0}</div>
@@ -666,8 +666,8 @@ function renderLeaderboard() {
 // --- GROUPS ---
 function renderGroups() {
   return `
-  <div class="page-title">ð ÐÑÑÐ¿Ð¾Ð²Ð° ÑÐ°Ð·Ð° â Ð¢Ð°Ð±Ð»Ð¸ÑÐ¸</div>
-  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:1rem">â = Ð´Ð¸ÑÐµÐºÑÐ½Ð° ÐºÐ²Ð°Ð»Ð¸ÑÐ¸ÐºÐ°ÑÐ¸Ñ (ÑÐ¾Ð¿ 2 Ð¾Ñ Ð²ÑÑÐºÐ° Ð³ÑÑÐ¿Ð° + 8 Ð½Ð°Ð¹-Ð´Ð¾Ð±ÑÐ¸ ÑÑÐµÑÐ¸ Ð¼ÐµÑÑÐ°)</div>
+  <div class="page-title">🌍 Групова фаза — Таблици</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:1rem">✓ = директна квалификация (топ 2 от всяка група + 8 най-добри трети места)</div>
   <div class="groups-grid">${Object.entries(GROUPS).map(([g,t])=>renderGroupCard(g,t)).join('')}</div>`;
 }
 
@@ -691,9 +691,9 @@ function renderGroupCard(gName, teams) {
   });
   return `
   <div class="group-card">
-    <div class="group-card-hd">ÐÐ Ð£ÐÐ ${gName}</div>
+    <div class="group-card-hd">ГРУПА ${gName}</div>
     <table class="g-table">
-      <thead><tr><th>ÐÑÐ±Ð¾Ñ</th><th>Ð</th><th>Ð</th><th>Ð </th><th>Ð</th><th>Ð¢.</th></tr></thead>
+      <thead><tr><th>Отбор</th><th>И</th><th>П</th><th>Р</th><th>З</th><th>Т.</th></tr></thead>
       <tbody>${sorted.map((t,i) => `
         <tr class="${i<2?'qualify-row':''}">
           <td>${FLAGS[t]||''} ${t}</td>
@@ -710,18 +710,18 @@ function renderChampion() {
   const my = S.champions[S.currentUser] || null;
   return `
   <div class="champ-wrap">
-    <div class="champ-icon">ð</div>
-    <div class="champ-title">ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ» Ð½Ð° ÑÑÑÐ½Ð¸ÑÐ°</div>
-    <div class="champ-sub">ÐÐ¾Ð¹ ÑÐµ Ð²Ð´Ð¸Ð³Ð½Ðµ ÑÑÐ¾ÑÐµÑ? ÐÑÐ°Ð²Ð¸Ð»Ð½Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð° = <strong style="color:#f9a825">+30 ÑÐ¾ÑÐºÐ¸</strong></div>
+    <div class="champ-icon">🏆</div>
+    <div class="champ-title">Победител на турнира</div>
+    <div class="champ-sub">Кой ще вдигне трофея? Правилна прогноза = <strong style="color:#f9a825">+30 точки</strong></div>
     ${my ? `<div class="champ-current">
-      <div style="font-size:2.5rem">${FLAGS[my]||'ð³ï¸'}</div>
+      <div style="font-size:2.5rem">${FLAGS[my]||'🏳️'}</div>
       <div style="font-weight:800;font-size:18px;margin-top:8px">${my}</div>
-      <div style="color:rgba(255,255,255,.4);font-size:12px;margin-top:4px">Ð¢Ð²Ð¾ÑÑÐ° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°</div>
-    </div>` : `<div style="color:rgba(255,255,255,.35);margin-bottom:1.5rem;font-size:14px">â ï¸ ÐÐµ ÑÐ¸ Ð¸Ð·Ð±ÑÐ°Ð» Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»</div>`}
+      <div style="color:rgba(255,255,255,.4);font-size:12px;margin-top:4px">Твоята прогноза</div>
+    </div>` : `<div style="color:rgba(255,255,255,.35);margin-bottom:1.5rem;font-size:14px">⚠️ Не си избрал победител</div>`}
     <div class="champ-grid">
       ${ALL_TEAMS.map(t => `
       <button class="champ-btn ${my===t?'selected':''}" data-champ="${t}">
-        <span class="champ-flag">${FLAGS[t]||'ð³ï¸'}</span>${t}
+        <span class="champ-flag">${FLAGS[t]||'🏳️'}</span>${t}
       </button>`).join('')}
     </div>
   </div>`;
@@ -733,22 +733,22 @@ function renderAdmin() {
   const done = S.matches.filter(m => m.result).length;
   return `
   <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem">
-    <div class="page-title">âï¸ ÐÐ´Ð¼Ð¸Ð½Ð¸ÑÑÑÐ°ÑÐ¸Ñ â ÐÑÐ²ÐµÐ¶Ð´Ð°Ð½Ðµ Ð½Ð° ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸</div>
-    <button class="save-btn" id="autoFetchBtn" onclick="autoFetchResults()" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);margin-top:0">ï ÐÐ²ÑÐ¾-ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ Ð¾Ñ FIFA/ESPN</button>
-    <span id="autoRefreshBadge" style="font-size:12px;color:rgba(76,175,80,.8);display:none">ï¢ ÐÐ²ÑÐ¾-Ð¾Ð±Ð½Ð¾Ð²ÑÐ²Ð°Ð½Ðµ Ð½Ð° 5 Ð¼Ð¸Ð½</span>
+    <div class="page-title">⚙️ Администрация — Въвеждане на резултати</div>
+    <button class="save-btn" id="autoFetchBtn" onclick="autoFetchResults()" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);margin-top:0"> Авто-резултати от FIFA/ESPN</button>
+    <span id="autoRefreshBadge" style="font-size:12px;color:rgba(76,175,80,.8);display:none"> Авто-обновяване на 5 мин</span>
   <span id="lastAutoSave" style="font-size:11px;color:rgba(76,175,80,.75);margin-left:auto;display:none"></span>
   </div>
   <div class="admin-box">
     <div class="admin-note">
-      ÐÑÐ²ÐµÐ´Ð¸ ÑÐµÐ°Ð»Ð½Ð¸ÑÐµ ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ Ð¾Ñ Ð¼Ð°ÑÐ¾Ð²ÐµÑÐµ. Ð¢Ð¾ÑÐºÐ¸ÑÐµ Ð½Ð° Ð²ÑÐ¸ÑÐºÐ¸ Ð¸Ð³ÑÐ°ÑÐ¸ ÑÐµ ÑÐµ Ð¸Ð·ÑÐ¸ÑÐ»ÑÑ Ð°Ð²ÑÐ¾Ð¼Ð°ÑÐ¸ÑÐ½Ð¾.<br>
-      ÐÑÐ²ÐµÐ´ÐµÐ½Ð¸ ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸: <strong style="color:#f9a825">${done} / ${S.matches.length}</strong> Ð¼Ð°ÑÐ°
+      Въведи реалните резултати от мачовете. Точките на всички играчи ще се изчислят автоматично.<br>
+      Въведени резултати: <strong style="color:#f9a825">${done} / ${S.matches.length}</strong> мача
     </div>
     <div class="group-tabs">
-      ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">ÐÑÑÐ¿Ð° ${g}</div>`).join('')}
+      ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">Група ${g}</div>`).join('')}
     </div>
     ${[1,2,3].map(md => {
       const mds = gm.filter(m => m.matchday === md);
-      return `<div class="matchday-label">ÐÑÑÐ³ ${md}</div>${mds.map(m=>renderMatchCard(m,null,true)).join('')}`;
+      return `<div class="matchday-label">Кръг ${md}</div>${mds.map(m=>renderMatchCard(m,null,true)).join('')}`;
     }).join('')}
 
     <div class="admin-box" style="margin-top:1.5rem">
@@ -791,7 +791,7 @@ function renderAdmin() {
         </div>
       </div>
     </div>
-    <div><button class="save-btn" id="saveResults">ð¾ ÐÐ°Ð¿Ð°Ð·Ð¸ ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ÑÐµ Ð·Ð° ÐÑÑÐ¿Ð° ${S.activeGroup}</button></div>
+    <div><button class="save-btn" id="saveResults">💾 Запази резултатите за Група ${S.activeGroup}</button></div>
   </div>`;
 }
 
@@ -808,7 +808,7 @@ function normalizeTeam(name) {
     'bosnia and herzegovina':'bosnia-herzegovina',
     'dr congo':'congo dr','democratic republic of congo':'congo dr',
     'democratic republic of the congo':'congo dr',
-    "cote d'ivoire":'ivory coast',"cÃ´te d'ivoire":'ivory coast',
+    "cote d'ivoire":'ivory coast',"côte d'ivoire":'ivory coast',
     'ivory coast':'ivory coast',
     'cape verde islands':'cape verde','cabo verde':'cape verde',
     'curacao':'curacao','cura\u00e7ao':'curacao',
@@ -896,7 +896,7 @@ function bind() {
     const p = document.getElementById('lp').value;
     const user = S.users.find(x => x.username === u && x.password === p);
     if (user) { S.currentUser = u; S.authError = ''; S.sessionLog.push({username: u, action:'login', time: Date.now()}); persist(); render(); }
-    else { S.authError = 'ÐÑÐµÑÐ½Ð¾ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ Ð¸Ð¼Ðµ Ð¸Ð»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°'; render(); }
+    else { S.authError = 'Грешно потребителско име или парола'; render(); }
   });
 
   // Register
@@ -907,10 +907,10 @@ function bind() {
     const p = document.getElementById('rp').value;
     const p2 = document.getElementById('rp2').value;
       const em = (document.getElementById('re') || {value:''}).value.trim();
-    if (u.length < 3) S.authError = 'ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ÑÐ¾ Ð¸Ð¼Ðµ ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 3 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°';
-    else if (S.users.find(x => x.username === u)) S.authError = 'ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ÑÐ¾ Ð¸Ð¼Ðµ Ðµ Ð·Ð°ÐµÑÐ¾';
-    else if (p.length < 4) S.authError = 'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°';
-    else if (p !== p2) S.authError = 'ÐÐ°ÑÐ¾Ð»Ð¸ÑÐµ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°Ñ';
+    if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
+    else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
+    else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
+    else if (p !== p2) S.authError = 'Паролите не съвпадат';
     else {
       S.users.push({username: u, password: p, email: em, registeredAt: Date.now()});
       S.sessionLog.push({username: u, action:'register', time: Date.now()});
@@ -942,7 +942,7 @@ function bind() {
       if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
       S.predictions[S.currentUser][mid][inp.dataset.side] = inp.value;
     });
-    persist(); toast('â ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ Ð·Ð° ÐÑÑÐ¿Ð° ' + S.activeGroup + ' ÑÐ° Ð·Ð°Ð¿Ð°Ð·ÐµÐ½Ð¸!');
+    persist(); toast('✅ Прогнозите за Група ' + S.activeGroup + ' са запазени!');
   });
 
   // Save admin results
@@ -962,13 +962,13 @@ function bind() {
       if (m.result && (m.result.s1 === undefined || m.result.s2 === undefined ||
           isNaN(m.result.s1) || isNaN(m.result.s2))) m.result = null;
     });
-    persist(); toast('â Ð ÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ÑÐµ Ð·Ð° ÐÑÑÐ¿Ð° ' + S.activeGroup + ' ÑÐ° Ð·Ð°Ð¿Ð°Ð·ÐµÐ½Ð¸!'); render();
+    persist(); toast('✅ Резултатите за Група ' + S.activeGroup + ' са запазени!'); render();
   });
 
   // Champion
   document.querySelectorAll('[data-champ]').forEach(btn => btn.addEventListener('click', () => {
     S.champions[S.currentUser] = btn.dataset.champ;
-    persist(); toast('ð ' + btn.dataset.champ + ' â Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ðµ Ð·Ð°Ð¿Ð°Ð·ÐµÐ½Ð°!'); render();
+    persist(); toast('🏆 ' + btn.dataset.champ + ' — прогнозата е запазена!'); render();
   }));
   // Profile password change
   const pwf = document.getElementById('pwForm');
@@ -979,12 +979,12 @@ function bind() {
     const newP2 = document.getElementById('pwNew2').value;
     const user = S.users.find(u => u.username === S.currentUser);
     if (!user) return;
-    if (user.password !== oldP) { toast('â ÐÑÐµÑÐ½Ð° ÑÑÐ°ÑÐ° Ð¿Ð°ÑÐ¾Ð»Ð°!'); return; }
-    if (newP.length < 4) { toast('â ÐÐ¸Ð½Ð¸Ð¼ÑÐ¼ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°!'); return; }
-    if (newP !== newP2) { toast('â ÐÐ°ÑÐ¾Ð»Ð¸ÑÐµ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°Ñ!'); return; }
+    if (user.password !== oldP) { toast('❌ Грешна стара парола!'); return; }
+    if (newP.length < 4) { toast('❌ Минимум 4 символа!'); return; }
+    if (newP !== newP2) { toast('❌ Паролите не съвпадат!'); return; }
     user.password = newP;
     persist();
-    toast('â ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° Ðµ Ð¿ÑÐ¾Ð¼ÐµÐ½ÐµÐ½Ð°!');
+    toast('✅ Паролата е променена!');
   });
 }
 
