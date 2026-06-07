@@ -637,7 +637,10 @@ function renderAdmin() {
   const gm = S.matches.filter(m => m.group === S.activeGroup);
   const done = S.matches.filter(m => m.result).length;
   return `
-  <div class="page-title">⚙️ Администрация — Въвеждане на резултати</div>
+  <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem">
+    <div class="page-title">⚙️ Администрация — Въвеждане на резултати</div>
+    <button class="save-btn" id="autoFetchBtn" onclick="autoFetchResults()" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);margin-top:0"> Авто-резултати от FIFA/ESPN</button>
+  </div>
   <div class="admin-box">
     <div class="admin-note">
       Въведи реалните резултати от мачовете. Точките на всички играчи ще се изчислят автоматично.<br>
@@ -696,6 +699,81 @@ function renderAdmin() {
 }
 
 // ===================== EVENTS =====================
+
+// ===================== AUTO FETCH RESULTS =====================
+
+function normalizeTeam(name) {
+  const map = {
+    'czech republic':'czechia','czechia':'czechia',
+    'korea republic':'south korea','republic of korea':'south korea',
+    'south korea':'south korea',
+    'bosnia':'bosnia-herzegovina','bosnia & herzegovina':'bosnia-herzegovina',
+    'bosnia and herzegovina':'bosnia-herzegovina',
+    'dr congo':'congo dr','democratic republic of congo':'congo dr',
+    'democratic republic of the congo':'congo dr',
+    "cote d'ivoire":'ivory coast',"côte d'ivoire":'ivory coast',
+    'ivory coast':'ivory coast',
+    'cape verde islands':'cape verde','cabo verde':'cape verde',
+    'curacao':'curacao','cura\u00e7ao':'curacao',
+    'usa':'united states','united states of america':'united states',
+    'u.s.a.':'united states','u.s.':'united states',
+    'south africa':'south africa',
+    'saudi arabia':'saudi arabia',
+    'new zealand':'new zealand',
+  };
+  const n = (name||'').toLowerCase().trim().replace(/[\u0300-\u036f]/g,'');
+  return map[n] || n;
+}
+
+async function autoFetchResults() {
+  const btn = document.getElementById('autoFetchBtn');
+  if(btn) { btn.disabled = true; btn.textContent = '\u23F3 \u0417\u0430\u0440\u0435\u0436\u0434\u0430...'; }
+  try {
+    // ESPN API - FIFA World Cup
+    const urls = [
+      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?limit=200&dates=20260611-20260720',
+      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?limit=200',
+    ];
+    let events = [];
+    for(const url of urls) {
+      try {
+        const r = await fetch(url);
+        const d = await r.json();
+        if(d.events && d.events.length) { events = d.events; break; }
+      } catch(e) {}
+    }
+    if(!events.length) { toast('\u274C \u041D\u044F\u043C\u0430 \u0434\u0430\u043D\u043D\u0438 \u043E\u0449\u0435 \u2014 \u0432\u044A\u0437\u043C\u043E\u0436\u043D\u043E \u043C\u0430\u0447\u043E\u0432\u0435\u0442\u0435 \u043D\u0435 \u0441\u0430 \u0437\u0430\u043F\u043E\u0447\u043D\u0430\u043B\u0438.'); return; }
+    let updated = 0, skipped = 0;
+    for(const ev of events) {
+      const comp = ev.competitions && ev.competitions[0];
+      if(!comp) continue;
+      const status = ev.status && ev.status.type;
+      if(!status || !status.completed) { skipped++; continue; }
+      const home = comp.competitors && comp.competitors.find(c => c.homeAway === 'home');
+      const away = comp.competitors && comp.competitors.find(c => c.homeAway === 'away');
+      if(!home || !away) continue;
+      const hn = normalizeTeam(home.team.displayName);
+      const an = normalizeTeam(away.team.displayName);
+      const hs = parseInt(home.score), as2 = parseInt(away.score);
+      if(isNaN(hs) || isNaN(as2)) continue;
+      const match = S.matches.find(m => {
+        const t1 = normalizeTeam(m.team1), t2 = normalizeTeam(m.team2);
+        return (t1===hn && t2===an) || (t1===an && t2===hn);
+      });
+      if(match) {
+        const t1isHome = normalizeTeam(match.team1) === hn;
+        match.result = { s1: t1isHome ? hs : as2, s2: t1isHome ? as2 : hs };
+        updated++;
+      }
+    }
+    persist(); render();
+    toast('\u2705 \u041E\u0431\u043D\u043E\u0432\u0435\u043D\u0438 ' + updated + ' \u0440\u0435\u0437\u0443\u043B\u0442\u0430\u0442\u0430 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u043D\u043E!' + (skipped ? ' ('+skipped+' \u043D\u0435\u0437\u0430\u0432\u044A\u0440\u0448\u0435\u043D\u0438)' : ''));
+  } catch(e) {
+    toast('\u274C \u0413\u0440\u0435\u0448\u043A\u0430: ' + e.message);
+  } finally {
+    if(btn) { btn.disabled = false; btn.textContent = '\u{1F504} \u0410\u0432\u0442\u043E-\u0440\u0435\u0437\u0443\u043B\u0442\u0430\u0442\u0438 \u043E\u0442 FIFA/ESPN'; }
+  }
+}
 
 function bind() {
   // Auth tabs
@@ -760,6 +838,8 @@ function bind() {
   });
 
   // Save admin results
+  const af = document.getElementById('autoFetchBtn');
+  if(af) af.addEventListener('click', autoFetchResults);
   const sr = document.getElementById('saveResults');
   if (sr) sr.addEventListener('click', () => {
     document.querySelectorAll('[data-adm]').forEach(inp => {
