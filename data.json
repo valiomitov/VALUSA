@@ -1,7 +1,662 @@
 {
-  "users": [],
+  "users": [
+    {
+      "username": "admin",
+      "password": "admin2026"
+    }
+  ],
+  "matches": [
+    {
+      "id": 1,
+      "group": "A",
+      "matchday": 1,
+      "team1": "Mexico",
+      "team2": "South Africa",
+      "result": null,
+      "kickoff": "2026-06-11T22:00+03:00"
+    },
+    {
+      "id": 2,
+      "group": "A",
+      "matchday": 1,
+      "team1": "South Korea",
+      "team2": "Czechia",
+      "result": null,
+      "kickoff": "2026-06-12T05:00+03:00"
+    },
+    {
+      "id": 3,
+      "group": "A",
+      "matchday": 2,
+      "team1": "Mexico",
+      "team2": "South Korea",
+      "result": null,
+      "kickoff": "2026-06-19T04:00+03:00"
+    },
+    {
+      "id": 4,
+      "group": "A",
+      "matchday": 2,
+      "team1": "South Africa",
+      "team2": "Czechia",
+      "result": null,
+      "kickoff": "2026-06-18T19:00+03:00"
+    },
+    {
+      "id": 5,
+      "group": "A",
+      "matchday": 3,
+      "team1": "Mexico",
+      "team2": "Czechia",
+      "result": null,
+      "kickoff": "2026-06-25T04:00+03:00"
+    },
+    {
+      "id": 6,
+      "group": "A",
+      "matchday": 3,
+      "team1": "South Africa",
+      "team2": "South Korea",
+      "result": null,
+      "kickoff": "2026-06-25T04:00+03:00"
+    },
+    {
+      "id": 7,
+      "group": "B",
+      "matchday": 1,
+      "team1": "Canada",
+      "team2": "Bosnia-Herzegovina",
+      "result": null,
+      "kickoff": "2026-06-12T22:00+03:00"
+    },
+    {
+      "id": 8,
+      "group": "B",
+      "matchday": 1,
+      "team1": "Qatar",
+      "team2": "Switzerland",
+      "result": null,
+      "kickoff": "2026-06-13T22:00+03:00"
+    },
+    {
+      "id": 9,
+      "group": "B",
+      "matchday": 2,
+      "team1": "Canada",
+      "team2": "Qatar",
+      "result": null,
+      "kickoff": "2026-06-19T01:00+03:00"
+    },
+    {
+      "id": 10,
+      "group": "B",
+      "matchday": 2,
+      "team1": "Bosnia-Herzegovina",
+      "team2": "Switzerland",
+      "result": null,
+      "kickoff": "2026-06-18T22:00+03:00"
+    },
+    {
+      "id": 11,
+      "group": "B",
+      "matchday": 3,
+      "team1": "Canada",
+      "team2": "Switzerland",
+      "result": null,
+      "kickoff": "2026-06-24T22:00+03:00"
+    },
+    {
+      "id": 12,
+      "group": "B",
+      "matchday": 3,
+      "team1": "Bosnia-Herzegovina",
+      "team2": "Qatar",
+      "result": null,
+      "kickoff": "2026-06-24T22:00+03:00"
+    },
+    {
+      "id": 13,
+      "group": "C",
+      "matchday": 1,
+      "team1": "Brazil",
+      "team2": "Morocco",
+      "result": null,
+      "kickoff": "2026-06-14T01:00+03:00"
+    },
+    {
+      "id": 14,
+      "group": "C",
+      "matchday": 1,
+      "team1": "Haiti",
+      "team2": "Scotland",
+      "result": null,
+      "kickoff": "2026-06-14T04:00+03:00"
+    },
+    {
+      "id": 15,
+      "group": "C",
+      "matchday": 2,
+      "team1": "Brazil",
+      "team2": "Haiti",
+      "result": null,
+      "kickoff": "2026-06-20T04:00+03:00"
+    },
+    {
+      "id": 16,
+      "group": "C",
+      "matchday": 2,
+      "team1": "Morocco",
+      "team2": "Scotland",
+      "result": null,
+      "kickoff": "2026-06-20T01:00+03:00"
+    },
+    {
+      "id": 17,
+      "group": "C",
+      "matchday": 3,
+      "team1": "Brazil",
+      "team2": "Scotland",
+      "result": null,
+      "kickoff": "2026-06-25T01:00+03:00"
+    },
+    {
+      "id": 18,
+      "group": "C",
+      "matchday": 3,
+      "team1": "Morocco",
+      "team2": "Haiti",
+      "result": null,
+      "kickoff": "2026-06-25T01:00+03:00"
+    },
+    {
+      "id": 19,
+      "group": "D",
+      "matchday": 1,
+      "team1": "United States",
+      "team2": "Paraguay",
+      "result": null,
+      "kickoff": "2026-06-13T04:00+03:00"
+    },
+    {
+      "id": 20,
+      "group": "D",
+      "matchday": 1,
+      "team1": "Australia",
+      "team2": "Turkey",
+      "result": null,
+      "kickoff": "2026-06-14T07:00+03:00"
+    },
+    {
+      "id": 21,
+      "group": "D",
+      "matchday": 2,
+      "team1": "United States",
+      "team2": "Australia",
+      "result": null,
+      "kickoff": "2026-06-19T22:00+03:00"
+    },
+    {
+      "id": 22,
+      "group": "D",
+      "matchday": 2,
+      "team1": "Paraguay",
+      "team2": "Turkey",
+      "result": null,
+      "kickoff": "2026-06-20T07:00+03:00"
+    },
+    {
+      "id": 23,
+      "group": "D",
+      "matchday": 3,
+      "team1": "United States",
+      "team2": "Turkey",
+      "result": null,
+      "kickoff": "2026-06-26T05:00+03:00"
+    },
+    {
+      "id": 24,
+      "group": "D",
+      "matchday": 3,
+      "team1": "Paraguay",
+      "team2": "Australia",
+      "result": null,
+      "kickoff": "2026-06-26T05:00+03:00"
+    },
+    {
+      "id": 25,
+      "group": "E",
+      "matchday": 1,
+      "team1": "Germany",
+      "team2": "Curacao",
+      "result": null,
+      "kickoff": "2026-06-14T20:00+03:00"
+    },
+    {
+      "id": 26,
+      "group": "E",
+      "matchday": 1,
+      "team1": "Ivory Coast",
+      "team2": "Ecuador",
+      "result": null,
+      "kickoff": "2026-06-15T02:00+03:00"
+    },
+    {
+      "id": 27,
+      "group": "E",
+      "matchday": 2,
+      "team1": "Germany",
+      "team2": "Ivory Coast",
+      "result": null,
+      "kickoff": "2026-06-20T23:00+03:00"
+    },
+    {
+      "id": 28,
+      "group": "E",
+      "matchday": 2,
+      "team1": "Curacao",
+      "team2": "Ecuador",
+      "result": null,
+      "kickoff": "2026-06-21T03:00+03:00"
+    },
+    {
+      "id": 29,
+      "group": "E",
+      "matchday": 3,
+      "team1": "Germany",
+      "team2": "Ecuador",
+      "result": null,
+      "kickoff": "2026-06-25T23:00+03:00"
+    },
+    {
+      "id": 30,
+      "group": "E",
+      "matchday": 3,
+      "team1": "Curacao",
+      "team2": "Ivory Coast",
+      "result": null,
+      "kickoff": "2026-06-25T23:00+03:00"
+    },
+    {
+      "id": 31,
+      "group": "F",
+      "matchday": 1,
+      "team1": "Netherlands",
+      "team2": "Japan",
+      "result": null,
+      "kickoff": "2026-06-14T23:00+03:00"
+    },
+    {
+      "id": 32,
+      "group": "F",
+      "matchday": 1,
+      "team1": "Sweden",
+      "team2": "Tunisia",
+      "result": null,
+      "kickoff": "2026-06-15T05:00+03:00"
+    },
+    {
+      "id": 33,
+      "group": "F",
+      "matchday": 2,
+      "team1": "Netherlands",
+      "team2": "Sweden",
+      "result": null,
+      "kickoff": "2026-06-20T20:00+03:00"
+    },
+    {
+      "id": 34,
+      "group": "F",
+      "matchday": 2,
+      "team1": "Japan",
+      "team2": "Tunisia",
+      "result": null,
+      "kickoff": "2026-06-21T07:00+03:00"
+    },
+    {
+      "id": 35,
+      "group": "F",
+      "matchday": 3,
+      "team1": "Netherlands",
+      "team2": "Tunisia",
+      "result": null,
+      "kickoff": "2026-06-26T02:00+03:00"
+    },
+    {
+      "id": 36,
+      "group": "F",
+      "matchday": 3,
+      "team1": "Japan",
+      "team2": "Sweden",
+      "result": null,
+      "kickoff": "2026-06-26T02:00+03:00"
+    },
+    {
+      "id": 37,
+      "group": "G",
+      "matchday": 1,
+      "team1": "Belgium",
+      "team2": "Egypt",
+      "result": null,
+      "kickoff": "2026-06-15T22:00+03:00"
+    },
+    {
+      "id": 38,
+      "group": "G",
+      "matchday": 1,
+      "team1": "Iran",
+      "team2": "New Zealand",
+      "result": null,
+      "kickoff": "2026-06-16T04:00+03:00"
+    },
+    {
+      "id": 39,
+      "group": "G",
+      "matchday": 2,
+      "team1": "Belgium",
+      "team2": "Iran",
+      "result": null,
+      "kickoff": "2026-06-21T22:00+03:00"
+    },
+    {
+      "id": 40,
+      "group": "G",
+      "matchday": 2,
+      "team1": "Egypt",
+      "team2": "New Zealand",
+      "result": null,
+      "kickoff": "2026-06-22T04:00+03:00"
+    },
+    {
+      "id": 41,
+      "group": "G",
+      "matchday": 3,
+      "team1": "Belgium",
+      "team2": "New Zealand",
+      "result": null,
+      "kickoff": "2026-06-27T06:00+03:00"
+    },
+    {
+      "id": 42,
+      "group": "G",
+      "matchday": 3,
+      "team1": "Egypt",
+      "team2": "Iran",
+      "result": null,
+      "kickoff": "2026-06-27T06:00+03:00"
+    },
+    {
+      "id": 43,
+      "group": "H",
+      "matchday": 1,
+      "team1": "Spain",
+      "team2": "Cape Verde",
+      "result": null,
+      "kickoff": "2026-06-15T19:00+03:00"
+    },
+    {
+      "id": 44,
+      "group": "H",
+      "matchday": 1,
+      "team1": "Saudi Arabia",
+      "team2": "Uruguay",
+      "result": null,
+      "kickoff": "2026-06-16T01:00+03:00"
+    },
+    {
+      "id": 45,
+      "group": "H",
+      "matchday": 2,
+      "team1": "Spain",
+      "team2": "Saudi Arabia",
+      "result": null,
+      "kickoff": "2026-06-21T19:00+03:00"
+    },
+    {
+      "id": 46,
+      "group": "H",
+      "matchday": 2,
+      "team1": "Cape Verde",
+      "team2": "Uruguay",
+      "result": null,
+      "kickoff": "2026-06-22T01:00+03:00"
+    },
+    {
+      "id": 47,
+      "group": "H",
+      "matchday": 3,
+      "team1": "Spain",
+      "team2": "Uruguay",
+      "result": null,
+      "kickoff": "2026-06-27T03:00+03:00"
+    },
+    {
+      "id": 48,
+      "group": "H",
+      "matchday": 3,
+      "team1": "Cape Verde",
+      "team2": "Saudi Arabia",
+      "result": null,
+      "kickoff": "2026-06-27T03:00+03:00"
+    },
+    {
+      "id": 49,
+      "group": "I",
+      "matchday": 1,
+      "team1": "France",
+      "team2": "Senegal",
+      "result": null,
+      "kickoff": "2026-06-16T22:00+03:00"
+    },
+    {
+      "id": 50,
+      "group": "I",
+      "matchday": 1,
+      "team1": "Iraq",
+      "team2": "Norway",
+      "result": null,
+      "kickoff": "2026-06-17T01:00+03:00"
+    },
+    {
+      "id": 51,
+      "group": "I",
+      "matchday": 2,
+      "team1": "France",
+      "team2": "Iraq",
+      "result": null,
+      "kickoff": "2026-06-23T00:00+03:00"
+    },
+    {
+      "id": 52,
+      "group": "I",
+      "matchday": 2,
+      "team1": "Senegal",
+      "team2": "Norway",
+      "result": null,
+      "kickoff": "2026-06-23T03:00+03:00"
+    },
+    {
+      "id": 53,
+      "group": "I",
+      "matchday": 3,
+      "team1": "France",
+      "team2": "Norway",
+      "result": null,
+      "kickoff": "2026-06-26T22:00+03:00"
+    },
+    {
+      "id": 54,
+      "group": "I",
+      "matchday": 3,
+      "team1": "Senegal",
+      "team2": "Iraq",
+      "result": null,
+      "kickoff": "2026-06-26T22:00+03:00"
+    },
+    {
+      "id": 55,
+      "group": "J",
+      "matchday": 1,
+      "team1": "Argentina",
+      "team2": "Algeria",
+      "result": null,
+      "kickoff": "2026-06-17T04:00+03:00"
+    },
+    {
+      "id": 56,
+      "group": "J",
+      "matchday": 1,
+      "team1": "Austria",
+      "team2": "Jordan",
+      "result": null,
+      "kickoff": "2026-06-17T07:00+03:00"
+    },
+    {
+      "id": 57,
+      "group": "J",
+      "matchday": 2,
+      "team1": "Argentina",
+      "team2": "Austria",
+      "result": null,
+      "kickoff": "2026-06-22T20:00+03:00"
+    },
+    {
+      "id": 58,
+      "group": "J",
+      "matchday": 2,
+      "team1": "Algeria",
+      "team2": "Jordan",
+      "result": null,
+      "kickoff": "2026-06-23T06:00+03:00"
+    },
+    {
+      "id": 59,
+      "group": "J",
+      "matchday": 3,
+      "team1": "Argentina",
+      "team2": "Jordan",
+      "result": null,
+      "kickoff": "2026-06-28T05:00+03:00"
+    },
+    {
+      "id": 60,
+      "group": "J",
+      "matchday": 3,
+      "team1": "Algeria",
+      "team2": "Austria",
+      "result": null,
+      "kickoff": "2026-06-28T05:00+03:00"
+    },
+    {
+      "id": 61,
+      "group": "K",
+      "matchday": 1,
+      "team1": "Portugal",
+      "team2": "Congo DR",
+      "result": null,
+      "kickoff": "2026-06-17T20:00+03:00"
+    },
+    {
+      "id": 62,
+      "group": "K",
+      "matchday": 1,
+      "team1": "Uzbekistan",
+      "team2": "Colombia",
+      "result": null,
+      "kickoff": "2026-06-18T05:00+03:00"
+    },
+    {
+      "id": 63,
+      "group": "K",
+      "matchday": 2,
+      "team1": "Portugal",
+      "team2": "Uzbekistan",
+      "result": null,
+      "kickoff": "2026-06-23T20:00+03:00"
+    },
+    {
+      "id": 64,
+      "group": "K",
+      "matchday": 2,
+      "team1": "Congo DR",
+      "team2": "Colombia",
+      "result": null,
+      "kickoff": "2026-06-24T05:00+03:00"
+    },
+    {
+      "id": 65,
+      "group": "K",
+      "matchday": 3,
+      "team1": "Portugal",
+      "team2": "Colombia",
+      "result": null,
+      "kickoff": "2026-06-28T02:30+03:00"
+    },
+    {
+      "id": 66,
+      "group": "K",
+      "matchday": 3,
+      "team1": "Congo DR",
+      "team2": "Uzbekistan",
+      "result": null,
+      "kickoff": "2026-06-28T02:30+03:00"
+    },
+    {
+      "id": 67,
+      "group": "L",
+      "matchday": 1,
+      "team1": "England",
+      "team2": "Croatia",
+      "result": null,
+      "kickoff": "2026-06-17T23:00+03:00"
+    },
+    {
+      "id": 68,
+      "group": "L",
+      "matchday": 1,
+      "team1": "Ghana",
+      "team2": "Panama",
+      "result": null,
+      "kickoff": "2026-06-18T02:00+03:00"
+    },
+    {
+      "id": 69,
+      "group": "L",
+      "matchday": 2,
+      "team1": "England",
+      "team2": "Ghana",
+      "result": null,
+      "kickoff": "2026-06-23T23:00+03:00"
+    },
+    {
+      "id": 70,
+      "group": "L",
+      "matchday": 2,
+      "team1": "Croatia",
+      "team2": "Panama",
+      "result": null,
+      "kickoff": "2026-06-24T02:00+03:00"
+    },
+    {
+      "id": 71,
+      "group": "L",
+      "matchday": 3,
+      "team1": "England",
+      "team2": "Panama",
+      "result": null,
+      "kickoff": "2026-06-28T00:00+03:00"
+    },
+    {
+      "id": 72,
+      "group": "L",
+      "matchday": 3,
+      "team1": "Croatia",
+      "team2": "Ghana",
+      "result": null,
+      "kickoff": "2026-06-28T00:00+03:00"
+    }
+  ],
   "predictions": {},
   "champions": {},
-  "sessionLog": {},
-  "matchResults": {}
+  "sessionLog": [],
+  "_ts": 1780875357753
 }
