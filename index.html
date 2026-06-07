@@ -906,13 +906,13 @@ function bind() {
     const u = document.getElementById('ru').value.trim();
     const p = document.getElementById('rp').value;
     const p2 = document.getElementById('rp2').value;
-      const e = (document.getElementById('re') || {value:''}).value.trim();
+      const em = (document.getElementById('re') || {value:''}).value.trim();
     if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
     else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
     else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
     else if (p !== p2) S.authError = 'Паролите не съвпадат';
     else {
-      S.users.push({username: u, password: p, email: e, registeredAt: Date.now()});
+      S.users.push({username: u, password: p, email: em, registeredAt: Date.now()});
       S.sessionLog.push({username: u, action:'register', time: Date.now()});
       S.currentUser = u; S.authError = ''; persist(); render(); return;
     }
