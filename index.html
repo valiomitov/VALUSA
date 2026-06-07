@@ -291,7 +291,7 @@ function userScore(username) {
 }
 
 function leaderboard() {
-  return S.users.map(u => ({username: u.username, ...userScore(u.username)}))
+  return S.users.filter(u => u.username !== 'admin').map(u => ({username: u.username, ...userScore(u.username)}))
     .sort((a, b) => b.total - a.total || b.exact - a.exact);
 }
 
