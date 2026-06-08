@@ -541,16 +541,14 @@ function renderAuth() {
       </div>` : ''}
 
       ${S.authTab === 'login' ? `
-      <form id="loginForm">
-        <div class="form-group"><label>Потребителско име</label>
-          <input type="text" id="lu" placeholder="username" autocomplete="username"/></div>
-        <div class="form-group"><label>Парола</label>
-          <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
-        <button type="submit" class="btn btn-primary">🚀 Влез</button>
-      </form>
-      <button class="forgot-link" data-atab="forgot">Забравена парола?</button>
+      <div class="form-group"><label>Потребителско име</label>
+        <input type="text" id="lu" placeholder="username" autocomplete="username"/></div>
+      <div class="form-group"><label>Парола</label>
+        <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')window._doLogin()"/></div>
+      <button class="btn btn-primary" onclick="window._doLogin()">🚀 Влез</button>
+      <button class="forgot-link" onclick="window._setAuthTab('forgot')">Забравена парола?</button>
       ` : S.authTab === 'register' ? `
-      <form id="regForm">
+      <div id="regForm">
         <div class="form-group"><label>Потребителско име</label>
           <input type="text" id="ru" placeholder="избери username"/></div>
         <div class="form-group"><label>Имейл <span style="color:rgba(255,255,255,.3);font-weight:400;font-size:11px">(по желание — за забравена парола)</span></label>
@@ -559,15 +557,15 @@ function renderAuth() {
           <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
         <div class="form-group"><label>Потвърди парола</label>
           <input type="password" id="rp2" placeholder="••••••••"/></div>
-        <button type="submit" class="btn btn-primary">✅ Регистрирай се</button>
-      </form>
+        <button class="btn btn-primary" onclick="window._doRegister()">✅ Регистрирай се</button>
+      </div>
       ` : `
       <div style="text-align:center;margin-bottom:1.25rem">
         <div style="font-size:1.5rem;margin-bottom:.4rem">🔐</div>
         <div style="font-weight:800;font-size:1.1rem">Забравена парола</div>
         <div style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.3rem">Въведи потребителско ime и имейл</div>
       </div>
-      <form id="forgotForm">
+      <div id="forgotForm">
         <div class="form-group"><label>Потребителско име</label>
           <input type="text" id="fu" placeholder="username"/></div>
         <div class="form-group"><label>Имейл</label>
@@ -576,9 +574,9 @@ function renderAuth() {
           <input type="password" id="fnp" placeholder="минимум 4 символа"/></div>
         <div class="form-group"><label>Потвърди нова парола</label>
           <input type="password" id="fnp2" placeholder="••••••••"/></div>
-        <button type="submit" class="btn btn-primary">🔑 Смени паролата</button>
-      </form>
-      <button class="forgot-link" data-atab="login" style="margin-top:.75rem">← Обратно към вход</button>
+        <button class="btn btn-primary" onclick="window._doForgot()">🔑 Смени паролата</button>
+      <button class="forgot-link" onclick="window._setAuthTab('login')" style="margin-top:.75rem">← Обратно към вход</button>
+      </div>
       `}
       ${S.authError ? `<div class="error-msg">⚠️ ${S.authError}</div>` : ''}
       ${S.authSuccess ? `<div class="success-msg">✅ ${S.authSuccess}</div>` : ''}
@@ -1501,6 +1499,60 @@ function toast(msg) {
   render();
   setTimeout(() => { S.toast = null; render(); }, 3000);
 }
+
+// ===================== GLOBAL AUTH HANDLERS =====================
+// Директни onclick функции — по-надеждни от form submit listener
+window._setAuthTab = function(tab) {
+  S.authTab = tab; S.authError = ''; S.authSuccess = ''; render();
+};
+
+window._doLogin = function() {
+  const u = (document.getElementById('lu') || {}).value;
+  const p = (document.getElementById('lp') || {}).value;
+  if (!u || !p) { S.authError = 'Попълни потребителско име и парола'; render(); return; }
+  const user = S.users.find(x => x.username === u.trim() && x.password === p);
+  if (user) {
+    S.currentUser = u.trim(); S.authError = '';
+    S.sessionLog.push({username: u.trim(), action:'login', time: Date.now()});
+    persist(); render();
+  } else {
+    S.authError = 'Грешно потребителско ime или парола'; render();
+  }
+};
+
+window._doRegister = function() {
+  const u = (document.getElementById('ru') || {}).value || '';
+  const em = ((document.getElementById('re') || {}).value || '').trim().toLowerCase();
+  const p = (document.getElementById('rp') || {}).value || '';
+  const p2 = (document.getElementById('rp2') || {}).value || '';
+  if (u.trim().length < 3) S.authError = 'Потребителското ime трябва да е поне 3 символа';
+  else if (S.users.find(x => x.username === u.trim())) S.authError = 'Потребителското ime е заето';
+  else if (em && S.users.find(x => x.email && x.email === em)) S.authError = 'Имейлът вече е регистриран';
+  else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
+  else if (p !== p2) S.authError = 'Паролите не съвпадат';
+  else {
+    S.users.push({username: u.trim(), password: p, email: em || null, registeredAt: Date.now()});
+    S.sessionLog.push({username: u.trim(), action:'register', time: Date.now()});
+    S.currentUser = u.trim(); S.authError = ''; persist(); render(); return;
+  }
+  render();
+};
+
+window._doForgot = function() {
+  const u = ((document.getElementById('fu') || {}).value || '').trim();
+  const em = ((document.getElementById('fe') || {}).value || '').trim().toLowerCase();
+  const np = (document.getElementById('fnp') || {}).value || '';
+  const np2 = (document.getElementById('fnp2') || {}).value || '';
+  const user = S.users.find(x => x.username === u);
+  if (!user) { S.authError = 'Потребителят не е намерен'; render(); return; }
+  if (!user.email) { S.authError = 'Няма регистриран имейл — свържи се с администратора'; render(); return; }
+  if (user.email !== em) { S.authError = 'Имейлът не съвпада'; render(); return; }
+  if (np.length < 4) { S.authError = 'Паролата трябва да е поне 4 символа'; render(); return; }
+  if (np !== np2) { S.authError = 'Паролите не съвпадат'; render(); return; }
+  user.password = np;
+  S.authError = ''; S.authSuccess = 'Паролата е сменена! Влез с новата си парола.';
+  persist(); render();
+};
 
 // ===================== INIT =====================
 render();
