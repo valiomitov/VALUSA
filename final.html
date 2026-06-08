@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚽ WC 2026 · Прогнози</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:100vh;color:#fff}
+
+/* AUTH */
+.auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:linear-gradient(135deg,#0d1b2a 0%,#1a237e 60%,#b71c1c 100%)}
+.auth-logo{font-size:5rem;margin-bottom:.5rem;text-align:center;filter:drop-shadow(0 0 20px rgba(249,168,37,.6))}
+.auth-title{font-size:2.2rem;font-weight:900;text-align:center;letter-spacing:1px;background:linear-gradient(90deg,#fff,#90caf9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.auth-sub{color:rgba(255,255,255,.5);margin-bottom:2rem;text-align:center;font-size:.9rem}
+.auth-card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:2rem;width:100%;max-width:400px}
+.auth-tabs{display:flex;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;margin-bottom:1.5rem}
+.auth-tab{flex:1;text-align:center;padding:9px;cursor:pointer;border-radius:8px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);transition:all .2s}
+.auth-tab.active{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.5);margin-bottom:6px}
+.form-group input,.form-group select{width:100%;padding:11px 14px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;color:#fff;font-size:15px;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{border-color:#1565c0}
+.form-group input::placeholder{color:rgba(255,255,255,.25)}
+.form-group select option{background:#1a237e;color:#fff}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.3px}
+.btn-primary{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff}
+.btn-primary:hover{background:linear-gradient(135deg,#1976d2,#1565c0);transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.4)}
+.error-msg{color:#ef9a9a;font-size:13px;margin-top:10px;text-align:center;padding:8px;background:rgba(198,40,40,.15);border-radius:8px}
+.admin-hint{margin-top:1rem;text-align:center;font-size:12px;color:rgba(255,255,255,.3)}
+
+/* HEADER */
+.app-header{background:rgba(0,0,0,.5);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:0 1.25rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100}
+.app-logo{font-size:1.1rem;font-weight:900;padding:.9rem 0;white-space:nowrap;color:#fff;letter-spacing:.5px}
+.app-logo span{color:#f9a825}
+.app-nav{display:flex;gap:3px;flex:1;overflow-x:auto;padding:6px 0;scrollbar-width:none}
+.app-nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:7px 14px;border:none;background:transparent;color:rgba(255,255,255,.55);cursor:pointer;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap;transition:all .2s}
+.nav-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-btn.active{background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff}
+.user-info{display:flex;align-items:center;gap:8px;white-space:nowrap;margin-left:auto}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#c62828,#e53935);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.user-name{font-size:13px;font-weight:700;max-width:100px;overflow:hidden;text-overflow:ellipsis}
+.logout-btn{padding:5px 10px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.3);border-radius:7px;color:#ef9a9a;cursor:pointer;font-size:12px;transition:all .2s;font-weight:600}
+.logout-btn:hover{background:rgba(198,40,40,.4);color:#fff}
+
+/* CONTENT */
+.main-content{max-width:1000px;margin:0 auto;padding:1.5rem}
+.page-title{font-size:1.4rem;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:10px}
+
+/* GROUP TABS */
+.group-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.group-tab{padding:6px 14px;border:1.5px solid rgba(255,255,255,.12);border-radius:20px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.3px;transition:all .2s}
+.group-tab:hover{background:rgba(255,255,255,.09);color:#fff}
+.group-tab.active{background:#1565c0;border-color:#1565c0;color:#fff}
+
+.kickoff-time{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.5px;padding:.4rem 0 .2rem;text-align:center}
+
+/* MATCH CARDS */
+.matchday-label{font-size:11px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.35);letter-spacing:1.5px;padding:.75rem 0 .4rem;margin-top:.25rem}
+.match-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.6rem;display:flex;align-items:center;gap:.75rem;transition:background .2s}
+.match-card:hover{background:rgba(255,255,255,.07)}
+.match-card.predicted{border-left:3px solid #4caf50}
+.match-card.locked{opacity:.8}
+.team{flex:1;display:flex;align-items:center;gap:8px;min-width:0}
+.team.right{flex-direction:row-reverse}
+.team-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-flag{font-size:1.4rem;flex-shrink:0}
+.score-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.score-input{width:44px;height:44px;text-align:center;font-size:18px;font-weight:800;background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.12);border-radius:9px;color:#fff;outline:none;transition:border-color .2s;-moz-appearance:textfield}
+.score-input::-webkit-inner-spin-button,.score-input::-webkit-outer-spin-button{-webkit-appearance:none}
+.score-input:focus{border-color:#1565c0}
+.score-input:disabled{background:rgba(0,0,0,.2);color:rgba(255,255,255,.4);cursor:not-allowed}
+.score-sep{font-size:18px;font-weight:800;color:rgba(255,255,255,.3)}
+.result-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0}
+.result-score{font-size:20px;font-weight:900;color:#f9a825;min-width:60px;text-align:center}
+.result-label{font-size:10px;font-weight:700;text-transform:uppercase;color:rgba(255,255,255,.3);letter-spacing:.5px}
+.pts-badge{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:800;white-space:nowrap}
+.pts-3{background:rgba(27,94,32,.8);color:#a5d6a7;border:1px solid rgba(76,175,80,.3)}
+.pts-1{background:rgba(13,71,161,.8);color:#90caf9;border:1px solid rgba(21,101,192,.3)}
+.pts-2{background:rgba(200,100,0,.8);color:#ffe082;border:1px solid rgba(249,168,37,.3)}
+.pts-0{background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)}
+.pts-5{background:rgba(255,112,67,.25);color:#ff8a65;border:1px solid rgba(255,112,67,.4);font-weight:800}
+
+/* SAVE BTN */
+.save-btn{padding:11px 28px;background:linear-gradient(135deg,#1565c0,#0d47a1);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:1.25rem}
+.save-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.4)}
+.info-bar{padding:.6rem 1rem;background:rgba(255,255,255,.04);border-radius:8px;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:1rem}
+
+/* LEADERBOARD */
+.lb-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
+.lb-head{display:grid;grid-template-columns:48px 1fr 52px 52px 52px 52px 70px;padding:10px 18px;background:rgba(0,0,0,.3);font-size:11px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.35);letter-spacing:.5px}
+.lb-row{display:grid;grid-template-columns:48px 1fr 52px 52px 52px 52px 70px;padding:13px 18px;border-top:1px solid rgba(255,255,255,.05);align-items:center;transition:background .2s}
+.lb-row:hover{background:rgba(255,255,255,.04)}
+.lb-row.me{background:rgba(21,101,192,.12);border-left:3px solid #1565c0}
+.lb-rank{font-size:15px;font-weight:800}
+.rank-1{color:#f9a825}
+.rank-2{color:#bdbdbd}
+.rank-3{color:#a1887f}
+.lb-user{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;min-width:0}
+.lb-me-tag{color:#90caf9;font-size:11px;font-weight:600;margin-left:4px}
+.lb-stat{text-align:center;font-size:14px}
+.lb-total{text-align:center;font-size:19px;font-weight:900;color:#f9a825}
+.lb-empty{text-align:center;padding:3rem;color:rgba(255,255,255,.3);font-size:14px}
+
+/* GROUPS */
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.group-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
+.group-card-hd{background:linear-gradient(135deg,#1565c0,#0d47a1);padding:9px 14px;font-weight:800;font-size:13px;letter-spacing:1px}
+.g-table{width:100%;border-collapse:collapse}
+.g-table th{padding:7px 10px;font-size:10px;text-align:center;color:rgba(255,255,255,.35);font-weight:800;text-transform:uppercase;background:rgba(0,0,0,.2)}
+.g-table th:first-child{text-align:left;width:50%}
+.g-table td{padding:9px 10px;font-size:12px;text-align:center;border-top:1px solid rgba(255,255,255,.04)}
+.g-table td:first-child{text-align:left;font-weight:700;font-size:13px}
+.qualify-row{background:rgba(76,175,80,.07)}
+.qualify-row td:first-child::after{content:' ✓';color:#4caf50;font-size:10px}
+
+/* CHAMPION */
+.champ-wrap{max-width:550px;margin:1.5rem auto;text-align:center}
+.champ-icon{font-size:5rem;margin-bottom:.5rem;filter:drop-shadow(0 0 15px rgba(249,168,37,.5))}
+.champ-title{font-size:1.7rem;font-weight:900;margin-bottom:.4rem}
+.champ-sub{color:rgba(255,255,255,.5);margin-bottom:1.75rem;font-size:.9rem}
+.champ-current{padding:1.25rem;background:rgba(249,168,37,.08);border:2px solid #f9a825;border-radius:14px;margin-bottom:1.5rem}
+.champ-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:1.5rem}
+.champ-btn{padding:10px 6px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);border-radius:10px;color:#fff;cursor:pointer;font-size:12px;text-align:center;transition:all .2s;width:100%}
+.champ-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+.champ-btn.selected{border-color:#f9a825;background:rgba(249,168,37,.12);color:#f9a825;font-weight:700}
+.champ-flag{font-size:1.5rem;display:block;margin-bottom:3px}
+
+/* ADMIN */
+.admin-box{background:rgba(198,40,40,.06);border:1px solid rgba(198,40,40,.18);border-radius:14px;padding:1.25rem;margin-bottom:1.25rem}
+.admin-note{color:rgba(255,255,255,.5);font-size:13px;margin-bottom:1.25rem;line-height:1.6}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:rgba(27,94,32,.95);border:1px solid rgba(76,175,80,.4);backdrop-filter:blur(10px);border-radius:12px;padding:12px 20px;color:#a5d6a7;font-weight:700;font-size:14px;z-index:999;animation:toastIn .3s ease}
+@keyframes toastIn{from{transform:translateX(120px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .team-name{font-size:12px}
+  .match-card{padding:.7rem .8rem;gap:.5rem}
+  .score-input{width:38px;height:38px;font-size:16px}
+  .lb-head,.lb-row{grid-template-columns:36px 1fr 55px 55px 60px;padding:9px 12px}
+  .champ-grid{grid-template-columns:repeat(3,1fr)}
+  .app-logo{font-size:.95rem}
+}
+
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(10,18,35,.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);z-index:200;padding:6px 0 env(safe-area-inset-bottom,6px)}
+.bottom-nav-inner{display:flex;justify-content:space-around;align-items:center}
+.bnav-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 12px;border:none;background:transparent;color:rgba(255,255,255,.45);cursor:pointer;border-radius:10px;transition:all .2s;min-width:56px}
+.bnav-btn.active{color:#1976d2}
+.bnav-icon{font-size:1.3rem;padding:4px 8px}
+.bnav-label{font-size:10px;font-weight:700}
+@media(max-width:600px){body{padding-bottom:70px}.app-header .app-nav,.app-header .user-name{display:none}.bottom-nav{display:block}.main-content{padding:1rem .75rem}.team-name{font-size:12px}.match-card{padding:.65rem .75rem}.score-input{width:40px;height:40px;font-size:17px}.lb-head,.lb-row{grid-template-columns:28px 1fr 40px 40px 40px 52px;padding:9px 10px}.champ-grid{grid-template-columns:repeat(3,1fr)}.groups-grid{grid-template-columns:1fr}.save-btn{width:100%}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+// ===================== DATA =====================
+
+const FLAGS = {
+  'Mexico':'🇲🇽','South Africa':'🇿🇦','South Korea':'🇰🇷','Czechia':'🇨🇿',
+  'Canada':'🇨🇦','Bosnia-Herzegovina':'🇧🇦','Qatar':'🇶🇦','Switzerland':'🇨🇭',
+  'Brazil':'🇧🇷','Morocco':'🇲🇦','Haiti':'🇭🇹','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+  'United States':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Turkey':'🇹🇷',
+  'Germany':'🇩🇪','Curacao':'🇨🇼','Ivory Coast':'🇨🇮','Ecuador':'🇪🇨',
+  'Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳',
+  'Belgium':'🇧🇪','Egypt':'🇪🇬','Iran':'🇮🇷','New Zealand':'🇳🇿',
+  'Spain':'🇪🇸','Cape Verde':'🇨🇻','Saudi Arabia':'🇸🇦','Uruguay':'🇺🇾',
+  'France':'🇫🇷','Senegal':'🇸🇳','Iraq':'🇮🇶','Norway':'🇳🇴',
+  'Argentina':'🇦🇷','Algeria':'🇩🇿','Austria':'🇦🇹','Jordan':'🇯🇴',
+  'Portugal':'🇵🇹','Congo DR':'🇨🇩','Uzbekistan':'🇺🇿','Colombia':'🇨🇴',
+  'England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Croatia':'🇭🇷','Ghana':'🇬🇭','Panama':'🇵🇦',
+};
+
+
+const MATCH_TIMES = {
+  1:"2026-06-11T22:00+03:00",2:"2026-06-12T05:00+03:00",3:"2026-06-19T04:00+03:00",4:"2026-06-18T19:00+03:00",5:"2026-06-25T04:00+03:00",6:"2026-06-25T04:00+03:00",
+  7:"2026-06-12T22:00+03:00",8:"2026-06-13T22:00+03:00",9:"2026-06-19T01:00+03:00",10:"2026-06-18T22:00+03:00",11:"2026-06-24T22:00+03:00",12:"2026-06-24T22:00+03:00",
+  13:"2026-06-14T01:00+03:00",14:"2026-06-14T04:00+03:00",15:"2026-06-20T04:00+03:00",16:"2026-06-20T01:00+03:00",17:"2026-06-25T01:00+03:00",18:"2026-06-25T01:00+03:00",
+  19:"2026-06-13T04:00+03:00",20:"2026-06-14T07:00+03:00",21:"2026-06-19T22:00+03:00",22:"2026-06-20T07:00+03:00",23:"2026-06-26T05:00+03:00",24:"2026-06-26T05:00+03:00",
+  25:"2026-06-14T20:00+03:00",26:"2026-06-15T02:00+03:00",27:"2026-06-20T23:00+03:00",28:"2026-06-21T03:00+03:00",29:"2026-06-25T23:00+03:00",30:"2026-06-25T23:00+03:00",
+  31:"2026-06-14T23:00+03:00",32:"2026-06-15T05:00+03:00",33:"2026-06-20T20:00+03:00",34:"2026-06-21T07:00+03:00",35:"2026-06-26T02:00+03:00",36:"2026-06-26T02:00+03:00",
+  37:"2026-06-15T22:00+03:00",38:"2026-06-16T04:00+03:00",39:"2026-06-21T22:00+03:00",40:"2026-06-22T04:00+03:00",41:"2026-06-27T06:00+03:00",42:"2026-06-27T06:00+03:00",
+  43:"2026-06-15T19:00+03:00",44:"2026-06-16T01:00+03:00",45:"2026-06-21T19:00+03:00",46:"2026-06-22T01:00+03:00",47:"2026-06-27T03:00+03:00",48:"2026-06-27T03:00+03:00",
+  49:"2026-06-16T22:00+03:00",50:"2026-06-17T01:00+03:00",51:"2026-06-23T00:00+03:00",52:"2026-06-23T03:00+03:00",53:"2026-06-26T22:00+03:00",54:"2026-06-26T22:00+03:00",
+  55:"2026-06-17T04:00+03:00",56:"2026-06-17T07:00+03:00",57:"2026-06-22T20:00+03:00",58:"2026-06-23T06:00+03:00",59:"2026-06-28T05:00+03:00",60:"2026-06-28T05:00+03:00",
+  61:"2026-06-17T20:00+03:00",62:"2026-06-18T05:00+03:00",63:"2026-06-23T20:00+03:00",64:"2026-06-24T05:00+03:00",65:"2026-06-28T02:30+03:00",66:"2026-06-28T02:30+03:00",
+  67:"2026-06-17T23:00+03:00",68:"2026-06-18T02:00+03:00",69:"2026-06-23T23:00+03:00",70:"2026-06-24T02:00+03:00",71:"2026-06-28T00:00+03:00",72:"2026-06-28T00:00+03:00"
+};
+
+function getKickoff(matchId) { return MATCH_TIMES[matchId] ? new Date(MATCH_TIMES[matchId]) : null; }
+function fmtBG(matchId) {
+  const d = getKickoff(matchId); if(!d) return '';
+  return d.toLocaleDateString('bg-BG',{day:'2-digit',month:'2-digit',timeZone:'Europe/Sofia'}) + ' ' +
+    d.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Sofia'}) + ' ч.';
+}
+function isLocked(matchId) {
+  const k = getKickoff(matchId); if(!k) return false;
+  return Date.now() >= k.getTime() - 30*60*1000;
+}
+
+const GROUPS = {
+  A:['Mexico','South Africa','South Korea','Czechia'],
+  B:['Canada','Bosnia-Herzegovina','Qatar','Switzerland'],
+  C:['Brazil','Morocco','Haiti','Scotland'],
+  D:['United States','Paraguay','Australia','Turkey'],
+  E:['Germany','Curacao','Ivory Coast','Ecuador'],
+  F:['Netherlands','Japan','Sweden','Tunisia'],
+  G:['Belgium','Egypt','Iran','New Zealand'],
+  H:['Spain','Cape Verde','Saudi Arabia','Uruguay'],
+  I:['France','Senegal','Iraq','Norway'],
+  J:['Argentina','Algeria','Austria','Jordan'],
+  K:['Portugal','Congo DR','Uzbekistan','Colombia'],
+  L:['England','Croatia','Ghana','Panama'],
+};
+
+const ALL_TEAMS = Object.values(GROUPS).flat();
+
+function generateMatches() {
+  const ms = []; let id = 1;
+  for (const [g, t] of Object.entries(GROUPS)) {
+    const pairs = [[0,1],[2,3],[0,2],[1,3],[0,3],[1,2]];
+    const mdays = [1,1,2,2,3,3];
+    pairs.forEach(([a,b],i) => {const mid=id++;ms.push({id:mid,group:g,matchday:mdays[i],team1:t[a],team2:t[b],result:null,kickoff:MATCH_TIMES[mid]||null});});
+  }
+  return ms;
+}
+
+// ===================== STATE =====================
+
+const LS = {
+  get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+  set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+  del: k => localStorage.removeItem(k),
+};
+
+
+// ===================== UTF-8 / BASE64 HELPERS =====================
+function utf8ToB64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
+}
+function b64ToUtf8(b64) {
+  const bin = atob(b64.replace(/\n/g,''));
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder('utf-8').decode(bytes);
+}
+
+// ===================== GITHUB SYNC =====================
+const GH = {
+  REPO: 'valiomitov/VALUSA',
+  FILE: 'data.json',
+  tok: () => LS.get('_wc26_tok') || '',
+  setTok: t => t ? LS.set('_wc26_tok', t) : LS.del('_wc26_tok'),
+  rawUrl: () => 'https://raw.githubusercontent.com/valiomitov/VALUSA/main/data.json?_cb=' + Date.now(),
+
+  async pull() {
+    try {
+      const r = await fetch(GH.rawUrl(), { cache: 'no-store' });
+      if (!r.ok) return null;
+      const data = await r.json();
+      if (data._tok) GH.setTok(b64ToUtf8(data._tok));
+      return data;
+    } catch(e) { return null; }
+  },
+
+  async push() {
+    const tok = GH.tok();
+    if (!tok) { toast('\u274C \u0412\u044A\u0432\u0435\u0434\u0438 Sync Key'); return false; }
+    const payload = {
+      users: S.users,
+      matches: S.matches,
+      predictions: S.predictions,
+      champions: S.champions,
+      sessionLog: S.sessionLog,
+      _tok: utf8ToB64(tok),
+      _ts: Date.now()
+    };
+    try {
+      const shaR = await fetch('https://api.github.com/repos/' + GH.REPO + '/contents/' + GH.FILE, {
+        headers: { Authorization: 'token ' + tok, Accept: 'application/vnd.github.v3+json' }
+      });
+      const shaD = shaR.ok ? await shaR.json() : {};
+      const body = { message: 'sync: \u043F\u0440\u043E\u0433\u043D\u043E\u0437\u0438', content: utf8ToB64(JSON.stringify(payload, null, 2)) };
+      if (shaD.sha) body.sha = shaD.sha;
+      const putR = await fetch('https://api.github.com/repos/' + GH.REPO + '/contents/' + GH.FILE, {
+        method: 'PUT',
+        headers: { Authorization: 'token ' + tok, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (putR.ok) { toast('\u2705 \u0421\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0438\u0440\u0430\u043D\u043E \u0441 GitHub!'); return true; }
+      const err = await putR.json();
+      toast('\u274C ' + (err.message || '\u0413\u0440\u0435\u0448\u043A\u0430 \u043F\u0440\u0438 sync'));
+      return false;
+    } catch(e) { toast('\u274C ' + e.message); return false; }
+  }
+};
+
+function applyGHData(data) {
+  if (!data) return;
+  if (Array.isArray(data.users)) S.users = data.users;
+  if (Array.isArray(data.matches)) S.matches = data.matches;
+  if (data.predictions && typeof data.predictions === 'object') S.predictions = data.predictions;
+  if (data.champions && typeof data.champions === 'object') S.champions = data.champions;
+  if (Array.isArray(data.sessionLog)) S.sessionLog = data.sessionLog;
+  if (!S.users.find(u => u.username === 'admin')) S.users.push({username:'admin',password:'admin2026'});
+  persist();
+}
+
+
+let S = {
+  users: LS.get('wc26_users') || [],
+  currentUser: LS.get('wc26_current') || null,
+  matches: LS.get('wc26_matches') || generateMatches(),
+  predictions: LS.get('wc26_preds') || {},
+  champions: LS.get('wc26_champs') || {},
+  sessionLog: LS.get('wc26_log') || [],
+  tab: 'predictions',
+  authTab: 'login',
+  activeGroup: 'A',
+  authError: '',
+  toast: null,
+};
+
+function persist() {
+  LS.set('wc26_users', S.users);
+  LS.set('wc26_matches', S.matches);
+  LS.set('wc26_preds', S.predictions);
+  LS.set('wc26_champs', S.champions);
+  LS.set('wc26_log', S.sessionLog);
+  if (S.currentUser) LS.set('wc26_current', S.currentUser);
+  else LS.del('wc26_current');
+}
+
+// Ensure admin user
+if (!S.users.find(u => u.username === 'admin')) {
+  S.users.push({username:'admin', password:'admin2026'});
+  persist();
+}
+
+// ===================== SCORING =====================
+
+function outcome(s1, s2) {
+  return s1 > s2 ? 1 : s1 < s2 ? 2 : 0;
+}
+
+function userScore(username) {
+  const preds = S.predictions[username] || {};
+  let sign = 0, signDiff = 0, exact = 0, exact5 = 0;
+  for (const m of S.matches) {
+    const p = preds[m.id];
+    if (!p || m.result === null || p.s1 === '' || p.s2 === '') continue;
+    const ps1 = parseInt(p.s1), ps2 = parseInt(p.s2);
+    const rs1 = m.result.s1, rs2 = m.result.s2;
+    if (ps1===rs1 && ps2===rs2) {
+      if (rs1 + rs2 >= 5) { exact5++; } else { exact++; }
+    }
+    else if (outcome(ps1,ps2)===outcome(rs1,rs2) && (ps1-ps2)===(rs1-rs2)) { signDiff++; }
+    else if (outcome(ps1,ps2)===outcome(rs1,rs2)) { sign++; }
+  }
+  const champ = S.champions[username];
+  return {sign, signDiff, exact, exact5, total: sign*10 + signDiff*15 + exact*20 + exact5*30, champ};
+}
+
+function leaderboard() {
+  return S.users.filter(u => u.username !== 'admin').map(u => ({username: u.username, ...userScore(u.username)}))
+    .sort((a, b) => b.total - a.total || b.exact - a.exact);
+}
+
+// ===================== RENDER =====================
+
+function render() {
+  document.getElementById('root').innerHTML = S.currentUser ? renderApp() : renderAuth();
+  bind();
+}
+
+// --- AUTH ---
+function renderAuth() {
+  return `<div class="auth-screen">
+    <div class="auth-logo">⚽</div>
+    <div class="auth-title">WORLD CUP 2026</div>
+    <div class="auth-sub">🇨🇦 Canada &nbsp;·&nbsp; 🇲🇽 Mexico &nbsp;·&nbsp; 🇺🇸 USA · Платформа за прогнози</div>
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <div class="auth-tab ${S.authTab==='login'?'active':''}" data-atab="login">Вход</div>
+        <div class="auth-tab ${S.authTab==='register'?'active':''}" data-atab="register">Регистрация</div>
+      </div>
+      ${S.authTab === 'login' ? `
+      <form id="loginForm">
+        <div class="form-group"><label>Потребителско име</label>
+          <input type="text" id="lu" placeholder="username" autocomplete="username"/></div>
+        <div class="form-group"><label>Парола</label>
+          <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
+        <button type="submit" class="btn btn-primary">🚀 Влез</button>
+      </form>
+      ` : `
+      <form id="regForm">
+        <div class="form-group"><label>Потребителско име</label>
+          <input type="text" id="ru" placeholder="избери username"/></div>
+        <div class="form-group"><label>Парола</label>
+          <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
+        <div class="form-group"><label>Потвърди парола</label>
+          <input type="password" id="rp2" placeholder="••••••••"/></div>
+        <button type="submit" class="btn btn-primary">✅ Регистрирай се</button>
+      </form>
+      `}
+      ${S.authError ? `<div class="error-msg">⚠️ ${S.authError}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+// --- MAIN APP ---
+function renderApp() {
+  const isAdmin = S.currentUser === 'admin';
+  const tabs = [
+    {id:'predictions',l:'🔮 Прогнози'},
+    {id:'leaderboard',l:'🏅 Класиране'},
+    {id:'groups',l:'🌍 Групи'},
+    {id:'champion',l:'🏆 Шампион'},
+    {id:'rules',l:'📋 Правила'},
+    ...(isAdmin ? [{id:'admin',l:'⚙️ Админ'}] : []),
+  ];
+  return `
+  <div class="app-header">
+    <div class="app-logo">⚽ <span>WC</span> 2026</div>
+    <nav class="app-nav">
+      ${tabs.map(t=>`<button class="nav-btn ${S.tab===t.id?'active':''}" data-tab="${t.id}">${t.l}</button>`).join('')}
+    </nav>
+    <div class="user-info">
+      <div class="user-avatar">${S.currentUser[0].toUpperCase()}</div>
+      <span class="user-name">${S.currentUser}</span>
+      <button class="logout-btn" id="logoutBtn">Изход</button>
+    </div>
+  </div>
+  <div class="main-content">${renderTab()}</div>
+  ${S.toast ? `<div class="toast">${S.toast}</div>` : ''}
+  ${renderBottomNav()}`;
+}
+
+
+function renderBottomNav() {
+  const isAdmin = S.currentUser === 'admin';
+  const items = [
+    {id:'predictions', icon:'🔮', label:'Прогнози'},
+    {id:'leaderboard', icon:'🏅', label:'Класиране'},
+    {id:'groups', icon:'🌍', label:'Групи'},
+    {id:'champion', icon:'🏆', label:'Шампион'},
+    {id:'rules', icon:'📋', label:'Правила'},
+    ...(isAdmin ? [{id:'admin', icon:'⚙️', label:'Админ'}] : []),
+  ];
+  return `<nav class="bottom-nav"><div class="bottom-nav-inner">${items.map(it=>`<button class="bnav-btn ${S.tab===it.id?'active':''}" data-tab="${it.id}"><span class="bnav-icon">${it.icon}</span><span class="bnav-label">${it.label}</span></button>`).join('')}</div></nav>`;
+}
+
+function renderRules() {
+  return `
+  <div class="page-title">📋 Правила за точкуване</div>
+  <div style="max-width:580px;margin:0 auto">
+
+    <div style="background:rgba(165,214,167,.08);border:1.5px solid rgba(165,214,167,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
+      <div style="font-size:3rem;flex-shrink:0">🎯</div>
+      <div style="flex:1">
+        <div style="font-size:1.4rem;font-weight:900;color:#a5d6a7">20 точки</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Точен резултат</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш точния брой голове и за двата отбора.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 2:1 ✓</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,224,130,.06);border:1.5px solid rgba(249,168,37,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
+      <div style="font-size:3rem;flex-shrink:0">📐</div>
+      <div style="flex:1">
+        <div style="font-size:1.4rem;font-weight:900;color:#ffe082">15 точки</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Правилен знак + Голова разлика</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш кой побеждава (или равен) И точната разлика в голове.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 3:2 ✓ (победа с 1 гол)</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(144,202,249,.06);border:1.5px solid rgba(21,101,192,.3);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
+      <div style="font-size:3rem;flex-shrink:0">✅</div>
+      <div style="flex:1">
+        <div style="font-size:1.4rem;font-weight:900;color:#90caf9">10 точки</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Правилен знак (1 / X / 2)</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш само знака — победа домакин, равен, или победа гост.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 3:0 ✓ (и двете са победа)</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(249,168,37,.06);border:1.5px solid rgba(249,168,37,.2);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
+      <div style="font-size:3rem;flex-shrink:0">🏆</div>
+      <div style="flex:1">
+        <div style="font-size:1.4rem;font-weight:900;color:#f9a825">30 точки</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Победител на турнира</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш кой ще вдигне трофея. Добавят се след финала.</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(198,40,40,.08);border:1px solid rgba(198,40,40,.2);border-radius:14px;padding:1rem;margin-bottom:.75rem">
+      <div style="font-weight:700;margin-bottom:.3rem">⏰ Краен срок</div>
+      <div style="color:rgba(255,255,255,.6);font-size:.9rem">Прогнозата се <strong>заключва автоматично 30 мин</strong> преди началото на всеки мач.</div>
+    </div>
+
+    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1rem">
+      <div style="font-weight:700;margin-bottom:.75rem;text-align:center">Бързо сравнение</div>
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem">
+        <thead><tr style="color:rgba(255,255,255,.4)">
+          <th style="padding:6px;text-align:left">Прогноза</th>
+          <th style="padding:6px;text-align:left">Реален</th>
+          <th style="padding:6px;text-align:right">Точки</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">2:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:#90caf9;font-weight:700">+10т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">0:1</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">1:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">2:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0т</td></tr>
+        </tbody>
+
+    <div style="background:rgba(255,112,67,.08);border:1.5px solid rgba(255,112,67,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
+      <div style="font-size:3rem;flex-shrink:0">🔥</div>
+      <div style="flex:1">
+        <div style="font-size:1.15rem;font-weight:800;color:#ff7043;margin-bottom:.3rem">30 т — точен резултат с 5+ гола</div>
+        <div style="color:rgba(255,255,255,.65);font-size:.9rem">Познават точния резултат на мач, в който има по 5 гола общо (напр. 3:3, 4:1, 3:2...).</div>
+      </div>
+    </div>
+      </table>
+    </div>
+
+  </div>`;
+}
+function renderTab() {
+  if (S.tab === 'predictions') return renderPredictions();
+  if (S.tab === 'leaderboard') return renderLeaderboard();
+  if (S.tab === 'groups') return renderGroups();
+  if (S.tab === 'champion') return renderChampion();
+  if (S.tab === 'admin') return renderAdmin();
+  if (S.tab === 'rules') return renderRules();
+  return '';
+}
+
+// --- PREDICTIONS ---
+function renderPredictions() {
+  const preds = S.predictions[S.currentUser] || {};
+  const gm = S.matches.filter(m => m.group === S.activeGroup);
+  const totalPred = Object.keys(preds).length;
+  const totalM = S.matches.length;
+  return `
+  <div class="page-title">🔮 Моите прогнози</div>
+  <div class="info-bar">
+    ⏰ Прогнозата се заключва 30 мин преди началото · 🔥 <strong style="color:#ff7043">30т</strong> точен (5+ гола) &nbsp;·&nbsp; 💡 <strong style="color:#a5d6a7">20т</strong> точен резултат &nbsp;·&nbsp;
+    <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp;
+    Прогнозирал: <strong>${totalPred}/${totalM}</strong> мача
+  </div>
+  <div class="group-tabs">
+    ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">Група ${g}</div>`).join('')}
+  </div>
+  ${[1,2,3].map(md => {
+    const mds = gm.filter(m => m.matchday === md);
+    return `<div class="matchday-label">Кръг ${md}</div>${mds.map(m => renderMatchCard(m, preds[m.id], false)).join('')}`;
+  }).join('')}
+  <div><button class="save-btn" id="savePreds">💾 Запази прогнозите за Група ${S.activeGroup}</button></div>`;
+}
+
+function renderMatchCard(m, pred, isAdmin) {
+  const hasPred = pred && pred.s1 !== '' && pred.s2 !== '';
+  const hasResult = m.result !== null;
+  const locked = (hasResult || (!isAdmin && isLocked(m.id))) && !isAdmin;
+  let pts = '';
+  if (hasPred && hasResult && !isAdmin) {
+    const ps1 = parseInt(pred.s1), ps2 = parseInt(pred.s2);
+    const rs1 = m.result.s1, rs2 = m.result.s2;
+    if(ps1===rs1&&ps2===rs2) pts=(rs1+rs2>=5)?`<span class="pts-badge pts-5">🔥 +30т</span>`:`<span class="pts-badge pts-3">🎯 +20т</span>`;
+    else if(outcome(ps1,ps2)===outcome(rs1,rs2)&&(ps1-ps2)===(rs1-rs2)) pts=`<span class="pts-badge pts-2">📐 +15т</span>`;
+    else if(outcome(ps1,ps2)===outcome(rs1,rs2)) pts=`<span class="pts-badge pts-1">✓ +10т</span>`;
+    else pts=`<span class="pts-badge pts-0">✗ 0т</span>`;
+  }
+  const prefix = isAdmin ? 'adm' : 'pr';
+  return `
+  ${!isAdmin && MATCH_TIMES[m.id] ? `<div class="kickoff-time">${fmtBG(m.id)}${isLocked(m.id)&&!hasResult?' 🔒':''}</div>` : ''}
+  <div class="match-card ${hasPred&&!isAdmin?'predicted':''} ${locked?'locked':''}">
+    <div class="team">
+      <span class="team-flag">${FLAGS[m.team1]||'🏳️'}</span>
+      <span class="team-name">${m.team1}</span>
+    </div>
+    <div class="score-wrap">
+      <input class="score-input" type="number" min="0" max="30"
+        data-${prefix}="${m.id}" data-side="s1"
+        value="${isAdmin ? (m.result?m.result.s1:'') : (pred?pred.s1:'')}"
+        placeholder="–" ${locked?'disabled':''}>
+      <span class="score-sep">:</span>
+      <input class="score-input" type="number" min="0" max="30"
+        data-${prefix}="${m.id}" data-side="s2"
+        value="${isAdmin ? (m.result?m.result.s2:'') : (pred?pred.s2:'')}"
+        placeholder="–" ${locked?'disabled':''}>
+    </div>
+    <div class="team right">
+      <span class="team-flag">${FLAGS[m.team2]||'🏳️'}</span>
+      <span class="team-name">${m.team2}</span>
+    </div>
+    ${hasResult && !isAdmin ? `
+    <div class="result-wrap">
+      <div class="result-label">Резултат</div>
+      <div class="result-score">${m.result.s1}:${m.result.s2}</div>
+      ${pts}
+    </div>` : ''}
+    ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">✓</span>` : ''}
+  </div>`;
+}
+
+// --- LEADERBOARD ---
+function renderLeaderboard() {
+  const lb = leaderboard();
+  const medals = ['🥇','🥈','🥉'];
+  return `
+  <div class="page-title">🏅 Класиране</div>
+  <div class="lb-wrap">
+    <div class="lb-head">
+      <div>#</div><div>Потребител</div>
+      <div style="text-align:center;font-size:10px">Знак<br><span style="color:#90caf9">10т</span></div>
+      <div style="text-align:center;font-size:10px">+Разл.<br><span style="color:#ffe082">15т</span></div>
+      <div style="text-align:center;font-size:10px">Точен<br><span style="color:#a5d6a7">20т</span></div>
+      <div style="text-align:center">Общо</div>
+    </div>
+    ${lb.length === 0 ? `<div class="lb-empty">Все още няма регистрирани потребители</div>` :
+      lb.map((u,i) => `
+      <div class="lb-row ${u.username===S.currentUser?'me':''}">
+        <div class="lb-rank ${i<3?'rank-'+(i+1):''}">${i<3?medals[i]:i+1}</div>
+        <div class="lb-user">
+          <div class="user-avatar" style="width:28px;height:28px;font-size:12px">${u.username[0].toUpperCase()}</div>
+          ${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(аз)</span>':''}
+        </div>
+        <div class="lb-stat" style="color:#90caf9">${u.sign||0}</div>
+        <div class="lb-stat" style="color:#ffe082">${u.signDiff||0}</div>
+        <div class="lb-stat" style="color:#a5d6a7">${u.exact||0}</div>
+        <div class="lb-stat" style="color:#ff7043">${u.exact5||0}</div>
+        <div class="lb-total">${u.total}</div>
+      </div>`).join('')}
+  </div>`;
+}
+
+// --- GROUPS ---
+function renderGroups() {
+  return `
+  <div class="page-title">🌍 Групова фаза — Таблици</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:1rem">✓ = директна квалификация (топ 2 от всяка група + 8 най-добри трети места)</div>
+  <div class="groups-grid">${Object.entries(GROUPS).map(([g,t])=>renderGroupCard(g,t)).join('')}</div>`;
+}
+
+function renderGroupCard(gName, teams) {
+  const stats = {};
+  teams.forEach(t => { stats[t] = {p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}; });
+  S.matches.filter(m => m.group === gName && m.result).forEach(m => {
+    const s1 = m.result.s1, s2 = m.result.s2;
+    stats[m.team1].p++; stats[m.team2].p++;
+    stats[m.team1].gf += s1; stats[m.team1].ga += s2;
+    stats[m.team2].gf += s2; stats[m.team2].ga += s1;
+    if (s1 > s2) { stats[m.team1].w++; stats[m.team1].pts+=3; stats[m.team2].l++; }
+    else if (s2 > s1) { stats[m.team2].w++; stats[m.team2].pts+=3; stats[m.team1].l++; }
+    else { stats[m.team1].d++; stats[m.team1].pts++; stats[m.team2].d++; stats[m.team2].pts++; }
+  });
+  const sorted = [...teams].sort((a,b) => {
+    if (stats[b].pts !== stats[a].pts) return stats[b].pts - stats[a].pts;
+    const gdB = stats[b].gf - stats[b].ga, gdA = stats[a].gf - stats[a].ga;
+    if (gdB !== gdA) return gdB - gdA;
+    return stats[b].gf - stats[a].gf;
+  });
+  return `
+  <div class="group-card">
+    <div class="group-card-hd">ГРУПА ${gName}</div>
+    <table class="g-table">
+      <thead><tr><th>Отбор</th><th>И</th><th>П</th><th>Р</th><th>З</th><th>Т.</th></tr></thead>
+      <tbody>${sorted.map((t,i) => `
+        <tr class="${i<2?'qualify-row':''}">
+          <td>${FLAGS[t]||''} ${t}</td>
+          <td>${stats[t].p}</td><td>${stats[t].w}</td><td>${stats[t].d}</td><td>${stats[t].l}</td>
+          <td><strong>${stats[t].pts}</strong></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// --- CHAMPION ---
+function renderChampion() {
+  const my = S.champions[S.currentUser] || null;
+  return `
+  <div class="champ-wrap">
+    <div class="champ-icon">🏆</div>
+    <div class="champ-title">Победител на турнира</div>
+    <div class="champ-sub">Кой ще вдигне трофея? Правилна прогноза = <strong style="color:#f9a825">+30 точки</strong></div>
+    ${my ? `<div class="champ-current">
+      <div style="font-size:2.5rem">${FLAGS[my]||'🏳️'}</div>
+      <div style="font-weight:800;font-size:18px;margin-top:8px">${my}</div>
+      <div style="color:rgba(255,255,255,.4);font-size:12px;margin-top:4px">Твоята прогноза</div>
+    </div>` : `<div style="color:rgba(255,255,255,.35);margin-bottom:1.5rem;font-size:14px">⚠️ Не си избрал победител</div>`}
+    <div class="champ-grid">
+      ${ALL_TEAMS.map(t => `
+      <button class="champ-btn ${my===t?'selected':''}" data-champ="${t}">
+        <span class="champ-flag">${FLAGS[t]||'🏳️'}</span>${t}
+      </button>`).join('')}
+    </div>
+  </div>`;
+}
+
+// --- ADMIN ---
+function renderAdmin() {
+  const gm = S.matches.filter(m => m.group === S.activeGroup);
+  const done = S.matches.filter(m => m.result).length;
+  return `
+  <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem">
+    <div class="page-title">⚙️ Администрация — Въвеждане на резултати</div>
+    <button class="save-btn" id="autoFetchBtn" onclick="autoFetchResults()" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);margin-top:0"> Авто-резултати от FIFA/ESPN</button>
+    <span id="autoRefreshBadge" style="font-size:12px;color:rgba(76,175,80,.8);display:none"> Авто-обновяване на 5 мин</span>
+  <span id="lastAutoSave" style="font-size:11px;color:rgba(76,175,80,.75);margin-left:auto;display:none"></span>
+  </div>
+  <div class="admin-box">
+    <div class="admin-note">
+      Въведи реалните резултати от мачовете. Точките на всички играчи ще се изчислят автоматично.<br>
+      Въведени резултати: <strong style="color:#f9a825">${done} / ${S.matches.length}</strong> мача
+    </div>
+    <div class="group-tabs">
+      ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">Група ${g}</div>`).join('')}
+    </div>
+    ${[1,2,3].map(md => {
+      const mds = gm.filter(m => m.matchday === md);
+      return `<div class="matchday-label">Кръг ${md}</div>${mds.map(m=>renderMatchCard(m,null,true)).join('')}`;
+    }).join('')}
+
+    <div class="admin-box" style="margin-top:1.5rem">
+      <div class="admin-note" style="margin-bottom:1rem">
+        <strong>\u{1F465} \u{0420}\u{0435}\u{0433}\u{0438}\u{0441}\u{0442}\u{0440}\u{0438}\u{0440}\u{0430}\u{043D}\u{0438} \u{043F}\u{043E}\u{0442}\u{0440}\u{0435}\u{0431}\u{0438}\u{0442}\u{0435}\u{043B}\u{0438}</strong>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="color:rgba(255,255,255,.4);text-align:left;border-bottom:1px solid rgba(255,255,255,.1)">
+          <th style="padding:6px 10px">#</th>
+          <th style="padding:6px 10px">\u{041F}\u{043E}\u{0442}\u{0440}\u{0435}\u{0431}\u{0438}\u{0442}\u{0435}\u{043B}</th>
+          <th style="padding:6px 10px">\u{0420}\u{0435}\u{0433}\u{0438}\u{0441}\u{0442}\u{0440}\u{0438}\u{0440}\u{0430}\u{043D}</th>
+          <th style="padding:6px 10px">\u{041F}\u{043E}\u{0441}\u{043B}\u{0435}\u{0434}\u{0435}\u{043D} \u{0432}\u{0445}\u{043E}\u{0434}</th>
+          <th style="padding:6px 10px">\u{041F}\u{0440}\u{043E}\u{0433}\u{043D}\u{043E}\u{0437}\u{0438}</th>
+        </tr></thead>
+        <tbody>
+        ${S.users.filter(u=>u.username!=='admin').map((u,i) => {
+          const lastLogin = [...S.sessionLog].reverse().find(l=>l.username===u.username && l.action==='login');
+          const predCount = Object.keys(S.predictions[u.username]||{}).filter(k=>{const p=S.predictions[u.username][k];return p&&p.s1!==''&&p.s2!=='';}).length;
+          const regDate = u.registeredAt ? new Date(u.registeredAt).toLocaleString('bg-BG',{timeZone:'Europe/Sofia'}) : '\u2014';
+          const loginDate = lastLogin ? new Date(lastLogin.time).toLocaleString('bg-BG',{timeZone:'Europe/Sofia'}) : '\u2014';
+          return `<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+            <td style="padding:8px 10px;color:rgba(255,255,255,.4)">${i+1}</td>
+            <td style="padding:8px 10px;font-weight:700">${u.username}</td>
+            <td style="padding:8px 10px;color:rgba(255,255,255,.5);font-size:12px">${regDate}</td>
+            <td style="padding:8px 10px;color:rgba(255,255,255,.5);font-size:12px">${loginDate}</td>
+            <td style="padding:8px 10px;color:#f9a825;font-weight:700">${predCount}/72</td>
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+      <div style="margin-top:1.5rem">
+        <strong style="color:rgba(255,255,255,.6)">\u{1F4CB} \u{041B}\u{043E}\u{0433} \u{043D}\u{0430} \u{0441}\u{0435}\u{0441}\u{0438}\u{0438}</strong>
+        <div style="margin-top:.5rem;max-height:250px;overflow-y:auto;background:rgba(0,0,0,.2);border-radius:8px;padding:.5rem">
+        ${[...S.sessionLog].reverse().slice(0,50).map(e => {
+          const icons = {login:'\u{1F7E2}',logout:'\u{1F534}',register:'\u{1F195}'};
+          const dt = new Date(e.time).toLocaleString('bg-BG',{timeZone:'Europe/Sofia'});
+          return `<div style="padding:4px 8px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.04)">${icons[e.action]||'\u2022'} <strong>${e.username}</strong> \u2014 ${e.action} \u2014 ${dt}</div>`;
+        }).join('')}
+        ${S.sessionLog.length===0 ? '<div style="padding:8px;color:rgba(255,255,255,.3)">\u041D\u044F\u043C\u0430 \u043B\u043E\u0433\u043E\u0432\u0435.</div>' : ''}
+        </div>
+      </div>
+    </div>
+    <div><button class="save-btn" id="saveResults">💾 Запази резултатите за Група ${S.activeGroup}</button></div>
+
+    <div class="admin-box" style="margin-top:1.5rem;border:1px solid rgba(100,181,246,.25);background:rgba(100,181,246,.04)">
+      <div class="admin-note"><strong>☁️ GitHub Sync</strong><br>
+        Sync Key се пази само на твоето устройство. Другите потребители ще получат достъп автоматично при следващото опресняване.
+      </div>
+      <div class="form-group" style="margin-top:1rem">
+        <label style="font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px">Sync Key (GitHub PAT)</label>
+        <input type="password" id="ghTokInput" value="${GH.tok()}" placeholder="ghp_..." style="width:100%;padding:10px 14px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;margin-top:4px">
+      </div>
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem">
+        <button class="save-btn" id="ghSaveBtn" style="background:linear-gradient(135deg,#37474f,#455a64)">💾 Запази Key</button>
+        <button class="save-btn" id="ghPushBtn" style="background:linear-gradient(135deg,#1b5e20,#2e7d32)">☁️ Качи на GitHub</button>
+        <button class="save-btn" id="ghPullBtn" style="background:linear-gradient(135deg,#1a237e,#283593)">⬇️ Изтегли от GitHub</button>
+      </div>
+    </div>
+
+  </div>`;
+}
+
+// ===================== EVENTS =====================
+
+// ===================== AUTO FETCH RESULTS =====================
+
+function normalizeTeam(name) {
+  const map = {
+    'czech republic':'czechia','czechia':'czechia',
+    'korea republic':'south korea','republic of korea':'south korea',
+    'south korea':'south korea',
+    'bosnia':'bosnia-herzegovina','bosnia & herzegovina':'bosnia-herzegovina',
+    'bosnia and herzegovina':'bosnia-herzegovina',
+    'dr congo':'congo dr','democratic republic of congo':'congo dr',
+    'democratic republic of the congo':'congo dr',
+    "cote d'ivoire":'ivory coast',"côte d'ivoire":'ivory coast',
+    'ivory coast':'ivory coast',
+    'cape verde islands':'cape verde','cabo verde':'cape verde',
+    'curacao':'curacao','cura\u00e7ao':'curacao',
+    'usa':'united states','united states of america':'united states',
+    'u.s.a.':'united states','u.s.':'united states',
+    'south africa':'south africa',
+    'saudi arabia':'saudi arabia',
+    'new zealand':'new zealand',
+  };
+  const n = (name||'').toLowerCase().trim().replace(/[\u0300-\u036f]/g,'');
+  return map[n] || n;
+}
+
+async function autoFetchResults(silent=false) {
+  const btn = document.getElementById('autoFetchBtn');
+  if(btn && !silent) { btn.disabled = true; btn.textContent = '\u23F3 \u0417\u0430\u0440\u0435\u0436\u0434\u0430...'; }
+  try {
+    // ESPN API - FIFA World Cup
+    const urls = [
+      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?limit=200&dates=20260611-20260720',
+      'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?limit=200',
+    ];
+    let events = [];
+    for(const url of urls) {
+      try {
+        const r = await fetch(url);
+        const d = await r.json();
+        if(d.events && d.events.length) { events = d.events; break; }
+      } catch(e) {}
+    }
+    if(!events.length) { if(!silent) toast('\u274C \u041D\u044F\u043C\u0430 \u0434\u0430\u043D\u043D\u0438 \u043E\u0449\u0435 \u2014 \u0432\u044A\u0437\u043C\u043E\u0436\u043D\u043E \u043C\u0430\u0447\u043E\u0432\u0435\u0442\u0435 \u043D\u0435 \u0441\u0430 \u0437\u0430\u043F\u043E\u0447\u043D\u0430\u043B\u0438.'); return; }
+    let updated = 0, skipped = 0;
+    for(const ev of events) {
+      const comp = ev.competitions && ev.competitions[0];
+      if(!comp) continue;
+      const status = ev.status && ev.status.type;
+      if(!status || !status.completed) { skipped++; continue; }
+      const home = comp.competitors && comp.competitors.find(c => c.homeAway === 'home');
+      const away = comp.competitors && comp.competitors.find(c => c.homeAway === 'away');
+      if(!home || !away) continue;
+      const hn = normalizeTeam(home.team.displayName);
+      const an = normalizeTeam(away.team.displayName);
+      const hs = parseInt(home.score), as2 = parseInt(away.score);
+      if(isNaN(hs) || isNaN(as2)) continue;
+      const match = S.matches.find(m => {
+        const t1 = normalizeTeam(m.team1), t2 = normalizeTeam(m.team2);
+        return (t1===hn && t2===an) || (t1===an && t2===hn);
+      });
+      if(match) {
+        const t1isHome = normalizeTeam(match.team1) === hn;
+        match.result = { s1: t1isHome ? hs : as2, s2: t1isHome ? as2 : hs };
+        updated++;
+      }
+    }
+    persist(); render();
+    if(updated > 0) {
+      const _las = document.getElementById('lastAutoSave');
+      if(_las) {
+        const _d = new Date();
+        const _hh = _d.getHours().toString().padStart(2,'0');
+        const _mm = _d.getMinutes().toString().padStart(2,'0');
+        _las.textContent = '\u2713 \u0417\u0430\u043F\u0430\u0437\u0435\u043D\u043E \u0432 ' + _hh + ':' + _mm;
+        _las.style.display = 'inline';
+      }
+    }
+    if(!silent) toast('\u2705 \u041E\u0431\u043D\u043E\u0432\u0435\u043D\u0438 ' + updated + ' \u0440\u0435\u0437\u0443\u043B\u0442\u0430\u0442\u0430 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u043D\u043E!' + (skipped ? ' ('+skipped+' \u043D\u0435\u0437\u0430\u0432\u044A\u0440\u0448\u0435\u043D\u0438)' : ''));
+  } catch(e) {
+    if(!silent) toast('\u274C \u0413\u0440\u0435\u0448\u043A\u0430: ' + e.message);
+  } finally {
+    if(btn && !silent) { btn.disabled = false; btn.textContent = '\u{1F504} \u0410\u0432\u0442\u043E-\u0440\u0435\u0437\u0443\u043B\u0442\u0430\u0442\u0438 \u043E\u0442 FIFA/ESPN'; }
+  }
+}
+
+function bind() {
+  // Auth tabs
+  document.querySelectorAll('[data-atab]').forEach(el => el.addEventListener('click', () => {
+    S.authTab = el.dataset.atab; S.authError = ''; render();
+  }));
+
+  // Login
+  const lf = document.getElementById('loginForm');
+  if (lf) lf.addEventListener('submit', e => {
+    e.preventDefault();
+    const u = document.getElementById('lu').value.trim();
+    const p = document.getElementById('lp').value;
+    const user = S.users.find(x => x.username === u && x.password === p);
+    if (user) { S.currentUser = u; S.authError = ''; S.sessionLog.push({username: u, action:'login', time: Date.now()}); persist(); render(); }
+    else { S.authError = 'Грешно потребителско име или парола'; render(); }
+  });
+
+  // Register
+  const rf = document.getElementById('regForm');
+  if (rf) rf.addEventListener('submit', e => {
+    e.preventDefault();
+    const u = document.getElementById('ru').value.trim();
+    const p = document.getElementById('rp').value;
+    const p2 = document.getElementById('rp2').value;
+    if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
+    else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
+    else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
+    else if (p !== p2) S.authError = 'Паролите не съвпадат';
+    else {
+      S.users.push({username: u, password: p, registeredAt: Date.now()});
+      S.sessionLog.push({username: u, action:'register', time: Date.now()});
+      S.currentUser = u; S.authError = ''; persist(); render(); return;
+    }
+    render();
+  });
+
+  // Logout
+  const lb = document.getElementById('logoutBtn');
+  if (lb) lb.addEventListener('click', () => { S.sessionLog.push({username: S.currentUser, action:'logout', time: Date.now()}); S.currentUser = null; persist(); render(); });
+
+  // Nav tabs
+  document.querySelectorAll('[data-tab]').forEach(el => el.addEventListener('click', () => {
+    S.tab = el.dataset.tab; render();
+  }));
+
+  // Group tabs
+  document.querySelectorAll('[data-group]').forEach(el => el.addEventListener('click', () => {
+    S.activeGroup = el.dataset.group; render();
+  }));
+
+  // Save predictions
+  const sp = document.getElementById('savePreds');
+  if (sp) sp.addEventListener('click', () => {
+    if (!S.predictions[S.currentUser]) S.predictions[S.currentUser] = {};
+    document.querySelectorAll('[data-pr]').forEach(inp => {
+      const mid = parseInt(inp.dataset.pr);
+      if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
+      S.predictions[S.currentUser][mid][inp.dataset.side] = inp.value;
+    });
+    persist(); toast('✅ Прогнозите за Група ' + S.activeGroup + ' са запазени!');
+  });
+
+  // Save admin results
+  const af = document.getElementById('autoFetchBtn');
+  if(af) af.addEventListener('click', autoFetchResults);
+  const sr = document.getElementById('saveResults');
+  if (sr) sr.addEventListener('click', () => {
+    document.querySelectorAll('[data-adm]').forEach(inp => {
+      const mid = parseInt(inp.dataset.adm);
+      const match = S.matches.find(m => m.id === mid);
+      if (!match || inp.value === '') return;
+      if (!match.result) match.result = {s1:0, s2:0};
+      match.result[inp.dataset.side] = parseInt(inp.value);
+    });
+    // Validate - remove results where one side is missing
+    S.matches.forEach(m => {
+      if (m.result && (m.result.s1 === undefined || m.result.s2 === undefined ||
+          isNaN(m.result.s1) || isNaN(m.result.s2))) m.result = null;
+    });
+    persist(); toast('✅ Резултатите за Група ' + S.activeGroup + ' са запазени!'); render();
+  });
+
+  // Champion
+  document.querySelectorAll('[data-champ]').forEach(btn => btn.addEventListener('click', () => {
+    S.champions[S.currentUser] = btn.dataset.champ;
+    persist(); toast('🏆 ' + btn.dataset.champ + ' — прогнозата е запазена!'); render();
+  }));
+
+  // GitHub Sync (admin only)
+  const ghSave = document.getElementById('ghSaveBtn');
+  if (ghSave) ghSave.addEventListener('click', () => {
+    const tok = (document.getElementById('ghTokInput')||{}).value || '';
+    GH.setTok(tok.trim());
+    toast(tok.trim() ? '✅ Sync Key запазен!' : '🗑️ Sync Key изтрит');
+  });
+  const ghPush = document.getElementById('ghPushBtn');
+  if (ghPush) ghPush.addEventListener('click', () => {
+    ghPush.disabled = true; ghPush.textContent = '⏳ Качване...';
+    GH.push().finally(() => { ghPush.disabled = false; ghPush.textContent = '☁️ Качи на GitHub'; });
+  });
+  const ghPull = document.getElementById('ghPullBtn');
+  if (ghPull) ghPull.addEventListener('click', () => {
+    ghPull.disabled = true; ghPull.textContent = '⏳ Изтегляне...';
+    GH.pull().then(data => {
+      if (data) { applyGHData(data); render(); toast('✅ Данните са обновени!'); }
+      else toast('❌ Не може да се изтегли от GitHub');
+      ghPull.disabled = false; ghPull.textContent = '⬇️ Изтегли от GitHub';
+    });
+  });
+}
+
+function toast(msg) {
+  S.toast = msg;
+  render();
+  setTimeout(() => { S.toast = null; render(); }, 3000);
+}
+
+// ===================== INIT =====================
+render();
+
+// Auto-pull from GitHub on load (silent — no toast on success)
+GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
+
+// ===================== AUTO REFRESH =====================
+(function() {
+  const WC_START = new Date('2026-06-11T00:00:00+03:00').getTime();
+  const WC_END   = new Date('2026-07-20T00:00:00+03:00').getTime();
+  const INTERVAL = 5 * 60 * 1000; // 5 minutes
+
+  function tryAutoFetch() {
+    const now = Date.now();
+    if(now >= WC_START && now <= WC_END) {
+      autoFetchResults(true); // silent = no toasts
+    }
+  }
+
+  // Start interval once page is loaded
+  if(Date.now() >= WC_START && Date.now() <= WC_END) {
+    setInterval(tryAutoFetch, INTERVAL);
+    const badge = document.getElementById('autoRefreshBadge');
+    if(badge) badge.style.display = 'inline';
+    // Also fetch once on load after 3 seconds
+    setTimeout(tryAutoFetch, 3000);
+  }
+})();
+
+</script>
+</body>
+</html>
