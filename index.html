@@ -315,11 +315,11 @@ const FB = {
       if (!firebase.apps.length) firebase.initializeApp(FB_CONFIG);
       FB.db = firebase.database();
       FB.ref = FB.db.ref('wc26');
-      // Слушай за промени в реално време
+      // Слушай за промени в реално време — НЕ пише обратно в Firebase (предотвратява цикъл)
       FB.ref.on('value', snap => {
         const data = snap.val();
         if (!data || FB._syncing) return;
-        applyGHData(data);
+        applyGHData(data, true); // true = дойде от Firebase, не записвай обратно
         if (typeof render === 'function') render();
       });
       console.log('Firebase: свързан ✅');
@@ -402,17 +402,17 @@ const GH = {
   }
 };
 
-function applyGHData(data) {
+// fromFirebase=true → само чете данни, НЕ пише обратно (предотвратява цикъл Firebase→persist→Firebase→...)
+function applyGHData(data, fromFirebase = false) {
   if (!data) return;
   if (Array.isArray(data.users)) {
-    // Merge: GitHub users take priority, but keep any local-only users
+    // Merge: Firebase/GitHub users take priority, but keep any local-only users
     const ghNames = new Set(data.users.map(u => u.username));
     const localOnly = S.users.filter(u => !ghNames.has(u.username));
     S.users = [...data.users, ...localOnly];
   }
   if (Array.isArray(data.matches)) S.matches = data.matches;
   if (data.predictions && typeof data.predictions === 'object') {
-    // Merge predictions: keep local predictions for users not in GitHub data
     S.predictions = Object.assign({}, data.predictions,
       Object.fromEntries(Object.entries(S.predictions).filter(([k]) => !(k in data.predictions)))
     );
@@ -422,7 +422,16 @@ function applyGHData(data) {
   );
   if (Array.isArray(data.sessionLog)) S.sessionLog = data.sessionLog;
   if (!S.users.find(u => u.username === 'admin')) S.users.push({username:'admin',password:'admin2026'});
-  persist();
+  // Само ако НЕ дойде от Firebase listener — иначе правим безкраен цикъл
+  if (!fromFirebase) persist();
+  else {
+    // Само localStorage — без Firebase push
+    LS.set('wc26_users', S.users);
+    LS.set('wc26_matches', S.matches);
+    LS.set('wc26_preds', S.predictions);
+    LS.set('wc26_champs', S.champions);
+    LS.set('wc26_log', S.sessionLog);
+  }
 }
 
 
@@ -1496,8 +1505,60 @@ function toast(msg) {
 // ===================== INIT =====================
 render();
 
-// Auto-pull from GitHub on load (silent — no toast on success)
-GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
+// Auto-pull от GitHub само ако Firebase НЕ е конфигуриран
+// (ако Firebase е активен, данните идват от там — GitHub data.json е остаряло)
+if (!FB_CONFIG.databaseURL) {
+  GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
+}
+
+// Автоматично изтегляне на КО двойките от ESPN API
+async function fetchKOPairings() {
+  // ESPN API за WC 2026 КО мачове
+  const ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
+  try {
+    const res = await fetch(ESPN_URL);
+    if (!res.ok) return;
+    const json = await res.json();
+    const events = json.events || [];
+    let changed = false;
+    for (const ev of events) {
+      const comps = ev.competitions || [];
+      for (const comp of comps) {
+        const teams = comp.competitors || [];
+        if (teams.length < 2) continue;
+        const t1 = teams.find(t => t.homeAway === 'home');
+        const t2 = teams.find(t => t.homeAway === 'away');
+        if (!t1 || !t2) continue;
+        const name1 = t1.team?.displayName || t1.team?.name;
+        const name2 = t2.team?.displayName || t2.team?.name;
+        if (!name1 || !name2) continue;
+        // Намери KO мач по дата/час
+        const evDate = new Date(ev.date);
+        const koMatch = S.matches.find(m =>
+          m.stage && (m.team1 === 'TBD' || m.team2 === 'TBD') &&
+          m.kickoff && Math.abs(new Date(m.kickoff).getTime() - evDate.getTime()) < 3600000
+        );
+        if (!koMatch) continue;
+        // Попълни отборите само ако са TBD
+        if (koMatch.team1 === 'TBD') { koMatch.team1 = name1; changed = true; }
+        if (koMatch.team2 === 'TBD') { koMatch.team2 = name2; changed = true; }
+        // Попълни и резултата ако е наличен
+        const score = comp.score;
+        if (score && comp.status?.type?.completed) {
+          const s1 = parseInt(t1.score); const s2 = parseInt(t2.score);
+          if (!isNaN(s1) && !isNaN(s2) && !koMatch.result) {
+            koMatch.result = `${s1}-${s2}`;
+            changed = true;
+          }
+        }
+      }
+    }
+    if (changed) { persist(); render(); console.log('ESPN: КО двойките обновени'); }
+  } catch(e) { console.warn('ESPN fetch error:', e.message); }
+}
+
+// Стартирай ESPN sync само след зареждане на Firebase данните
+setTimeout(fetchKOPairings, 3000);
 
 // ===================== AUTO REFRESH =====================
 (function() {
@@ -1519,6 +1580,8 @@ GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
     if(badge) badge.style.display = 'inline';
     // Also fetch once on load after 3 seconds
     setTimeout(tryAutoFetch, 3000);
+    // ESPN KO sync на всеки 5 минути по време на елиминации
+    setInterval(fetchKOPairings, INTERVAL);
   }
 })();
 
