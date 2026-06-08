@@ -199,7 +199,28 @@ const MATCH_TIMES = {
   49:"2026-06-16T22:00+03:00",50:"2026-06-17T01:00+03:00",51:"2026-06-23T00:00+03:00",52:"2026-06-23T03:00+03:00",53:"2026-06-26T22:00+03:00",54:"2026-06-26T22:00+03:00",
   55:"2026-06-17T04:00+03:00",56:"2026-06-17T07:00+03:00",57:"2026-06-22T20:00+03:00",58:"2026-06-23T06:00+03:00",59:"2026-06-28T05:00+03:00",60:"2026-06-28T05:00+03:00",
   61:"2026-06-17T20:00+03:00",62:"2026-06-18T05:00+03:00",63:"2026-06-23T20:00+03:00",64:"2026-06-24T05:00+03:00",65:"2026-06-28T02:30+03:00",66:"2026-06-28T02:30+03:00",
-  67:"2026-06-17T23:00+03:00",68:"2026-06-18T02:00+03:00",69:"2026-06-23T23:00+03:00",70:"2026-06-24T02:00+03:00",71:"2026-06-28T00:00+03:00",72:"2026-06-28T00:00+03:00"
+  67:"2026-06-17T23:00+03:00",68:"2026-06-18T02:00+03:00",69:"2026-06-23T23:00+03:00",70:"2026-06-24T02:00+03:00",71:"2026-06-28T00:00+03:00",72:"2026-06-28T00:00+03:00",
+  // 1/32-финали (29 юни – 7 юли)
+  73:"2026-06-29T22:00+03:00",74:"2026-06-30T01:00+03:00",
+  75:"2026-06-30T22:00+03:00",76:"2026-07-01T01:00+03:00",
+  77:"2026-07-01T22:00+03:00",78:"2026-07-02T01:00+03:00",
+  79:"2026-07-02T22:00+03:00",80:"2026-07-03T01:00+03:00",
+  81:"2026-07-03T22:00+03:00",82:"2026-07-04T01:00+03:00",
+  83:"2026-07-04T22:00+03:00",84:"2026-07-05T01:00+03:00",
+  85:"2026-07-05T22:00+03:00",86:"2026-07-06T01:00+03:00",
+  87:"2026-07-06T22:00+03:00",88:"2026-07-07T01:00+03:00",
+  // 1/16-финали (8–11 юли)
+  89:"2026-07-08T01:00+03:00",90:"2026-07-08T04:00+03:00",
+  91:"2026-07-09T01:00+03:00",92:"2026-07-09T04:00+03:00",
+  93:"2026-07-10T01:00+03:00",94:"2026-07-10T04:00+03:00",
+  95:"2026-07-11T01:00+03:00",96:"2026-07-11T04:00+03:00",
+  // Четвъртфинали (13–15 юли)
+  97:"2026-07-13T22:00+03:00",98:"2026-07-14T01:00+03:00",
+  99:"2026-07-14T22:00+03:00",100:"2026-07-15T01:00+03:00",
+  // Полуфинали (17–18 юли)
+  101:"2026-07-17T01:00+03:00",102:"2026-07-18T01:00+03:00",
+  // 3-то място и Финал
+  103:"2026-07-19T21:00+03:00",104:"2026-07-20T01:00+03:00"
 };
 
 function getKickoff(matchId) { return MATCH_TIMES[matchId] ? new Date(MATCH_TIMES[matchId]) : null; }
@@ -209,6 +230,8 @@ function fmtBG(matchId) {
     d.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Sofia'}) + ' ч.';
 }
 function isLocked(matchId) {
+  const m = S && S.matches ? S.matches.find(x => x.id === matchId) : null;
+  if (m && (m.team1 === 'TBD' || m.team2 === 'TBD')) return true; // KO отборите не са определени
   const k = getKickoff(matchId); if(!k) return false;
   return Date.now() >= k.getTime() - 30*60*1000;
 }
@@ -237,7 +260,26 @@ function generateMatches() {
     const mdays = [1,1,2,2,3,3];
     pairs.forEach(([a,b],i) => {const mid=id++;ms.push({id:mid,group:g,matchday:mdays[i],team1:t[a],team2:t[b],result:null,kickoff:MATCH_TIMES[mid]||null});});
   }
-  return ms;
+  return [...ms, ...generateKOMatches()];
+}
+
+function generateKOMatches() {
+  const ko = [];
+  const stages = [
+    {stage:'R32', label:'1/32-финал', count:16, startId:73},
+    {stage:'R16', label:'1/16-финал', count:8,  startId:89},
+    {stage:'QF',  label:'Четвъртфинал', count:4, startId:97},
+    {stage:'SF',  label:'Полуфинал',  count:2,  startId:101},
+    {stage:'3P',  label:'3-то място', count:1,  startId:103},
+    {stage:'F',   label:'Финал',      count:1,  startId:104},
+  ];
+  for (const {stage, label, count, startId} of stages) {
+    for (let i = 0; i < count; i++) {
+      const id = startId + i;
+      ko.push({id, stage, stageLabel:label, matchNum:i+1, team1:'TBD', team2:'TBD', result:null, kickoff:MATCH_TIMES[id]||null});
+    }
+  }
+  return ko;
 }
 
 // ===================== STATE =====================
@@ -394,12 +436,21 @@ let S = {
   tab: 'predictions',
   authTab: 'login',
   activeGroup: 'A',
+  predView: 'group', // 'group' | 'ko'
+  adminView: 'group', // 'group' | 'ko'
   authError: '',
   authSuccess: '',
   profileError: '',
   profileSuccess: '',
   toast: null,
 };
+
+// Migration: ensure KO matches are present
+if (!S.matches.find(m => m.stage)) {
+  const groupMs = S.matches.filter(m => m.group);
+  S.matches = [...groupMs, ...generateKOMatches()];
+  persist();
+}
 
 function persist() {
   LS.set('wc26_users', S.users);
@@ -705,29 +756,87 @@ function renderTab() {
 }
 
 // --- PREDICTIONS ---
+function matchDateKey(m) {
+  const t = MATCH_TIMES[m.id];
+  if (!t) return '9999-99-99';
+  return new Date(t).toLocaleDateString('bg-BG', {timeZone:'Europe/Sofia', year:'numeric', month:'2-digit', day:'2-digit'});
+}
+function matchDateLabel(m) {
+  const t = MATCH_TIMES[m.id]; if (!t) return '';
+  return new Date(t).toLocaleDateString('bg-BG', {timeZone:'Europe/Sofia', weekday:'long', day:'numeric', month:'long', year:'numeric'});
+}
+
 function renderPredictions() {
   const preds = S.predictions[S.currentUser] || {};
-  const gm = S.matches.filter(m => m.group === S.activeGroup);
-  const totalPred = Object.keys(preds).length;
-  const totalM = S.matches.length;
+  const view = S.predView || 'group';
+  const groupMatches = S.matches.filter(m => m.group);
+  const koMatches = S.matches.filter(m => m.stage);
+  const totalPred = Object.values(preds).filter(p => p && p.s1 !== '' && p.s2 !== '').length;
+  const totalM = groupMatches.length + koMatches.length;
+
+  const STAGE_ORDER = ['R32','R16','QF','SF','3P','F'];
+  const STAGE_LABELS = {R32:'1/32-финали',R16:'1/16-финали',QF:'Четвъртфинали',SF:'Полуфинали','3P':'Мач за 3-то място',F:'Финал'};
+
+  let content = '';
+
+  if (view === 'group') {
+    // Sort by kickoff, group by date
+    const sorted = [...groupMatches].sort((a,b) => {
+      const ta = MATCH_TIMES[a.id] ? new Date(MATCH_TIMES[a.id]).getTime() : 0;
+      const tb = MATCH_TIMES[b.id] ? new Date(MATCH_TIMES[b.id]).getTime() : 0;
+      return ta - tb;
+    });
+    const byDate = {};
+    for (const m of sorted) {
+      const dk = matchDateKey(m);
+      if (!byDate[dk]) byDate[dk] = {label: matchDateLabel(m), matches:[]};
+      byDate[dk].matches.push(m);
+    }
+    for (const {label, matches} of Object.values(byDate)) {
+      content += `<div class="matchday-label">📅 ${label}</div>`;
+      content += matches.map(m => {
+        const badge = `<span style="font-size:10px;background:rgba(255,255,255,.12);padding:2px 8px;border-radius:10px;color:rgba(255,255,255,.7)">Гр. ${m.group}</span>`;
+        return renderMatchCard(m, preds[m.id], false, badge);
+      }).join('');
+    }
+  } else {
+    // KO view — grouped by stage, then by date within stage
+    for (const stage of STAGE_ORDER) {
+      const sm = koMatches.filter(m => m.stage === stage);
+      if (!sm.length) continue;
+      content += `<div class="matchday-label" style="background:linear-gradient(90deg,rgba(198,40,40,.15),transparent)">⚔️ ${STAGE_LABELS[stage]}</div>`;
+      const byDate = {};
+      for (const m of sm) {
+        const dk = matchDateKey(m);
+        if (!byDate[dk]) byDate[dk] = {label: matchDateLabel(m), matches:[]};
+        byDate[dk].matches.push(m);
+      }
+      for (const {label, matches} of Object.values(byDate)) {
+        if (label) content += `<div style="padding:6px 0 4px 1rem;font-size:12px;color:rgba(255,255,255,.4)">📅 ${label}</div>`;
+        content += matches.map(m => {
+          const badge = `<span style="font-size:10px;background:rgba(198,40,40,.2);padding:2px 8px;border-radius:10px;color:#ef9a9a">${m.stageLabel} #${m.matchNum}</span>`;
+          return renderMatchCard(m, preds[m.id], false, badge);
+        }).join('');
+      }
+    }
+  }
+
   return `
   <div class="page-title">🔮 Моите прогнози</div>
   <div class="info-bar">
-    ⏰ Прогнозата се заключва 30 мин преди началото · 🔥 <strong style="color:#ff7043">30т</strong> точен (5+ гола) &nbsp;·&nbsp; 💡 <strong style="color:#a5d6a7">20т</strong> точен резултат &nbsp;·&nbsp;
-    <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp;
-    Прогнозирал: <strong>${totalPred}/${totalM}</strong> мача
+    ⏰ Заключва се 30 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">30т</strong> точен 5+гола &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
+    <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp; Прогнозирал: <strong>${totalPred}/${totalM}</strong>
   </div>
   <div class="group-tabs">
-    ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">Група ${g}</div>`).join('')}
+    <div class="group-tab ${view==='group'?'active':''}" data-predview="group">📅 Групова фаза</div>
+    <div class="group-tab ${view==='ko'?'active':''}" data-predview="ko">⚔️ Елиминации</div>
   </div>
-  ${[1,2,3].map(md => {
-    const mds = gm.filter(m => m.matchday === md);
-    return `<div class="matchday-label">Кръг ${md}</div>${mds.map(m => renderMatchCard(m, preds[m.id], false)).join('')}`;
-  }).join('')}
-  <div><button class="save-btn" id="savePreds">💾 Запази прогнозите за Група ${S.activeGroup}</button></div>`;
+  ${content}
+  <div><button class="save-btn" id="savePreds">💾 Запази прогнозите</button></div>`;
 }
 
-function renderMatchCard(m, pred, isAdmin) {
+function renderMatchCard(m, pred, isAdmin, badge = '') {
+  const isTBD = m.team1 === 'TBD' || m.team2 === 'TBD';
   const hasPred = pred && pred.s1 !== '' && pred.s2 !== '';
   const hasResult = m.result !== null;
   const locked = (hasResult || (!isAdmin && isLocked(m.id))) && !isAdmin;
@@ -741,8 +850,17 @@ function renderMatchCard(m, pred, isAdmin) {
     else pts=`<span class="pts-badge pts-0">✗ 0т</span>`;
   }
   const prefix = isAdmin ? 'adm' : 'pr';
+  const t1name = isTBD && !isAdmin ? (m.slotDesc || 'TBD') : m.team1;
+  const t2name = isTBD && !isAdmin ? '' : m.team2;
   return `
-  ${!isAdmin && MATCH_TIMES[m.id] ? `<div class="kickoff-time">${fmtBG(m.id)}${isLocked(m.id)&&!hasResult?' 🔒':''}</div>` : ''}
+  <div style="display:flex;align-items:center;gap:6px;padding:${badge?'6px 0 2px':'2px 0'}">
+    ${badge}
+    ${MATCH_TIMES[m.id] ? `<span style="font-size:11px;color:rgba(255,255,255,.35)">${fmtBG(m.id)}${!hasResult&&isLocked(m.id)?' 🔒':''}</span>` : ''}
+  </div>
+  ${isTBD && !isAdmin ? `
+  <div class="match-card locked" style="opacity:.6">
+    <div class="team"><span class="team-name" style="font-size:13px;color:rgba(255,255,255,.45)">⏳ Отборите ще бъдат определени след груповата фаза</span></div>
+  </div>` : `
   <div class="match-card ${hasPred&&!isAdmin?'predicted':''} ${locked?'locked':''}">
     <div class="team">
       <span class="team-flag">${FLAGS[m.team1]||'🏳️'}</span>
@@ -770,7 +888,7 @@ function renderMatchCard(m, pred, isAdmin) {
       ${pts}
     </div>` : ''}
     ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">✓</span>` : ''}
-  </div>`;
+  </div>`}`;
 }
 
 // --- LEADERBOARD ---
@@ -882,15 +1000,51 @@ function renderAdmin() {
   <div class="admin-box">
     <div class="admin-note">
       Въведи реалните резултати от мачовете. Точките на всички играчи ще се изчислят автоматично.<br>
-      Въведени резултати: <strong style="color:#f9a825">${done} / ${S.matches.length}</strong> мача
+      Въведени резултати: <strong style="color:#f9a825">${done} / ${S.matches.filter(m=>m.group).length}</strong> групови мача
     </div>
     <div class="group-tabs">
+      <div class="group-tab ${(S.adminView||'group')==='group'?'active':''}" data-adminview="group" style="font-weight:700">📅 Групова фаза</div>
+      <div class="group-tab ${(S.adminView||'group')==='ko'?'active':''}" data-adminview="ko" style="font-weight:700">⚔️ Елиминации</div>
+    </div>
+
+    ${(S.adminView||'group') === 'group' ? `
+    <div class="group-tabs" style="margin-top:.5rem">
       ${Object.keys(GROUPS).map(g=>`<div class="group-tab ${S.activeGroup===g?'active':''}" data-group="${g}">Група ${g}</div>`).join('')}
     </div>
     ${[1,2,3].map(md => {
       const mds = gm.filter(m => m.matchday === md);
       return `<div class="matchday-label">Кръг ${md}</div>${mds.map(m=>renderMatchCard(m,null,true)).join('')}`;
     }).join('')}
+    ` : `
+    ${(() => {
+      const STAGE_ORDER = ['R32','R16','QF','SF','3P','F'];
+      const STAGE_LABELS = {R32:'1/32-финали',R16:'1/16-финали',QF:'Четвъртфинали',SF:'Полуфинали','3P':'Мач за 3-то място',F:'Финал'};
+      const koMs = S.matches.filter(m => m.stage);
+      let html = '';
+      for (const stage of STAGE_ORDER) {
+        const sm = koMs.filter(m => m.stage === stage);
+        if (!sm.length) continue;
+        html += `<div class="matchday-label">⚔️ ${STAGE_LABELS[stage]}</div>`;
+        html += sm.map(m => `
+          <div style="background:rgba(0,0,0,.2);border-radius:10px;padding:.75rem 1rem;margin-bottom:.5rem">
+            <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:.5rem">${m.stageLabel} #${m.matchNum} · ${MATCH_TIMES[m.id]?fmtBG(m.id):''}</div>
+            <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+              <input type="text" data-ko-team="${m.id}" data-side="t1" value="${m.team1==='TBD'?'':m.team1}"
+                placeholder="Отбор 1" style="flex:1;min-width:100px;padding:7px 10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;font-size:13px">
+              <input class="score-input" type="number" min="0" max="30" data-adm="${m.id}" data-side="s1"
+                value="${m.result?m.result.s1:''}" placeholder="–" style="width:52px">
+              <span style="color:rgba(255,255,255,.4)">:</span>
+              <input class="score-input" type="number" min="0" max="30" data-adm="${m.id}" data-side="s2"
+                value="${m.result?m.result.s2:''}" placeholder="–" style="width:52px">
+              <input type="text" data-ko-team="${m.id}" data-side="t2" value="${m.team2==='TBD'?'':m.team2}"
+                placeholder="Отбор 2" style="flex:1;min-width:100px;padding:7px 10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#fff;font-size:13px">
+            </div>
+          </div>`).join('');
+      }
+      return html;
+    })()}
+    <div><button class="save-btn" id="saveKOResults">💾 Запази елиминациите</button></div>
+    `}
 
     <div class="admin-box" style="margin-top:1.5rem">
       <div class="admin-note" style="margin-bottom:1rem">
@@ -1139,12 +1293,22 @@ function bind() {
     S.tab = el.dataset.tab; S.profileError = ''; S.profileSuccess = ''; render();
   }));
 
-  // Group tabs
+  // Group tabs (admin panel)
   document.querySelectorAll('[data-group]').forEach(el => el.addEventListener('click', () => {
     S.activeGroup = el.dataset.group; render();
   }));
 
-  // Save predictions
+  // Prediction view tabs (Групова фаза / Елиминации)
+  document.querySelectorAll('[data-predview]').forEach(el => el.addEventListener('click', () => {
+    S.predView = el.dataset.predview; render();
+  }));
+
+  // Admin view tabs
+  document.querySelectorAll('[data-adminview]').forEach(el => el.addEventListener('click', () => {
+    S.adminView = el.dataset.adminview; render();
+  }));
+
+  // Save predictions — reads ALL [data-pr] inputs on page
   const sp = document.getElementById('savePreds');
   if (sp) sp.addEventListener('click', () => {
     if (!S.predictions[S.currentUser]) S.predictions[S.currentUser] = {};
@@ -1153,7 +1317,7 @@ function bind() {
       if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
       S.predictions[S.currentUser][mid][inp.dataset.side] = inp.value;
     });
-    persist(); toast('✅ Прогнозите за Група ' + S.activeGroup + ' са запазени!');
+    persist(); toast('✅ Прогнозите са запазени!');
   });
 
   // Save admin results
@@ -1222,6 +1386,32 @@ function bind() {
     const user = S.users.find(x => x.username === uname);
     if (user) { user.password = newPw; persist(); toast(`✅ Паролата на ${uname} е ресетната!`); }
   }));
+
+  // Save KO results + team names
+  const koBtn = document.getElementById('saveKOResults');
+  if (koBtn) koBtn.addEventListener('click', () => {
+    // Save team names
+    document.querySelectorAll('[data-ko-team]').forEach(inp => {
+      const mid = parseInt(inp.dataset.koTeam);
+      const m = S.matches.find(x => x.id === mid);
+      if (!m) return;
+      const val = inp.value.trim() || 'TBD';
+      if (inp.dataset.side === 't1') m.team1 = val;
+      else m.team2 = val;
+    });
+    // Save results
+    document.querySelectorAll('[data-adm]').forEach(inp => {
+      const mid = parseInt(inp.dataset.adm);
+      const m = S.matches.find(x => x.id === mid);
+      if (!m || inp.value === '') return;
+      if (!m.result) m.result = {s1:0, s2:0};
+      m.result[inp.dataset.side] = parseInt(inp.value);
+    });
+    S.matches.forEach(m => {
+      if (m.result && (isNaN(m.result.s1) || isNaN(m.result.s2))) m.result = null;
+    });
+    persist(); render(); toast('✅ Елиминациите са запазени!');
+  });
 
   // Admin add user
   const adminAddUF = document.getElementById('adminAddUserForm');
