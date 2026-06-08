@@ -163,9 +163,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 @media(max-width:600px){body{padding-bottom:70px}.app-header .app-nav,.app-header .user-name{display:none}.bottom-nav{display:block}.main-content{padding:1rem .75rem}.team-name{font-size:12px}.match-card{padding:.65rem .75rem}.score-input{width:40px;height:40px;font-size:17px}.lb-head,.lb-row{grid-template-columns:28px 1fr 40px 40px 40px 52px;padding:9px 10px}.champ-grid{grid-template-columns:repeat(3,1fr)}.groups-grid{grid-template-columns:1fr}.save-btn{width:100%}}
 </style>
 </head>
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <body>
 <div id="root"></div>
 <script>
@@ -312,6 +309,7 @@ const FB = {
   init() {
     try {
       if (!FB_CONFIG.databaseURL) return; // не е конфигуриран
+      if (typeof firebase === 'undefined') { console.warn('Firebase SDK не е зареден'); return; }
       if (!firebase.apps.length) firebase.initializeApp(FB_CONFIG);
       FB.db = firebase.database();
       FB.ref = FB.db.ref('wc26');
@@ -488,8 +486,7 @@ if (!S.users.find(u => u.username === 'admin')) {
   persist();
 }
 
-// Init Firebase (ако е конфигуриран)
-FB.init();
+// Firebase се инициализира след зареждане (вижте window.load по-долу)
 
 // ===================== SCORING =====================
 
@@ -1555,12 +1552,14 @@ window._doForgot = function() {
 };
 
 // ===================== INIT =====================
-render();
-
-// Auto-pull от GitHub само ако Firebase НЕ е конфигуриран
-// (ако Firebase е активен, данните идват от там — GitHub data.json е остаряло)
-if (!FB_CONFIG.databaseURL) {
-  GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
+// render() веднага — страницата се показва без да чака Firebase/GitHub
+try {
+  render();
+} catch(e) {
+  document.getElementById('root').innerHTML =
+    '<div style="color:white;background:#c0392b;padding:2rem;font-family:monospace;font-size:0.9rem">' +
+    '<b>❌ JavaScript грешка при зареждане:</b><br><br>' + e.message + '<br><br>' + (e.stack||'').replace(/\n/g,'<br>') + '</div>';
+  throw e;
 }
 
 // Автоматично изтегляне на КО двойките от ESPN API
@@ -1609,11 +1608,21 @@ async function fetchKOPairings() {
   } catch(e) { console.warn('ESPN fetch error:', e.message); }
 }
 
-// Стартирай ESPN sync само след зареждане на Firebase данните
-setTimeout(fetchKOPairings, 3000);
+// ===================== POST-LOAD INIT =====================
+// Firebase SDK е зареден накрая в <body> — трябва да изчакаме window.load
+window.addEventListener('load', function() {
+  // Инициализирай Firebase (SDK е заредено вече)
+  FB.init();
 
-// ===================== AUTO REFRESH =====================
-(function() {
+  // Auto-pull от GitHub само ако Firebase НЕ е конфигуриран
+  if (!FB_CONFIG.databaseURL) {
+    GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
+  }
+
+  // ESPN КО sync след 3 секунди
+  setTimeout(fetchKOPairings, 3000);
+
+  // ===================== AUTO REFRESH =====================
   const WC_START = new Date('2026-06-11T00:00:00+03:00').getTime();
   const WC_END   = new Date('2026-07-20T00:00:00+03:00').getTime();
   const INTERVAL = 5 * 60 * 1000; // 5 minutes
@@ -1621,22 +1630,22 @@ setTimeout(fetchKOPairings, 3000);
   function tryAutoFetch() {
     const now = Date.now();
     if(now >= WC_START && now <= WC_END) {
-      autoFetchResults(true); // silent = no toasts
+      autoFetchResults(true);
     }
   }
 
-  // Start interval once page is loaded
   if(Date.now() >= WC_START && Date.now() <= WC_END) {
     setInterval(tryAutoFetch, INTERVAL);
     const badge = document.getElementById('autoRefreshBadge');
     if(badge) badge.style.display = 'inline';
-    // Also fetch once on load after 3 seconds
     setTimeout(tryAutoFetch, 3000);
-    // ESPN KO sync на всеки 5 минути по време на елиминации
     setInterval(fetchKOPairings, INTERVAL);
   }
-})();
+});
 
 </script>
+<!-- Firebase SDK — зарежда се накрая за да не блокира страницата -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </body>
 </html>
