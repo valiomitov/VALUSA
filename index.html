@@ -226,6 +226,10 @@ function fmtBG(matchId) {
   return d.toLocaleDateString('bg-BG',{day:'2-digit',month:'2-digit',timeZone:'Europe/Sofia'}) + ' ' +
     d.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Sofia'}) + ' ч.';
 }
+// Заключване на прогнозата за шампион — 11.06.2026 в 21:59 BG time (UTC+3)
+const CHAMP_LOCK = new Date('2026-06-11T21:59:00+03:00').getTime();
+function isChampLocked() { return Date.now() >= CHAMP_LOCK; }
+
 function isLocked(matchId) {
   const m = S && S.matches ? S.matches.find(x => x.id === matchId) : null;
   if (m && (m.team1 === 'TBD' || m.team2 === 'TBD')) return true; // KO отборите не са определени
@@ -996,22 +1000,24 @@ function renderGroupCard(gName, teams) {
 // --- CHAMPION ---
 function renderChampion() {
   const my = S.champions[S.currentUser] || null;
+  const locked = isChampLocked() && S.currentUser !== 'admin';
   return `
   <div class="champ-wrap">
     <div class="champ-icon">🏆</div>
     <div class="champ-title">Победител на турнира</div>
     <div class="champ-sub">Кой ще вдигне трофея? Правилна прогноза = <strong style="color:#f9a825">+60 точки</strong></div>
+    ${locked ? `<div style="background:rgba(198,40,40,.12);border:1px solid rgba(198,40,40,.3);border-radius:10px;padding:.6rem 1rem;margin-bottom:1rem;font-size:13px;color:#ef9a9a">🔒 Прогнозата е заключена — турнирът е започнал</div>` : ''}
     ${my ? `<div class="champ-current">
       <div style="font-size:2.5rem">${FLAGS[my]||'🏳️'}</div>
       <div style="font-weight:800;font-size:18px;margin-top:8px">${my}</div>
       <div style="color:rgba(255,255,255,.4);font-size:12px;margin-top:4px">Твоята прогноза</div>
     </div>` : `<div style="color:rgba(255,255,255,.35);margin-bottom:1.5rem;font-size:14px">⚠️ Не си избрал победител</div>`}
-    <div class="champ-grid">
+    ${!locked ? `<div class="champ-grid">
       ${ALL_TEAMS.map(t => `
       <button class="champ-btn ${my===t?'selected':''}" data-champ="${t}">
         <span class="champ-flag">${FLAGS[t]||'🏳️'}</span>${t}
       </button>`).join('')}
-    </div>
+    </div>` : ''}
   </div>`;
 }
 
@@ -1380,6 +1386,7 @@ function bind() {
 
   // Champion
   document.querySelectorAll('[data-champ]').forEach(btn => btn.addEventListener('click', () => {
+    if (isChampLocked() && S.currentUser !== 'admin') { toast('🔒 Прогнозата за шампион е заключена!'); return; }
     S.champions[S.currentUser] = btn.dataset.champ;
     persist(); toast('🏆 ' + btn.dataset.champ + ' — прогнозата е запазена!'); render();
   }));
