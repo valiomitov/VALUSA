@@ -291,80 +291,6 @@ async function syncToGitHub() {
   finally { _ghSyncing = false; }
 }
 
-// ===================== UTF-8 / BASE64 HELPERS =====================
-function utf8ToB64(str) {
-  const bytes = new TextEncoder().encode(str);
-  let bin = '';
-  bytes.forEach(b => bin += String.fromCharCode(b));
-  return btoa(bin);
-}
-function b64ToUtf8(b64) {
-  const bin = atob(b64.replace(/\n/g,''));
-  const bytes = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-  return new TextDecoder('utf-8').decode(bytes);
-}
-
-// ===================== GITHUB SYNC =====================
-const GH = {
-  REPO: 'valiomitov/VALUSA',
-  FILE: 'data.json',
-  tok: () => LS.get('_wc26_tok') || '',
-  setTok: t => t ? LS.set('_wc26_tok', t) : LS.del('_wc26_tok'),
-  rawUrl: () => 'https://raw.githubusercontent.com/valiomitov/VALUSA/main/data.json?_cb=' + Date.now(),
-
-  async pull() {
-    try {
-      const r = await fetch(GH.rawUrl(), { cache: 'no-store' });
-      if (!r.ok) return null;
-      const data = await r.json();
-      return data;
-    } catch(e) { return null; }
-  },
-
-  async push() {
-    const tok = GH.tok();
-    if (!tok) { toast('\u274C \u0412\u044A\u0432\u0435\u0434u0438 Sync Key'); return false; }
-    const payload = {
-      users: S.users,
-      matches: S.matches,
-      predictions: S.predictions,
-      champions: S.champions,
-      sessionLog: S.sessionLog,
-      _ts: Date.now()
-    };
-    try {
-      const shaR = await fetch('https://api.github.com/repos/' + GH.REPO + '/contents/' + GH.FILE, {
-        headers: { Authorization: 'token ' + tok, Accept: 'application/vnd.github.v3+json' }
-      });
-      const shaD = shaR.ok ? await shaR.json() : {};
-      const body = { message: 'sync: \u043F\u0440\u043E\u0433\u043D\u043E\u0437\u0438', content: utf8ToB64(JSON.stringify(payload, null, 2)) };
-      if (shaD.sha) body.sha = shaD.sha;
-      const putR = await fetch('https://api.github.com/repos/' + GH.REPO + '/contents/' + GH.FILE, {
-        method: 'PUT',
-        headers: { Authorization: 'token ' + tok, 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      if (putR.ok) { toast('\u2705 \u0421\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0438\u0440\u0430\u043D\u043E \u0441 GitHub!',); return true; }
-      const err = await putR.json();
-      toast('\u274C ' + (err.message || '\u0413\u0440\u0435\u0448\u043A\u0430 \u043F\u0440\u0438 sync'));
-      return false;
-    } catch(e) { toast('\u274C ' + e.message); return false; }
-  }
-};
-
-function applyGHData(data) {
-  if (!data) return;
-  if (Array.isArray(data.users)) S.users = data.users;
-  if (Array.isArray(data.matches)) S.matches = data.matches;
-  if (data.predictions && typeof data.predictions === 'object') S.predictions = data.predictions;
-  if (data.champions && typeof data.champions === 'object') S.champions = data.champions;
-  if (Array.isArray(data.sessionLog)) S.sessionLog = data.sessionLog;
-  if (!S.users.find(u => u.username === 'admin')) S.users.push({username:'admin',password:'admin2026'});
-  persist();
-}
-
-
 let S = {
   users: LS.get('wc26_users') || [],
   currentUser: LS.get('wc26_current') || null,
@@ -866,21 +792,6 @@ function renderAdmin() {
       </div>
     </div>
     <div><button class="save-btn" id="saveResults">💾 Запази резултатите за Група ${S.activeGroup}</button></div>
-<div class="admin-box" style="margin-top:1.5rem;border:1px solid rgba(100,181,246,.25);background:rgba(100,181,246,.04)">
-      <div class="admin-note"><strong>☁️ GitHub Sync</strong><br>
-        Sync Key се пази само на твоето устройство. Другите потребители ще получат достъп автоматично при следващото опресняване.
-      </div>
-      <div class="form-group" style="margin-top:1rem">
-        <label style="font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px">Sync Key (GitHub PAT)</label>
-        <input type="password" id="ghTokInput" value="${GH.tok()}" placeholder="ghp_..." style="width:100%;padding:10px 14px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;margin-top:4px">
-      </div>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem">
-        <button class="save-btn" id="ghSaveBtn" style="background:linear-gradient(135deg,#37474f,#455a64)">💾 Запази Key</button>
-        <button class="save-btn" id="ghPushBtn" style="background:linear-gradient(135deg,#1b5e20,#2e7d32)">☁️ Качи на GitHub</button>
-        <button class="save-btn" id="ghPullBtn" style="background:linear-gradient(135deg,#1a237e,#283593)">⬇️ Изтегли от GitHub</button>
-      </div>
-    </div>
-
   </div>`;
 }
 
@@ -1075,28 +986,6 @@ function bind() {
     persist();
     toast('✅ Паролата е променена!');
   });
-
-  // GitHub Sync (admin only)
-  const ghSave = document.getElementById('ghSaveBtn');
-  if (ghSave) ghSave.addEventListener('click', () => {
-    const tok = (document.getElementById('ghTokInput')||{}).value || '';
-    GH.setTok(tok.trim());
-    toast(tok.trim() ? '✅ Sync Key запазен!' : '🗑️ Sync Key изтрит');
-  });
-  const ghPush = document.getElementById('ghPushBtn');
-  if (ghPush) ghPush.addEventListener('click', () => {
-    ghPush.disabled = true; ghPush.textContent = '⏳ Качване...';
-    GH.push().finally(() => { ghPush.disabled = false; ghPush.textContent = '☁️ Качи на GitHub'; });
-  });
-  const ghPull = document.getElementById('ghPullBtn');
-  if (ghPull) ghPull.addEventListener('click', () => {
-    ghPull.disabled = true; ghPull.textContent = '⏳ Изтегляне...';
-    GH.pull().then(data => {
-      if (data) { applyGHData(data); render(); toast('✅ Данните са обновени!'); }
-      else toast('❌ Не може да се изтегли от GitHub');
-      ghPull.disabled = false; ghPull.textContent = '⬇️ Изтегли от GitHub';
-    });
-  });
 }
 
 function toast(msg) {
@@ -1107,10 +996,7 @@ function toast(msg) {
 
 // ===================== INIT =====================
 render();
-loadFromGitHub().then(ok => { if(ok) { LS.set('wc26_users', S.users); LS.set('wc26_preds', S.predictions); render();
-
-// Auto-pull from GitHub on load (silent — no toast on success)
-GH.pull().then(data => { if (data) { applyGHData(data); render(); } }); } });
+loadFromGitHub().then(ok => { if(ok) { LS.set('wc26_users', S.users); LS.set('wc26_preds', S.predictions); render(); } });
 
 // ===================== AUTO REFRESH =====================
 (function() {
