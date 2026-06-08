@@ -409,7 +409,17 @@ function applyGHData(data, fromFirebase = false) {
     const localOnly = S.users.filter(u => !ghNames.has(u.username));
     S.users = [...data.users, ...localOnly];
   }
-  if (Array.isArray(data.matches)) S.matches = data.matches;
+  if (Array.isArray(data.matches)) {
+    S.matches = data.matches;
+    // Нормализирай string резултати ("2-1") → {s1,s2} обекти
+    S.matches.forEach(m => {
+      if (m.result && typeof m.result === 'string') {
+        const parts = m.result.split('-');
+        const s1 = parseInt(parts[0]), s2 = parseInt(parts[1]);
+        m.result = (!isNaN(s1) && !isNaN(s2)) ? {s1, s2} : null;
+      }
+    });
+  }
   if (data.predictions && typeof data.predictions === 'object') {
     S.predictions = Object.assign({}, data.predictions,
       Object.fromEntries(Object.entries(S.predictions).filter(([k]) => !(k in data.predictions)))
@@ -508,9 +518,11 @@ function userScore(username) {
   let sign = 0, signDiff = 0, exact = 0, exact5 = 0;
   for (const m of S.matches) {
     const p = preds[m.id];
-    if (!p || m.result === null || p.s1 === '' || p.s2 === '') continue;
+    if (!p || !m.result || typeof m.result !== 'object' || m.result.s1 === undefined) continue;
+    if (p.s1 === '' || p.s2 === '') continue;
     const ps1 = parseInt(p.s1), ps2 = parseInt(p.s2);
     const rs1 = m.result.s1, rs2 = m.result.s2;
+    if (isNaN(ps1) || isNaN(ps2) || isNaN(rs1) || isNaN(rs2)) continue;
     if (ps1===rs1 && ps2===rs2) {
       if (rs1 + rs2 >= 5) { exact5++; } else { exact++; }
     }
@@ -919,6 +931,7 @@ function renderLeaderboard() {
       <div style="text-align:center;font-size:10px">Знак<br><span style="color:#90caf9">10т</span></div>
       <div style="text-align:center;font-size:10px">+Разл.<br><span style="color:#ffe082">15т</span></div>
       <div style="text-align:center;font-size:10px">Точен<br><span style="color:#a5d6a7">20т</span></div>
+      <div style="text-align:center;font-size:10px">🔥5+<br><span style="color:#ff7043">30т</span></div>
       <div style="text-align:center">Общо</div>
     </div>
     ${lb.length === 0 ? `<div class="lb-empty">Все още няма регистрирани потребители</div>` :
@@ -1334,6 +1347,15 @@ function bind() {
       S.predictions[S.currentUser][mid][inp.dataset.side] = inp.value;
     });
     persist(); toast('✅ Прогнозите са запазени!');
+  });
+
+  // При промяна на прогноза → иконката на бутона се сменя на незапазена (червена)
+  document.querySelectorAll('[data-pr]').forEach(inp => {
+    inp.addEventListener('input', () => {
+      const mid = inp.dataset.pr;
+      const btn = document.getElementById('sp_' + mid);
+      if (btn) { btn.textContent = '💾'; btn.style.background = '#c62828'; btn.style.color = '#ffcdd2'; }
+    });
   });
 
   // Save admin results
