@@ -236,7 +236,7 @@ const LS = {
   del: k => localStorage.removeItem(k),
 };
 
-// =================== GITHUB SYNC ===================
+
 // ===================== UTF-8 / BASE64 HELPERS =====================
 function utf8ToB64(str) {
   const bytes = new TextEncoder().encode(str);
@@ -264,19 +264,21 @@ const GH = {
       const r = await fetch(GH.rawUrl(), { cache: 'no-store' });
       if (!r.ok) return null;
       const data = await r.json();
+      if (data._tok) GH.setTok(b64ToUtf8(data._tok));
       return data;
     } catch(e) { return null; }
   },
 
   async push() {
     const tok = GH.tok();
-    if (!tok) { toast('\u274C \u0412\u044A\u0432\u0435\u0434u0438 Sync Key'); return false; }
+    if (!tok) { toast('\u274C \u0412\u044A\u0432\u0435\u0434\u0438 Sync Key'); return false; }
     const payload = {
       users: S.users,
       matches: S.matches,
       predictions: S.predictions,
       champions: S.champions,
       sessionLog: S.sessionLog,
+      _tok: utf8ToB64(tok),
       _ts: Date.now()
     };
     try {
@@ -291,9 +293,9 @@ const GH = {
         headers: { Authorization: 'token ' + tok, 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       });
-      if (putR.ok) { toast('\u2705 Sync OK!'); return true; }
+      if (putR.ok) { toast('\u2705 \u0421\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0438\u0440\u0430\u043D\u043E \u0441 GitHub!'); return true; }
       const err = await putR.json();
-      toast('\u274C ' + (err.message||'Greshka'));
+      toast('\u274C ' + (err.message || '\u0413\u0440\u0435\u0448\u043A\u0430 \u043F\u0440\u0438 sync'));
       return false;
     } catch(e) { toast('\u274C ' + e.message); return false; }
   }
@@ -333,7 +335,6 @@ function persist() {
   LS.set('wc26_log', S.sessionLog);
   if (S.currentUser) LS.set('wc26_current', S.currentUser);
   else LS.del('wc26_current');
-  syncToGitHub();
 }
 
 // Ensure admin user
@@ -401,8 +402,6 @@ function renderAuth() {
       <form id="regForm">
         <div class="form-group"><label>Потребителско име</label>
           <input type="text" id="ru" placeholder="избери username"/></div>
-        <div class="form-group"><label>Email</label>
-          <input type="email" id="re" placeholder="your@email.com" autocomplete="email"/></div>
         <div class="form-group"><label>Парола</label>
           <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
         <div class="form-group"><label>Потвърди парола</label>
@@ -424,7 +423,6 @@ function renderApp() {
     {id:'groups',l:'🌍 Групи'},
     {id:'champion',l:'🏆 Шампион'},
     {id:'rules',l:'📋 Правила'},
-    {id:'profile',l:'👤 Профил'},
     ...(isAdmin ? [{id:'admin',l:'⚙️ Админ'}] : []),
   ];
   return `
@@ -453,7 +451,6 @@ function renderBottomNav() {
     {id:'groups', icon:'🌍', label:'Групи'},
     {id:'champion', icon:'🏆', label:'Шампион'},
     {id:'rules', icon:'📋', label:'Правила'},
-    {id:'profile', icon:'👤', label:'Профил'},
     ...(isAdmin ? [{id:'admin', icon:'⚙️', label:'Админ'}] : []),
   ];
   return `<nav class="bottom-nav"><div class="bottom-nav-inner">${items.map(it=>`<button class="bnav-btn ${S.tab===it.id?'active':''}" data-tab="${it.id}"><span class="bnav-icon">${it.icon}</span><span class="bnav-label">${it.label}</span></button>`).join('')}</div></nav>`;
@@ -544,7 +541,6 @@ function renderTab() {
   if (S.tab === 'groups') return renderGroups();
   if (S.tab === 'champion') return renderChampion();
   if (S.tab === 'admin') return renderAdmin();
-  if (S.tab === 'profile') return renderProfile();
   if (S.tab === 'rules') return renderRules();
   return '';
 }
@@ -619,46 +615,12 @@ function renderMatchCard(m, pred, isAdmin) {
 }
 
 // --- LEADERBOARD ---
-
-function renderProfile() {
-  const user = S.users.find(u => u.username === S.currentUser) || {};
-  return `
-  <div class="page-title">👤 Профил</div>
-  <div class="admin-box" style="max-width:480px;margin:0 auto">
-    <div class="admin-note">👤 Потребител: <strong>${user.username}</strong></div>
-    <div class="admin-note" style="margin-top:6px">📧 Email: <strong>${user.email || '—'}</strong></div>
-    <hr style="border-color:rgba(255,255,255,.1);margin:16px 0">
-    <div style="font-weight:700;margin-bottom:12px">🔐 Смяна на парола</div>
-    <form id="pwForm">
-      <div class="form-group"><label>Стара парола</label>
-        <input type="password" id="pwOld" placeholder="..."></div>
-      <div class="form-group"><label>Нова парола</label>
-        <input type="password" id="pwNew" placeholder="минимум 4 символа"></div>
-      <div class="form-group"><label>Потвърди</label>
-        <input type="password" id="pwNew2" placeholder="повтори новата парола"></div>
-      <button type="submit" class="save-btn" style="width:100%">Запази новата парола</button>
-    </form>
-    <hr style="border-color:rgba(255,255,255,.1);margin:16px 0">
-    <div style="font-weight:700;margin-bottom:10px">🔑 Sync Key (за споделяне)</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <input id="skProfInp" placeholder="ghp_..." value="${GH.tok()}" style="flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:8px 12px;color:#fff;min-width:180px">
-      <button class="save-btn" style="padding:8px 16px" onclick="const v=document.getElementById('skProfInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('✅ Sync Key запазен!');}">Save</button>
-    </div>
-  </div>`;
-}
-
 function renderLeaderboard() {
   const lb = leaderboard();
   const medals = ['🥇','🥈','🥉'];
   return `
   <div class="page-title">🏅 Класиране</div>
-  ${!GH.tok() ? `<div style="background:rgba(255,165,0,.12);border:1px solid rgba(255,165,0,.35);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-  <span style="font-size:18px">🔑</span>
-  <span style="flex:1;font-size:13px">Въведи Sync Key за споделяне с приятели (попитай от админа):</span>
-  <input id="skInp" placeholder="ghp_..." style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:6px 10px;color:#fff;width:240px;font-size:13px">
-  <button class="save-btn" style="padding:6px 14px;font-size:13px" onclick="const v=document.getElementById('skInp').value.trim();if(v){localStorage.setItem('wc26_ght',v);GH.sha=null;syncToGitHub();toast('✅ Sync Key запазен!');render();}">Save</button>
-</div>` : ''}
-<div class="lb-wrap">
+  <div class="lb-wrap">
     <div class="lb-head">
       <div>#</div><div>Потребител</div>
       <div style="text-align:center;font-size:10px">Знак<br><span style="color:#90caf9">10т</span></div>
@@ -812,7 +774,8 @@ function renderAdmin() {
       </div>
     </div>
     <div><button class="save-btn" id="saveResults">💾 Запази резултатите за Група ${S.activeGroup}</button></div>
-<div class="admin-box" style="margin-top:1.5rem;border:1px solid rgba(100,181,246,.25);background:rgba(100,181,246,.04)">
+
+    <div class="admin-box" style="margin-top:1.5rem;border:1px solid rgba(100,181,246,.25);background:rgba(100,181,246,.04)">
       <div class="admin-note"><strong>☁️ GitHub Sync</strong><br>
         Sync Key се пази само на твоето устройство. Другите потребители ще получат достъп автоматично при следващото опресняване.
       </div>
@@ -941,13 +904,12 @@ function bind() {
     const u = document.getElementById('ru').value.trim();
     const p = document.getElementById('rp').value;
     const p2 = document.getElementById('rp2').value;
-      const em = (document.getElementById('re') || {value:''}).value.trim();
     if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
     else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
     else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
     else if (p !== p2) S.authError = 'Паролите не съвпадат';
     else {
-      S.users.push({username: u, password: p, email: em, registeredAt: Date.now()});
+      S.users.push({username: u, password: p, registeredAt: Date.now()});
       S.sessionLog.push({username: u, action:'register', time: Date.now()});
       S.currentUser = u; S.authError = ''; persist(); render(); return;
     }
@@ -1005,21 +967,27 @@ function bind() {
     S.champions[S.currentUser] = btn.dataset.champ;
     persist(); toast('🏆 ' + btn.dataset.champ + ' — прогнозата е запазена!'); render();
   }));
-  // Profile password change
-  const pwf = document.getElementById('pwForm');
-  if (pwf) pwf.addEventListener('submit', e => {
-    e.preventDefault();
-    const oldP = document.getElementById('pwOld').value;
-    const newP = document.getElementById('pwNew').value;
-    const newP2 = document.getElementById('pwNew2').value;
-    const user = S.users.find(u => u.username === S.currentUser);
-    if (!user) return;
-    if (user.password !== oldP) { toast('❌ Грешна стара парола!'); return; }
-    if (newP.length < 4) { toast('❌ Минимум 4 символа!'); return; }
-    if (newP !== newP2) { toast('❌ Паролите не съвпадат!'); return; }
-    user.password = newP;
-    persist();
-    toast('✅ Паролата е променена!');
+
+  // GitHub Sync (admin only)
+  const ghSave = document.getElementById('ghSaveBtn');
+  if (ghSave) ghSave.addEventListener('click', () => {
+    const tok = (document.getElementById('ghTokInput')||{}).value || '';
+    GH.setTok(tok.trim());
+    toast(tok.trim() ? '✅ Sync Key запазен!' : '🗑️ Sync Key изтрит');
+  });
+  const ghPush = document.getElementById('ghPushBtn');
+  if (ghPush) ghPush.addEventListener('click', () => {
+    ghPush.disabled = true; ghPush.textContent = '⏳ Качване...';
+    GH.push().finally(() => { ghPush.disabled = false; ghPush.textContent = '☁️ Качи на GitHub'; });
+  });
+  const ghPull = document.getElementById('ghPullBtn');
+  if (ghPull) ghPull.addEventListener('click', () => {
+    ghPull.disabled = true; ghPull.textContent = '⏳ Изтегляне...';
+    GH.pull().then(data => {
+      if (data) { applyGHData(data); render(); toast('✅ Данните са обновени!'); }
+      else toast('❌ Не може да се изтегли от GitHub');
+      ghPull.disabled = false; ghPull.textContent = '⬇️ Изтегли от GitHub';
+    });
   });
 }
 
@@ -1031,10 +999,9 @@ function toast(msg) {
 
 // ===================== INIT =====================
 render();
-loadFromGitHub().then(ok => { if(ok) { LS.set('wc26_users', S.users); LS.set('wc26_preds', S.predictions); render();
 
-// Auto-pull from GitHub on load
-GH.pull().then(data => { if (data) { applyGHData(data); render(); } }); } });
+// Auto-pull from GitHub on load (silent — no toast on success)
+GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
 
 // ===================== AUTO REFRESH =====================
 (function() {
