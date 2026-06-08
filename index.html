@@ -28,6 +28,15 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 .btn-primary:hover{background:linear-gradient(135deg,#1976d2,#1565c0);transform:translateY(-1px);box-shadow:0 6px 20px rgba(21,101,192,.4)}
 .error-msg{color:#ef9a9a;font-size:13px;margin-top:10px;text-align:center;padding:8px;background:rgba(198,40,40,.15);border-radius:8px}
 .admin-hint{margin-top:1rem;text-align:center;font-size:12px;color:rgba(255,255,255,.3)}
+.forgot-link{display:block;text-align:center;margin-top:.75rem;font-size:13px;color:rgba(144,202,249,.7);cursor:pointer;text-decoration:underline;background:none;border:none;width:100%}
+.forgot-link:hover{color:#90caf9}
+.success-msg{color:#a5d6a7;font-size:13px;margin-top:10px;text-align:center;padding:8px;background:rgba(27,94,32,.2);border-radius:8px}
+/* PROFILE */
+.profile-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:1.5rem;margin-bottom:1rem;max-width:520px;margin-left:auto;margin-right:auto}
+.profile-avatar-lg{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#c62828,#e53935);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:2rem;margin:0 auto 1rem}
+.profile-username{text-align:center;font-size:1.5rem;font-weight:900;margin-bottom:.25rem}
+.profile-email-display{text-align:center;color:rgba(255,255,255,.45);font-size:.9rem;margin-bottom:1.5rem}
+.profile-section{border-top:1px solid rgba(255,255,255,.06);padding-top:1.25rem;margin-top:.25rem}
 
 /* HEADER */
 .app-header{background:rgba(0,0,0,.5);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:0 1.25rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100}
@@ -324,6 +333,9 @@ let S = {
   authTab: 'login',
   activeGroup: 'A',
   authError: '',
+  authSuccess: '',
+  profileError: '',
+  profileSuccess: '',
   toast: null,
 };
 
@@ -386,10 +398,12 @@ function renderAuth() {
     <div class="auth-title">WORLD CUP 2026</div>
     <div class="auth-sub">🇨🇦 Canada &nbsp;·&nbsp; 🇲🇽 Mexico &nbsp;·&nbsp; 🇺🇸 USA · Платформа за прогнози</div>
     <div class="auth-card">
+      ${S.authTab !== 'forgot' ? `
       <div class="auth-tabs">
         <div class="auth-tab ${S.authTab==='login'?'active':''}" data-atab="login">Вход</div>
         <div class="auth-tab ${S.authTab==='register'?'active':''}" data-atab="register">Регистрация</div>
-      </div>
+      </div>` : ''}
+
       ${S.authTab === 'login' ? `
       <form id="loginForm">
         <div class="form-group"><label>Потребителско име</label>
@@ -398,18 +412,40 @@ function renderAuth() {
           <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/></div>
         <button type="submit" class="btn btn-primary">🚀 Влез</button>
       </form>
-      ` : `
+      <button class="forgot-link" data-atab="forgot">Забравена парола?</button>
+      ` : S.authTab === 'register' ? `
       <form id="regForm">
         <div class="form-group"><label>Потребителско име</label>
           <input type="text" id="ru" placeholder="избери username"/></div>
+        <div class="form-group"><label>Имейл <span style="color:rgba(255,255,255,.3);font-weight:400;font-size:11px">(по желание — за забравена парола)</span></label>
+          <input type="email" id="re" placeholder="example@mail.com" autocomplete="email"/></div>
         <div class="form-group"><label>Парола</label>
           <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
         <div class="form-group"><label>Потвърди парола</label>
           <input type="password" id="rp2" placeholder="••••••••"/></div>
         <button type="submit" class="btn btn-primary">✅ Регистрирай се</button>
       </form>
+      ` : `
+      <div style="text-align:center;margin-bottom:1.25rem">
+        <div style="font-size:1.5rem;margin-bottom:.4rem">🔐</div>
+        <div style="font-weight:800;font-size:1.1rem">Забравена парола</div>
+        <div style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.3rem">Въведи потребителско ime и имейл</div>
+      </div>
+      <form id="forgotForm">
+        <div class="form-group"><label>Потребителско име</label>
+          <input type="text" id="fu" placeholder="username"/></div>
+        <div class="form-group"><label>Имейл</label>
+          <input type="email" id="fe" placeholder="example@mail.com"/></div>
+        <div class="form-group"><label>Нова парола</label>
+          <input type="password" id="fnp" placeholder="минимум 4 символа"/></div>
+        <div class="form-group"><label>Потвърди нова парола</label>
+          <input type="password" id="fnp2" placeholder="••••••••"/></div>
+        <button type="submit" class="btn btn-primary">🔑 Смени паролата</button>
+      </form>
+      <button class="forgot-link" data-atab="login" style="margin-top:.75rem">← Обратно към вход</button>
       `}
       ${S.authError ? `<div class="error-msg">⚠️ ${S.authError}</div>` : ''}
+      ${S.authSuccess ? `<div class="success-msg">✅ ${S.authSuccess}</div>` : ''}
     </div>
   </div>`;
 }
@@ -423,6 +459,7 @@ function renderApp() {
     {id:'groups',l:'🌍 Групи'},
     {id:'champion',l:'🏆 Шампион'},
     {id:'rules',l:'📋 Правила'},
+    {id:'profile',l:'👤 Профил'},
     ...(isAdmin ? [{id:'admin',l:'⚙️ Админ'}] : []),
   ];
   return `
@@ -451,6 +488,7 @@ function renderBottomNav() {
     {id:'groups', icon:'🌍', label:'Групи'},
     {id:'champion', icon:'🏆', label:'Шампион'},
     {id:'rules', icon:'📋', label:'Правила'},
+    {id:'profile', icon:'👤', label:'Профил'},
     ...(isAdmin ? [{id:'admin', icon:'⚙️', label:'Админ'}] : []),
   ];
   return `<nav class="bottom-nav"><div class="bottom-nav-inner">${items.map(it=>`<button class="bnav-btn ${S.tab===it.id?'active':''}" data-tab="${it.id}"><span class="bnav-icon">${it.icon}</span><span class="bnav-label">${it.label}</span></button>`).join('')}</div></nav>`;
@@ -535,6 +573,50 @@ function renderRules() {
 
   </div>`;
 }
+// --- PROFILE ---
+function renderProfile() {
+  const user = S.users.find(u => u.username === S.currentUser) || {};
+  const sc = userScore(S.currentUser);
+  const lb = leaderboard();
+  const rank = lb.findIndex(u => u.username === S.currentUser) + 1;
+  return `
+  <div class="page-title">👤 Профил</div>
+  <div class="profile-card" style="text-align:center">
+    <div class="profile-avatar-lg">${S.currentUser[0].toUpperCase()}</div>
+    <div class="profile-username">${S.currentUser}</div>
+    <div class="profile-email-display">${user.email || '—'}</div>
+    <div style="display:flex;justify-content:center;gap:2rem;margin-bottom:.5rem">
+      <div><div style="font-size:1.4rem;font-weight:900;color:#f9a825">${sc.total}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">ТОЧКИ</div></div>
+      <div><div style="font-size:1.4rem;font-weight:900;color:#90caf9">${rank > 0 ? '#'+rank : '—'}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">КЛАСИРАНЕ</div></div>
+      <div><div style="font-size:1.4rem;font-weight:900;color:#a5d6a7">${sc.exact}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">ТОЧНИ</div></div>
+    </div>
+  </div>
+
+  <div class="profile-card">
+    <div style="font-weight:800;margin-bottom:1rem">✉️ Промени имейл</div>
+    <form id="profileEmailForm">
+      <div class="form-group"><label>Нов имейл</label>
+        <input type="email" id="peEmail" placeholder="example@mail.com" value="${user.email || ''}"/></div>
+      <button type="submit" class="btn btn-primary">💾 Запази имейл</button>
+    </form>
+  </div>
+
+  <div class="profile-card">
+    <div style="font-weight:800;margin-bottom:1rem">🔐 Промени парола</div>
+    <form id="profilePwForm">
+      <div class="form-group"><label>Текуща парола</label>
+        <input type="password" id="peCurPw" placeholder="••••••••"/></div>
+      <div class="form-group"><label>Нова парола</label>
+        <input type="password" id="peNewPw" placeholder="минимум 4 символа"/></div>
+      <div class="form-group"><label>Потвърди нова парола</label>
+        <input type="password" id="peNewPw2" placeholder="••••••••"/></div>
+      <button type="submit" class="btn btn-primary">🔑 Смени паролата</button>
+    </form>
+    ${S.profileError ? `<div class="error-msg" style="margin-top:.75rem">⚠️ ${S.profileError}</div>` : ''}
+    ${S.profileSuccess ? `<div class="success-msg" style="margin-top:.75rem">✅ ${S.profileSuccess}</div>` : ''}
+  </div>`;
+}
+
 function renderTab() {
   if (S.tab === 'predictions') return renderPredictions();
   if (S.tab === 'leaderboard') return renderLeaderboard();
@@ -542,6 +624,7 @@ function renderTab() {
   if (S.tab === 'champion') return renderChampion();
   if (S.tab === 'admin') return renderAdmin();
   if (S.tab === 'rules') return renderRules();
+  if (S.tab === 'profile') return renderProfile();
   return '';
 }
 
@@ -740,23 +823,25 @@ function renderAdmin() {
       <table style="width:100%;border-collapse:collapse;font-size:13px">
         <thead><tr style="color:rgba(255,255,255,.4);text-align:left;border-bottom:1px solid rgba(255,255,255,.1)">
           <th style="padding:6px 10px">#</th>
-          <th style="padding:6px 10px">\u{041F}\u{043E}\u{0442}\u{0440}\u{0435}\u{0431}\u{0438}\u{0442}\u{0435}\u{043B}</th>
-          <th style="padding:6px 10px">\u{0420}\u{0435}\u{0433}\u{0438}\u{0441}\u{0442}\u{0440}\u{0438}\u{0440}\u{0430}\u{043D}</th>
-          <th style="padding:6px 10px">\u{041F}\u{043E}\u{0441}\u{043B}\u{0435}\u{0434}\u{0435}\u{043D} \u{0432}\u{0445}\u{043E}\u{0434}</th>
-          <th style="padding:6px 10px">\u{041F}\u{0440}\u{043E}\u{0433}\u{043D}\u{043E}\u{0437}\u{0438}</th>
+          <th style="padding:6px 10px">\u041f\u043e\u0442\u0440\u0435\u0431\u0438\u0442\u0435\u043b</th>
+          <th style="padding:6px 10px">\u0418\u043c\u0435\u0439\u043b</th>
+          <th style="padding:6px 10px">\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u0430\u043d</th>
+          <th style="padding:6px 10px">\u041f\u0440\u043e\u0433\u043d\u043e\u0437\u0438</th>
+          <th style="padding:6px 10px">\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u044f</th>
         </tr></thead>
         <tbody>
         ${S.users.filter(u=>u.username!=='admin').map((u,i) => {
-          const lastLogin = [...S.sessionLog].reverse().find(l=>l.username===u.username && l.action==='login');
           const predCount = Object.keys(S.predictions[u.username]||{}).filter(k=>{const p=S.predictions[u.username][k];return p&&p.s1!==''&&p.s2!=='';}).length;
           const regDate = u.registeredAt ? new Date(u.registeredAt).toLocaleString('bg-BG',{timeZone:'Europe/Sofia'}) : '\u2014';
-          const loginDate = lastLogin ? new Date(lastLogin.time).toLocaleString('bg-BG',{timeZone:'Europe/Sofia'}) : '\u2014';
           return `<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
             <td style="padding:8px 10px;color:rgba(255,255,255,.4)">${i+1}</td>
             <td style="padding:8px 10px;font-weight:700">${u.username}</td>
+            <td style="padding:8px 10px;color:rgba(255,255,255,.5);font-size:12px">${u.email||'\u2014'}</td>
             <td style="padding:8px 10px;color:rgba(255,255,255,.5);font-size:12px">${regDate}</td>
-            <td style="padding:8px 10px;color:rgba(255,255,255,.5);font-size:12px">${loginDate}</td>
             <td style="padding:8px 10px;color:#f9a825;font-weight:700">${predCount}/72</td>
+            <td style="padding:8px 10px">
+              <button data-reset-user="${u.username}" style="padding:4px 10px;font-size:12px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.3);border-radius:6px;color:#ef9a9a;cursor:pointer;font-weight:600">\ud83d\udd11 \u0420\u0435\u0441\u0435\u0442 \u043f\u0430\u0440\u043e\u043b\u0430</button>
+            </td>
           </tr>`;
         }).join('')}
         </tbody>
@@ -883,7 +968,7 @@ async function autoFetchResults(silent=false) {
 function bind() {
   // Auth tabs
   document.querySelectorAll('[data-atab]').forEach(el => el.addEventListener('click', () => {
-    S.authTab = el.dataset.atab; S.authError = ''; render();
+    S.authTab = el.dataset.atab; S.authError = ''; S.authSuccess = ''; render();
   }));
 
   // Login
@@ -902,18 +987,39 @@ function bind() {
   if (rf) rf.addEventListener('submit', e => {
     e.preventDefault();
     const u = document.getElementById('ru').value.trim();
+    const em = (document.getElementById('re').value || '').trim().toLowerCase();
     const p = document.getElementById('rp').value;
     const p2 = document.getElementById('rp2').value;
     if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
     else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
+    else if (em && S.users.find(x => x.email && x.email === em)) S.authError = 'Имейлът вече е регистриран';
     else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
     else if (p !== p2) S.authError = 'Паролите не съвпадат';
     else {
-      S.users.push({username: u, password: p, registeredAt: Date.now()});
+      S.users.push({username: u, password: p, email: em || null, registeredAt: Date.now()});
       S.sessionLog.push({username: u, action:'register', time: Date.now()});
       S.currentUser = u; S.authError = ''; persist(); render(); return;
     }
     render();
+  });
+
+  // Forgot password
+  const ff = document.getElementById('forgotForm');
+  if (ff) ff.addEventListener('submit', e => {
+    e.preventDefault();
+    const u = document.getElementById('fu').value.trim();
+    const em = document.getElementById('fe').value.trim().toLowerCase();
+    const np = document.getElementById('fnp').value;
+    const np2 = document.getElementById('fnp2').value;
+    const user = S.users.find(x => x.username === u);
+    if (!user) { S.authError = 'Потребителят не е намерен'; render(); return; }
+    if (!user.email) { S.authError = 'Няма регистриран имейл — свържи се с администратора'; render(); return; }
+    if (user.email !== em) { S.authError = 'Имейлът не съвпада'; render(); return; }
+    if (np.length < 4) { S.authError = 'Паролата трябва да е поне 4 символа'; render(); return; }
+    if (np !== np2) { S.authError = 'Паролите не съвпадат'; render(); return; }
+    user.password = np;
+    S.authError = ''; S.authSuccess = 'Паролата е сменена! Влез с новата си парола.';
+    persist(); render();
   });
 
   // Logout
@@ -922,7 +1028,7 @@ function bind() {
 
   // Nav tabs
   document.querySelectorAll('[data-tab]').forEach(el => el.addEventListener('click', () => {
-    S.tab = el.dataset.tab; render();
+    S.tab = el.dataset.tab; S.profileError = ''; S.profileSuccess = ''; render();
   }));
 
   // Group tabs
@@ -966,6 +1072,47 @@ function bind() {
   document.querySelectorAll('[data-champ]').forEach(btn => btn.addEventListener('click', () => {
     S.champions[S.currentUser] = btn.dataset.champ;
     persist(); toast('🏆 ' + btn.dataset.champ + ' — прогнозата е запазена!'); render();
+  }));
+
+  // Profile — change email
+  const pef = document.getElementById('profileEmailForm');
+  if (pef) pef.addEventListener('submit', e => {
+    e.preventDefault();
+    const em = (document.getElementById('peEmail').value || '').trim().toLowerCase();
+    const user = S.users.find(x => x.username === S.currentUser);
+    if (!user) return;
+    if (em && S.users.find(x => x.username !== S.currentUser && x.email && x.email === em)) {
+      S.profileError = 'Имейлът вече се използва от друг потребител'; S.profileSuccess = ''; render(); return;
+    }
+    user.email = em || null;
+    S.profileError = ''; S.profileSuccess = 'Имейлът е запазен!';
+    persist(); render();
+  });
+
+  // Profile — change password
+  const ppf = document.getElementById('profilePwForm');
+  if (ppf) ppf.addEventListener('submit', e => {
+    e.preventDefault();
+    const cur = document.getElementById('peCurPw').value;
+    const np = document.getElementById('peNewPw').value;
+    const np2 = document.getElementById('peNewPw2').value;
+    const user = S.users.find(x => x.username === S.currentUser);
+    if (!user) return;
+    if (user.password !== cur) { S.profileError = 'Грешна текуща парола'; S.profileSuccess = ''; render(); return; }
+    if (np.length < 4) { S.profileError = 'Новата парола трябва да е поне 4 символа'; S.profileSuccess = ''; render(); return; }
+    if (np !== np2) { S.profileError = 'Паролите не съвпадат'; S.profileSuccess = ''; render(); return; }
+    user.password = np;
+    S.profileError = ''; S.profileSuccess = 'Паролата е сменена успешно!';
+    persist(); render();
+  });
+
+  // Admin — reset user password
+  document.querySelectorAll('[data-reset-user]').forEach(btn => btn.addEventListener('click', () => {
+    const uname = btn.dataset.resetUser;
+    const newPw = prompt(`Нова парола за "${uname}":`, '');
+    if (!newPw || newPw.length < 4) { alert('Паролата трябва да е поне 4 символа.'); return; }
+    const user = S.users.find(x => x.username === uname);
+    if (user) { user.password = newPw; persist(); toast(`✅ Паролата на ${uname} е ресетната!`); }
   }));
 
   // GitHub Sync (admin only)
