@@ -163,6 +163,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 @media(max-width:600px){body{padding-bottom:70px}.app-header .app-nav,.app-header .user-name{display:none}.bottom-nav{display:block}.main-content{padding:1rem .75rem}.team-name{font-size:12px}.match-card{padding:.65rem .75rem}.score-input{width:40px;height:40px;font-size:17px}.lb-head,.lb-row{grid-template-columns:28px 1fr 40px 40px 40px 52px;padding:9px 10px}.champ-grid{grid-template-columns:repeat(3,1fr)}.groups-grid{grid-template-columns:1fr}.save-btn{width:100%}}
 </style>
 </head>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <body>
 <div id="root"></div>
 <script>
@@ -246,6 +249,53 @@ const LS = {
 };
 
 
+// ===================== FIREBASE CONFIG =====================
+// 👇 ПОПЪЛНИ ТУК след като създадеш Firebase проект (вж. инструкциите в Admin > Синхронизация)
+const FB_CONFIG = {
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
+
+const FB = {
+  db: null,
+  ref: null,
+  _listener: null,
+  _syncing: false,
+
+  init() {
+    try {
+      if (!FB_CONFIG.databaseURL) return; // не е конфигуриран
+      if (!firebase.apps.length) firebase.initializeApp(FB_CONFIG);
+      FB.db = firebase.database();
+      FB.ref = FB.db.ref('wc26');
+      // Слушай за промени в реално време
+      FB.ref.on('value', snap => {
+        const data = snap.val();
+        if (!data || FB._syncing) return;
+        applyGHData(data);
+        if (typeof render === 'function') render();
+      });
+      console.log('Firebase: свързан ✅');
+    } catch(e) { console.warn('Firebase init error:', e.message); }
+  },
+
+  isReady() { return !!FB.ref; },
+
+  async push(data) {
+    if (!FB.ref) return;
+    FB._syncing = true;
+    try {
+      await FB.ref.set(data);
+    } catch(e) { console.warn('Firebase push error:', e.message); }
+    finally { setTimeout(() => FB._syncing = false, 500); }
+  }
+};
+
 // ===================== UTF-8 / BASE64 HELPERS =====================
 function utf8ToB64(str) {
   const bytes = new TextEncoder().encode(str);
@@ -312,10 +362,22 @@ const GH = {
 
 function applyGHData(data) {
   if (!data) return;
-  if (Array.isArray(data.users)) S.users = data.users;
+  if (Array.isArray(data.users)) {
+    // Merge: GitHub users take priority, but keep any local-only users
+    const ghNames = new Set(data.users.map(u => u.username));
+    const localOnly = S.users.filter(u => !ghNames.has(u.username));
+    S.users = [...data.users, ...localOnly];
+  }
   if (Array.isArray(data.matches)) S.matches = data.matches;
-  if (data.predictions && typeof data.predictions === 'object') S.predictions = data.predictions;
-  if (data.champions && typeof data.champions === 'object') S.champions = data.champions;
+  if (data.predictions && typeof data.predictions === 'object') {
+    // Merge predictions: keep local predictions for users not in GitHub data
+    S.predictions = Object.assign({}, data.predictions,
+      Object.fromEntries(Object.entries(S.predictions).filter(([k]) => !(k in data.predictions)))
+    );
+  }
+  if (data.champions && typeof data.champions === 'object') S.champions = Object.assign({}, data.champions,
+    Object.fromEntries(Object.entries(S.champions).filter(([k]) => !(k in data.champions)))
+  );
   if (Array.isArray(data.sessionLog)) S.sessionLog = data.sessionLog;
   if (!S.users.find(u => u.username === 'admin')) S.users.push({username:'admin',password:'admin2026'});
   persist();
@@ -347,6 +409,17 @@ function persist() {
   LS.set('wc26_log', S.sessionLog);
   if (S.currentUser) LS.set('wc26_current', S.currentUser);
   else LS.del('wc26_current');
+  // Auto-sync to Firebase (ако е конфигуриран)
+  if (FB.isReady()) {
+    FB.push({
+      users: S.users,
+      matches: S.matches,
+      predictions: S.predictions,
+      champions: S.champions,
+      sessionLog: S.sessionLog,
+      _ts: Date.now()
+    });
+  }
 }
 
 // Ensure admin user
@@ -354,6 +427,9 @@ if (!S.users.find(u => u.username === 'admin')) {
   S.users.push({username:'admin', password:'admin2026'});
   persist();
 }
+
+// Init Firebase (ако е конфигуриран)
+FB.init();
 
 // ===================== SCORING =====================
 
@@ -820,6 +896,21 @@ function renderAdmin() {
       <div class="admin-note" style="margin-bottom:1rem">
         <strong>\u{1F465} \u{0420}\u{0435}\u{0433}\u{0438}\u{0441}\u{0442}\u{0440}\u{0438}\u{0440}\u{0430}\u{043D}\u{0438} \u{043F}\u{043E}\u{0442}\u{0440}\u{0435}\u{0431}\u{0438}\u{0442}\u{0435}\u{043B}\u{0438}</strong>
       </div>
+      <form id="adminAddUserForm" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;align-items:flex-end">
+        <div style="flex:1;min-width:120px">
+          <label style="font-size:11px;color:rgba(255,255,255,.4);display:block;margin-bottom:4px">\u041f\u041e\u0422\u0420\u0415\u0411\u0418\u0422\u0415\u041b\u0421\u041a\u041e \u0418\u041c\u0415</label>
+          <input type="text" id="adminNewUser" placeholder="username" style="width:100%;padding:8px 10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:13px"/>
+        </div>
+        <div style="flex:1;min-width:120px">
+          <label style="font-size:11px;color:rgba(255,255,255,.4);display:block;margin-bottom:4px">\u041f\u0410\u0420\u041e\u041b\u0410</label>
+          <input type="text" id="adminNewPw" placeholder="\u043f\u0430\u0440\u043e\u043b\u0430" style="width:100%;padding:8px 10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:13px"/>
+        </div>
+        <div style="flex:1;min-width:140px">
+          <label style="font-size:11px;color:rgba(255,255,255,.4);display:block;margin-bottom:4px">\u0418\u041c\u0415\u0419\u041b (\u043f\u043e \u0436\u0435\u043b\u0430\u043d\u0438\u0435)</label>
+          <input type="email" id="adminNewEmail" placeholder="email" style="width:100%;padding:8px 10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:13px"/>
+        </div>
+        <button type="submit" style="padding:8px 16px;background:linear-gradient(135deg,#1565c0,#0d47a1);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">\u2795 \u0414\u043e\u0431\u0430\u0432\u0438</button>
+      </form>
       <table style="width:100%;border-collapse:collapse;font-size:13px">
         <thead><tr style="color:rgba(255,255,255,.4);text-align:left;border-bottom:1px solid rgba(255,255,255,.1)">
           <th style="padding:6px 10px">#</th>
@@ -860,33 +951,34 @@ function renderAdmin() {
     </div>
     <div><button class="save-btn" id="saveResults">💾 Запази резултатите за Група ${S.activeGroup}</button></div>
 
-    <div class="admin-box" style="margin-top:1.5rem;border:1px solid rgba(100,181,246,.25);background:rgba(100,181,246,.04)">
-      <div class="admin-note"><strong>☁️ Синхронизация с GitHub</strong><br>
-        Данните се споделят чрез <code>data.json</code> в GitHub. При блокиран API — използвай ръчен метод.
+    <div class="admin-box" style="margin-top:1.5rem;border:1px solid ${FB.isReady() ? 'rgba(76,175,80,.4)' : 'rgba(255,152,0,.35)'};background:${FB.isReady() ? 'rgba(76,175,80,.05)' : 'rgba(255,152,0,.04)'}">
+      <div class="admin-note">
+        <strong>☁️ Firebase Синхронизация</strong>
+        <span style="margin-left:.75rem;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;${FB.isReady() ? 'background:rgba(76,175,80,.2);color:#a5d6a7' : 'background:rgba(255,152,0,.2);color:#ffcc80'}">${FB.isReady() ? '● СВЪРЗАН' : '○ НЕ Е НАСТРОЕН'}</span>
       </div>
 
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem;margin-bottom:1rem">
-        <button class="save-btn" id="exportDataBtn" style="background:linear-gradient(135deg,#e65100,#bf360c)">📥 Свали data.json</button>
-        <button class="save-btn" id="importDataBtn" style="background:linear-gradient(135deg,#4a148c,#6a1b9a)">📤 Зареди data.json</button>
-        <input type="file" id="importFileInput" accept=".json" style="display:none">
+      ${FB.isReady() ? `
+      <div style="padding:.75rem 1rem;background:rgba(76,175,80,.1);border-radius:8px;font-size:13px;color:#a5d6a7;margin-top:.75rem">
+        ✅ Автоматична синхронизация е активна. Всеки потребител вижда данните на другите в реално време.
       </div>
-      <div style="padding:.65rem 1rem;background:rgba(0,0,0,.25);border-radius:8px;font-size:12px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:1rem">
-        <strong style="color:rgba(255,255,255,.65)">Ръчна синхронизация:</strong><br>
-        1. Натисни <em>Свали data.json</em> — ще свалиш текущото състояние<br>
-        2. Отиди на <strong>github.com/valiomitov/VALUSA</strong> → <em>Add file → Upload files</em><br>
-        3. Качи <code>data.json</code> — всички потребители ще го получат автоматично
+      ` : `
+      <div style="padding:.75rem 1rem;background:rgba(0,0,0,.25);border-radius:8px;font-size:12px;color:rgba(255,255,255,.5);line-height:1.9;margin-top:.75rem">
+        <strong style="color:rgba(255,204,128,.8)">⚡ Настройка (еднократно, ~5 мин):</strong><br>
+        1. Отиди на <a href="https://console.firebase.google.com" target="_blank" style="color:#90caf9">console.firebase.google.com</a> → <em>Add project</em><br>
+        2. Пропусни Google Analytics → <em>Create project</em><br>
+        3. Щракни <em>Realtime Database</em> (от лявото меню) → <em>Create database</em> → <em>Start in test mode</em><br>
+        4. Щракни <em>Project settings</em> (⚙️) → <em>Your apps</em> → иконата <strong>&lt;/&gt;</strong> (Web) → регистрирай приложение<br>
+        5. Копирай показания <code>firebaseConfig</code> обект<br>
+        6. В GitHub, отвори <code>index.html</code> → намери <code>const FB_CONFIG = &#123;</code> → попълни стойностите → Commit
       </div>
+      `}
 
-      <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:1rem;margin-top:.5rem">
-        <div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">API Sync (ако мрежата го позволява)</div>
-        <div class="form-group">
-          <label style="font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px">Sync Key (GitHub PAT)</label>
-          <input type="password" id="ghTokInput" value="${GH.tok()}" placeholder="ghp_..." style="width:100%;padding:10px 14px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;margin-top:4px">
-        </div>
-        <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem">
-          <button class="save-btn" id="ghSaveBtn" style="background:linear-gradient(135deg,#37474f,#455a64)">💾 Запази Key</button>
-          <button class="save-btn" id="ghPushBtn" style="background:linear-gradient(135deg,#1b5e20,#2e7d32)">☁️ Качи на GitHub</button>
-          <button class="save-btn" id="ghPullBtn" style="background:linear-gradient(135deg,#1a237e,#283593)">⬇️ Изтегли от GitHub</button>
+      <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:1rem;margin-top:1rem">
+        <div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">Резервна опция (ако Firebase не работи)</div>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <button class="save-btn" id="exportDataBtn" style="background:linear-gradient(135deg,#37474f,#455a64);font-size:13px">📥 Свали data.json</button>
+          <button class="save-btn" id="importDataBtn" style="background:linear-gradient(135deg,#37474f,#455a64);font-size:13px">📤 Зареди data.json</button>
+          <input type="file" id="importFileInput" accept=".json" style="display:none">
         </div>
       </div>
     </div>
@@ -1130,6 +1222,20 @@ function bind() {
     const user = S.users.find(x => x.username === uname);
     if (user) { user.password = newPw; persist(); toast(`✅ Паролата на ${uname} е ресетната!`); }
   }));
+
+  // Admin add user
+  const adminAddUF = document.getElementById('adminAddUserForm');
+  if (adminAddUF) adminAddUF.addEventListener('submit', e => {
+    e.preventDefault();
+    const u = (document.getElementById('adminNewUser').value || '').trim();
+    const p = (document.getElementById('adminNewPw').value || '');
+    const em = (document.getElementById('adminNewEmail').value || '').trim().toLowerCase();
+    if (u.length < 3) { toast('❌ Потребителското ime трябва да е поне 3 символа'); return; }
+    if (S.users.find(x => x.username === u)) { toast('❌ Потребителското ime е заето'); return; }
+    if (p.length < 4) { toast('❌ Паролата трябва да е поне 4 символа'); return; }
+    S.users.push({username: u, password: p, email: em || null, registeredAt: Date.now()});
+    persist(); render(); toast('✅ Потребител "' + u + '" е добавен!');
+  });
 
   // Export data.json
   const expBtn = document.getElementById('exportDataBtn');
