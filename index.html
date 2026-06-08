@@ -861,17 +861,33 @@ function renderAdmin() {
     <div><button class="save-btn" id="saveResults">💾 Запази резултатите за Група ${S.activeGroup}</button></div>
 
     <div class="admin-box" style="margin-top:1.5rem;border:1px solid rgba(100,181,246,.25);background:rgba(100,181,246,.04)">
-      <div class="admin-note"><strong>☁️ GitHub Sync</strong><br>
-        Sync Key се пази само на твоето устройство. Другите потребители ще получат достъп автоматично при следващото опресняване.
+      <div class="admin-note"><strong>☁️ Синхронизация с GitHub</strong><br>
+        Данните се споделят чрез <code>data.json</code> в GitHub. При блокиран API — използвай ръчен метод.
       </div>
-      <div class="form-group" style="margin-top:1rem">
-        <label style="font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px">Sync Key (GitHub PAT)</label>
-        <input type="password" id="ghTokInput" value="${GH.tok()}" placeholder="ghp_..." style="width:100%;padding:10px 14px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;margin-top:4px">
+
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem;margin-bottom:1rem">
+        <button class="save-btn" id="exportDataBtn" style="background:linear-gradient(135deg,#e65100,#bf360c)">📥 Свали data.json</button>
+        <button class="save-btn" id="importDataBtn" style="background:linear-gradient(135deg,#4a148c,#6a1b9a)">📤 Зареди data.json</button>
+        <input type="file" id="importFileInput" accept=".json" style="display:none">
       </div>
-      <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem">
-        <button class="save-btn" id="ghSaveBtn" style="background:linear-gradient(135deg,#37474f,#455a64)">💾 Запази Key</button>
-        <button class="save-btn" id="ghPushBtn" style="background:linear-gradient(135deg,#1b5e20,#2e7d32)">☁️ Качи на GitHub</button>
-        <button class="save-btn" id="ghPullBtn" style="background:linear-gradient(135deg,#1a237e,#283593)">⬇️ Изтегли от GitHub</button>
+      <div style="padding:.65rem 1rem;background:rgba(0,0,0,.25);border-radius:8px;font-size:12px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:1rem">
+        <strong style="color:rgba(255,255,255,.65)">Ръчна синхронизация:</strong><br>
+        1. Натисни <em>Свали data.json</em> — ще свалиш текущото състояние<br>
+        2. Отиди на <strong>github.com/valiomitov/VALUSA</strong> → <em>Add file → Upload files</em><br>
+        3. Качи <code>data.json</code> — всички потребители ще го получат автоматично
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:1rem;margin-top:.5rem">
+        <div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">API Sync (ако мрежата го позволява)</div>
+        <div class="form-group">
+          <label style="font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px">Sync Key (GitHub PAT)</label>
+          <input type="password" id="ghTokInput" value="${GH.tok()}" placeholder="ghp_..." style="width:100%;padding:10px 14px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;margin-top:4px">
+        </div>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.75rem">
+          <button class="save-btn" id="ghSaveBtn" style="background:linear-gradient(135deg,#37474f,#455a64)">💾 Запази Key</button>
+          <button class="save-btn" id="ghPushBtn" style="background:linear-gradient(135deg,#1b5e20,#2e7d32)">☁️ Качи на GitHub</button>
+          <button class="save-btn" id="ghPullBtn" style="background:linear-gradient(135deg,#1a237e,#283593)">⬇️ Изтегли от GitHub</button>
+        </div>
       </div>
     </div>
 
@@ -1114,6 +1130,43 @@ function bind() {
     const user = S.users.find(x => x.username === uname);
     if (user) { user.password = newPw; persist(); toast(`✅ Паролата на ${uname} е ресетната!`); }
   }));
+
+  // Export data.json
+  const expBtn = document.getElementById('exportDataBtn');
+  if (expBtn) expBtn.addEventListener('click', () => {
+    const payload = {
+      users: S.users,
+      matches: S.matches,
+      predictions: S.predictions,
+      champions: S.champions,
+      sessionLog: S.sessionLog,
+      _ts: Date.now()
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'data.json'; a.click();
+    URL.revokeObjectURL(url);
+    toast('✅ data.json свален!');
+  });
+
+  // Import data.json
+  const impBtn = document.getElementById('importDataBtn');
+  const impFile = document.getElementById('importFileInput');
+  if (impBtn && impFile) {
+    impBtn.addEventListener('click', () => impFile.click());
+    impFile.addEventListener('change', e => {
+      const file = e.target.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => {
+        try {
+          const data = JSON.parse(ev.target.result);
+          applyGHData(data); render(); toast('✅ Данните са заредени от ' + file.name + '!');
+        } catch { toast('❌ Невалиден JSON файл'); }
+        impFile.value = '';
+      };
+      reader.readAsText(file);
+    });
+  }
 
   // GitHub Sync (admin only)
   const ghSave = document.getElementById('ghSaveBtn');
