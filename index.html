@@ -480,6 +480,15 @@ function persist() {
   }
 }
 
+// Migrate: нормализирай стари string резултати (напр. "2-1") към {s1,s2} обекти
+S.matches.forEach(m => {
+  if (m.result && typeof m.result === 'string') {
+    const parts = m.result.split('-');
+    const s1 = parseInt(parts[0]), s2 = parseInt(parts[1]);
+    m.result = (!isNaN(s1) && !isNaN(s2)) ? {s1, s2} : null;
+  }
+});
+
 // Ensure admin user
 if (!S.users.find(u => u.username === 'admin')) {
   S.users.push({username:'admin', password:'admin2026'});
@@ -842,7 +851,7 @@ function renderPredictions() {
 function renderMatchCard(m, pred, isAdmin, badge = '') {
   const isTBD = m.team1 === 'TBD' || m.team2 === 'TBD';
   const hasPred = pred && pred.s1 !== '' && pred.s2 !== '';
-  const hasResult = m.result !== null;
+  const hasResult = m.result !== null && typeof m.result === 'object' && m.result.s1 !== undefined;
   const locked = (hasResult || (!isAdmin && isLocked(m.id))) && !isAdmin;
   let pts = '';
   if (hasPred && hasResult && !isAdmin) {
@@ -1598,7 +1607,7 @@ async function fetchKOPairings() {
         if (score && comp.status?.type?.completed) {
           const s1 = parseInt(t1.score); const s2 = parseInt(t2.score);
           if (!isNaN(s1) && !isNaN(s2) && !koMatch.result) {
-            koMatch.result = `${s1}-${s2}`;
+            koMatch.result = {s1: s1, s2: s2};
             changed = true;
           }
         }
