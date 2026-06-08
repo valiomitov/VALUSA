@@ -890,6 +890,10 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
         value="${isAdmin ? (m.result?m.result.s2:'') : (pred?pred.s2:'')}"
         placeholder="–" ${locked?'disabled':''}>
     </div>
+    ${!isAdmin && !locked ? `<button id="sp_${m.id}" onclick="window._savePred(${m.id})"
+      style="flex-shrink:0;border:none;cursor:pointer;border-radius:8px;padding:6px 10px;font-size:13px;font-weight:700;transition:all .2s;
+      ${hasPred ? 'background:#1b5e20;color:#a5d6a7' : 'background:#c62828;color:#ffcdd2'}">
+      ${hasPred ? '✓' : '💾'}</button>` : ''}
     <div class="team right">
       <span class="team-flag">${FLAGS[m.team2]||'🏳️'}</span>
       <span class="team-name">${m.team2}</span>
@@ -1558,6 +1562,21 @@ window._doForgot = function() {
   user.password = np;
   S.authError = ''; S.authSuccess = 'Паролата е сменена! Влез с новата си парола.';
   persist(); render();
+};
+
+// Per-match save
+window._savePred = function(mid) {
+  const inp1 = document.querySelector('[data-pr="'+mid+'"][data-side="s1"]');
+  const inp2 = document.querySelector('[data-pr="'+mid+'"][data-side="s2"]');
+  if (!inp1 || !inp2) return;
+  if (inp1.value === '' || inp2.value === '') { toast('⚠️ Въведи и двата резултата'); return; }
+  if (!S.predictions[S.currentUser]) S.predictions[S.currentUser] = {};
+  if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
+  S.predictions[S.currentUser][mid].s1 = inp1.value;
+  S.predictions[S.currentUser][mid].s2 = inp2.value;
+  persist();
+  const btn = document.getElementById('sp_'+mid);
+  if (btn) { btn.textContent = '✓'; btn.style.background = '#1b5e20'; btn.style.color = '#a5d6a7'; }
 };
 
 // ===================== INIT =====================
