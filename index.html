@@ -408,10 +408,16 @@ const GH = {
 function applyGHData(data, fromFirebase = false) {
   if (!data) return;
   if (Array.isArray(data.users)) {
-    // Merge: Firebase/GitHub users take priority, but keep any local-only users
-    const ghNames = new Set(data.users.map(u => u.username));
-    const localOnly = S.users.filter(u => !ghNames.has(u.username));
-    S.users = [...data.users, ...localOnly];
+    if (fromFirebase) {
+      // Firebase е авторитетен — директно замести (без localOnly merge)
+      // Иначе изтрити от admin потребители се връщат обратно
+      S.users = data.users;
+    } else {
+      // GitHub/backup може да е остаряло — запази локално-регистрирани потребители
+      const ghNames = new Set(data.users.map(u => u.username));
+      const localOnly = S.users.filter(u => !ghNames.has(u.username));
+      S.users = [...data.users, ...localOnly];
+    }
   }
   if (Array.isArray(data.matches)) {
     S.matches = data.matches;
@@ -425,13 +431,24 @@ function applyGHData(data, fromFirebase = false) {
     });
   }
   if (data.predictions && typeof data.predictions === 'object') {
-    S.predictions = Object.assign({}, data.predictions,
-      Object.fromEntries(Object.entries(S.predictions).filter(([k]) => !(k in data.predictions)))
-    );
+    if (fromFirebase) {
+      // Firebase е авторитетен — директно замести (без localOnly merge)
+      S.predictions = Object.assign({}, data.predictions);
+    } else {
+      S.predictions = Object.assign({}, data.predictions,
+        Object.fromEntries(Object.entries(S.predictions).filter(([k]) => !(k in data.predictions)))
+      );
+    }
   }
-  if (data.champions && typeof data.champions === 'object') S.champions = Object.assign({}, data.champions,
-    Object.fromEntries(Object.entries(S.champions).filter(([k]) => !(k in data.champions)))
-  );
+  if (data.champions && typeof data.champions === 'object') {
+    if (fromFirebase) {
+      S.champions = Object.assign({}, data.champions);
+    } else {
+      S.champions = Object.assign({}, data.champions,
+        Object.fromEntries(Object.entries(S.champions).filter(([k]) => !(k in data.champions)))
+      );
+    }
+  }
   if (Array.isArray(data.sessionLog)) S.sessionLog = data.sessionLog;
   if (!S.users.find(u => u.username === 'admin')) S.users.push({username:'admin',password:'admin2026'});
   // Само ако НЕ дойде от Firebase listener — иначе правим безкраен цикъл
