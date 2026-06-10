@@ -977,7 +977,7 @@ function renderLeaderboard() {
         <div class="lb-stat" style="color:#ffe082">${u.signDiff||0}</div>
         <div class="lb-stat" style="color:#a5d6a7">${u.exact||0}</div>
         <div class="lb-stat" style="color:#ff7043">${u.exact5||0}</div>
-        <div class="lb-stat" style="color:#f9a825" title="${u.champ||'—'}">${u.champCorrect ? '✓' : (u.champ ? '?' : '—')}</div>
+        <div class="lb-stat" style="color:#f9a825" ${u.champCorrect ? `title="${u.champ}"` : ''}>${u.champCorrect ? '✓' : (u.champ ? '?' : '—')}</div>
         <div class="lb-total">${u.total}</div>
       </div>`).join('')}
   </div>`;
