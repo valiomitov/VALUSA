@@ -955,6 +955,11 @@ function renderLeaderboard() {
   const medals = ['🥇','🥈','🥉'];
   return `
   <div class="page-title">🏅 Класиране</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:1rem;display:flex;flex-wrap:wrap;gap:.75rem">
+    <span><span style="color:#f9a825;font-weight:700">✓</span> — познал победителя (+60т)</span>
+    <span><span style="color:#f9a825;font-weight:700">?</span> — има прогноза, победителят не е известен</span>
+    <span><span style="color:rgba(255,255,255,.35);font-weight:700">—</span> — няма прогноза за победител</span>
+  </div>
   <div class="lb-wrap">
     <div class="lb-head">
       <div>#</div><div>Потребител</div>
