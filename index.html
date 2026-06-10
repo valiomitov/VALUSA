@@ -1029,6 +1029,7 @@ function renderAdmin() {
   <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem">
     <div class="page-title">⚙️ Администрация — Въвеждане на резултати</div>
     <button class="save-btn" id="autoFetchBtn" onclick="autoFetchResults()" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);margin-top:0"> Авто-резултати от FIFA/ESPN</button>
+    <button class="save-btn" onclick="window._downloadBackup()" style="background:linear-gradient(135deg,#1565c0,#0d47a1);margin-top:0">&#x1F4E5; Изтегли бекъп</button>
     <span id="autoRefreshBadge" style="font-size:12px;color:rgba(76,175,80,.8);display:none"> Авто-обновяване на 5 мин</span>
   <span id="lastAutoSave" style="font-size:11px;color:rgba(76,175,80,.75);margin-left:auto;display:none"></span>
   </div>
@@ -1121,6 +1122,7 @@ function renderAdmin() {
             <td style="padding:8px 10px;color:#f9a825;font-weight:700">${predCount}/72</td>
             <td style="padding:8px 10px">
               <button data-reset-user="${u.username}" style="padding:4px 10px;font-size:12px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.3);border-radius:6px;color:#ef9a9a;cursor:pointer;font-weight:600">\ud83d\udd11 \u0420\u0435\u0441\u0435\u0442 \u043f\u0430\u0440\u043e\u043b\u0430</button>
+              <button onclick="window._deleteUser('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(198,40,40,.35);border:1px solid rgba(198,40,40,.5);border-radius:6px;color:#ff8a80;cursor:pointer;font-weight:600">🗑️ Изтрий</button>
             </td>
           </tr>`;
         }).join('')}
@@ -1603,6 +1605,38 @@ window._savePred = function(mid) {
   persist();
   const btn = document.getElementById('sp_'+mid);
   if (btn) { btn.textContent = '✓'; btn.style.background = '#1b5e20'; btn.style.color = '#a5d6a7'; }
+};
+
+window._downloadBackup = function() {
+  const backup = {
+    exportedAt: new Date().toISOString(),
+    exportedBy: S.currentUser,
+    users: S.users,
+    predictions: S.predictions,
+    champions: S.champions,
+    matches: S.matches,
+    sessionLog: S.sessionLog
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'wc26_backup_' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+  toast('✅ Бекъпът е изтеглен!');
+};
+
+window._deleteUser = function(username) {
+  if (username === 'admin') { toast('❌ Не може да изтриеш admin!'); return; }
+  if (!confirm('Сигурен ли си, че искаш да изтриеш потребител "' + username + '"?\n\nВсички прогнози на потребителя ще бъдат изтрити!')) return;
+  S.users = S.users.filter(u => u.username !== username);
+  delete S.predictions[username];
+  delete S.champions[username];
+  persist();
+  render();
+  toast('🗑️ Потребител "' + username + '" е изтрит.');
 };
 
 // ===================== INIT =====================
