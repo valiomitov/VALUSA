@@ -98,8 +98,8 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 
 /* LEADERBOARD */
 .lb-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
-.lb-head{display:grid;grid-template-columns:48px 1fr 52px 52px 52px 52px 70px;padding:10px 18px;background:rgba(0,0,0,.3);font-size:11px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.35);letter-spacing:.5px}
-.lb-row{display:grid;grid-template-columns:48px 1fr 52px 52px 52px 52px 70px;padding:13px 18px;border-top:1px solid rgba(255,255,255,.05);align-items:center;transition:background .2s}
+.lb-head{display:grid;grid-template-columns:48px 1fr 52px 52px 52px 52px 48px 70px;padding:10px 18px;background:rgba(0,0,0,.3);font-size:11px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.35);letter-spacing:.5px}
+.lb-row{display:grid;grid-template-columns:48px 1fr 52px 52px 52px 52px 48px 70px;padding:13px 18px;border-top:1px solid rgba(255,255,255,.05);align-items:center;transition:background .2s}
 .lb-row:hover{background:rgba(255,255,255,.04)}
 .lb-row.me{background:rgba(21,101,192,.12);border-left:3px solid #1565c0}
 .lb-rank{font-size:15px;font-weight:800}
@@ -149,7 +149,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
   .team-name{font-size:12px}
   .match-card{padding:.7rem .8rem;gap:.5rem}
   .score-input{width:38px;height:38px;font-size:16px}
-  .lb-head,.lb-row{grid-template-columns:28px 1fr 38px 38px 38px 38px 52px;padding:8px 10px;font-size:10px}
+  .lb-head,.lb-row{grid-template-columns:28px 1fr 38px 38px 38px 38px 36px 52px;padding:8px 10px;font-size:10px}
   .champ-grid{grid-template-columns:repeat(3,1fr)}
   .app-logo{font-size:.95rem}
 }
@@ -160,7 +160,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 .bnav-btn.active{color:#1976d2}
 .bnav-icon{font-size:1.3rem;padding:4px 8px}
 .bnav-label{font-size:10px;font-weight:700}
-@media(max-width:600px){body{padding-bottom:70px}.app-header .app-nav,.app-header .user-name{display:none}.bottom-nav{display:block}.main-content{padding:1rem .75rem}.team-name{font-size:12px}.match-card{padding:.65rem .75rem}.score-input{width:40px;height:40px;font-size:17px}.lb-head,.lb-row{grid-template-columns:22px 1fr 32px 32px 32px 32px 46px;padding:7px 8px;font-size:9px}.champ-grid{grid-template-columns:repeat(3,1fr)}.groups-grid{grid-template-columns:1fr}.save-btn{width:100%}}
+@media(max-width:600px){body{padding-bottom:70px}.app-header .app-nav,.app-header .user-name{display:none}.bottom-nav{display:block}.main-content{padding:1rem .75rem}.team-name{font-size:12px}.match-card{padding:.65rem .75rem}.score-input{width:40px;height:40px;font-size:17px}.lb-head,.lb-row{grid-template-columns:22px 1fr 32px 32px 32px 32px 28px 46px;padding:7px 8px;font-size:9px}.champ-grid{grid-template-columns:repeat(3,1fr)}.groups-grid{grid-template-columns:1fr}.save-btn{width:100%}}
 </style>
 </head>
 <body>
@@ -450,6 +450,7 @@ function applyGHData(data, fromFirebase = false) {
     }
   }
   if (Array.isArray(data.sessionLog)) S.sessionLog = data.sessionLog;
+  if (data.actualWinner !== undefined) S.actualWinner = data.actualWinner || null;
   if (!S.users.find(u => u.username === 'admin')) S.users.push({username:'admin',password:'admin2026'});
   // Само ако НЕ дойде от Firebase listener — иначе правим безкраен цикъл
   if (!fromFirebase) persist();
@@ -460,6 +461,7 @@ function applyGHData(data, fromFirebase = false) {
     LS.set('wc26_preds', S.predictions);
     LS.set('wc26_champs', S.champions);
     LS.set('wc26_log', S.sessionLog);
+    if (S.actualWinner) LS.set('wc26_winner', S.actualWinner); else LS.del('wc26_winner');
   }
 }
 
@@ -470,6 +472,7 @@ let S = {
   matches: LS.get('wc26_matches') || generateMatches(),
   predictions: LS.get('wc26_preds') || {},
   champions: LS.get('wc26_champs') || {},
+  actualWinner: LS.get('wc26_winner') || null, // реалният победител на турнира (задава се от admin)
   sessionLog: LS.get('wc26_log') || [],
   tab: 'predictions',
   authTab: 'login',
@@ -496,6 +499,8 @@ function persist() {
   LS.set('wc26_preds', S.predictions);
   LS.set('wc26_champs', S.champions);
   LS.set('wc26_log', S.sessionLog);
+  if (S.actualWinner) LS.set('wc26_winner', S.actualWinner);
+  else LS.del('wc26_winner');
   if (S.currentUser) LS.set('wc26_current', S.currentUser);
   else LS.del('wc26_current');
   // Auto-sync to Firebase (ако е конфигуриран)
@@ -505,6 +510,7 @@ function persist() {
       matches: S.matches,
       predictions: S.predictions,
       champions: S.champions,
+      actualWinner: S.actualWinner || null,
       sessionLog: S.sessionLog,
       _ts: Date.now()
     });
@@ -550,8 +556,11 @@ function userScore(username) {
     else if (outcome(ps1,ps2)===outcome(rs1,rs2) && (ps1-ps2)===(rs1-rs2)) { signDiff++; }
     else if (outcome(ps1,ps2)===outcome(rs1,rs2)) { sign++; }
   }
-  const champ = S.champions[username];
-  return {sign, signDiff, exact, exact5, total: sign*10 + signDiff*15 + exact*20 + exact5*30, champ};
+  const champ = S.champions[username] || null;
+  const champCorrect = S.actualWinner && champ && champ === S.actualWinner;
+  const champPts = champCorrect ? 60 : 0;
+  return {sign, signDiff, exact, exact5, champ, champCorrect, champPts,
+          total: sign*10 + signDiff*15 + exact*20 + exact5*30 + champPts};
 }
 
 function leaderboard() {
@@ -953,6 +962,7 @@ function renderLeaderboard() {
       <div style="text-align:center;font-size:10px">+Разл.<br><span style="color:#ffe082">15т</span></div>
       <div style="text-align:center;font-size:10px">Точен<br><span style="color:#a5d6a7">20т</span></div>
       <div style="text-align:center;font-size:10px">🔥5+<br><span style="color:#ff7043">30т</span></div>
+      <div style="text-align:center;font-size:10px">🏆<br><span style="color:#f9a825">60т</span></div>
       <div style="text-align:center">Общо</div>
     </div>
     ${lb.length === 0 ? `<div class="lb-empty">Все още няма регистрирани потребители</div>` :
@@ -967,6 +977,7 @@ function renderLeaderboard() {
         <div class="lb-stat" style="color:#ffe082">${u.signDiff||0}</div>
         <div class="lb-stat" style="color:#a5d6a7">${u.exact||0}</div>
         <div class="lb-stat" style="color:#ff7043">${u.exact5||0}</div>
+        <div class="lb-stat" style="color:#f9a825" title="${u.champ||'—'}">${u.champCorrect ? '✓' : (u.champ ? '?' : '—')}</div>
         <div class="lb-total">${u.total}</div>
       </div>`).join('')}
   </div>`;
@@ -1159,6 +1170,18 @@ function renderAdmin() {
     </div>
     <div><button class="save-btn" id="saveResults">💾 Запази резултатите за Група ${S.activeGroup}</button></div>
 
+    <div class="admin-box" style="margin-top:1.5rem;background:rgba(249,168,37,.04);border:1px solid rgba(249,168,37,.2);border-radius:12px;padding:1rem 1.25rem">
+      <div style="font-weight:700;margin-bottom:.75rem">🏆 Реален победител на турнира <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.4)">(задай след финала за 60т бонус)</span></div>
+      <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap">
+        <input type="text" id="actualWinnerInput" placeholder="Напр. Argentina" value="${S.actualWinner||''}"
+          style="flex:1;min-width:180px;padding:8px 12px;background:rgba(0,0,0,.3);border:1px solid rgba(249,168,37,.3);border-radius:8px;color:#fff;font-size:14px"/>
+        <button onclick="window._setActualWinner()" style="padding:8px 18px;background:linear-gradient(135deg,#f57f17,#e65100);border:none;border-radius:8px;color:#fff;font-weight:700;font-size:13px;cursor:pointer">
+          💾 Запази победителя
+        </button>
+        ${S.actualWinner ? `<span style="color:#f9a825;font-size:13px">✓ Текущ: <strong>${S.actualWinner}</strong></span>` : '<span style="color:rgba(255,255,255,.3);font-size:12px">Не е зададен</span>'}
+      </div>
+    </div>
+
     <div class="admin-box" style="margin-top:1.5rem;border:1px solid ${FB.isReady() ? 'rgba(76,175,80,.4)' : 'rgba(255,152,0,.35)'};background:${FB.isReady() ? 'rgba(76,175,80,.05)' : 'rgba(255,152,0,.04)'}">
       <div class="admin-note">
         <strong>☁️ Firebase Синхронизация</strong>
@@ -1262,6 +1285,42 @@ async function autoFetchResults(silent=false) {
         updated++;
       }
     }
+    // \u2500\u2500 \u0410\u0432\u0442\u043E-\u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B: \u043E\u0442\u043A\u0440\u0438\u0439 \u0437\u0430\u0432\u044A\u0440\u0448\u0435\u043D \u0424\u0438\u043D\u0430\u043B \u0438 \u0438\u0437\u0432\u043B\u0435\u0447\u0438 winner \u2500\u2500
+    if (!S.actualWinner) {
+      const finalMatch = S.matches.find(m => m.stage === 'F');
+      if (finalMatch && finalMatch.result && finalMatch.team1 !== 'TBD' && finalMatch.team2 !== 'TBD') {
+        // \u041D\u0430\u043C\u0435\u0440\u0438 ESPN event \u0437\u0430 \u0444\u0438\u043D\u0430\u043B\u0430
+        for (const ev of events) {
+          const comp = ev.competitions && ev.competitions[0];
+          if (!comp || !(ev.status && ev.status.type && ev.status.type.completed)) continue;
+          const home = comp.competitors && comp.competitors.find(c => c.homeAway === 'home');
+          const away = comp.competitors && comp.competitors.find(c => c.homeAway === 'away');
+          if (!home || !away) continue;
+          const hn = normalizeTeam(home.team.displayName);
+          const an = normalizeTeam(away.team.displayName);
+          const fn1 = normalizeTeam(finalMatch.team1), fn2 = normalizeTeam(finalMatch.team2);
+          if (!((fn1===hn && fn2===an) || (fn1===an && fn2===hn))) continue;
+          // ESPN \u043F\u043E\u0441\u0442\u0430\u0432\u044F winner:true \u043D\u0430 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B\u044F (\u0432\u043A\u043B\u044E\u0447\u0438\u0442\u0435\u043B\u043D\u043E \u0441\u043B\u0435\u0434 \u0434\u0443\u0437\u043F\u0438)
+          let winner = null;
+          if (home.winner === true) winner = home.team.displayName;
+          else if (away.winner === true) winner = away.team.displayName;
+          else {
+            // Fallback: \u043F\u043E\u0432\u0435\u0447\u0435 \u0433\u043E\u043B\u043E\u0432\u0435 (\u043D\u043E\u0440\u043C\u0430\u043B\u0435\u043D/\u043F\u0440\u043E\u0434\u044A\u043B\u0436\u0435\u043D\u0438\u044F)
+            const hs = parseInt(home.score), as2 = parseInt(away.score);
+            if (!isNaN(hs) && !isNaN(as2) && hs !== as2) {
+              winner = hs > as2 ? home.team.displayName : away.team.displayName;
+            }
+          }
+          if (winner) {
+            S.actualWinner = winner;
+            if (!silent) toast('\uD83C\uDFC6 \u041F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B \u043D\u0430 \u0442\u0443\u0440\u043D\u0438\u0440\u0430: ' + winner + '! 60\u0442 \u0431\u043E\u043D\u0443\u0441 \u0440\u0430\u0437\u0434\u0430\u0434\u0435\u043D\u0438!');
+            console.log('\u0410\u0432\u0442\u043E-\u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B:', winner);
+          }
+          break;
+        }
+      }
+    }
+
     persist(); render();
     if(updated > 0) {
       const _las = document.getElementById('lastAutoSave');
@@ -1624,6 +1683,15 @@ window._savePred = function(mid) {
   if (btn) { btn.textContent = '✓'; btn.style.background = '#1b5e20'; btn.style.color = '#a5d6a7'; }
 };
 
+window._setActualWinner = function() {
+  const val = ((document.getElementById('actualWinnerInput') || {}).value || '').trim();
+  if (!val) { toast('⚠️ Въведи името на победителя'); return; }
+  S.actualWinner = val;
+  persist();
+  render();
+  toast('🏆 Победителят е записан: ' + val + '. 60т бонус раздадени!');
+};
+
 window._downloadBackup = function() {
   const backup = {
     exportedAt: new Date().toISOString(),
@@ -1729,7 +1797,7 @@ window.addEventListener('load', function() {
 
   // ===================== AUTO REFRESH =====================
   const WC_START = new Date('2026-06-11T00:00:00+03:00').getTime();
-  const WC_END   = new Date('2026-07-20T00:00:00+03:00').getTime();
+  const WC_END   = new Date('2026-07-21T23:59:00+03:00').getTime(); // +2 дни след финала
   const INTERVAL = 5 * 60 * 1000; // 5 minutes
 
   function tryAutoFetch() {
