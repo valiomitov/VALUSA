@@ -431,23 +431,22 @@ function applyGHData(data, fromFirebase = false) {
     });
   }
   if (data.predictions && typeof data.predictions === 'object') {
-    if (fromFirebase) {
-      // Firebase е авторитетен — директно замести (без localOnly merge)
-      S.predictions = Object.assign({}, data.predictions);
-    } else {
-      S.predictions = Object.assign({}, data.predictions,
-        Object.fromEntries(Object.entries(S.predictions).filter(([k]) => !(k in data.predictions)))
-      );
-    }
+    // Merge: Firebase + локални данни, но само за валидни потребители (не изтрити)
+    const validUsers = new Set(S.users.map(u => u.username));
+    const localPredExtra = Object.fromEntries(
+      Object.entries(S.predictions).filter(([k]) => !(k in data.predictions) && validUsers.has(k))
+    );
+    S.predictions = Object.assign({}, data.predictions, localPredExtra);
+    // Изтрий данни на изтрити потребители
+    Object.keys(S.predictions).forEach(k => { if (!validUsers.has(k)) delete S.predictions[k]; });
   }
   if (data.champions && typeof data.champions === 'object') {
-    if (fromFirebase) {
-      S.champions = Object.assign({}, data.champions);
-    } else {
-      S.champions = Object.assign({}, data.champions,
-        Object.fromEntries(Object.entries(S.champions).filter(([k]) => !(k in data.champions)))
-      );
-    }
+    const validUsers = new Set(S.users.map(u => u.username));
+    const localChampExtra = Object.fromEntries(
+      Object.entries(S.champions).filter(([k]) => !(k in data.champions) && validUsers.has(k))
+    );
+    S.champions = Object.assign({}, data.champions, localChampExtra);
+    Object.keys(S.champions).forEach(k => { if (!validUsers.has(k)) delete S.champions[k]; });
   }
   if (Array.isArray(data.sessionLog)) S.sessionLog = data.sessionLog;
   if (data.actualWinner !== undefined) S.actualWinner = data.actualWinner || null;
