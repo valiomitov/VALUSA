@@ -334,9 +334,40 @@ const FB = {
     if (!FB.ref) return;
     FB._syncing = true;
     try {
-      await FB.ref.set(data);
+      // Използваме update() вместо set() — само модифицираме подадените пътища,
+      // без да трием данни на други потребители (напр. SashoK не се губи при persist на admin)
+      const update = {
+        users: data.users,
+        matches: data.matches,
+        actualWinner: data.actualWinner ?? null,
+        sessionLog: data.sessionLog,
+        _ts: data._ts
+      };
+      // predictions и champions — path-specific за всеки потребител
+      if (data.predictions) {
+        Object.keys(data.predictions).forEach(u => {
+          update['predictions/' + u] = data.predictions[u];
+        });
+      }
+      if (data.champions) {
+        Object.keys(data.champions).forEach(u => {
+          update['champions/' + u] = data.champions[u];
+        });
+      }
+      await FB.ref.update(update);
     } catch(e) { console.warn('Firebase push error:', e.message); }
     finally { setTimeout(() => FB._syncing = false, 500); }
+  },
+
+  // Изрично изтриване на данни на изтрит потребител от Firebase
+  async deleteUserData(username) {
+    if (!FB.ref) return;
+    try {
+      const update = {};
+      update['predictions/' + username] = null;
+      update['champions/' + username] = null;
+      await FB.ref.update(update);
+    } catch(e) { console.warn('Firebase deleteUser error:', e.message); }
   }
 };
 
@@ -1724,6 +1755,7 @@ window._deleteUser = function(username) {
   delete S.predictions[username];
   delete S.champions[username];
   persist();
+  FB.deleteUserData(username); // Изрично изтрий от Firebase пътищата predictions/X и champions/X
   render();
   toast('🗑️ Потребител "' + username + '" е изтрит.');
 };
