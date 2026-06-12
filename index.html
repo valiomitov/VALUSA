@@ -1768,7 +1768,7 @@ window._editPrediction = function(username) {
     const predStr = (p && p.s1 !== '' && p.s2 !== '') ? (p.s1 + ':' + p.s2) : '—';
     const resStr = m.result ? (m.result.s1 + '-' + m.result.s2) : '';
     const locked = resStr ? ' 🔒' : '';
-    return '<option value="' + mid + '">' + mid + '. ' + m.home + ' vs ' + m.away + locked + '  (прогноза: ' + predStr + ')</option>';
+    return '<option value="' + mid + '">' + mid + '. ' + m.team1 + ' vs ' + m.team2 + locked + '  (прогноза: ' + predStr + ')</option>';
   }).join('');
 
   const modal = document.createElement('div');
@@ -1816,7 +1816,7 @@ window._editPrediction = function(username) {
   document.getElementById('epDelBtn').addEventListener('click', function() {
     const mid = parseInt(document.getElementById('epMatchSel').value);
     const m = S.matches[mid - 1];
-    const label = m ? (m.home + ' vs ' + m.away) : ('Мач ' + mid);
+    const label = m ? (m.team1 + ' vs ' + m.team2) : ('Мач ' + mid);
     if (!confirm('Изтрий прогнозата на "' + username + '" за ' + label + '?')) return;
     if (!S.predictions[username]) S.predictions[username] = {};
     delete S.predictions[username][mid];
@@ -1846,7 +1846,7 @@ window._editPrediction = function(username) {
     S.predictions[username][mid] = { s1: String(n1), s2: String(n2) };
     LS.set('wc26_preds', S.predictions);
     const m = S.matches[mid - 1];
-    const label = m ? (m.home + ' vs ' + m.away) : ('Мач ' + mid);
+    const label = m ? (m.team1 + ' vs ' + m.team2) : ('Мач ' + mid);
     if (FB.isReady()) {
       FB.db.ref('wc26/predictions/' + username + '/' + mid).set({ s1: String(n1), s2: String(n2) })
         .then(() => toast('✅ ' + username + ': ' + label + ' → ' + n1 + ':' + n2))
