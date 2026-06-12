@@ -1191,6 +1191,7 @@ function renderAdmin() {
             <td style="padding:8px 10px;color:#f9a825;font-weight:700">${predCount}/72</td>
             <td style="padding:8px 10px">
               <button data-reset-user="${u.username}" style="padding:4px 10px;font-size:12px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.3);border-radius:6px;color:#ef9a9a;cursor:pointer;font-weight:600">\ud83d\udd11 \u0420\u0435\u0441\u0435\u0442 \u043f\u0430\u0440\u043e\u043b\u0430</button>
+              <button onclick="window._editPrediction('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(21,101,192,.15);border:1px solid rgba(21,101,192,.35);border-radius:6px;color:#90caf9;cursor:pointer;font-weight:600">✏️ Прогнози</button>
               <button onclick="window._editChampion('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(249,168,37,.15);border:1px solid rgba(249,168,37,.35);border-radius:6px;color:#f9a825;cursor:pointer;font-weight:600">🏆 ${S.champions[u.username]||'—'}</button>
               <button onclick="window._deleteUser('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(198,40,40,.35);border:1px solid rgba(198,40,40,.5);border-radius:6px;color:#ff8a80;cursor:pointer;font-weight:600">🗑️ Изтрий</button>
             </td>
@@ -1753,6 +1754,108 @@ window._downloadBackup = function() {
   a.click();
   setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
   toast('✅ Бекъпът е изтеглен!');
+};
+
+window._editPrediction = function(username) {
+  const existing = document.getElementById('editPredModal');
+  if (existing) existing.remove();
+
+  const preds = S.predictions[username] || {};
+
+  const matchOptions = S.matches.map((m, idx) => {
+    const mid = idx + 1;
+    const p = preds[mid];
+    const predStr = (p && p.s1 !== '' && p.s2 !== '') ? (p.s1 + ':' + p.s2) : '—';
+    const resStr = m.result ? (m.result.s1 + '-' + m.result.s2) : '';
+    const locked = resStr ? ' 🔒' : '';
+    return '<option value="' + mid + '">' + mid + '. ' + m.home + ' vs ' + m.away + locked + '  (прогноза: ' + predStr + ')</option>';
+  }).join('');
+
+  const modal = document.createElement('div');
+  modal.id = 'editPredModal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1rem';
+  modal.innerHTML =
+    '<div style="background:#0d1b2a;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:1.5rem;width:100%;max-width:440px;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.6)">' +
+      '<div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem">✏️ Редактирай прогноза — <span style="color:#90caf9">' + username + '</span></div>' +
+      '<div style="margin-bottom:1rem">' +
+        '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">Избери мач</label>' +
+        '<select id="epMatchSel" style="width:100%;padding:10px 12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:12px;outline:none">' + matchOptions + '</select>' +
+      '</div>' +
+      '<div style="display:flex;align-items:flex-end;gap:1rem;margin-bottom:1.25rem">' +
+        '<div style="flex:1">' +
+          '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">Домакин</label>' +
+          '<input id="epS1" type="number" min="0" max="30" placeholder="—" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:22px;font-weight:800;text-align:center;outline:none;-moz-appearance:textfield">' +
+        '</div>' +
+        '<div style="padding-bottom:12px;font-size:1.6rem;font-weight:800;color:rgba(255,255,255,.25)">:</div>' +
+        '<div style="flex:1">' +
+          '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">Гост</label>' +
+          '<input id="epS2" type="number" min="0" max="30" placeholder="—" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:22px;font-weight:800;text-align:center;outline:none;-moz-appearance:textfield">' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;gap:.6rem">' +
+        '<button id="epSaveBtn" style="flex:1;padding:11px;background:linear-gradient(135deg,#1565c0,#0d47a1);border:none;border-radius:9px;color:#fff;font-size:14px;font-weight:700;cursor:pointer">💾 Запази</button>' +
+        '<button id="epDelBtn" title="Изтрий прогнозата за този мач" style="padding:11px 13px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.35);border-radius:9px;color:#ef9a9a;font-size:14px;cursor:pointer">🗑️</button>' +
+        '<button id="epCancelBtn" style="padding:11px 13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer">✕</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(modal);
+
+  function fillScores() {
+    const mid = parseInt(document.getElementById('epMatchSel').value);
+    const p = (S.predictions[username] || {})[mid];
+    document.getElementById('epS1').value = (p && p.s1 !== '') ? p.s1 : '';
+    document.getElementById('epS2').value = (p && p.s2 !== '') ? p.s2 : '';
+  }
+  document.getElementById('epMatchSel').addEventListener('change', fillScores);
+  fillScores();
+
+  function closeModal() { const m = document.getElementById('editPredModal'); if (m) m.remove(); }
+  document.getElementById('epCancelBtn').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+
+  document.getElementById('epDelBtn').addEventListener('click', function() {
+    const mid = parseInt(document.getElementById('epMatchSel').value);
+    const m = S.matches[mid - 1];
+    const label = m ? (m.home + ' vs ' + m.away) : ('Мач ' + mid);
+    if (!confirm('Изтрий прогнозата на "' + username + '" за ' + label + '?')) return;
+    if (!S.predictions[username]) S.predictions[username] = {};
+    delete S.predictions[username][mid];
+    LS.set('wc26_preds', S.predictions);
+    if (FB.isReady()) {
+      FB.db.ref('wc26/predictions/' + username + '/' + mid).set(null)
+        .then(() => toast('🗑️ Прогнозата е изтрита!'))
+        .catch(function(e) { toast('❌ Грешка: ' + e.message); });
+      FB.db.ref('wc26/_ts').set(Date.now());
+    } else { toast('🗑️ Изтрита локално.'); }
+    document.getElementById('epS1').value = '';
+    document.getElementById('epS2').value = '';
+    // Обнови label в select-а
+    const sel = document.getElementById('epMatchSel');
+    if (sel) { const opt = sel.options[sel.selectedIndex]; if (opt) opt.text = opt.text.replace(/\(прогноза:.*?\)/, '(прогноза: —)'); }
+    render();
+  });
+
+  document.getElementById('epSaveBtn').addEventListener('click', function() {
+    const mid = parseInt(document.getElementById('epMatchSel').value);
+    const s1v = document.getElementById('epS1').value.trim();
+    const s2v = document.getElementById('epS2').value.trim();
+    if (s1v === '' || s2v === '') { toast('❌ Въведи двата резултата!'); return; }
+    const n1 = parseInt(s1v), n2 = parseInt(s2v);
+    if (isNaN(n1) || isNaN(n2) || n1 < 0 || n2 < 0) { toast('❌ Невалидни стойности!'); return; }
+    if (!S.predictions[username]) S.predictions[username] = {};
+    S.predictions[username][mid] = { s1: String(n1), s2: String(n2) };
+    LS.set('wc26_preds', S.predictions);
+    const m = S.matches[mid - 1];
+    const label = m ? (m.home + ' vs ' + m.away) : ('Мач ' + mid);
+    if (FB.isReady()) {
+      FB.db.ref('wc26/predictions/' + username + '/' + mid).set({ s1: String(n1), s2: String(n2) })
+        .then(() => toast('✅ ' + username + ': ' + label + ' → ' + n1 + ':' + n2))
+        .catch(function(e) { toast('❌ Грешка: ' + e.message); });
+      FB.db.ref('wc26/_ts').set(Date.now());
+    } else { toast('✅ Записано локално. Firebase не е свързан.'); }
+    render();
+    closeModal();
+  });
 };
 
 window._editChampion = function(username) {
