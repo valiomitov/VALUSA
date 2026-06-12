@@ -800,19 +800,152 @@ function renderProfile() {
   const sc = userScore(S.currentUser);
   const lb = leaderboard();
   const rank = lb.findIndex(u => u.username === S.currentUser) + 1;
+
+  // Prediction stats
+  const preds = S.predictions[S.currentUser] || {};
+  const totalMatches = S.matches.length;
+  const predCount = Object.keys(preds).filter(k => { const p = preds[k]; return p && p.s1 !== '' && p.s2 !== ''; }).length;
+  const predPct = totalMatches > 0 ? Math.round(predCount / totalMatches * 100) : 0;
+  const playedMatches = S.matches.filter(m => m.result && typeof m.result === 'object' && m.result.s1 !== undefined);
+  const scoredCount = sc.sign + sc.signDiff + sc.exact + sc.exact5;
+  const hitRate = playedMatches.length > 0 ? Math.round(scoredCount / playedMatches.length * 100) : 0;
+
+  // Session log stats
+  const userLogins = S.sessionLog.filter(e => e.username === S.currentUser && e.action === 'login');
+  const lastLoginTime = userLogins.length > 0 ? userLogins[userLogins.length - 1].time : null;
+  const lastLoginStr = lastLoginTime
+    ? new Date(lastLoginTime).toLocaleString('bg-BG', {timeZone:'Europe/Sofia', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'})
+    : '—';
+  const registeredStr = user.registeredAt
+    ? new Date(user.registeredAt).toLocaleDateString('bg-BG', {timeZone:'Europe/Sofia', day:'numeric', month:'long', year:'numeric'})
+    : '—';
+
+  // Recent form — last 10 played matches, newest first
+  const formDots = playedMatches.slice(-10).reverse().map(m => {
+    const p = preds[m.id];
+    if (!p || p.s1 === '' || p.s2 === '') return '<div title="Без прогноза" style="width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.25)">—</div>';
+    const ps1 = parseInt(p.s1), ps2 = parseInt(p.s2), rs1 = m.result.s1, rs2 = m.result.s2;
+    if (ps1===rs1 && ps2===rs2) return '<div title="🎯 Точен резултат!" style="width:24px;height:24px;border-radius:6px;background:rgba(27,94,32,.8);border:1px solid #4caf50;display:flex;align-items:center;justify-content:center;font-size:12px">🎯</div>';
+    if (outcome(ps1,ps2)===outcome(rs1,rs2) && (ps1-ps2)===(rs1-rs2)) return '<div title="📐 Верна разлика" style="width:24px;height:24px;border-radius:6px;background:rgba(249,168,37,.2);border:1px solid rgba(249,168,37,.5);display:flex;align-items:center;justify-content:center;font-size:12px">📐</div>';
+    if (outcome(ps1,ps2)===outcome(rs1,rs2)) return '<div title="✅ Верен знак" style="width:24px;height:24px;border-radius:6px;background:rgba(21,101,192,.3);border:1px solid rgba(33,150,243,.4);display:flex;align-items:center;justify-content:center;font-size:12px">✅</div>';
+    return '<div title="❌ Грешна прогноза" style="width:24px;height:24px;border-radius:6px;background:rgba(198,40,40,.25);border:1px solid rgba(244,67,54,.3);display:flex;align-items:center;justify-content:center;font-size:12px">❌</div>';
+  }).join('');
+
+  // Points breakdown
+  const maxPts = Math.max(sc.total, 1);
+  const breakdown = [
+    { label:'🎯 Точен резултат', count: sc.exact + sc.exact5, pts: sc.exact*20 + sc.exact5*30, color:'#4caf50' },
+    { label:'📐 Верна разлика',  count: sc.signDiff,          pts: sc.signDiff*15,              color:'#f9a825' },
+    { label:'✅ Верен знак',     count: sc.sign,              pts: sc.sign*10,                  color:'#42a5f5' },
+    { label:'🏆 Шампион',        count: sc.champCorrect?1:0,  pts: sc.champPts,                 color:'#ff8a65' },
+  ];
+
+  // SVG donut (r=15.9, circumference≈100)
+  const donutFill = predPct;
+
   return `
   <div class="page-title">👤 Профил</div>
+
+  <!-- HERO -->
   <div class="profile-card" style="text-align:center">
     <div class="profile-avatar-lg">${S.currentUser[0].toUpperCase()}</div>
     <div class="profile-username">${S.currentUser}</div>
     <div class="profile-email-display">${user.email || '—'}</div>
-    <div style="display:flex;justify-content:center;gap:2rem;margin-bottom:.5rem">
-      <div><div style="font-size:1.4rem;font-weight:900;color:#f9a825">${sc.total}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">ТОЧКИ</div></div>
-      <div><div style="font-size:1.4rem;font-weight:900;color:#90caf9">${rank > 0 ? '#'+rank : '—'}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">КЛАСИРАНЕ</div></div>
-      <div><div style="font-size:1.4rem;font-weight:900;color:#a5d6a7">${sc.exact}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">ТОЧНИ</div></div>
+    <div style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap">
+      <div><div style="font-size:1.5rem;font-weight:900;color:#f9a825">${sc.total}</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Точки</div></div>
+      <div><div style="font-size:1.5rem;font-weight:900;color:#90caf9">${rank > 0 ? '#'+rank : '—'}</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Класиране</div></div>
+      <div><div style="font-size:1.5rem;font-weight:900;color:#4caf50">${hitRate}%</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Успеваемост</div></div>
+      <div><div style="font-size:1.5rem;font-weight:900;color:#ce93d8">${predCount}<span style="font-size:.9rem;color:rgba(255,255,255,.3)">/${totalMatches}</span></div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Прогнози</div></div>
     </div>
   </div>
 
+  <!-- STATISTICS -->
+  <div class="profile-card">
+    <div style="font-weight:800;margin-bottom:1.25rem;font-size:1rem">📊 Статистика</div>
+
+    <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem">
+      <!-- Donut -->
+      <div style="position:relative;flex-shrink:0;width:90px;height:90px">
+        <svg width="90" height="90" viewBox="0 0 36 36" style="transform:rotate(-90deg)">
+          <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="3.5"/>
+          <circle cx="18" cy="18" r="15.9" fill="none" stroke="url(#dg)" stroke-width="3.5"
+            stroke-dasharray="${donutFill} ${100-donutFill}" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="dg" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#1565c0"/>
+              <stop offset="100%" stop-color="#42a5f5"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="font-size:1.15rem;font-weight:900;color:#90caf9">${predPct}%</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.3px">ЗАПЪЛНЕНИ</div>
+        </div>
+      </div>
+      <!-- Progress bars -->
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:3px">
+          <span>Въведени прогнози</span><span style="color:#90caf9;font-weight:700">${predCount}/${totalMatches}</span>
+        </div>
+        <div style="height:6px;background:rgba(255,255,255,.07);border-radius:3px;margin-bottom:10px">
+          <div style="height:6px;background:linear-gradient(90deg,#1565c0,#42a5f5);border-radius:3px;width:${predPct}%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:3px">
+          <span>Точки от изиграни мачове</span><span style="color:#4caf50;font-weight:700">${scoredCount}/${playedMatches.length}</span>
+        </div>
+        <div style="height:6px;background:rgba(255,255,255,.07);border-radius:3px">
+          <div style="height:6px;background:linear-gradient(90deg,#2e7d32,#66bb6a);border-radius:3px;width:${playedMatches.length>0?Math.round(scoredCount/playedMatches.length*100):0}%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Points breakdown -->
+    ${breakdown.map(b => `
+    <div style="margin-bottom:.55rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:3px">
+        <span style="color:rgba(255,255,255,.6)">${b.label}</span>
+        <span style="color:${b.color};font-weight:700">${b.count>0 ? b.count+' × — = ' : ''}${b.pts} т.</span>
+      </div>
+      <div style="height:5px;background:rgba(255,255,255,.06);border-radius:3px">
+        <div style="height:5px;border-radius:3px;background:${b.color};width:${b.pts>0?Math.round(b.pts/maxPts*100):0}%;opacity:.75"></div>
+      </div>
+    </div>`).join('')}
+
+    <!-- Recent form -->
+    ${formDots ? `
+    <div style="margin-top:1.1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.05)">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.55rem">Последна форма</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">${formDots}</div>
+      <div style="margin-top:.5rem;display:flex;gap:.75rem;font-size:10px;color:rgba(255,255,255,.3)">
+        <span>🎯 Точен</span><span>📐 Разлика</span><span>✅ Знак</span><span>❌ Грешка</span>
+      </div>
+    </div>` : ''}
+  </div>
+
+  <!-- ACTIVITY -->
+  <div class="profile-card">
+    <div style="font-weight:800;margin-bottom:1rem;font-size:1rem">🕐 Активност</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Последен вход</div>
+        <div style="font-size:13px;font-weight:700;color:#90caf9">${lastLoginStr}</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Влизания</div>
+        <div style="font-size:13px;font-weight:700;color:#ce93d8">${userLogins.length} пъти</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Регистриран</div>
+        <div style="font-size:12px;font-weight:700;color:#a5d6a7">${registeredStr}</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem">
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Шампион 🏆</div>
+        <div style="font-size:13px;font-weight:700;color:#f9a825">${sc.champ || '—'}${sc.champCorrect ? ' ✨' : ''}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMAIL -->
   <div class="profile-card">
     <div style="font-weight:800;margin-bottom:1rem">✉️ Промени имейл</div>
     <div class="form-group"><label>Нов имейл</label>
@@ -820,6 +953,7 @@ function renderProfile() {
     <button class="btn btn-primary" onclick="window._saveProfileEmail()">💾 Запази имейл</button>
   </div>
 
+  <!-- PASSWORD -->
   <div class="profile-card">
     <div style="font-weight:800;margin-bottom:1rem">🔐 Промени парола</div>
     <div class="form-group"><label>Текуща парола</label>
