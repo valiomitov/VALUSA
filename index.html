@@ -462,14 +462,20 @@ function applyGHData(data, fromFirebase = false) {
     });
   }
   if (data.predictions && typeof data.predictions === 'object') {
-    // Merge: Firebase + локални данни, но само за валидни потребители (не изтрити)
     const validUsers = new Set(S.users.map(u => u.username));
-    const localPredExtra = Object.fromEntries(
-      Object.entries(S.predictions).filter(([k]) => !(k in data.predictions) && validUsers.has(k))
-    );
-    S.predictions = Object.assign({}, data.predictions, localPredExtra);
-    // Изтрий данни на изтрити потребители
-    Object.keys(S.predictions).forEach(k => { if (!validUsers.has(k)) delete S.predictions[k]; });
+    const merged = {};
+    // Deep merge на ниво МАЧ (не на ниво потребител):
+    // За потребители в Firebase → взимаме локалните като база + Firebase отгоре (Firebase печели при съвпадение на мач).
+    // Така локално-въведени прогнози (непратени още в Firebase) не се губят при onValue callback.
+    Object.keys(data.predictions).forEach(u => {
+      if (!validUsers.has(u)) return;
+      merged[u] = Object.assign({}, S.predictions[u] || {}, data.predictions[u]);
+    });
+    // Добави потребители, които са само локално (не са изобщо в Firebase)
+    Object.keys(S.predictions).forEach(u => {
+      if (validUsers.has(u) && !(u in merged)) merged[u] = S.predictions[u];
+    });
+    S.predictions = merged;
   }
   if (data.champions && typeof data.champions === 'object') {
     const validUsers = new Set(S.users.map(u => u.username));
