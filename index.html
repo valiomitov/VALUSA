@@ -1185,6 +1185,7 @@ function renderAdmin() {
             <td style="padding:8px 10px;color:#f9a825;font-weight:700">${predCount}/72</td>
             <td style="padding:8px 10px">
               <button data-reset-user="${u.username}" style="padding:4px 10px;font-size:12px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.3);border-radius:6px;color:#ef9a9a;cursor:pointer;font-weight:600">\ud83d\udd11 \u0420\u0435\u0441\u0435\u0442 \u043f\u0430\u0440\u043e\u043b\u0430</button>
+              <button onclick="window._editChampion('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(249,168,37,.15);border:1px solid rgba(249,168,37,.35);border-radius:6px;color:#f9a825;cursor:pointer;font-weight:600">🏆 ${S.champions[u.username]||'—'}</button>
               <button onclick="window._deleteUser('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(198,40,40,.35);border:1px solid rgba(198,40,40,.5);border-radius:6px;color:#ff8a80;cursor:pointer;font-weight:600">🗑️ Изтрий</button>
             </td>
           </tr>`;
@@ -1746,6 +1747,30 @@ window._downloadBackup = function() {
   a.click();
   setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
   toast('✅ Бекъпът е изтеглен!');
+};
+
+window._editChampion = function(username) {
+  const current = S.champions[username] || '';
+  const val = prompt('🏆 Шампионска прогноза за "' + username + '":\n(остави празно за да изтриеш прогнозата)', current);
+  if (val === null) return; // отказ
+  const trimmed = val.trim();
+  if (trimmed) {
+    S.champions[username] = trimmed;
+  } else {
+    delete S.champions[username];
+  }
+  // Запази в localStorage
+  LS.set('wc26_champs', S.champions);
+  // Запази path-specific в Firebase (не презаписва останалите)
+  if (FB.isReady()) {
+    FB.db.ref('wc26/champions/' + username).set(trimmed || null)
+      .then(() => toast('🏆 Шампион за "' + username + '" ' + (trimmed ? 'е сменен на ' + trimmed : 'е изтрит') + '!'))
+      .catch(e => toast('❌ Грешка: ' + e.message));
+    FB.db.ref('wc26/_ts').set(Date.now());
+  } else {
+    toast('🏆 Записано локално. Firebase не е свързан.');
+  }
+  render();
 };
 
 window._deleteUser = function(username) {
