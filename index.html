@@ -687,7 +687,7 @@ function renderApp() {
       ${tabs.map(t=>`<button class="nav-btn ${S.tab===t.id?'active':''}" data-tab="${t.id}">${t.l}</button>`).join('')}
     </nav>
     <div class="user-info">
-      <div class="user-avatar">${S.currentUser[0].toUpperCase()}</div>
+      <div class="user-avatar" style="${(S.users.find(u=>u.username===S.currentUser)||{}).avatar?'font-size:18px;background:rgba(255,255,255,.08)':''}">${(S.users.find(u=>u.username===S.currentUser)||{}).avatar||S.currentUser[0].toUpperCase()}</div>
       <span class="user-name">${S.currentUser}</span>
       <button class="logout-btn" id="logoutBtn">Изход</button>
     </div>
@@ -848,7 +848,7 @@ function renderProfile() {
 
   <!-- HERO -->
   <div class="profile-card" style="text-align:center">
-    <div class="profile-avatar-lg">${S.currentUser[0].toUpperCase()}</div>
+    <div class="profile-avatar-lg" style="${user.avatar?'font-size:3rem;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.12)':''}">${user.avatar||S.currentUser[0].toUpperCase()}</div>
     <div class="profile-username">${S.currentUser}</div>
     <div class="profile-email-display">${user.email || '—'}</div>
     <div style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap">
@@ -857,6 +857,16 @@ function renderProfile() {
       <div><div style="font-size:1.5rem;font-weight:900;color:#4caf50">${hitRate}%</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Успеваемост</div></div>
       <div><div style="font-size:1.5rem;font-weight:900;color:#ce93d8">${predCount}<span style="font-size:.9rem;color:rgba(255,255,255,.3)">/${totalMatches}</span></div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Прогнози</div></div>
     </div>
+  </div>
+
+  <!-- AVATAR PICKER -->
+  <div class="profile-card">
+    <div style="font-weight:800;margin-bottom:.3rem;font-size:1rem">🎨 Избери аватар</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:1rem">Натисни emoji за да го зададеш като профилна снимка</div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px">
+      ${['⚽','🏆','🥇','🎯','🏅','🎽','🥅','🏟️','🔥','💎','⚡','🌊','❄️','🌪️','☀️','🌙','🌈','🚀','👑','💪','🌟','🧠','😎','🤩','😈','👿','🤠','🥶','🥵','😤','🦁','🐯','🦅','🐺','🦊','🐻','🦈','🐉','🦄','🐆','🦋','🦂','🐊','🦬','🦏','🐘','🎭','🃏'].map(e=>`<div onclick="window._saveAvatar('${e}')" style="width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all .15s;background:${user.avatar===e?'rgba(21,101,192,.45)':'rgba(255,255,255,.05)'};border:1.5px solid ${user.avatar===e?'#1565c0':'rgba(255,255,255,.07)'};transform:${user.avatar===e?'scale(1.15)':'scale(1)'}" title="${e}">${e}</div>`).join('')}
+    </div>
+    ${user.avatar?`<button onclick="window._saveAvatar('')" style="margin-top:.9rem;padding:5px 13px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer">✕ Премахни аватар</button>`:''}
   </div>
 
   <!-- STATISTICS -->
@@ -1145,7 +1155,7 @@ function renderLeaderboard() {
       <div class="lb-row ${u.username===S.currentUser?'me':''}">
         <div class="lb-rank ${i<3?'rank-'+(i+1):''}">${i<3?medals[i]:i+1}</div>
         <div class="lb-user">
-          <div class="user-avatar" style="width:28px;height:28px;font-size:12px">${u.username[0].toUpperCase()}</div>
+          <div class="user-avatar" style="width:28px;height:28px;font-size:${(S.users.find(x=>x.username===u.username)||{}).avatar?'16px':'12px'};${(S.users.find(x=>x.username===u.username)||{}).avatar?'background:rgba(255,255,255,.08)':''}">${(S.users.find(x=>x.username===u.username)||{}).avatar||u.username[0].toUpperCase()}</div>
           ${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(аз)</span>':''}
         </div>
         <div class="lb-stat" style="color:#90caf9">${u.sign||0}</div>
@@ -1888,6 +1898,17 @@ window._downloadBackup = function() {
   a.click();
   setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
   toast('✅ Бекъпът е изтеглен!');
+};
+
+const PROFILE_EMOJIS = ['⚽','🏆','🥇','🎯','🏅','🎽','🥅','🏟️','🔥','💎','⚡','🌊','❄️','🌪️','☀️','🌙','🌈','🚀','👑','💪','🌟','🧠','😎','🤩','😈','👿','🤠','🥶','🥵','😤','🦁','🐯','🦅','🐺','🦊','🐻','🦈','🐉','🦄','🐆','🦋','🦂','🐊','🦬','🦏','🐘','🎭','🃏'];
+
+window._saveAvatar = function(emoji) {
+  const userObj = S.users.find(u => u.username === S.currentUser);
+  if (!userObj) return;
+  if (emoji) { userObj.avatar = emoji; } else { delete userObj.avatar; }
+  persist();
+  render();
+  toast(emoji ? '✅ Аватарът е сменен на ' + emoji : '✅ Аватарът е премахнат.');
 };
 
 window._editPrediction = function(username) {
