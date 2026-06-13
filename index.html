@@ -606,8 +606,18 @@ function userScore(username) {
 }
 
 function leaderboard() {
-  return S.users.filter(u => u.username !== 'admin').map(u => ({username: u.username, ...userScore(u.username)}))
-    .sort((a, b) => b.total - a.total || b.exact - a.exact);
+  return S.users.filter(u => u.username !== 'admin').map(u => {
+    const sc = userScore(u.username);
+    const preds = S.predictions[u.username] || {};
+    const predCount = Object.keys(preds).filter(k => { const p = preds[k]; return p && p.s1 !== undefined && p.s1 !== '' && p.s2 !== undefined && p.s2 !== ''; }).length;
+    return {username: u.username, ...sc, predCount};
+  }).sort((a, b) =>
+    b.total - a.total ||                                    // 1. Общо точки
+    b.exact - a.exact ||                                    // 2. Точни резултати
+    b.sign - a.sign ||                                      // 3. Верни знаци (1X2)
+    (b.champCorrect ? 1 : 0) - (a.champCorrect ? 1 : 0) || // 4. Познал шампиона
+    b.predCount - a.predCount                               // 5. Брой въведени прогнози
+  );
 }
 
 // ===================== RENDER =====================
@@ -775,6 +785,30 @@ function renderRules() {
     <div style="background:rgba(198,40,40,.08);border:1px solid rgba(198,40,40,.2);border-radius:14px;padding:1rem;margin-bottom:.75rem">
       <div style="font-weight:700;margin-bottom:.3rem">⏰ Краен срок</div>
       <div style="color:rgba(255,255,255,.6);font-size:.9rem">Прогнозата се <strong>заключва автоматично 30 мин</strong> преди началото на всеки мач.</div>
+    </div>
+
+    <div style="background:rgba(156,39,176,.08);border:1.5px solid rgba(156,39,176,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem">
+      <div style="font-weight:800;font-size:1rem;margin-bottom:.75rem">⚖️ Критерии при равен брой точки</div>
+      <div style="color:rgba(255,255,255,.55);font-size:.83rem;margin-bottom:.9rem">При равенство в крайното класиране, по-напред се нарежда участникът, който е по-добър по следния ред:</div>
+      <div style="display:flex;flex-direction:column;gap:.5rem">
+        ${[
+          ['1', '🎯', 'Повече точни резултати', 'Познаваш точния брой голове и на двата отбора'],
+          ['2', '✅', 'Повече верни знаци (1/X/2)', 'Познаваш кой побеждава, дори без точен резултат'],
+          ['3', '🏆', 'Познал шампиона на турнира', 'Дали си предвидил правилно победителя'],
+          ['4', '📝', 'Повече въведени прогнози', 'По-добросъвестен участник — въвел е прогноза за повече мачове'],
+        ].map(([n,icon,title,desc]) => `
+        <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.6rem .85rem">
+          <div style="min-width:22px;height:22px;border-radius:50%;background:rgba(156,39,176,.4);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;flex-shrink:0;margin-top:1px">${n}</div>
+          <div style="font-size:1.3rem;flex-shrink:0">${icon}</div>
+          <div>
+            <div style="font-weight:700;font-size:.88rem">${title}</div>
+            <div style="color:rgba(255,255,255,.4);font-size:.78rem">${desc}</div>
+          </div>
+        </div>`).join('')}
+      </div>
+      <div style="margin-top:.85rem;padding:.55rem .85rem;background:rgba(0,0,0,.2);border-radius:8px;font-size:.78rem;color:rgba(255,255,255,.35)">
+        Ако и след всичките критерии има пълно равенство — участниците заемат едно и също място.
+      </div>
     </div>
 
     <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1rem">
