@@ -440,9 +440,15 @@ function applyGHData(data, fromFirebase = false) {
   if (!data) return;
   if (Array.isArray(data.users)) {
     if (fromFirebase) {
-      // Firebase е авторитетен — директно замести (без localOnly merge)
-      // Иначе изтрити от admin потребители се връщат обратно
-      S.users = data.users;
+      // Deep-merge на ниво user: Firebase е авторитетен за своите полета,
+      // но запазва локални полета (напр. avatar) ако Firebase все още ги няма.
+      // Потребители изтрити в Firebase (не присъстват в data.users) се изключват.
+      const localByName = {};
+      S.users.forEach(u => { localByName[u.username] = u; });
+      S.users = data.users.map(fbUser => {
+        const local = localByName[fbUser.username];
+        return local ? Object.assign({}, local, fbUser) : fbUser;
+      });
     } else {
       // GitHub/backup може да е остаряло — запази локално-регистрирани потребители
       const ghNames = new Set(data.users.map(u => u.username));
