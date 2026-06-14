@@ -594,6 +594,13 @@ if (!S.matches.find(m => m.stage)) {
 
 function persist() {
   S.users = dedupeUsers(S.users); // предотвратява натрупване на дубликати в localStorage
+  // Изчисти невалидни prediction ключове (напр. стар id=0 когато IDs стартират от 1)
+  const _validIds = new Set(S.matches.map(m => String(m.id)));
+  Object.keys(S.predictions).forEach(u => {
+    Object.keys(S.predictions[u] || {}).forEach(mid => {
+      if (!_validIds.has(String(mid))) delete S.predictions[u][mid];
+    });
+  });
   LS.set('wc26_users', S.users);
   LS.set('wc26_matches', S.matches);
   LS.set('wc26_preds', S.predictions);
@@ -2032,21 +2039,34 @@ window._syncTest = async function(verbose = true) {
     const rKeys  = Object.keys(remote);
     const userProblems = [];
 
-    // Локално но не в Firebase
+    // Помощна: label на мач
+    const matchLabel = mid => {
+      const m = S.matches.find(x => String(x.id) === String(mid));
+      return m ? (m.team1 + ' - ' + m.team2) : ('мач ' + mid + ' (невалиден ID)');
+    };
+    const validMatchIds = new Set(S.matches.map(m => String(m.id)));
+
+    // Локално но не в Firebase (пропуска невалидни ключове)
     lKeys.forEach(mid => {
+      if (!validMatchIds.has(String(mid))) return; // стар/невалиден ключ — игнорира
       if (!remote[mid]) {
-        userProblems.push('мач ' + mid + ': в local, ЛИПСВА в Firebase');
+        userProblems.push(matchLabel(mid) + ': ЛИПСВА в Firebase');
       } else if (String(local[mid].s1) !== String(remote[mid].s1) || String(local[mid].s2) !== String(remote[mid].s2)) {
-        userProblems.push('мач ' + mid + ': local=' + local[mid].s1 + ':' + local[mid].s2 + ' ≠ Firebase=' + remote[mid].s1 + ':' + remote[mid].s2);
+        userProblems.push(matchLabel(mid) + ': local=' + local[mid].s1 + ':' + local[mid].s2 + ' ≠ Firebase=' + remote[mid].s1 + ':' + remote[mid].s2);
       }
     });
     // В Firebase но не локално
-    rKeys.forEach(mid => { if (!local[mid]) userProblems.push('мач ' + mid + ': в Firebase, ЛИПСВА в local'); });
+    rKeys.forEach(mid => {
+      if (!validMatchIds.has(String(mid))) return;
+      if (!local[mid]) userProblems.push(matchLabel(mid) + ': в Firebase, ЛИПСВА в local');
+    });
     // Потребителят в Firebase users?
     if (!fbUserSet.has(u.username)) userProblems.push('потребителят НЕ Е в Firebase /users');
 
-    if (userProblems.length > 0) issues.push({user:u.username, problems:userProblems, lc:lKeys.length, rc:rKeys.length});
-    else ok.push({user:u.username, count:lKeys.length});
+    const validLc = lKeys.filter(mid => validMatchIds.has(String(mid))).length;
+    const validRc = rKeys.filter(mid => validMatchIds.has(String(mid))).length;
+    if (userProblems.length > 0) issues.push({user:u.username, problems:userProblems, lc:validLc, rc:validRc});
+    else ok.push({user:u.username, count:validLc});
   });
 
   if (verbose) {
