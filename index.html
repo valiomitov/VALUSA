@@ -2365,7 +2365,7 @@ window.addEventListener('load', function() {
   // ===================== AUTO REFRESH =====================
   const WC_START = new Date('2026-06-11T00:00:00+03:00').getTime();
   const WC_END   = new Date('2026-07-21T23:59:00+03:00').getTime(); // +2 дни след финала
-  const INTERVAL = 5 * 60 * 1000; // 5 minutes
+  const INTERVAL = 2 * 60 * 1000; // 2 минути — по-бързо обновяване на резултати
 
   function tryAutoFetch() {
     const now = Date.now();
