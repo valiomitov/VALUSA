@@ -525,7 +525,14 @@ function applyGHData(data, fromFirebase = false) {
       // Дори ако потребителят все още не е в S.users (race condition), прогнозите му се запазват.
       // Deep merge на ниво мач: локалното е база, Firebase е отгоре (Firebase печели при съвпадение).
       Object.keys(data.predictions).forEach(u => {
-        merged[u] = Object.assign({}, S.predictions[u] || {}, data.predictions[u]);
+        if (u === S.currentUser) {
+          // Текущият потребител: локалното побеждава — прогнозите му са само-що въведени
+          // и Firebase write може все още да е в ход (race condition).
+          merged[u] = Object.assign({}, data.predictions[u], S.predictions[u] || {});
+        } else {
+          // Останалите: Firebase е авторитетен
+          merged[u] = Object.assign({}, S.predictions[u] || {}, data.predictions[u]);
+        }
       });
       // Добави локални прогнози за потребители, чиито данни още не са в Firebase
       Object.keys(S.predictions).forEach(u => {
