@@ -355,6 +355,8 @@ const FB = {
       // users — path-specific по username: Alice не може да изтрие Drag само защото
       // нейният браузър не знае за него. Всеки потребител пише само своя запис.
       if (data.users) {
+        // Null стари числови ключове (migration от array към path-specific)
+        for (let _i = 0; _i < 60; _i++) update['users/' + _i] = null;
         data.users.forEach(u => {
           if (u && u.username) update['users/' + u.username] = u;
         });
@@ -464,9 +466,13 @@ function applyGHData(data, fromFirebase = false) {
   if (!data) return;
   if (data.users) {
     // Поддържа и стар array формат ({0:{...},1:{...}}) и нов object формат ({alice:{...},bob:{...}})
-    const fbUsersArr = Array.isArray(data.users)
+    const _rawUsers = Array.isArray(data.users)
       ? data.users
       : Object.values(data.users).filter(u => u && u.username);
+    // Дедублиране по username (Firebase може да има и стари числови ключове И нови path ключове едновременно)
+    const _seenUsernames = {};
+    _rawUsers.forEach(u => { if (u && u.username) _seenUsernames[u.username] = u; });
+    const fbUsersArr = Object.values(_seenUsernames);
     if (fromFirebase) {
       // Deep-merge на ниво user: Firebase е авторитетен за своите полета,
       // но запазва локални полета (напр. avatar) ако Firebase все още ги няма.
