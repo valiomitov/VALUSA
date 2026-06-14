@@ -638,7 +638,8 @@ function persist() {
       actualWinner: S.actualWinner || null,
       sessionLog: S.sessionLog,
       _ts: Date.now(),
-      currentUser: S.currentUser // само текущия потребител се записва в predictions/champions
+      currentUser: S.currentUser, // само текущия потребител се записва в predictions/champions
+      _forceAll: S.currentUser === 'admin' // admin записва прогнозите на всички потребители
     });
   }
 }
