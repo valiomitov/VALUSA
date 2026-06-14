@@ -361,16 +361,27 @@ const FB = {
           if (u && u.username) update['users/' + u.username] = u;
         });
       }
-      // predictions и champions — path-specific за всеки потребител
+      // predictions и champions — само за текущия потребител при нормален persist()
+      // _forceAll:true се ползва само при _syncRepair за да запише всички
       if (data.predictions) {
-        Object.keys(data.predictions).forEach(u => {
-          update['predictions/' + u] = data.predictions[u];
-        });
+        if (data._forceAll) {
+          Object.keys(data.predictions).forEach(u => {
+            update['predictions/' + u] = data.predictions[u];
+          });
+        } else if (data.currentUser && data.predictions[data.currentUser]) {
+          // Записва само прогнозите на текущия потребител — не презаписва другите!
+          update['predictions/' + data.currentUser] = data.predictions[data.currentUser];
+        }
       }
       if (data.champions) {
-        Object.keys(data.champions).forEach(u => {
-          update['champions/' + u] = data.champions[u];
-        });
+        if (data._forceAll) {
+          Object.keys(data.champions).forEach(u => {
+            update['champions/' + u] = data.champions[u];
+          });
+        } else if (data.currentUser) {
+          const cv = data.champions[data.currentUser];
+          if (cv !== undefined) update['champions/' + data.currentUser] = cv || null;
+        }
       }
       await FB.ref.update(update);
       FB._pendingWrite = false;
@@ -619,7 +630,8 @@ function persist() {
       champions: S.champions,
       actualWinner: S.actualWinner || null,
       sessionLog: S.sessionLog,
-      _ts: Date.now()
+      _ts: Date.now(),
+      currentUser: S.currentUser // само текущия потребител се записва в predictions/champions
     });
   }
 }
@@ -2090,7 +2102,8 @@ window._syncRepair = async function() {
   await FB.push({
     users: S.users, matches: S.matches, predictions: S.predictions,
     champions: S.champions, actualWinner: S.actualWinner||null,
-    sessionLog: S.sessionLog, _ts: Date.now()
+    sessionLog: S.sessionLog, _ts: Date.now(),
+    _forceAll: true // записва ВСИЧКИ потребители — само при ръчен repair
   });
   toast('✅ Force sync завършен!');
 };
