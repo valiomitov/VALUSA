@@ -335,14 +335,20 @@ const FB = {
     FB._syncing = true;
     try {
       // Използваме update() вместо set() — само модифицираме подадените пътища,
-      // без да трием данни на други потребители (напр. SashoK не се губи при persist на admin)
+      // без да трием данни на други потребители
       const update = {
-        users: data.users,
         matches: data.matches,
         actualWinner: data.actualWinner ?? null,
         sessionLog: data.sessionLog,
         _ts: data._ts
       };
+      // users — path-specific по username: Alice не може да изтрие Drag само защото
+      // нейният браузър не знае за него. Всеки потребител пише само своя запис.
+      if (data.users) {
+        data.users.forEach(u => {
+          if (u && u.username) update['users/' + u.username] = u;
+        });
+      }
       // predictions и champions — path-specific за всеки потребител
       if (data.predictions) {
         Object.keys(data.predictions).forEach(u => {
@@ -364,6 +370,7 @@ const FB = {
     if (!FB.ref) return;
     try {
       const update = {};
+      update['users/' + username] = null;        // Изтрий потребителя по path
       update['predictions/' + username] = null;
       update['champions/' + username] = null;
       await FB.ref.update(update);
@@ -438,22 +445,32 @@ const GH = {
 // fromFirebase=true → само чете данни, НЕ пише обратно (предотвратява цикъл Firebase→persist→Firebase→...)
 function applyGHData(data, fromFirebase = false) {
   if (!data) return;
-  if (Array.isArray(data.users)) {
+  if (data.users) {
+    // Поддържа и стар array формат ({0:{...},1:{...}}) и нов object формат ({alice:{...},bob:{...}})
+    const fbUsersArr = Array.isArray(data.users)
+      ? data.users
+      : Object.values(data.users).filter(u => u && u.username);
     if (fromFirebase) {
       // Deep-merge на ниво user: Firebase е авторитетен за своите полета,
       // но запазва локални полета (напр. avatar) ако Firebase все още ги няма.
-      // Потребители изтрити в Firebase (не присъстват в data.users) се изключват.
       const localByName = {};
       S.users.forEach(u => { localByName[u.username] = u; });
-      S.users = data.users.map(fbUser => {
+      const fbMerged = fbUsersArr.map(fbUser => {
         const local = localByName[fbUser.username];
         return local ? Object.assign({}, local, fbUser) : fbUser;
       });
+      // Добави локални потребители, чийто path в Firebase е null или не е записан още
+      // (регистрирали са се преди последния persist() да стигне до Firebase)
+      const fbUsernames = new Set(fbUsersArr.map(u => u.username));
+      S.users.forEach(localUser => {
+        if (!fbUsernames.has(localUser.username)) fbMerged.push(localUser);
+      });
+      S.users = fbMerged;
     } else {
       // GitHub/backup може да е остаряло — запази локално-регистрирани потребители
-      const ghNames = new Set(data.users.map(u => u.username));
+      const ghNames = new Set(fbUsersArr.map(u => u.username));
       const localOnly = S.users.filter(u => !ghNames.has(u.username));
-      S.users = [...data.users, ...localOnly];
+      S.users = [...fbUsersArr, ...localOnly];
     }
   }
   if (Array.isArray(data.matches)) {
@@ -468,19 +485,29 @@ function applyGHData(data, fromFirebase = false) {
     });
   }
   if (data.predictions && typeof data.predictions === 'object') {
-    const validUsers = new Set(S.users.map(u => u.username));
     const merged = {};
-    // Deep merge на ниво МАЧ (не на ниво потребител):
-    // За потребители в Firebase → взимаме локалните като база + Firebase отгоре (Firebase печели при съвпадение на мач).
-    // Така локално-въведени прогнози (непратени още в Firebase) не се губят при onValue callback.
-    Object.keys(data.predictions).forEach(u => {
-      if (!validUsers.has(u)) return;
-      merged[u] = Object.assign({}, S.predictions[u] || {}, data.predictions[u]);
-    });
-    // Добави потребители, които са само локално (не са изобщо в Firebase)
-    Object.keys(S.predictions).forEach(u => {
-      if (validUsers.has(u) && !(u in merged)) merged[u] = S.predictions[u];
-    });
+    if (fromFirebase) {
+      // Firebase е авторитетен — включи ВСИЧКИ прогнози от Firebase без филтър по validUsers.
+      // Дори ако потребителят все още не е в S.users (race condition), прогнозите му се запазват.
+      // Deep merge на ниво мач: локалното е база, Firebase е отгоре (Firebase печели при съвпадение).
+      Object.keys(data.predictions).forEach(u => {
+        merged[u] = Object.assign({}, S.predictions[u] || {}, data.predictions[u]);
+      });
+      // Добави локални прогнози за потребители, чиито данни още не са в Firebase
+      Object.keys(S.predictions).forEach(u => {
+        if (!(u in merged)) merged[u] = S.predictions[u];
+      });
+    } else {
+      // GitHub/backup — филтрирай по validUsers за да не върнем изтрити потребители
+      const validUsers = new Set(S.users.map(u => u.username));
+      Object.keys(data.predictions).forEach(u => {
+        if (!validUsers.has(u)) return;
+        merged[u] = Object.assign({}, S.predictions[u] || {}, data.predictions[u]);
+      });
+      Object.keys(S.predictions).forEach(u => {
+        if (validUsers.has(u) && !(u in merged)) merged[u] = S.predictions[u];
+      });
+    }
     S.predictions = merged;
   }
   if (data.champions && typeof data.champions === 'object') {
