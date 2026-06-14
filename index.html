@@ -488,12 +488,12 @@ function applyGHData(data, fromFirebase = false) {
       S.users.forEach(localUser => {
         if (!fbUsernames.has(localUser.username)) fbMerged.push(localUser);
       });
-      S.users = fbMerged;
+      S.users = dedupeUsers(fbMerged);
     } else {
       // GitHub/backup може да е остаряло — запази локално-регистрирани потребители
       const ghNames = new Set(fbUsersArr.map(u => u.username));
       const localOnly = S.users.filter(u => !ghNames.has(u.username));
-      S.users = [...fbUsersArr, ...localOnly];
+      S.users = dedupeUsers([...fbUsersArr, ...localOnly]);
     }
   }
   if (Array.isArray(data.matches)) {
@@ -558,8 +558,15 @@ function applyGHData(data, fromFirebase = false) {
 }
 
 
+// Dedup helper — винаги дедублицира по username
+function dedupeUsers(arr) {
+  const seen = {};
+  (arr || []).forEach(u => { if (u && u.username) seen[u.username] = u; });
+  return Object.values(seen);
+}
+
 let S = {
-  users: LS.get('wc26_users') || [],
+  users: dedupeUsers(LS.get('wc26_users')),
   currentUser: LS.get('wc26_current') || null,
   matches: LS.get('wc26_matches') || generateMatches(),
   predictions: LS.get('wc26_preds') || {},
@@ -586,6 +593,7 @@ if (!S.matches.find(m => m.stage)) {
 }
 
 function persist() {
+  S.users = dedupeUsers(S.users); // предотвратява натрупване на дубликати в localStorage
   LS.set('wc26_users', S.users);
   LS.set('wc26_matches', S.matches);
   LS.set('wc26_preds', S.predictions);
@@ -656,7 +664,7 @@ function userScore(username) {
 }
 
 function leaderboard() {
-  return S.users.filter(u => u.username !== 'admin').map(u => {
+  return dedupeUsers(S.users).filter(u => u.username !== 'admin').map(u => {
     const sc = userScore(u.username);
     const preds = S.predictions[u.username] || {};
     const predCount = Object.keys(preds).filter(k => { const p = preds[k]; return p && p.s1 !== undefined && p.s1 !== '' && p.s2 !== undefined && p.s2 !== ''; }).length;
