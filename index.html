@@ -344,50 +344,62 @@ const FB = {
     FB._pendingWrite = true;
     FB._lastSyncError = null;
     try {
-      // Използваме update() вместо set() — само модифицираме подадените пътища,
-      // без да трием данни на други потребители
-      const update = {
-        matches: data.matches,
-        actualWinner: data.actualWinner ?? null,
-        sessionLog: data.sessionLog,
-        _ts: data._ts
-      };
-      // users — path-specific по username: Alice не може да изтрие Drag само защото
-      // нейният браузър не знае за него. Всеки потребител пише само своя запис.
+      // ═══════════════════════════════════════════════════════════════════
+      // ВАРИАНТ Б — ЧИСТ АТОМЕН ЗАПИС ПО ПЪЛЕН PATH
+      // Правило: никога не replace-ваме цял обект.
+      // Всеки запис е до конкретен leaf-path: predictions/username/matchId
+      // Така concurrent writes от различни браузъри не се конфликтират.
+      // ═══════════════════════════════════════════════════════════════════
+      const update = {};
+
+      // ── Споделени данни (matches, actualWinner, sessionLog) ──
+      // Тук admin е единственият писател, OK е да заменяме целия обект.
+      if (data.matches)      update['matches']      = data.matches;
+      if (data.sessionLog)   update['sessionLog']   = data.sessionLog;
+      update['actualWinner'] = data.actualWinner ?? null;
+      update['_ts']          = data._ts;
+
+      // ── users — per-username path, никога не трием чужди записи ──
       if (data.users) {
-        // Null стари числови ключове (migration от array към path-specific)
+        // Изчистваме стари числови ключове (migration от масив към обект)
         for (let _i = 0; _i < 60; _i++) update['users/' + _i] = null;
         data.users.forEach(u => {
           if (u && u.username) update['users/' + u.username] = u;
         });
       }
-      // predictions и champions — само за текущия потребител при нормален persist()
-      // _forceAll:true се ползва само при _syncRepair за да запише всички
+
+      // ── predictions — САМО атомни записи по matchId ──
+      // Никога: update['predictions/X'] = {...}  ← заменя целия обект
+      // Винаги: update['predictions/X/5'] = pred ← само конкретна прогноза
       if (data.predictions) {
-        if (data._forceAll) {
-          Object.keys(data.predictions).forEach(u => {
-            update['predictions/' + u] = data.predictions[u];
+        const usersToWrite = data._forceAll
+          ? Object.keys(data.predictions)           // admin repair: всички
+          : (data.currentUser ? [data.currentUser] : []); // нормален: само текущият
+
+        usersToWrite.forEach(u => {
+          const preds = data.predictions[u] || {};
+          Object.keys(preds).forEach(mid => {
+            // Пишем само ако прогнозата е валидна (не null/undefined)
+            if (preds[mid] != null) {
+              update['predictions/' + u + '/' + mid] = preds[mid];
+            }
           });
-        } else if (data.currentUser) {
-          // Записва само ИНДИВИДУАЛНИТЕ прогнози на текущия потребител (merge, не replace).
-          // Така никога не изтриваме прогнози въведени от admin за този потребител.
-          const userPreds = data.predictions[data.currentUser] || {};
-          Object.keys(userPreds).forEach(mid => {
-            update['predictions/' + data.currentUser + '/' + mid] = userPreds[mid];
-          });
-          // Записваме само ако има реални прогнози — не изпращаме празен обект
-        }
+          // Ако няма прогнози — не пишем нищо (не изтриваме Firebase данните!)
+        });
       }
+
+      // ── champions — per-username path ──
       if (data.champions) {
-        if (data._forceAll) {
-          Object.keys(data.champions).forEach(u => {
-            update['champions/' + u] = data.champions[u];
-          });
-        } else if (data.currentUser) {
-          const cv = data.champions[data.currentUser];
-          if (cv !== undefined) update['champions/' + data.currentUser] = cv || null;
-        }
+        const usersToWrite = data._forceAll
+          ? Object.keys(data.champions)
+          : (data.currentUser ? [data.currentUser] : []);
+
+        usersToWrite.forEach(u => {
+          const cv = data.champions[u];
+          if (cv !== undefined) update['champions/' + u] = cv || null;
+        });
       }
+
       await FB.ref.update(update);
       FB._pendingWrite = false;
       FB._lastSyncTime = Date.now();
