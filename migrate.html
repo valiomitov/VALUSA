@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Миграция → Firebase · WC 2026</title>
+<style>
+  body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#0d1b2a;color:#fff;
+       margin:0;padding:20px;line-height:1.5}
+  .card{max-width:640px;margin:0 auto;background:#16263b;border-radius:14px;padding:22px}
+  h1{font-size:20px;margin:0 0 4px} .sub{opacity:.7;font-size:13px;margin-bottom:18px}
+  .stat{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .pill{background:#0d1b2a;border:1px solid #25405e;border-radius:10px;padding:10px 14px;font-size:14px}
+  .pill b{display:block;font-size:22px}
+  button{border:0;border-radius:10px;padding:12px 18px;font-size:15px;font-weight:600;
+         cursor:pointer;margin:6px 6px 0 0}
+  .primary{background:linear-gradient(135deg,#1b5e20,#2e7d32);color:#fff}
+  .ghost{background:#25405e;color:#fff}
+  label{display:block;font-size:13px;margin:14px 0 6px;opacity:.85}
+  #log{white-space:pre-wrap;font-family:monospace;font-size:12px;background:#0d1b2a;
+       border-radius:10px;padding:12px;margin-top:16px;max-height:260px;overflow:auto}
+  .err{color:#ff8a80} .ok{color:#69f0ae} a{color:#4cc9f0}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>⚽ Миграция на данните → Firebase</h1>
+  <div class="sub">
+    Тази страница чете локалните данни (<code>localStorage</code>) на ТОЗИ браузър
+    и ги качва в облачната база. <b>Трябва да е отворена от адреса на сайта</b>
+    (напр. <code>https://valiomitov.github.io/VALUSA/migrate.html</code>), иначе
+    няма да види данните.
+  </div>
+
+  <div id="found"></div>
+
+  <label><input type="checkbox" id="overwrite"> Презапиши и записи, които вече
+    съществуват в облака (по подразбиране: запазва съществуващите)</label>
+
+  <div>
+    <button class="primary" id="go" disabled>⬆️ Качи в Firebase</button>
+    <button class="ghost" id="export">💾 Свали резервно копие (JSON)</button>
+  </div>
+
+  <div id="log"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+(function(){
+  var logEl = document.getElementById('log');
+  function log(msg, cls){ var d=document.createElement('div'); if(cls)d.className=cls;
+    d.textContent=msg; logEl.appendChild(d); logEl.scrollTop=logEl.scrollHeight; }
+
+  // ---- прочети локалните данни ----
+  function LS(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } }
+  var data = {
+    users:       LS('wc26_users')  || [],
+    predictions: LS('wc26_preds')  || {},
+    champions:   LS('wc26_champs') || {},
+    matches:     LS('wc26_matches')|| []
+  };
+
+  var nUsers = data.users.filter(function(u){return u.username!=='admin';}).length;
+  var nPreds = Object.keys(data.predictions).length;
+  var nChamp = Object.keys(data.champions).length;
+  var nRes   = (data.matches||[]).filter(function(m){return m && m.result;}).length;
+
+  document.getElementById('found').innerHTML =
+    '<div class="stat">'+
+    '<div class="pill"><b>'+nUsers+'</b>юзъри</div>'+
+    '<div class="pill"><b>'+nPreds+'</b>с прогнози</div>'+
+    '<div class="pill"><b>'+nChamp+'</b>шампиони</div>'+
+    '<div class="pill"><b>'+nRes+'</b>резултата</div></div>';
+
+  // ---- резервно копие ----
+  document.getElementById('export').onclick = function(){
+    var blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='valusa-backup-'+Date.now()+'.json'; a.click();
+  };
+
+  // ---- Firebase ----
+  if(!window.FIREBASE_CONFIG || window.FIREBASE_CONFIG.apiKey==='ЗАМЕНИ_МЕ'){
+    log('⚠️ firebase-config.js не е конфигуриран. Попълни го първо.','err'); return;
+  }
+  if(typeof firebase==='undefined'){ log('⚠️ Firebase SDK не се зареди.','err'); return; }
+
+  firebase.initializeApp(window.FIREBASE_CONFIG);
+  var db = firebase.firestore();
+  firebase.auth().signInAnonymously()
+    .then(function(){ document.getElementById('go').disabled=false;
+      log('✅ Свързан с Firebase. Готов за качване.','ok'); })
+    .catch(function(e){ log('❌ Auth грешка: '+e.message+' (включи Anonymous в конзолата)','err'); });
+
+  // ---- качване ----
+  document.getElementById('go').onclick = async function(){
+    var btn=this; btn.disabled=true;
+    var overwrite=document.getElementById('overwrite').checked;
+    var ok=0, skip=0, fail=0;
+
+    async function put(coll,id,obj){
+      try{
+        var ref=db.collection(coll).doc(String(id));
+        if(!overwrite){ var s=await ref.get(); if(s.exists){ skip++; return; } }
+        await ref.set(obj); ok++;
+      }catch(e){ fail++; log('  ✗ '+coll+'/'+id+': '+e.message,'err'); }
+    }
+
+    log('— Качвам юзъри —');
+    for(const u of data.users){
+      if(!u || !u.username) continue;
+      await put('users', u.username, {password:u.password, registeredAt:u.registeredAt||Date.now()});
+    }
+    log('— Качвам прогнози —');
+    for(const name of Object.keys(data.predictions)){
+      await put('predictions', name, data.predictions[name]||{});
+    }
+    log('— Качвам шампиони —');
+    for(const name of Object.keys(data.champions)){
+      if(data.champions[name]) await put('champions', name, {champ:data.champions[name]});
+    }
+    if(nRes>0){
+      log('— Качвам мачове/резултати —');
+      await put('meta','matches',{matches:data.matches, updatedAt:Date.now()});
+    }
+
+    log('');
+    log('✅ Готово. Записани: '+ok+'  ·  прескочени (вече съществуват): '+skip+'  ·  грешки: '+fail,
+        fail? 'err':'ok');
+    log('Сега отвори сайта/приложението — данните трябва да се виждат навсякъде.');
+  };
+})();
+</script>
+</body>
+</html>
