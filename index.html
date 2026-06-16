@@ -1269,6 +1269,11 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
       <button onclick="event.stopPropagation();window._showMatchStats(${m.id})"
         title="Вижте как всички са заложили този мач"
         style="margin-left:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;font-size:12px;padding:3px 7px;cursor:pointer;flex-shrink:0">📊</button>
+    </div>` : !hasResult && isLocked(m.id) && !isAdmin ? `
+    <div class="result-wrap">
+      <button onclick="event.stopPropagation();window._showMatchStats(${m.id})"
+        title="Вижте прогнозите на всички участници"
+        style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;font-size:12px;padding:3px 9px;cursor:pointer;flex-shrink:0">📊 Прогнози</button>
     </div>` : ''}
     ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">✓</span>` : ''}
   </div>`}`;
@@ -2135,10 +2140,13 @@ window._syncTest = async function(verbose = true) {
 
 window._showMatchStats = function(matchId) {
   const m = S.matches.find(x => x.id === matchId);
-  if (!m || !m.result) return;
-  const rs1 = m.result.s1, rs2 = m.result.s2;
+  if (!m) return;
+  const hasRes = m.result !== null && typeof m.result === 'object' && m.result.s1 !== undefined;
+  const rs1 = hasRes ? m.result.s1 : null;
+  const rs2 = hasRes ? m.result.s2 : null;
 
   function calcPts(ps1, ps2) {
+    if (!hasRes) return null;
     const p1 = parseInt(ps1), p2 = parseInt(ps2);
     if (isNaN(p1) || isNaN(p2)) return null;
     if (p1 === rs1 && p2 === rs2) return (rs1 + rs2 >= 5) ? 30 : 20;
@@ -2153,18 +2161,24 @@ window._showMatchStats = function(matchId) {
   const rows = users.map(u => {
     const pred = (S.predictions[u.username] || {})[String(matchId)];
     const hasPred = pred && pred.s1 !== '' && pred.s2 !== '' && pred.s1 != null;
-    const pts = hasPred ? calcPts(pred.s1, pred.s2) : null;
+    const pts = hasRes && hasPred ? calcPts(pred.s1, pred.s2) : null;
     return { username: u.username, pred, hasPred, pts };
   }).sort((a, b) => {
-    if (a.pts === null && b.pts !== null) return 1;
-    if (a.pts !== null && b.pts === null) return -1;
-    return (b.pts || 0) - (a.pts || 0);
+    if (hasRes) {
+      if (a.pts === null && b.pts !== null) return 1;
+      if (a.pts !== null && b.pts === null) return -1;
+      return (b.pts || 0) - (a.pts || 0);
+    } else {
+      if (a.hasPred && !b.hasPred) return -1;
+      if (!a.hasPred && b.hasPred) return 1;
+      return a.username.localeCompare(b.username);
+    }
   });
 
   const total = rows.filter(r => r.hasPred).length;
-  const exact = rows.filter(r => r.pts === 30 || r.pts === 20).length;
-  const winner = rows.filter(r => r.pts === 15 || r.pts === 10).length;
-  const wrong = rows.filter(r => r.pts === 0).length;
+  const exact = hasRes ? rows.filter(r => r.pts === 30 || r.pts === 20).length : 0;
+  const winner = hasRes ? rows.filter(r => r.pts === 15 || r.pts === 10).length : 0;
+  const wrong = hasRes ? rows.filter(r => r.pts === 0).length : 0;
 
   function ptsLabel(pts) {
     if (pts === 30) return '<span style="color:#ff9800;font-weight:700">🔥 +30т</span>';
@@ -2188,8 +2202,8 @@ window._showMatchStats = function(matchId) {
           <div style="font-size:16px;font-weight:700;color:#fff">
             ${FLAGS[m.team1]||'🏳️'} ${m.team1} vs ${m.team2} ${FLAGS[m.team2]||'🏳️'}
           </div>
-          <div style="font-size:26px;font-weight:700;color:#f9a825;margin-top:.25rem">
-            ${rs1} : ${rs2}
+          <div style="font-size:${hasRes ? '26' : '14'}px;font-weight:700;color:${hasRes ? '#f9a825' : '#ff7043'};margin-top:.25rem">
+            ${hasRes ? `${rs1} : ${rs2}` : '🔴 Мачът е в ход — точките ще се изчислят след финалния резултат'}
           </div>
         </div>
         <button onclick="document.getElementById('matchStatsModal').remove()"
@@ -2198,9 +2212,13 @@ window._showMatchStats = function(matchId) {
 
       <div style="display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap">
         <span style="background:rgba(255,255,255,.07);border-radius:20px;padding:3px 10px;font-size:12px;color:rgba(255,255,255,.6)">👥 ${total} прогнози</span>
+        ${hasRes ? `
         <span style="background:rgba(76,175,80,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#81c784">🎯 ${exact} точни</span>
         <span style="background:rgba(171,71,188,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#ce93d8">✓ ${winner} победител</span>
         <span style="background:rgba(239,83,80,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#ef9a9a">✗ ${wrong} грешни</span>
+        ` : `
+        <span style="background:rgba(255,112,67,.12);border-radius:20px;padding:3px 10px;font-size:12px;color:#ff8a65">⏳ Прогнозите са видими от началото за пълна прозрачност</span>
+        `}
       </div>
 
       <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -2209,7 +2227,7 @@ window._showMatchStats = function(matchId) {
             <th style="padding:5px 6px;text-align:left;font-weight:500">#</th>
             <th style="padding:5px 6px;text-align:left;font-weight:500">Потребител</th>
             <th style="padding:5px 6px;text-align:center;font-weight:500">Прогноза</th>
-            <th style="padding:5px 6px;text-align:right;font-weight:500">Точки</th>
+            ${hasRes ? '<th style="padding:5px 6px;text-align:right;font-weight:500">Точки</th>' : ''}
           </tr>
         </thead>
         <tbody>
@@ -2222,7 +2240,7 @@ window._showMatchStats = function(matchId) {
               <td style="padding:8px 6px;text-align:center;font-family:monospace;font-size:16px;font-weight:700;color:${r.hasPred ? '#fff' : 'rgba(255,255,255,.2)'}">
                 ${r.hasPred ? `${r.pred.s1} : ${r.pred.s2}` : '—'}
               </td>
-              <td style="padding:8px 6px;text-align:right">${ptsLabel(r.pts)}</td>
+              ${hasRes ? `<td style="padding:8px 6px;text-align:right">${ptsLabel(r.pts)}</td>` : ''}
             </tr>
           `).join('')}
         </tbody>
