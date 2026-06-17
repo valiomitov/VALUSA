@@ -1169,11 +1169,38 @@ function renderPredictions() {
       byDate[dk].matches.push(m);
     }
     for (const {label, matches} of Object.values(byDate)) {
-      content += `<div class="matchday-label">📅 ${label}</div>`;
-      content += matches.map(m => {
+      const allDone = matches.every(m => m.result !== null && typeof m.result === 'object' && m.result.s1 !== undefined);
+      const cardsHtml = matches.map(m => {
         const badge = `<span style="font-size:10px;background:rgba(255,255,255,.12);padding:2px 8px;border-radius:10px;color:rgba(255,255,255,.7)">Гр. ${m.group}</span>`;
         return renderMatchCard(m, preds[m.id], false, badge);
       }).join('');
+      if (allDone) {
+        const pts = matches.reduce((sum, m) => {
+          const pred = preds[m.id];
+          if (!pred || pred.s1 === '' || pred.s1 == null) return sum;
+          const ps1 = parseInt(pred.s1), ps2 = parseInt(pred.s2);
+          const rs1 = m.result.s1, rs2 = m.result.s2;
+          if (ps1 === rs1 && ps2 === rs2) return sum + ((rs1+rs2>=5)?30:20);
+          const dm = (ps1-ps2)===(rs1-rs2), wm = outcome(ps1,ps2)===outcome(rs1,rs2);
+          if (wm && dm) return sum + 15;
+          if (wm) return sum + 10;
+          return sum;
+        }, 0);
+        content += `
+        <details style="margin-bottom:2px">
+          <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;
+            padding:7px 12px;border-radius:10px;background:rgba(255,255,255,.04);
+            color:rgba(255,255,255,.38);font-size:12px;user-select:none;margin-bottom:2px">
+            <span style="font-size:10px;color:rgba(255,255,255,.2)">▶</span>
+            📅 ${label}
+            <span style="margin-left:auto;color:#81c784;font-size:11px">✓ ${matches.length} прикл. · +${pts}т</span>
+          </summary>
+          ${cardsHtml}
+        </details>`;
+      } else {
+        content += `<div class="matchday-label">📅 ${label}</div>`;
+        content += cardsHtml;
+      }
     }
   } else {
     // KO view — grouped by stage, then by date within stage
