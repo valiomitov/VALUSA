@@ -1333,7 +1333,8 @@ function renderLeaderboard() {
         <div class="lb-rank ${i<3?'rank-'+(i+1):''}">${i<3?medals[i]:i+1}</div>
         <div class="lb-user">
           <div class="user-avatar" style="width:28px;height:28px;font-size:${(S.users.find(x=>x.username===u.username)||{}).avatar?'16px':'12px'};${(S.users.find(x=>x.username===u.username)||{}).avatar?'background:rgba(255,255,255,.08)':''}">${(S.users.find(x=>x.username===u.username)||{}).avatar||u.username[0].toUpperCase()}</div>
-          ${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(аз)</span>':''}
+          <span>${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(аз)</span>':''}</span>
+          ${u.champ ? `<span title="${u.champ}" style="font-size:18px;line-height:1;margin-left:4px">${FLAGS[u.champ]||'🏳️'}</span>` : ''}
         </div>
         <div class="lb-stat" style="color:#90caf9">${u.sign||0}</div>
         <div class="lb-stat" style="color:#ffe082">${u.signDiff||0}</div>
