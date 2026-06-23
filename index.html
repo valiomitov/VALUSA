@@ -1380,7 +1380,7 @@ function renderLeaderboard() {
           <div class="user-avatar" style="width:28px;height:28px;font-size:${(S.users.find(x=>x.username===u.username)||{}).avatar?'16px':'12px'};${(S.users.find(x=>x.username===u.username)||{}).avatar?'background:rgba(255,255,255,.08)':''}">${(S.users.find(x=>x.username===u.username)||{}).avatar||u.username[0].toUpperCase()}</div>
           <span>${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(аз)</span>':''}</span>
           ${u.champ ? `<span title="${u.champ}" style="font-size:18px;line-height:1;margin-left:4px">${FLAGS[u.champ]||'🏳️'}</span>` : ''}
-          <span style="width:9px;height:9px;border-radius:50%;background:${ls.color};display:inline-block;margin-left:auto;flex-shrink:0" title="${ls.title}"></span>
+          <span style="width:12px;height:12px;border-radius:50%;background:${ls.color};display:inline-block;margin-left:auto;flex-shrink:0;cursor:pointer" title="${ls.title}" onclick="event.stopPropagation();toast(this.title)"></span>
         </div>
         <div class="lb-stat" style="color:#90caf9">${u.sign||0}</div>
         <div class="lb-stat" style="color:#ffe082">${u.signDiff||0}</div>
@@ -1399,7 +1399,7 @@ function renderLeaderboard() {
           <div class="user-avatar" style="width:28px;height:28px;font-size:12px;background:rgba(198,40,40,.2)">A</div>
           <span style="color:rgba(255,255,255,.5)">admin${S.currentUser==='admin'?'<span class="lb-me-tag">(аз)</span>':''}</span>
           <span style="font-size:10px;background:rgba(255,255,255,.06);border-radius:10px;padding:1px 7px;color:rgba(255,255,255,.3);margin-left:4px">не участва</span>
-          <span style="width:9px;height:9px;border-radius:50%;background:${ls.color};display:inline-block;margin-left:auto;flex-shrink:0" title="${ls.title}"></span>
+          <span style="width:12px;height:12px;border-radius:50%;background:${ls.color};display:inline-block;margin-left:auto;flex-shrink:0;cursor:pointer" title="${ls.title}" onclick="event.stopPropagation();toast(this.title)"></span>
         </div>
         <div class="lb-stat" style="color:rgba(255,255,255,.2)">—</div>
         <div class="lb-stat" style="color:rgba(255,255,255,.2)">—</div>
