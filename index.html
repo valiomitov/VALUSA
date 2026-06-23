@@ -1531,8 +1531,7 @@ function renderAdmin() {
             <td style="padding:8px 10px;color:#f9a825;font-weight:700">${predCount}/72</td>
             <td style="padding:8px 10px">
               <button data-reset-user="${u.username}" style="padding:4px 10px;font-size:12px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.3);border-radius:6px;color:#ef9a9a;cursor:pointer;font-weight:600">\ud83d\udd11 \u0420\u0435\u0441\u0435\u0442 \u043f\u0430\u0440\u043e\u043b\u0430</button>
-              <button onclick="window._editPrediction('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(21,101,192,.15);border:1px solid rgba(21,101,192,.35);border-radius:6px;color:#90caf9;cursor:pointer;font-weight:600">✏️ Прогнози</button>
-              <button onclick="window._editChampion('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(249,168,37,.15);border:1px solid rgba(249,168,37,.35);border-radius:6px;color:#f9a825;cursor:pointer;font-weight:600">🏆 ${S.champions[u.username]||'—'}</button>
+              <span style="margin-left:6px;padding:4px 10px;font-size:12px;color:rgba(249,168,37,.7)">🏆 ${S.champions[u.username]||'—'}</span>
               <button onclick="window._deleteUser('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(198,40,40,.35);border:1px solid rgba(198,40,40,.5);border-radius:6px;color:#ff8a80;cursor:pointer;font-weight:600">🗑️ Изтрий</button>
             </td>
           </tr>`;
