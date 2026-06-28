@@ -707,7 +707,7 @@ function outcome(s1, s2) {
 
 function userScore(username) {
   const preds = S.predictions[username] || {};
-  let sign = 0, signDiff = 0, exact = 0, exact5 = 0;
+  let sign = 0, signDiff = 0, exact = 0, exact5 = 0, etBonus = 0, penBonus = 0;
   for (const m of S.matches) {
     const p = preds[m.id];
     if (!p || !m.result || typeof m.result !== 'object' || m.result.s1 === undefined) continue;
@@ -720,12 +720,25 @@ function userScore(username) {
     }
     else if (outcome(ps1,ps2)===outcome(rs1,rs2) && (ps1-ps2)===(rs1-rs2)) { signDiff++; }
     else if (outcome(ps1,ps2)===outcome(rs1,rs2)) { sign++; }
+    if (m.stage) {
+      if (m.etResult && typeof m.etResult === 'object' && m.etResult.s1 !== undefined &&
+          p.ets1 !== undefined && p.ets1 !== '' && p.ets2 !== undefined && p.ets2 !== '') {
+        const pets1 = parseInt(p.ets1), pets2 = parseInt(p.ets2);
+        const ets1 = m.etResult.s1, ets2 = m.etResult.s2;
+        if (!isNaN(pets1) && !isNaN(pets2) && pets1 === ets1 && pets2 === ets2) {
+          etBonus += (ets1 === ets2) ? 10 : 15;
+        }
+      }
+      if (m.penWinner && p.penWinner && parseInt(p.penWinner) === m.penWinner) {
+        penBonus += 20;
+      }
+    }
   }
   const champ = S.champions[username] || null;
   const champCorrect = S.actualWinner && champ && champ === S.actualWinner;
   const champPts = champCorrect ? 60 : 0;
-  return {sign, signDiff, exact, exact5, champ, champCorrect, champPts,
-          total: sign*10 + signDiff*15 + exact*20 + exact5*30 + champPts};
+  return {sign, signDiff, exact, exact5, etBonus, penBonus, champ, champCorrect, champPts,
+          total: sign*10 + signDiff*15 + exact*20 + exact5*30 + etBonus + penBonus + champPts};
 }
 
 function leaderboard() {
@@ -908,6 +921,41 @@ function renderRules() {
     <div style="background:rgba(198,40,40,.08);border:1px solid rgba(198,40,40,.2);border-radius:14px;padding:1rem;margin-bottom:.75rem">
       <div style="font-weight:700;margin-bottom:.3rem">⏰ Краен срок</div>
       <div style="color:rgba(255,255,255,.6);font-size:.9rem">Прогнозата се <strong>заключва автоматично 30 мин</strong> преди началото на всеки мач.</div>
+    </div>
+
+    <!-- ⚔️ ЕЛИМИНАЦИИ -->
+    <div style="background:linear-gradient(135deg,rgba(198,40,40,.12),rgba(136,14,79,.1));border:1.5px solid rgba(198,40,40,.3);border-radius:14px;padding:1.25rem;margin-bottom:.75rem">
+      <div style="font-weight:900;font-size:1.1rem;margin-bottom:1rem;color:#ef9a9a">⚔️ Елиминации — Допълнителни точки</div>
+      <div style="color:rgba(255,255,255,.6);font-size:.86rem;margin-bottom:.85rem">
+        В елиминационната фаза прогнозираш на <strong>3 нива</strong>: редовно време, продължения и дузпи.
+        Точките за редовното време са <strong>същите</strong> като в груповата фаза.
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.55rem">
+        <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
+          <div style="font-size:1.5rem;flex-shrink:0">⏱️</div>
+          <div>
+            <div style="font-weight:800;font-size:.9rem">Продължения — Победител <span style="color:#ffe082">+15 точки</span></div>
+            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш точния резултат след 120 мин и мачът завършва с победа в продълженията.</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
+          <div style="font-size:1.5rem;flex-shrink:0">⏱️</div>
+          <div>
+            <div style="font-weight:800;font-size:.9rem">Продължения — Равен (→ Дузпи) <span style="color:#90caf9">+10 точки</span></div>
+            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш точния резултат след 120 мин и той завършва равен (отиват на дузпи).</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
+          <div style="font-size:1.5rem;flex-shrink:0">🎯</div>
+          <div>
+            <div style="font-weight:800;font-size:.9rem">Дузпи — Победител <span style="color:#a5d6a7">+20 точки</span></div>
+            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш кой отбор печели дузпите.</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:.85rem;background:rgba(0,0,0,.2);border-radius:8px;padding:.6rem .85rem;font-size:.8rem;color:rgba(255,255,255,.4)">
+        💡 Прогнозите за продължения и дузпи се <strong>виждат и попълват директно</strong> под всеки КО мач. Запазват се с бутона 💾.
+      </div>
     </div>
 
     <div style="background:rgba(156,39,176,.08);border:1.5px solid rgba(156,39,176,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem">
@@ -1297,6 +1345,7 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
   const hasPred = pred && pred.s1 !== '' && pred.s2 !== '';
   const hasResult = m.result !== null && typeof m.result === 'object' && m.result.s1 !== undefined;
   const locked = (hasResult || (!isAdmin && isLocked(m.id))) && !isAdmin;
+  const isKO = !!m.stage;
   let pts = '';
   if (hasPred && hasResult && !isAdmin) {
     const ps1 = parseInt(pred.s1), ps2 = parseInt(pred.s2);
@@ -1309,6 +1358,95 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
   const prefix = isAdmin ? 'adm' : 'pr';
   const t1name = isTBD && !isAdmin ? (m.slotDesc || 'TBD') : m.team1;
   const t2name = isTBD && !isAdmin ? '' : m.team2;
+
+  // КО допълнителни прогнози: продължения + дузпи
+  let koExtra = '';
+  if (isKO && !isAdmin && !isTBD) {
+    const hasEtResult = m.etResult && typeof m.etResult === 'object' && m.etResult.s1 !== undefined;
+    const hasPenResult = m.penWinner;
+    const ets1v = pred ? (pred.ets1 ?? '') : '';
+    const ets2v = pred ? (pred.ets2 ?? '') : '';
+    const penWv = pred ? (pred.penWinner ?? '') : '';
+    // ET бонус точки
+    let etPts = '';
+    if (hasEtResult && ets1v !== '' && ets2v !== '') {
+      const pets1 = parseInt(ets1v), pets2 = parseInt(ets2v);
+      const ets1 = m.etResult.s1, ets2 = m.etResult.s2;
+      if (pets1 === ets1 && pets2 === ets2) {
+        etPts = (ets1 === ets2)
+          ? `<span class="pts-badge pts-1">⏱️ +10т</span>`
+          : `<span class="pts-badge pts-2">⏱️ +15т</span>`;
+      } else {
+        etPts = `<span class="pts-badge pts-0">⏱️ 0т</span>`;
+      }
+    }
+    // Дузпи бонус точки
+    let penPts = '';
+    if (hasPenResult && penWv !== '') {
+      penPts = parseInt(penWv) === m.penWinner
+        ? `<span class="pts-badge pts-3">🎯 +20т</span>`
+        : `<span class="pts-badge pts-0">🎯 0т</span>`;
+    }
+    koExtra = `
+    <div style="border-top:1px dashed rgba(255,255,255,.1);margin-top:6px;padding-top:6px">
+      <div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:4px;letter-spacing:.3px">⏱️ ПРОДЪЛЖЕНИЯ (ако равен след 90 мин)</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span style="font-size:11px;color:rgba(255,255,255,.4);min-width:90px">${FLAGS[m.team1]||'🏳️'} ${m.team1}</span>
+        <input class="score-input" type="number" min="0" max="20" style="width:44px;font-size:14px"
+          data-pr="${m.id}" data-side="ets1"
+          value="${ets1v}" placeholder="–" ${locked?'disabled':''}>
+        <span class="score-sep">:</span>
+        <input class="score-input" type="number" min="0" max="20" style="width:44px;font-size:14px"
+          data-pr="${m.id}" data-side="ets2"
+          value="${ets2v}" placeholder="–" ${locked?'disabled':''}>
+        <span style="font-size:11px;color:rgba(255,255,255,.4)">${FLAGS[m.team2]||'🏳️'} ${m.team2}</span>
+        ${hasEtResult ? `<span style="font-size:11px;color:rgba(255,255,255,.4)">→ ${m.etResult.s1}:${m.etResult.s2}</span>` : ''}
+        ${etPts}
+      </div>
+      <div style="font-size:10px;color:rgba(255,255,255,.35);margin:6px 0 4px;letter-spacing:.3px">🎯 ДУЗПИ (ако равен след продължения)</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        ${locked ? `
+        <span style="font-size:12px;color:rgba(255,255,255,.4)">${penWv === '1' ? `${FLAGS[m.team1]||'🏳️'} ${m.team1}` : penWv === '2' ? `${FLAGS[m.team2]||'🏳️'} ${m.team2}` : '—'}</span>
+        ` : `
+        <button id="pen1_${m.id}" onclick="window._setPenWinner(${m.id},1)"
+          style="border:1.5px solid ${penWv=='1'?'#a5d6a7':'rgba(255,255,255,.2)'};background:${penWv=='1'?'rgba(165,214,167,.15)':'rgba(255,255,255,.05)'};
+          color:${penWv=='1'?'#a5d6a7':'rgba(255,255,255,.6)'};border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s">
+          ${FLAGS[m.team1]||'🏳️'} ${m.team1}
+        </button>
+        <button id="pen2_${m.id}" onclick="window._setPenWinner(${m.id},2)"
+          style="border:1.5px solid ${penWv=='2'?'#a5d6a7':'rgba(255,255,255,.2)'};background:${penWv=='2'?'rgba(165,214,167,.15)':'rgba(255,255,255,.05)'};
+          color:${penWv=='2'?'#a5d6a7':'rgba(255,255,255,.6)'};border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s">
+          ${FLAGS[m.team2]||'🏳️'} ${m.team2}
+        </button>
+        `}
+        ${hasPenResult ? `<span style="font-size:11px;color:rgba(255,255,255,.4)">→ ${m.penWinner===1?m.team1:m.team2}</span>` : ''}
+        ${penPts}
+      </div>
+    </div>`;
+  }
+  // Админ КО: ET резултат + дузпи
+  let adminKoExtra = '';
+  if (isAdmin && isKO && !isTBD) {
+    const etS1 = m.etResult ? m.etResult.s1 : '';
+    const etS2 = m.etResult ? m.etResult.s2 : '';
+    const penW = m.penWinner || '';
+    adminKoExtra = `
+    <div style="border-top:1px dashed rgba(255,255,255,.1);margin-top:4px;padding-top:4px;display:flex;flex-wrap:wrap;align-items:center;gap:4px">
+      <span style="font-size:10px;color:rgba(255,255,255,.4)">ET:</span>
+      <input class="score-input" type="number" min="0" max="20" style="width:38px;font-size:13px"
+        data-adm-et="${m.id}" data-side="s1" value="${etS1}" placeholder="–">
+      <span style="color:rgba(255,255,255,.4)">:</span>
+      <input class="score-input" type="number" min="0" max="20" style="width:38px;font-size:13px"
+        data-adm-et="${m.id}" data-side="s2" value="${etS2}" placeholder="–">
+      <span style="font-size:10px;color:rgba(255,255,255,.4);margin-left:6px">Дузпи:</span>
+      <select data-adm-pen="${m.id}" style="background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:3px 6px;font-size:11px">
+        <option value="" ${!penW?'selected':''}>—</option>
+        <option value="1" ${penW===1?'selected':''}>${m.team1}</option>
+        <option value="2" ${penW===2?'selected':''}>${m.team2}</option>
+      </select>
+    </div>`;
+  }
+
   return `
   <div style="display:flex;align-items:center;gap:6px;padding:${badge?'6px 0 2px':'2px 0'}">
     ${badge}
@@ -1357,6 +1495,8 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
         style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;font-size:12px;padding:3px 9px;cursor:pointer;flex-shrink:0">📊 Прогнози</button>
     </div>` : ''}
     ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">✓</span>` : ''}
+    ${koExtra}
+    ${adminKoExtra}
   </div>`}`;
 }
 
@@ -1911,7 +2051,7 @@ function bind() {
       if (inp.dataset.side === 't1') m.team1 = val;
       else m.team2 = val;
     });
-    // Save results
+    // Save 90min results
     document.querySelectorAll('[data-adm]').forEach(inp => {
       const mid = parseInt(inp.dataset.adm);
       const m = S.matches.find(x => x.id === mid);
@@ -1921,6 +2061,24 @@ function bind() {
     });
     S.matches.forEach(m => {
       if (m.result && (isNaN(m.result.s1) || isNaN(m.result.s2))) m.result = null;
+    });
+    // Save ET results
+    document.querySelectorAll('[data-adm-et]').forEach(inp => {
+      const mid = parseInt(inp.dataset.admEt);
+      const m = S.matches.find(x => x.id === mid);
+      if (!m || inp.value === '') return;
+      if (!m.etResult) m.etResult = {s1:0, s2:0};
+      m.etResult[inp.dataset.side] = parseInt(inp.value);
+    });
+    S.matches.forEach(m => {
+      if (m.etResult && (isNaN(m.etResult.s1) || isNaN(m.etResult.s2))) m.etResult = null;
+    });
+    // Save pen winner
+    document.querySelectorAll('[data-adm-pen]').forEach(sel => {
+      const mid = parseInt(sel.dataset.admPen);
+      const m = S.matches.find(x => x.id === mid);
+      if (!m) return;
+      m.penWinner = sel.value ? parseInt(sel.value) : null;
     });
     persist(); render(); toast('✅ Елиминациите са запазени!');
   });
@@ -2096,9 +2254,30 @@ window._savePred = function(mid) {
   if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
   S.predictions[S.currentUser][mid].s1 = inp1.value;
   S.predictions[S.currentUser][mid].s2 = inp2.value;
+  const inpEt1 = document.querySelector('[data-pr="'+mid+'"][data-side="ets1"]');
+  const inpEt2 = document.querySelector('[data-pr="'+mid+'"][data-side="ets2"]');
+  if (inpEt1) S.predictions[S.currentUser][mid].ets1 = inpEt1.value;
+  if (inpEt2) S.predictions[S.currentUser][mid].ets2 = inpEt2.value;
   persist();
   const btn = document.getElementById('sp_'+mid);
   if (btn) { btn.textContent = '✓'; btn.style.background = '#1b5e20'; btn.style.color = '#a5d6a7'; }
+};
+
+window._setPenWinner = function(mid, which) {
+  if (!S.predictions[S.currentUser]) S.predictions[S.currentUser] = {};
+  if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
+  const cur = S.predictions[S.currentUser][mid].penWinner;
+  S.predictions[S.currentUser][mid].penWinner = (cur == which) ? '' : which;
+  persist();
+  const penW = S.predictions[S.currentUser][mid].penWinner;
+  [1,2].forEach(n => {
+    const btn = document.getElementById('pen'+n+'_'+mid);
+    if (!btn) return;
+    const sel = penW == n;
+    btn.style.border = `1.5px solid ${sel?'#a5d6a7':'rgba(255,255,255,.2)'}`;
+    btn.style.background = sel ? 'rgba(165,214,167,.15)' : 'rgba(255,255,255,.05)';
+    btn.style.color = sel ? '#a5d6a7' : 'rgba(255,255,255,.6)';
+  });
 };
 
 window._setActualWinner = function() {
@@ -2562,8 +2741,14 @@ function renderKnockout() {
   return `
   <div class="page-title">⚔️ Елиминации</div>
   <div class="info-bar">
-    ⏰ Заключва се 15 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">30т</strong> точен 5+гола &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
-    <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp; Прогнозирал: <strong>${predKO}/${totalKO}</strong>
+    ⏰ Заключва 30 мин преди мача &nbsp;·&nbsp;
+    🔥<strong style="color:#ff7043">30т</strong> точен 5+ &nbsp;·&nbsp;
+    💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
+    <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp;
+    ⏱️<strong style="color:#ffe082">+15т</strong> ET победа &nbsp;·&nbsp;
+    ⏱️<strong style="color:#64b5f6">+10т</strong> ET равен &nbsp;·&nbsp;
+    🎯<strong style="color:#a5d6a7">+20т</strong> дузпи &nbsp;·&nbsp;
+    Прогнозирал: <strong>${predKO}/${totalKO}</strong>
   </div>
   ${content}
   <div><button class="save-btn" id="savePreds">💾 Запази прогнозите</button></div>`;
