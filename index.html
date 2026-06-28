@@ -336,6 +336,8 @@ const FB = {
         const data = snap.val();
         if (!data || FB._syncing) return;
         applyGHData(data, true); // true = дойде от Firebase, не записвай обратно
+        if (data.lastSeen) S.lastSeen = data.lastSeen;
+        if (S.currentUser && FB.ref && !window._visitLogged) { window._visitLogged = true; FB.ref.child('lastSeen').child(S.currentUser).set(Date.now()).catch(function(){}); }
         if (typeof render === 'function') render();
       });
       // Monitor connection state for status badge
@@ -1501,9 +1503,10 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
 
 // --- LEADERBOARD ---
 function lastSeenStatus(username) {
+  const fbTs = (S.lastSeen && S.lastSeen[username]) || 0;
   const entries = S.sessionLog.filter(e => e.username === username);
-  if (!entries.length) return {color:'rgba(255,255,255,.18)', title:'Никога не е влизал'};
-  const last = Math.max(...entries.map(e => e.time));
+  if (!entries.length && !fbTs) return {color:'rgba(255,255,255,.18)', title:'Никога не е влизал'};
+  const last = Math.max(fbTs, ...(entries.length ? entries.map(e => e.time) : [0]));
   const diff = Date.now() - last;
   const timeStr = new Date(last).toLocaleString('bg-BG', {timeZone:'Europe/Sofia'});
   if (diff < 30 * 60 * 1000) return {color:'#4caf50', title:'🟢 Онлайн · ' + timeStr};
