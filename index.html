@@ -2515,6 +2515,8 @@ try {
 
 // ─── renderKnockout: самостоятелен таб Елиминации ───────────────────────────
 function renderKnockout() {
+  const STAGE_ORDER = ['R32','R16','QF','SF','3P','F'];
+  const STAGE_LABELS = {R32:'1/32-финали',R16:'1/16-финали',QF:'Четвъртфинали',SF:'Полуфинали','3P':'Мач за 3-то място',F:'Финал'};
   fetchKOPairings().then(() => autoFetchResults(true));
   const preds = S.predictions[S.currentUser] || {};
   const koMatches = S.matches.filter(m => m.stage);
