@@ -322,7 +322,7 @@ const FB = {
         const data = snap.val();
         if (!data || FB._syncing) return;
         applyGHData(data, true); // true = дойде от Firebase, не записвай обратно
-        if (typeof render === 'function') render();
+        if (typeof render === 'function' && S.currentUser) render(); // не rebuild-вай login формата
       });
       // Monitor connection state for status badge
       FB.db.ref('.info/connected').on('value', snap => {
