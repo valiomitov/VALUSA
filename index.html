@@ -67,7 +67,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 
 /* MATCH CARDS */
 .matchday-label{font-size:11px;font-weight:800;text-transform:uppercase;color:rgba(255,255,255,.35);letter-spacing:1.5px;padding:.75rem 0 .4rem;margin-top:.25rem}
-.match-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.6rem;display:flex;align-items:center;gap:.75rem;transition:background .2s}
+.match-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.6rem;display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;transition:background .2s}
 .match-card:hover{background:rgba(255,255,255,.07)}
 .match-card.predicted{border-left:3px solid #4caf50}
 .match-card.locked{opacity:.8}
@@ -1388,7 +1388,7 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
         : `<span class="pts-badge pts-0">🎯 0т</span>`;
     }
     koExtra = `
-    <div style="border-top:1px dashed rgba(255,255,255,.1);margin-top:6px;padding-top:6px">
+    <div style="flex:0 0 100%;width:100%;border-top:1px dashed rgba(255,255,255,.1);margin-top:.6rem;padding-top:.6rem">
       <div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:4px;letter-spacing:.3px">⏱️ ПРОДЪЛЖЕНИЯ (ако равен след 90 мин)</div>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <span style="font-size:11px;color:rgba(255,255,255,.4);min-width:90px">${FLAGS[m.team1]||'🏳️'} ${m.team1}</span>
@@ -1431,7 +1431,7 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
     const etS2 = m.etResult ? m.etResult.s2 : '';
     const penW = m.penWinner || '';
     adminKoExtra = `
-    <div style="border-top:1px dashed rgba(255,255,255,.1);margin-top:4px;padding-top:4px;display:flex;flex-wrap:wrap;align-items:center;gap:4px">
+    <div style="flex:0 0 100%;width:100%;border-top:1px dashed rgba(255,255,255,.1);margin-top:.6rem;padding-top:.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:4px">
       <span style="font-size:10px;color:rgba(255,255,255,.4)">ET:</span>
       <input class="score-input" type="number" min="0" max="20" style="width:38px;font-size:13px"
         data-adm-et="${m.id}" data-side="s1" value="${etS1}" placeholder="–">
