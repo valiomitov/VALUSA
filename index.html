@@ -234,7 +234,7 @@ function isLocked(matchId) {
   const m = S && S.matches ? S.matches.find(x => x.id === matchId) : null;
   if (m && (m.team1 === 'TBD' || m.team2 === 'TBD')) return true; // KO отборите не са определени
   const k = getKickoff(matchId); if(!k) return false;
-  return Date.now() >= k.getTime() - 30*60*1000;
+  return Date.now() >= k.getTime() - 15*60*1000;
 }
 
 const GROUPS = {
@@ -322,7 +322,7 @@ const FB = {
         const data = snap.val();
         if (!data || FB._syncing) return;
         applyGHData(data, true); // true = дойде от Firebase, не записвай обратно
-        if (typeof render === 'function' && S.currentUser) render(); // не rebuild-вай login формата
+        if (typeof render === 'function') render();
       });
       // Monitor connection state for status badge
       FB.db.ref('.info/connected').on('value', snap => {
@@ -611,7 +611,7 @@ let S = {
   tab: 'predictions',
   authTab: 'login',
   activeGroup: 'A',
-  predView: 'group', // 'group' | 'ko'
+  predView: 'ko', // 'group' | 'ko'
   adminView: 'group', // 'group' | 'ko'
   authError: '',
   authSuccess: '',
@@ -791,7 +791,6 @@ function renderApp() {
   const isAdmin = S.currentUser === 'admin';
   const tabs = [
     {id:'predictions',l:'🔮 Прогнози'},
-    {id:'knockout',l:'⚔️ Елиминации'},
     {id:'leaderboard',l:'🏅 Класиране'},
     {id:'groups',l:'🌍 Групи'},
     {id:'champion',l:'🏆 Шампион'},
@@ -821,7 +820,6 @@ function renderBottomNav() {
   const isAdmin = S.currentUser === 'admin';
   const items = [
     {id:'predictions', icon:'🔮', label:'Прогнози'},
-    {id:'knockout', icon:'⚔️', label:'Елиминации'},
     {id:'leaderboard', icon:'🏅', label:'Класиране'},
     {id:'groups', icon:'🌍', label:'Групи'},
     {id:'champion', icon:'🏆', label:'Шампион'},
@@ -1157,7 +1155,6 @@ function renderProfile() {
 
 function renderTab() {
   if (S.tab === 'predictions') return renderPredictions();
-  if (S.tab === 'knockout') return renderKnockout();
   if (S.tab === 'leaderboard') return renderLeaderboard();
   if (S.tab === 'groups') return renderGroups();
   if (S.tab === 'champion') return renderChampion();
@@ -1263,7 +1260,7 @@ function renderPredictions() {
   return `
   <div class="page-title">🔮 Моите прогнози</div>
   <div class="info-bar">
-    ⏰ Заключва се 30 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">30т</strong> точен 5+гола &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
+    ⏰ Заключва се 15 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">30т</strong> точен 5+гола &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
     <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp; Прогнозирал: <strong>${totalPred}/${totalM}</strong>
   </div>
   <div class="group-tabs">
@@ -1803,7 +1800,7 @@ function bind() {
 
   // Nav tabs
   document.querySelectorAll('[data-tab]').forEach(el => el.addEventListener('click', () => {
-    S.tab = el.dataset.tab; S.profileError = ''; S.profileSuccess = ''; render();
+    S.tab = el.dataset.tab; S.profileError = ''; S.profileSuccess = ''; if (el.dataset.tab === 'predictions') S.predView = 'ko'; render();
   }));
 
   // Group tabs (admin panel)
@@ -2544,7 +2541,7 @@ function renderKnockout() {
   return `
   <div class="page-title">⚔️ Елиминации</div>
   <div class="info-bar">
-    ⏰ Заключва се 30 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">30т</strong> точен 5+гола &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
+    ⏰ Заключва се 15 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">30т</strong> точен 5+гола &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
     <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp; Прогнозирал: <strong>${predKO}/${totalKO}</strong>
   </div>
   ${content}
@@ -2554,9 +2551,11 @@ function renderKnockout() {
 // Автоматично изтегляне на КО двойките от ESPN API
 async function fetchKOPairings() {
   const BASE = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
+  // Fetch ESPN day-by-day for R32 + one range call
   const urls = [
-    `${BASE}?limit=100&dates=20260629-20260720`,
     `${BASE}?limit=100`,
+    `${BASE}?limit=100&dates=20260629-20260707`,
+    ...['20260629','20260630','20260701','20260702','20260703','20260704','20260705','20260706','20260707'].map(d => `${BASE}?limit=100&dates=${d}`)
   ];
   let allEvents = [];
   for (const url of urls) {
@@ -2587,8 +2586,10 @@ async function fetchKOPairings() {
         m.kickoff && Math.abs(new Date(m.kickoff).getTime() - evDate.getTime()) < 3600000
       );
       if (!koMatch) continue;
-      if (koMatch.team1 === 'TBD' && name1) { koMatch.team1 = name1; changed = true; }
-      if (koMatch.team2 === 'TBD' && name2) { koMatch.team2 = name2; changed = true; }
+      // Приемаме само реални имена на отбори (не "Round of 32 X Winner")
+      const isReal = n => n && !n.includes('Winner') && !n.includes('Loser') && !n.includes('Runner') && n !== 'TBD';
+      if (koMatch.team1 === 'TBD' && isReal(name1)) { koMatch.team1 = name1; changed = true; }
+      if (koMatch.team2 === 'TBD' && isReal(name2)) { koMatch.team2 = name2; changed = true; }
       if (comp.status?.type?.completed) {
         const s1 = parseInt(t1.score), s2 = parseInt(t2.score);
         if (!isNaN(s1) && !isNaN(s2) && !koMatch.result) {
