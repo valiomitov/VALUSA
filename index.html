@@ -791,6 +791,7 @@ function renderApp() {
   const isAdmin = S.currentUser === 'admin';
   const tabs = [
     {id:'predictions',l:'🔮 Прогнози'},
+    {id:'knockout',l:'⚔️ Елиминации'},
     {id:'leaderboard',l:'🏅 Класиране'},
     {id:'groups',l:'🌍 Групи'},
     {id:'champion',l:'🏆 Шампион'},
@@ -820,6 +821,7 @@ function renderBottomNav() {
   const isAdmin = S.currentUser === 'admin';
   const items = [
     {id:'predictions', icon:'🔮', label:'Прогнози'},
+    {id:'knockout', icon:'⚔️', label:'Елиминации'},
     {id:'leaderboard', icon:'🏅', label:'Класиране'},
     {id:'groups', icon:'🌍', label:'Групи'},
     {id:'champion', icon:'🏆', label:'Шампион'},
@@ -1155,6 +1157,7 @@ function renderProfile() {
 
 function renderTab() {
   if (S.tab === 'predictions') return renderPredictions();
+  if (S.tab === 'knockout') return renderKnockout();
   if (S.tab === 'leaderboard') return renderLeaderboard();
   if (S.tab === 'groups') return renderGroups();
   if (S.tab === 'champion') return renderChampion();
@@ -2510,50 +2513,91 @@ try {
   throw e;
 }
 
+// ─── renderKnockout: самостоятелен таб Елиминации ───────────────────────────
+function renderKnockout() {
+  fetchKOPairings().then(() => autoFetchResults(true));
+  const preds = S.predictions[S.currentUser] || {};
+  const koMatches = S.matches.filter(m => m.stage);
+  const totalKO = koMatches.length;
+  const predKO = koMatches.filter(m => { const p = preds[m.id]; return p && p.s1 !== '' && p.s2 !== ''; }).length;
+  let content = '';
+  for (const stage of STAGE_ORDER) {
+    const sm = koMatches.filter(m => m.stage === stage);
+    if (!sm.length) continue;
+    content += `<div class="matchday-label" style="background:linear-gradient(90deg,rgba(198,40,40,.15),transparent)">⚔️ ${STAGE_LABELS[stage]}</div>`;
+    const byDate = {};
+    for (const m of sm) {
+      const dk = matchDateKey(m);
+      if (!byDate[dk]) byDate[dk] = {label: matchDateLabel(m), matches:[]};
+      byDate[dk].matches.push(m);
+    }
+    for (const {label, matches} of Object.values(byDate)) {
+      if (label) content += `<div style="padding:6px 0 4px 1rem;font-size:12px;color:rgba(255,255,255,.4)">📅 ${label}</div>`;
+      content += matches.map(m => {
+        const badge = `<span style="font-size:10px;background:rgba(198,40,40,.2);padding:2px 8px;border-radius:10px;color:#ef9a9a">${m.stageLabel} #${m.matchNum}</span>`;
+        return renderMatchCard(m, preds[m.id], false, badge);
+      }).join('');
+    }
+  }
+  return `
+  <div class="page-title">⚔️ Елиминации</div>
+  <div class="info-bar">
+    ⏰ Заключва се 30 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">30т</strong> точен 5+гола &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
+    <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp; Прогнозирал: <strong>${predKO}/${totalKO}</strong>
+  </div>
+  ${content}
+  <div><button class="save-btn" id="savePreds">💾 Запази прогнозите</button></div>`;
+}
+
 // Автоматично изтегляне на КО двойките от ESPN API
 async function fetchKOPairings() {
-  // ESPN API за WC 2026 КО мачове
-  const ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
-  try {
-    const res = await fetch(ESPN_URL);
-    if (!res.ok) return;
-    const json = await res.json();
-    const events = json.events || [];
-    let changed = false;
-    for (const ev of events) {
-      const comps = ev.competitions || [];
-      for (const comp of comps) {
-        const teams = comp.competitors || [];
-        if (teams.length < 2) continue;
-        const t1 = teams.find(t => t.homeAway === 'home');
-        const t2 = teams.find(t => t.homeAway === 'away');
-        if (!t1 || !t2) continue;
-        const name1 = t1.team?.displayName || t1.team?.name;
-        const name2 = t2.team?.displayName || t2.team?.name;
-        if (!name1 || !name2) continue;
-        // Намери KO мач по дата/час
-        const evDate = new Date(ev.date);
-        const koMatch = S.matches.find(m =>
-          m.stage && (m.team1 === 'TBD' || m.team2 === 'TBD') &&
-          m.kickoff && Math.abs(new Date(m.kickoff).getTime() - evDate.getTime()) < 3600000
-        );
-        if (!koMatch) continue;
-        // Попълни отборите само ако са TBD
-        if (koMatch.team1 === 'TBD') { koMatch.team1 = name1; changed = true; }
-        if (koMatch.team2 === 'TBD') { koMatch.team2 = name2; changed = true; }
-        // Попълни и резултата ако е наличен
-        const score = comp.score;
-        if (score && comp.status?.type?.completed) {
-          const s1 = parseInt(t1.score); const s2 = parseInt(t2.score);
-          if (!isNaN(s1) && !isNaN(s2) && !koMatch.result) {
-            koMatch.result = {s1: s1, s2: s2};
-            changed = true;
-          }
+  const BASE = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
+  const urls = [
+    `${BASE}?limit=100&dates=20260629-20260720`,
+    `${BASE}?limit=100`,
+  ];
+  let allEvents = [];
+  for (const url of urls) {
+    try {
+      const r = await fetch(url);
+      if (!r.ok) continue;
+      const d = await r.json();
+      if (d.events?.length) allEvents = allEvents.concat(d.events);
+    } catch(e) {}
+  }
+  const seen = new Set();
+  const events = allEvents.filter(ev => { if (seen.has(ev.id)) return false; seen.add(ev.id); return true; });
+  let changed = false;
+  for (const ev of events) {
+    const comps = ev.competitions || [];
+    for (const comp of comps) {
+      const teams = comp.competitors || [];
+      if (teams.length < 2) continue;
+      const t1 = teams.find(t => t.homeAway === 'home');
+      const t2 = teams.find(t => t.homeAway === 'away');
+      if (!t1 || !t2) continue;
+      const name1 = t1.team?.displayName || t1.team?.name;
+      const name2 = t2.team?.displayName || t2.team?.name;
+      if (!name1 || !name2) continue;
+      const evDate = new Date(ev.date);
+      const koMatch = S.matches.find(m =>
+        m.stage &&
+        m.kickoff && Math.abs(new Date(m.kickoff).getTime() - evDate.getTime()) < 3600000
+      );
+      if (!koMatch) continue;
+      if (koMatch.team1 === 'TBD' && name1) { koMatch.team1 = name1; changed = true; }
+      if (koMatch.team2 === 'TBD' && name2) { koMatch.team2 = name2; changed = true; }
+      if (comp.status?.type?.completed) {
+        const s1 = parseInt(t1.score), s2 = parseInt(t2.score);
+        if (!isNaN(s1) && !isNaN(s2) && !koMatch.result) {
+          koMatch.result = {s1, s2};
+          changed = true;
         }
       }
     }
-    if (changed) { persist(); render(); console.log('ESPN: КО двойките обновени'); }
-  } catch(e) { console.warn('ESPN fetch error:', e.message); }
+  }
+  if (changed) { persist(); render(); console.log('ESPN: КО двойките обновени'); }
+  return changed;
 }
 
 // ===================== POST-LOAD INIT =====================
