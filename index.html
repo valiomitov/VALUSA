@@ -2263,7 +2263,7 @@ window._savePred = function(mid) {
   const _v1=parseInt(inp1.value||''),_v2=parseInt(inp2.value||''),_draw90=!isNaN(_v1)&&!isNaN(_v2)&&_v1===_v2;
   if (inpEt1) S.predictions[S.currentUser][mid].ets1 = _draw90?inpEt1.value:'';
   if (inpEt2) S.predictions[S.currentUser][mid].ets2 = _draw90?inpEt2.value:'';
-  if(!_draw90){S.predictions[S.currentUser][mid].penWinner='';}else{const _e1=parseInt(inpEt1&&inpEt1.value||''),_e2=parseInt(inpEt2&&inpEt2.value||'');if(!isNaN(_e1)&&!isNaN(_e2)&&_e1!==_e2)S.predictions[S.currentUser][mid].penWinner='';}
+  if(!_draw90){S.predictions[S.currentUser][mid].penWinner='';}else{const _e1=parseInt(inpEt1&&inpEt1.value||''),_e2=parseInt(inpEt2&&inpEt2.value||'');if(!_draw90||(!isNaN(_e1)&&!isNaN(_e2)&&_e1!==_e2))S.predictions[S.currentUser][mid].penWinner='';}
   persist();
   const btn = document.getElementById('sp_'+mid);
   if (btn) { btn.textContent = '✓'; btn.style.background = '#1b5e20'; btn.style.color = '#a5d6a7'; }
