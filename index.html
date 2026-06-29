@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>⚽ WC 2026 · Прогнози</title>
 <style>
-/* mobile fix: keep online-status dot from overlapping the stats columns */
-@media(max-width:600px){.lb-head,.lb-row{column-gap:6px}.lb-user{padding-right:4px;min-width:0}}
+/* mobile fix: online dot as avatar badge, names truncate, stats stay clear */
+@media(max-width:600px){.lb-user{position:relative;min-width:0}.lb-user>span:first-of-type{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.lb-user span[style*="border-radius"]{position:absolute!important;left:18px;bottom:2px;margin:0!important;border:2px solid #0d1b2a;box-shadow:0 0 0 1px #0d1b2a}.lb-head,.lb-row{column-gap:6px}}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:100vh;color:#fff}
 
