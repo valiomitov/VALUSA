@@ -398,7 +398,7 @@ const FB = {
           const preds = data.predictions[u] || {};
           Object.keys(preds).forEach(mid => {
             // Пишем само ако прогнозата е валидна (не null/undefined)
-            if (preds[mid] != null) {
+            if (preds[mid] != null && !(preds[mid].s1 === '' && preds[mid].s2 === '')) {
               update['predictions/' + u + '/' + mid] = preds[mid];
             }
           });
