@@ -1520,11 +1520,7 @@ function renderLeaderboard() {
   const medals = ['🥇','🥈','🥉'];
   return `
   <div class="page-title">🏅 Класиране</div>
-  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:1rem;display:flex;flex-wrap:wrap;gap:.75rem">
-    <span><span style="color:#f9a825;font-weight:700">✓</span> — познал победителя (+60т)</span>
-    <span><span style="color:#f9a825;font-weight:700">?</span> — има прогноза, победителят не е известен</span>
-    <span><span style="color:rgba(255,255,255,.35);font-weight:700">—</span> — няма прогноза за победител</span>
-  </div>
+  <div style="display:flex;gap:1rem;align-items:center;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:.5rem"><span title="Познал шампиона (+60т)" style="cursor:help"><b style="color:#4caf50">✓</b> +60т</span><span title="Има прогноза, чакаме резултата" style="cursor:help"><b style="color:#f9a825">?</b> изч.</span><span title="Няма прогноза за шампион" style="cursor:help"><b style="color:rgba(255,255,255,.25)">—</b> без</span></div>
   <div class="lb-wrap">
     <div class="lb-head">
       <div>#</div><div style="display:flex;justify-content:space-between;align-items:center">Потребител</div>
@@ -1539,7 +1535,7 @@ function renderLeaderboard() {
       lb.map((u,i) => {
         const ls = lastSeenStatus(u.username);
         return `
-      <div class="lb-row ${u.username===S.currentUser?'me':''}">
+      <div class="lb-row ${u.username===S.currentUser?'me':''}" style="cursor:pointer" onclick="window._showProfile('${u.username}')">
         <div class="lb-rank ${i<3?'rank-'+(i+1):''}">${i<3?medals[i]:i+1}</div>
         <div class="lb-user">
           <div class="user-avatar" style="width:28px;height:28px;font-size:${(S.users.find(x=>x.username===u.username)||{}).avatar?'16px':'12px'};${(S.users.find(x=>x.username===u.username)||{}).avatar?'background:rgba(255,255,255,.08)':''}">${(S.users.find(x=>x.username===u.username)||{}).avatar||u.username[0].toUpperCase()}</div>
@@ -2891,6 +2887,54 @@ window.addEventListener('load', function() {
 </script>
 <!-- Firebase SDK — зарежда се накрая за да не блокира страницата -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js">
+window._showProfile = function(uname) {
+  const preds = (S.predictions||{})[uname]||{};
+  const lb = leaderboard();
+  const rank = lb.findIndex(function(x){return x.username===uname;})+1;
+  const lu = lb.find(function(x){return x.username===uname;})||{};
+  const av = uname.slice(0,1).toUpperCase();
+  const statRows = [
+    ['ЗНАК','#90caf9',lu.sign||0,(lu.sign||0)*10],
+    ['+РАЗЛ','#ffe082',lu.signDiff||0,(lu.signDiff||0)*15],
+    ['ТОЧЕН','#a5d6a7',lu.exact||0,(lu.exact||0)*20],
+    ['5+','#ff7043',lu.exact5||0,(lu.exact5||0)*30],
+    ['\u{1F3C6}',lu.champCorrect?'#f9a825':'rgba(255,255,255,.35)',lu.champ?'?':'—',lu.champPts||0],
+  ];
+  const matchList = (S.matches||[]).filter(function(m){
+    const p=preds[m.id];
+    return p&&p.s1!==''&&p.s1!=null&&p.s2!==''&&p.s2!=null&&m.result&&m.result.s1!=null;
+  }).map(function(m){
+    const p=preds[m.id],r=m.result;
+    const ps1=+p.s1,ps2=+p.s2,rs1=+r.s1,rs2=+r.s2;
+    const sg=function(v){return v>0?1:v<0?-1:0;};
+    const signOk=sg(ps1-ps2)===sg(rs1-rs2);
+    const diffOk=signOk&&(ps1-ps2===rs1-rs2);
+    const exactOk=ps1===rs1&&ps2===rs2;
+    const badge=exactOk?'<b style="color:#a5d6a7">✔✔+20</b>':diffOk?'<b style="color:#ffe082">≈+15</b>':signOk?'<b style="color:#90caf9">~+10</b>':'<span style="color:rgba(255,255,255,.25)">✗</span>';
+    return '<div style="display:grid;grid-template-columns:1fr 38px 38px 60px;gap:4px;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px">'
+      +'<span style="color:rgba(255,255,255,.5);overflow:hidden;white-space:nowrap">'+m.home+' – '+m.away+'</span>'
+      +'<span style="color:rgba(255,255,255,.3);text-align:center">'+p.s1+':'+p.s2+'</span>'
+      +'<span style="font-weight:600;text-align:center">'+r.s1+':'+r.s2+'</span>'
+      +badge+'</div>';
+  });
+  const predCount=Object.keys(preds).filter(function(k){const p=preds[k];return p&&p.s1!==''&&p.s1!=null;}).length;
+  document.getElementById('prof-inner').innerHTML=
+    '<div style="display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:14px">'
+    +'<div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1565c0,#0d47a1);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0">'+av+'</div>'
+    +'<div style="flex:1"><div style="font-size:16px;font-weight:700">'+uname+'</div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4)">#'+rank+' класиране · '+predCount+' прогнози</div></div>'
+    +'<div style="font-size:24px;font-weight:800;color:#ffd54f">'+(lu.total||0)+'<span style="font-size:12px">т</span></div></div>'
+    +'<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px">'
+    +statRows.map(function(s){return '<div style="background:rgba(255,255,255,.07);border-radius:8px;padding:8px 4px;text-align:center"><div style="font-size:8px;color:rgba(255,255,255,.35);margin-bottom:2px">'+s[0]+'</div><div style="font-size:17px;font-weight:800;color:'+s[1]+';line-height:1">'+s[2]+'</div><div style="font-size:8px;color:rgba(255,255,255,.25);margin-top:2px">'+s[3]+'т</div></div>';}).join('')+'</div>'
+    +(matchList.length
+      ?'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:4px">Изиграни ('+matchList.length+'):</div>'+matchList.join('')
+      :'<div style="color:rgba(255,255,255,.3);font-size:12px;padding:8px 0">Все още няма изиграни мачове</div>');
+  const mod=document.getElementById('prof-modal');
+  mod.style.display='block';
+  mod.scrollTop=0;
+};
+</script>
+<div id="prof-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9900;background:rgba(0,0,0,.88);overflow-y:auto;-webkit-overflow-scrolling:touch"><div style="max-width:460px;margin:0 auto;padding:16px 12px 80px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:12px;color:rgba(255,255,255,.4)">👤 Профил</span><button onclick="document.getElementById('prof-modal').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);border-radius:16px;padding:4px 12px;cursor:pointer;font-size:12px">✕</button></div><div id="prof-inner" style="background:#0d1b2a;border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.08)"></div></div></div>
 </body>
 </html>
