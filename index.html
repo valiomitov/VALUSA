@@ -2330,9 +2330,10 @@ window._updateKoViz = function(mid) {
   var et2=document.querySelector('[data-pr="'+mid+'"][data-side="ets2"]');
   var p1=document.getElementById('pen1_'+mid);
   var p2=document.getElementById('pen2_'+mid);
-  if(!et1)return;
   var s1=parseInt(s1e&&s1e.value||''),s2=parseInt(s2e&&s2e.value||'');
   var has90=!isNaN(s1)&&!isNaN(s2),draw90=has90&&s1===s2;
+  var _kw=document.getElementById('kow1_'+mid);if(_kw&&_kw.parentElement){_kw.parentElement.style.opacity=draw90?'':'0.4';_kw.parentElement.style.pointerEvents=draw90?'':'none';}
+  if(!et1)return;
   var etOK=!has90||draw90;
   [et1,et2].forEach(function(el){if(el){el.disabled=!etOK;el.style.opacity=etOK?'':'0.3';}});
   if(!etOK){if(et1)et1.value='';if(et2)et2.value='';}
