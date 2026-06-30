@@ -931,7 +931,7 @@ function renderRules() {
 
     <div style="background:rgba(198,40,40,.08);border:1px solid rgba(198,40,40,.2);border-radius:14px;padding:1rem;margin-bottom:.75rem">
       <div style="font-weight:700;margin-bottom:.3rem">⏰ Краен срок</div>
-      <div style="color:rgba(255,255,255,.6);font-size:.9rem">Прогнозата се <strong>заключва автоматично 30 мин</strong> преди началото на всеки мач.</div>
+      <div style="color:rgba(255,255,255,.6);font-size:.9rem">Прогнозата се <strong>заключва автоматично 15 мин</strong> преди началото на всеки мач.</div>
     </div>
 
     <!-- ⚔️ ЕЛИМИНАЦИИ -->
@@ -945,28 +945,7 @@ function renderRules() {
         <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
           <div style="font-size:1.5rem;flex-shrink:0">⏱️</div>
           <div>
-            <div style="font-weight:800;font-size:.9rem">Продължения — Победител <span style="color:#ffe082">+15 точки</span></div>
-            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш точния резултат след 120 мин и мачът завършва с победа в продълженията.</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
-          <div style="font-size:1.5rem;flex-shrink:0">⏱️</div>
-          <div>
-            <div style="font-weight:800;font-size:.9rem">Продължения — Равен (→ Дузпи) <span style="color:#90caf9">+10 точки</span></div>
-            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш точния резултат след 120 мин и той завършва равен (отиват на дузпи).</div>
-          </div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
-          <div style="font-size:1.5rem;flex-shrink:0">🎯</div>
-          <div>
-            <div style="font-weight:800;font-size:.9rem">Дузпи — Победител <span style="color:#a5d6a7">+20 точки</span></div>
-            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш кой отбор печели дузпите.</div>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:.85rem;background:rgba(0,0,0,.2);border-radius:8px;padding:.6rem .85rem;font-size:.8rem;color:rgba(255,255,255,.4)">
-        💡 Прогнозите за продължения и дузпи се <strong>виждат и попълват директно</strong> под всеки КО мач. Запазват се с бутона 💾.
-      </div>
+            <div style="background:rgba(255,255,255,.07);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px"><span style="font-weight:800;font-size:.9rem">🏆 Победател (прод./дузпи)</span><span style="display:block;font-size:.85rem;opacity:.75;margin-top:6px"><strong style="color:#ffd700">+30 точки</strong> — Ако прогнозираш равен в редовното време, избираш кой отбор печели в продълженията или дузпите. Само при равен резултат в редовното време.</span></div>
     </div>
 
     <div style="background:rgba(156,39,176,.08);border:1.5px solid rgba(156,39,176,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem">
@@ -1340,7 +1319,7 @@ function renderPredictions() {
   return `
   <div class="page-title">🔮 Моите прогнози</div>
   <div class="info-bar">
-    ⏰ Заключва 15 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">+30т</strong> точен 5+ &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">+20т</strong> точен &nbsp;·&nbsp; <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp; ⏱️<strong style="color:#80deea">+15т</strong> ET победа &nbsp;·&nbsp; ⏱️<strong style="color:#80deea">+10т</strong> ET равен &nbsp;·&nbsp; 🎯<strong style="color:#ce93d8">+20т</strong> дузпи &nbsp;·&nbsp; Прогнозирал: <strong>${totalPred}/${totalM}</strong>
+    ⏰ Заключва 15 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">+30т</strong> точен 5+ &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">+20т</strong> точен &nbsp;·&nbsp; <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp; 🏆<strong style="color:#ffd700">+30т</strong> победател (прод./дузпи) &nbsp;·&nbsp; Прогнозирал: <strong>${totalPred}/${totalM}</strong>
   </div>
   <div class="group-tabs">
     <div class="group-tab ${view==='group'?'active':''}" data-predview="group">📅 Групова фаза</div>
