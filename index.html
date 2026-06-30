@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚽ WC 2026 · Прогнози</title>
+<title>â½ WC 2026 Â· ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</title>
 <style>
 /* mobile fix: grid columns fit mobile, names visible, stats clear */
 @media(max-width:600px){.lb-head,.lb-row{grid-template-columns:18px 1fr 20px 20px 20px 20px 18px 34px!important;padding:5px 6px!important;font-size:7px!important}.lb-head div[style*="text-align:center"]>br,.lb-head div[style*="text-align:center"]>span{display:none}.lb-user{gap:4px!important;font-size:11px!important;position:relative;min-width:0}.lb-user .user-avatar{width:22px!important;height:22px!important;font-size:10px!important}.lb-user span[style*="font-size:18px"]{font-size:12px!important;line-height:1}.lb-user>span:not([style*="border-radius"]):not([style*="font-size:18px"]){white-space:nowrap;overflow:hidden;min-width:0;flex:1}.lb-user span[style*="border-radius"]{position:absolute!important;left:14px;bottom:2px;margin:0!important;border:2px solid #0d1b2a;box-shadow:0 0 0 1px #0d1b2a}}
@@ -124,7 +124,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 .g-table td{padding:9px 10px;font-size:12px;text-align:center;border-top:1px solid rgba(255,255,255,.04)}
 .g-table td:first-child{text-align:left;font-weight:700;font-size:13px}
 .qualify-row{background:rgba(76,175,80,.07)}
-.qualify-row td:first-child::after{content:' ✓';color:#4caf50;font-size:10px}
+.qualify-row td:first-child::after{content:' â';color:#4caf50;font-size:10px}
 
 /* CHAMPION */
 .champ-wrap{max-width:550px;margin:1.5rem auto;text-align:center}
@@ -171,18 +171,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1b2a;min-height:1
 // ===================== DATA =====================
 
 const FLAGS = {
-  'Mexico':'🇲🇽','South Africa':'🇿🇦','South Korea':'🇰🇷','Czechia':'🇨🇿',
-  'Canada':'🇨🇦','Bosnia-Herzegovina':'🇧🇦','Qatar':'🇶🇦','Switzerland':'🇨🇭',
-  'Brazil':'🇧🇷','Morocco':'🇲🇦','Haiti':'🇭🇹','Scotland':'🏴󠁧󠁢󠁳󠁣󠁴󠁿',
-  'United States':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Turkey':'🇹🇷',
-  'Germany':'🇩🇪','Curacao':'🇨🇼','Ivory Coast':'🇨🇮','Ecuador':'🇪🇨',
-  'Netherlands':'🇳🇱','Japan':'🇯🇵','Sweden':'🇸🇪','Tunisia':'🇹🇳',
-  'Belgium':'🇧🇪','Egypt':'🇪🇬','Iran':'🇮🇷','New Zealand':'🇳🇿',
-  'Spain':'🇪🇸','Cape Verde':'🇨🇻','Saudi Arabia':'🇸🇦','Uruguay':'🇺🇾',
-  'France':'🇫🇷','Senegal':'🇸🇳','Iraq':'🇮🇶','Norway':'🇳🇴',
-  'Argentina':'🇦🇷','Algeria':'🇩🇿','Austria':'🇦🇹','Jordan':'🇯🇴',
-  'Portugal':'🇵🇹','Congo DR':'🇨🇩','Uzbekistan':'🇺🇿','Colombia':'🇨🇴',
-  'England':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Croatia':'🇭🇷','Ghana':'🇬🇭','Panama':'🇵🇦',
+  'Mexico':'ð²ð½','South Africa':'ð¿ð¦','South Korea':'ð°ð·','Czechia':'ð¨ð¿',
+  'Canada':'ð¨ð¦','Bosnia-Herzegovina':'ð§ð¦','Qatar':'ð¶ð¦','Switzerland':'ð¨ð­',
+  'Brazil':'ð§ð·','Morocco':'ð²ð¦','Haiti':'ð­ð¹','Scotland':'ð´ó §ó ¢ó ³ó £ó ´ó ¿',
+  'United States':'ðºð¸','Paraguay':'ðµð¾','Australia':'ð¦ðº','Turkey':'ð¹ð·',
+  'Germany':'ð©ðª','Curacao':'ð¨ð¼','Ivory Coast':'ð¨ð®','Ecuador':'ðªð¨',
+  'Netherlands':'ð³ð±','Japan':'ð¯ðµ','Sweden':'ð¸ðª','Tunisia':'ð¹ð³',
+  'Belgium':'ð§ðª','Egypt':'ðªð¬','Iran':'ð®ð·','New Zealand':'ð³ð¿',
+  'Spain':'ðªð¸','Cape Verde':'ð¨ð»','Saudi Arabia':'ð¸ð¦','Uruguay':'ðºð¾',
+  'France':'ð«ð·','Senegal':'ð¸ð³','Iraq':'ð®ð¶','Norway':'ð³ð´',
+  'Argentina':'ð¦ð·','Algeria':'ð©ð¿','Austria':'ð¦ð¹','Jordan':'ð¯ð´',
+  'Portugal':'ðµð¹','Congo DR':'ð¨ð©','Uzbekistan':'ðºð¿','Colombia':'ð¨ð´',
+  'England':'ð´ó §ó ¢ó ¥ó ®ó §ó ¿','Croatia':'ð­ð·','Ghana':'ð¬ð­','Panama':'ðµð¦',
 };
 
 
@@ -199,7 +199,7 @@ const MATCH_TIMES = {
   55:"2026-06-17T04:00+03:00",56:"2026-06-17T07:00+03:00",57:"2026-06-22T20:00+03:00",58:"2026-06-23T06:00+03:00",59:"2026-06-28T05:00+03:00",60:"2026-06-28T05:00+03:00",
   61:"2026-06-17T20:00+03:00",62:"2026-06-18T05:00+03:00",63:"2026-06-23T20:00+03:00",64:"2026-06-24T05:00+03:00",65:"2026-06-28T02:30+03:00",66:"2026-06-28T02:30+03:00",
   67:"2026-06-17T23:00+03:00",68:"2026-06-18T02:00+03:00",69:"2026-06-23T23:00+03:00",70:"2026-06-24T02:00+03:00",71:"2026-06-28T00:00+03:00",72:"2026-06-28T00:00+03:00",
-  // 1/32-финали (29 юни – 7 юли)
+  // 1/32-ÑÐ¸Ð½Ð°Ð»Ð¸ (29 ÑÐ½Ð¸ â 7 ÑÐ»Ð¸)
   73:"2026-06-28T22:00+03:00",74:"2026-06-29T20:00+03:00",
   75:"2026-06-29T23:30+03:00",76:"2026-06-30T04:00+03:00",
   77:"2026-06-30T20:00+03:00",78:"2026-07-01T00:00+03:00",
@@ -208,17 +208,17 @@ const MATCH_TIMES = {
   83:"2026-07-02T22:00+03:00",84:"2026-07-03T02:00+03:00",
   85:"2026-07-03T06:00+03:00",86:"2026-07-03T21:00+03:00",
   87:"2026-07-04T01:00+03:00",88:"2026-07-04T04:30+03:00",
-  // 1/16-финали (8–11 юли)
+  // 1/16-ÑÐ¸Ð½Ð°Ð»Ð¸ (8â11 ÑÐ»Ð¸)
   89:"2026-07-08T01:00+03:00",90:"2026-07-08T04:00+03:00",
   91:"2026-07-09T01:00+03:00",92:"2026-07-09T04:00+03:00",
   93:"2026-07-10T01:00+03:00",94:"2026-07-10T04:00+03:00",
   95:"2026-07-11T01:00+03:00",96:"2026-07-11T04:00+03:00",
-  // Четвъртфинали (13–15 юли)
+  // Ð§ÐµÑÐ²ÑÑÑÑÐ¸Ð½Ð°Ð»Ð¸ (13â15 ÑÐ»Ð¸)
   97:"2026-07-13T22:00+03:00",98:"2026-07-14T01:00+03:00",
   99:"2026-07-14T22:00+03:00",100:"2026-07-15T01:00+03:00",
-  // Полуфинали (17–18 юли)
+  // ÐÐ¾Ð»ÑÑÐ¸Ð½Ð°Ð»Ð¸ (17â18 ÑÐ»Ð¸)
   101:"2026-07-17T01:00+03:00",102:"2026-07-18T01:00+03:00",
-  // 3-то място и Финал
+  // 3-ÑÐ¾ Ð¼ÑÑÑÐ¾ Ð¸ Ð¤Ð¸Ð½Ð°Ð»
   103:"2026-07-19T21:00+03:00",104:"2026-07-20T01:00+03:00"
 };
 
@@ -226,15 +226,15 @@ function getKickoff(matchId) { return MATCH_TIMES[matchId] ? new Date(MATCH_TIME
 function fmtBG(matchId) {
   const d = getKickoff(matchId); if(!d) return '';
   return d.toLocaleDateString('bg-BG',{day:'2-digit',month:'2-digit',timeZone:'Europe/Sofia'}) + ' ' +
-    d.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Sofia'}) + ' ч.';
+    d.toLocaleTimeString('bg-BG',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Sofia'}) + ' Ñ.';
 }
-// Заключване на прогнозата за шампион — 11.06.2026 в 21:59 BG time (UTC+3)
+// ÐÐ°ÐºÐ»ÑÑÐ²Ð°Ð½Ðµ Ð½Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ð·Ð° ÑÐ°Ð¼Ð¿Ð¸Ð¾Ð½ â 11.06.2026 Ð² 21:59 BG time (UTC+3)
 const CHAMP_LOCK = new Date('2026-06-11T21:59:00+03:00').getTime();
 function isChampLocked() { return Date.now() >= CHAMP_LOCK; }
 
 function isLocked(matchId) {
   const m = S && S.matches ? S.matches.find(x => x.id === matchId) : null;
-  if (m && (m.team1 === 'TBD' || m.team2 === 'TBD')) return true; // KO отборите не са определени
+  if (m && (m.team1 === 'TBD' || m.team2 === 'TBD')) return true; // KO Ð¾ÑÐ±Ð¾ÑÐ¸ÑÐµ Ð½Ðµ ÑÐ° Ð¾Ð¿ÑÐµÐ´ÐµÐ»ÐµÐ½Ð¸
   const k = getKickoff(matchId); if(!k) return false;
   return Date.now() >= k.getTime() - 15*60*1000;
 }
@@ -280,12 +280,12 @@ const R32_TEAMS = {
 function generateKOMatches() {
   const ko = [];
   const stages = [
-    {stage:'R32', label:'1/32-финал', count:16, startId:73},
-    {stage:'R16', label:'1/16-финал', count:8,  startId:89},
-    {stage:'QF',  label:'Четвъртфинал', count:4, startId:97},
-    {stage:'SF',  label:'Полуфинал',  count:2,  startId:101},
-    {stage:'3P',  label:'3-то място', count:1,  startId:103},
-    {stage:'F',   label:'Финал',      count:1,  startId:104},
+    {stage:'R32', label:'1/32-ÑÐ¸Ð½Ð°Ð»', count:16, startId:73},
+    {stage:'R16', label:'1/16-ÑÐ¸Ð½Ð°Ð»', count:8,  startId:89},
+    {stage:'QF',  label:'Ð§ÐµÑÐ²ÑÑÑÑÐ¸Ð½Ð°Ð»', count:4, startId:97},
+    {stage:'SF',  label:'ÐÐ¾Ð»ÑÑÐ¸Ð½Ð°Ð»',  count:2,  startId:101},
+    {stage:'3P',  label:'3-ÑÐ¾ Ð¼ÑÑÑÐ¾', count:1,  startId:103},
+    {stage:'F',   label:'Ð¤Ð¸Ð½Ð°Ð»',      count:1,  startId:104},
   ];
   for (const {stage, label, count, startId} of stages) {
     for (let i = 0; i < count; i++) {
@@ -309,7 +309,7 @@ const LS = {
 
 
 // ===================== FIREBASE CONFIG =====================
-// 👇 ПОПЪЛНИ ТУК след като създадеш Firebase проект (вж. инструкциите в Admin > Синхронизация)
+// ð ÐÐÐÐªÐÐÐ Ð¢Ð£Ð ÑÐ»ÐµÐ´ ÐºÐ°ÑÐ¾ ÑÑÐ·Ð´Ð°Ð´ÐµÑ Firebase Ð¿ÑÐ¾ÐµÐºÑ (Ð²Ð¶. Ð¸Ð½ÑÑÑÑÐºÑÐ¸Ð¸ÑÐµ Ð² Admin > Ð¡Ð¸Ð½ÑÑÐ¾Ð½Ð¸Ð·Ð°ÑÐ¸Ñ)
 const FB_CONFIG = {
   apiKey: "AIzaSyDBio3eW772tHesmg_nPS88W_SPGNjH0xU",
   authDomain: "wc2026-89fc5.firebaseapp.com",
@@ -328,16 +328,16 @@ const FB = {
 
   init() {
     try {
-      if (!FB_CONFIG.databaseURL) return; // не е конфигуриран
-      if (typeof firebase === 'undefined') { console.warn('Firebase SDK не е зареден'); return; }
+      if (!FB_CONFIG.databaseURL) return; // Ð½Ðµ Ðµ ÐºÐ¾Ð½ÑÐ¸Ð³ÑÑÐ¸ÑÐ°Ð½
+      if (typeof firebase === 'undefined') { console.warn('Firebase SDK Ð½Ðµ Ðµ Ð·Ð°ÑÐµÐ´ÐµÐ½'); return; }
       if (!firebase.apps.length) firebase.initializeApp(FB_CONFIG);
       FB.db = firebase.database();
       FB.ref = FB.db.ref('wc26');
-      // Слушай за промени в реално време — НЕ пише обратно в Firebase (предотвратява цикъл)
+      // Ð¡Ð»ÑÑÐ°Ð¹ Ð·Ð° Ð¿ÑÐ¾Ð¼ÐµÐ½Ð¸ Ð² ÑÐµÐ°Ð»Ð½Ð¾ Ð²ÑÐµÐ¼Ðµ â ÐÐ Ð¿Ð¸ÑÐµ Ð¾Ð±ÑÐ°ÑÐ½Ð¾ Ð² Firebase (Ð¿ÑÐµÐ´Ð¾ÑÐ²ÑÐ°ÑÑÐ²Ð° ÑÐ¸ÐºÑÐ»)
       FB.ref.on('value', snap => {
         const data = snap.val();
         if (!data || FB._syncing) return;
-        applyGHData(data, true); // true = дойде от Firebase, не записвай обратно
+        applyGHData(data, true); // true = Ð´Ð¾Ð¹Ð´Ðµ Ð¾Ñ Firebase, Ð½Ðµ Ð·Ð°Ð¿Ð¸ÑÐ²Ð°Ð¹ Ð¾Ð±ÑÐ°ÑÐ½Ð¾
         if (data.lastSeen) S.lastSeen = data.lastSeen;
         if (S.currentUser && FB.ref && !window._visitLogged) { window._visitLogged = true; FB.ref.child('lastSeen').child(S.currentUser).set(Date.now()).catch(function(){}); }
         if (typeof render === 'function') render();
@@ -347,10 +347,10 @@ const FB = {
         const badge = document.getElementById('fbStatusBadge');
         if (!badge) return;
         const ok = snap.val() === true;
-        badge.textContent = ok ? '🟢 Firebase' : '🟡 Firebase офлайн';
+        badge.textContent = ok ? 'ð¢ Firebase' : 'ð¡ Firebase Ð¾ÑÐ»Ð°Ð¹Ð½';
         badge.style.color = ok ? 'rgba(76,175,80,.85)' : 'rgba(255,193,7,.85)';
       });
-      console.log('Firebase: свързан ✅');
+      console.log('Firebase: ÑÐ²ÑÑÐ·Ð°Ð½ â');
     } catch(e) { console.warn('Firebase init error:', e.message); }
   },
 
@@ -362,51 +362,51 @@ const FB = {
     FB._pendingWrite = true;
     FB._lastSyncError = null;
     try {
-      // ═══════════════════════════════════════════════════════════════════
-      // ВАРИАНТ Б — ЧИСТ АТОМЕН ЗАПИС ПО ПЪЛЕН PATH
-      // Правило: никога не replace-ваме цял обект.
-      // Всеки запис е до конкретен leaf-path: predictions/username/matchId
-      // Така concurrent writes от различни браузъри не се конфликтират.
-      // ═══════════════════════════════════════════════════════════════════
+      // âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+      // ÐÐÐ ÐÐÐÐ¢ Ð â Ð§ÐÐ¡Ð¢ ÐÐ¢ÐÐÐÐ ÐÐÐÐÐ¡ ÐÐ ÐÐªÐÐÐ PATH
+      // ÐÑÐ°Ð²Ð¸Ð»Ð¾: Ð½Ð¸ÐºÐ¾Ð³Ð° Ð½Ðµ replace-Ð²Ð°Ð¼Ðµ ÑÑÐ» Ð¾Ð±ÐµÐºÑ.
+      // ÐÑÐµÐºÐ¸ Ð·Ð°Ð¿Ð¸Ñ Ðµ Ð´Ð¾ ÐºÐ¾Ð½ÐºÑÐµÑÐµÐ½ leaf-path: predictions/username/matchId
+      // Ð¢Ð°ÐºÐ° concurrent writes Ð¾Ñ ÑÐ°Ð·Ð»Ð¸ÑÐ½Ð¸ Ð±ÑÐ°ÑÐ·ÑÑÐ¸ Ð½Ðµ ÑÐµ ÐºÐ¾Ð½ÑÐ»Ð¸ÐºÑÐ¸ÑÐ°Ñ.
+      // âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
       const update = {};
 
-      // ── Споделени данни (matches, actualWinner, sessionLog) ──
-      // Тук admin е единственият писател, OK е да заменяме целия обект.
+      // ââ Ð¡Ð¿Ð¾Ð´ÐµÐ»ÐµÐ½Ð¸ Ð´Ð°Ð½Ð½Ð¸ (matches, actualWinner, sessionLog) ââ
+      // Ð¢ÑÐº admin Ðµ ÐµÐ´Ð¸Ð½ÑÑÐ²ÐµÐ½Ð¸ÑÑ Ð¿Ð¸ÑÐ°ÑÐµÐ», OK Ðµ Ð´Ð° Ð·Ð°Ð¼ÐµÐ½ÑÐ¼Ðµ ÑÐµÐ»Ð¸Ñ Ð¾Ð±ÐµÐºÑ.
       if (data.matches && data._forceAll)      update['matches']      = data.matches;
       if (data.sessionLog)   update['sessionLog']   = data.sessionLog;
       update['actualWinner'] = data.actualWinner ?? null;
       update['_ts']          = data._ts;
 
-      // ── users — per-username path, никога не трием чужди записи ──
+      // ââ users â per-username path, Ð½Ð¸ÐºÐ¾Ð³Ð° Ð½Ðµ ÑÑÐ¸ÐµÐ¼ ÑÑÐ¶Ð´Ð¸ Ð·Ð°Ð¿Ð¸ÑÐ¸ ââ
       if (data.users) {
-        // Изчистваме стари числови ключове (migration от масив към обект)
+        // ÐÐ·ÑÐ¸ÑÑÐ²Ð°Ð¼Ðµ ÑÑÐ°ÑÐ¸ ÑÐ¸ÑÐ»Ð¾Ð²Ð¸ ÐºÐ»ÑÑÐ¾Ð²Ðµ (migration Ð¾Ñ Ð¼Ð°ÑÐ¸Ð² ÐºÑÐ¼ Ð¾Ð±ÐµÐºÑ)
         for (let _i = 0; _i < 60; _i++) update['users/' + _i] = null;
         data.users.forEach(u => {
           if (u && u.username) update['users/' + u.username] = u;
         });
       }
 
-      // ── predictions — САМО атомни записи по matchId ──
-      // Никога: update['predictions/X'] = {...}  ← заменя целия обект
-      // Винаги: update['predictions/X/5'] = pred ← само конкретна прогноза
+      // ââ predictions â Ð¡ÐÐÐ Ð°ÑÐ¾Ð¼Ð½Ð¸ Ð·Ð°Ð¿Ð¸ÑÐ¸ Ð¿Ð¾ matchId ââ
+      // ÐÐ¸ÐºÐ¾Ð³Ð°: update['predictions/X'] = {...}  â Ð·Ð°Ð¼ÐµÐ½Ñ ÑÐµÐ»Ð¸Ñ Ð¾Ð±ÐµÐºÑ
+      // ÐÐ¸Ð½Ð°Ð³Ð¸: update['predictions/X/5'] = pred â ÑÐ°Ð¼Ð¾ ÐºÐ¾Ð½ÐºÑÐµÑÐ½Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°
       if (data.predictions) {
         const usersToWrite = data._forceAll
-          ? Object.keys(data.predictions)           // admin repair: всички
-          : (data.currentUser ? [data.currentUser] : []); // нормален: само текущият
+          ? Object.keys(data.predictions)           // admin repair: Ð²ÑÐ¸ÑÐºÐ¸
+          : (data.currentUser ? [data.currentUser] : []); // Ð½Ð¾ÑÐ¼Ð°Ð»ÐµÐ½: ÑÐ°Ð¼Ð¾ ÑÐµÐºÑÑÐ¸ÑÑ
 
         usersToWrite.forEach(u => {
           const preds = data.predictions[u] || {};
           Object.keys(preds).forEach(mid => {
-            // Пишем само ако прогнозата е валидна (не null/undefined)
+            // ÐÐ¸ÑÐµÐ¼ ÑÐ°Ð¼Ð¾ Ð°ÐºÐ¾ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ðµ Ð²Ð°Ð»Ð¸Ð´Ð½Ð° (Ð½Ðµ null/undefined)
             if (preds[mid] != null) {
               update['predictions/' + u + '/' + mid] = preds[mid];
             }
           });
-          // Ако няма прогнози — не пишем нищо (не изтриваме Firebase данните!)
+          // ÐÐºÐ¾ Ð½ÑÐ¼Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ â Ð½Ðµ Ð¿Ð¸ÑÐµÐ¼ Ð½Ð¸ÑÐ¾ (Ð½Ðµ Ð¸Ð·ÑÑÐ¸Ð²Ð°Ð¼Ðµ Firebase Ð´Ð°Ð½Ð½Ð¸ÑÐµ!)
         });
       }
 
-      // ── champions — per-username path ──
+      // ââ champions â per-username path ââ
       if (data.champions) {
         const usersToWrite = data._forceAll
           ? Object.keys(data.champions)
@@ -430,12 +430,12 @@ const FB = {
     finally { setTimeout(() => FB._syncing = false, 500); }
   },
 
-  // Изрично изтриване на данни на изтрит потребител от Firebase
+  // ÐÐ·ÑÐ¸ÑÐ½Ð¾ Ð¸Ð·ÑÑÐ¸Ð²Ð°Ð½Ðµ Ð½Ð° Ð´Ð°Ð½Ð½Ð¸ Ð½Ð° Ð¸Ð·ÑÑÐ¸Ñ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ» Ð¾Ñ Firebase
   async deleteUserData(username) {
     if (!FB.ref) return;
     try {
       const update = {};
-      update['users/' + username] = null;        // Изтрий потребителя по path
+      update['users/' + username] = null;        // ÐÐ·ÑÑÐ¸Ð¹ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ñ Ð¿Ð¾ path
       update['predictions/' + username] = null;
       update['champions/' + username] = null;
       await FB.ref.update(update);
@@ -507,36 +507,36 @@ const GH = {
   }
 };
 
-// fromFirebase=true → само чете данни, НЕ пише обратно (предотвратява цикъл Firebase→persist→Firebase→...)
+// fromFirebase=true â ÑÐ°Ð¼Ð¾ ÑÐµÑÐµ Ð´Ð°Ð½Ð½Ð¸, ÐÐ Ð¿Ð¸ÑÐµ Ð¾Ð±ÑÐ°ÑÐ½Ð¾ (Ð¿ÑÐµÐ´Ð¾ÑÐ²ÑÐ°ÑÑÐ²Ð° ÑÐ¸ÐºÑÐ» FirebaseâpersistâFirebaseâ...)
 function applyGHData(data, fromFirebase = false) {
   if (!data) return;
   if (data.users) {
-    // Поддържа и стар array формат ({0:{...},1:{...}}) и нов object формат ({alice:{...},bob:{...}})
+    // ÐÐ¾Ð´Ð´ÑÑÐ¶Ð° Ð¸ ÑÑÐ°Ñ array ÑÐ¾ÑÐ¼Ð°Ñ ({0:{...},1:{...}}) Ð¸ Ð½Ð¾Ð² object ÑÐ¾ÑÐ¼Ð°Ñ ({alice:{...},bob:{...}})
     const _rawUsers = Array.isArray(data.users)
       ? data.users
       : Object.values(data.users).filter(u => u && u.username);
-    // Дедублиране по username (Firebase може да има и стари числови ключове И нови path ключове едновременно)
+    // ÐÐµÐ´ÑÐ±Ð»Ð¸ÑÐ°Ð½Ðµ Ð¿Ð¾ username (Firebase Ð¼Ð¾Ð¶Ðµ Ð´Ð° Ð¸Ð¼Ð° Ð¸ ÑÑÐ°ÑÐ¸ ÑÐ¸ÑÐ»Ð¾Ð²Ð¸ ÐºÐ»ÑÑÐ¾Ð²Ðµ Ð Ð½Ð¾Ð²Ð¸ path ÐºÐ»ÑÑÐ¾Ð²Ðµ ÐµÐ´Ð½Ð¾Ð²ÑÐµÐ¼ÐµÐ½Ð½Ð¾)
     const _seenUsernames = {};
     _rawUsers.forEach(u => { if (u && u.username) _seenUsernames[u.username] = u; });
     const fbUsersArr = Object.values(_seenUsernames);
     if (fromFirebase) {
-      // Deep-merge на ниво user: Firebase е авторитетен за своите полета,
-      // но запазва локални полета (напр. avatar) ако Firebase все още ги няма.
+      // Deep-merge Ð½Ð° Ð½Ð¸Ð²Ð¾ user: Firebase Ðµ Ð°Ð²ÑÐ¾ÑÐ¸ÑÐµÑÐµÐ½ Ð·Ð° ÑÐ²Ð¾Ð¸ÑÐµ Ð¿Ð¾Ð»ÐµÑÐ°,
+      // Ð½Ð¾ Ð·Ð°Ð¿Ð°Ð·Ð²Ð° Ð»Ð¾ÐºÐ°Ð»Ð½Ð¸ Ð¿Ð¾Ð»ÐµÑÐ° (Ð½Ð°Ð¿Ñ. avatar) Ð°ÐºÐ¾ Firebase Ð²ÑÐµ Ð¾ÑÐµ Ð³Ð¸ Ð½ÑÐ¼Ð°.
       const localByName = {};
       S.users.forEach(u => { localByName[u.username] = u; });
       const fbMerged = fbUsersArr.map(fbUser => {
         const local = localByName[fbUser.username];
         return local ? Object.assign({}, local, fbUser) : fbUser;
       });
-      // Добави локални потребители, чийто path в Firebase е null или не е записан още
-      // (регистрирали са се преди последния persist() да стигне до Firebase)
+      // ÐÐ¾Ð±Ð°Ð²Ð¸ Ð»Ð¾ÐºÐ°Ð»Ð½Ð¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸, ÑÐ¸Ð¹ÑÐ¾ path Ð² Firebase Ðµ null Ð¸Ð»Ð¸ Ð½Ðµ Ðµ Ð·Ð°Ð¿Ð¸ÑÐ°Ð½ Ð¾ÑÐµ
+      // (ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð»Ð¸ ÑÐ° ÑÐµ Ð¿ÑÐµÐ´Ð¸ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ñ persist() Ð´Ð° ÑÑÐ¸Ð³Ð½Ðµ Ð´Ð¾ Firebase)
       const fbUsernames = new Set(fbUsersArr.map(u => u.username));
       S.users.forEach(localUser => {
         if (!fbUsernames.has(localUser.username)) fbMerged.push(localUser);
       });
       S.users = dedupeUsers(fbMerged);
     } else {
-      // GitHub/backup може да е остаряло — запази локално-регистрирани потребители
+      // GitHub/backup Ð¼Ð¾Ð¶Ðµ Ð´Ð° Ðµ Ð¾ÑÑÐ°ÑÑÐ»Ð¾ â Ð·Ð°Ð¿Ð°Ð·Ð¸ Ð»Ð¾ÐºÐ°Ð»Ð½Ð¾-ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð½Ð¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸
       const ghNames = new Set(fbUsersArr.map(u => u.username));
       const localOnly = S.users.filter(u => !ghNames.has(u.username));
       S.users = dedupeUsers([...fbUsersArr, ...localOnly]);
@@ -544,16 +544,16 @@ function applyGHData(data, fromFirebase = false) {
   }
   if (Array.isArray(data.matches)) {
     S.matches = data.matches;
-    // Нормализирай string резултати + enforce актуални MATCH_TIMES и R32_TEAMS
+    // ÐÐ¾ÑÐ¼Ð°Ð»Ð¸Ð·Ð¸ÑÐ°Ð¹ string ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ + enforce Ð°ÐºÑÑÐ°Ð»Ð½Ð¸ MATCH_TIMES Ð¸ R32_TEAMS
     S.matches.forEach(m => {
       if (m.result && typeof m.result === 'string') {
         const parts = m.result.split('-');
         const s1 = parseInt(parts[0]), s2 = parseInt(parts[1]);
         m.result = (!isNaN(s1) && !isNaN(s2)) ? {s1, s2} : null;
       }
-      // Винаги синхронизирай kickoff от MATCH_TIMES (покрива коригираните R32 времена)
+      // ÐÐ¸Ð½Ð°Ð³Ð¸ ÑÐ¸Ð½ÑÑÐ¾Ð½Ð¸Ð·Ð¸ÑÐ°Ð¹ kickoff Ð¾Ñ MATCH_TIMES (Ð¿Ð¾ÐºÑÐ¸Ð²Ð° ÐºÐ¾ÑÐ¸Ð³Ð¸ÑÐ°Ð½Ð¸ÑÐµ R32 Ð²ÑÐµÐ¼ÐµÐ½Ð°)
       if (MATCH_TIMES[m.id]) m.kickoff = MATCH_TIMES[m.id];
-      // R32: винаги enforce хардкоднати двойки (override TBD/ESPN placeholders от Firebase)
+      // R32: Ð²Ð¸Ð½Ð°Ð³Ð¸ enforce ÑÐ°ÑÐ´ÐºÐ¾Ð´Ð½Ð°ÑÐ¸ Ð´Ð²Ð¾Ð¹ÐºÐ¸ (override TBD/ESPN placeholders Ð¾Ñ Firebase)
       if (m.stage === 'R32' && R32_TEAMS[m.id]) {
         m.team1 = R32_TEAMS[m.id][0];
         m.team2 = R32_TEAMS[m.id][1];
@@ -563,25 +563,25 @@ function applyGHData(data, fromFirebase = false) {
   if (data.predictions && typeof data.predictions === 'object') {
     const merged = {};
     if (fromFirebase) {
-      // Firebase е авторитетен — включи ВСИЧКИ прогнози от Firebase без филтър по validUsers.
-      // Дори ако потребителят все още не е в S.users (race condition), прогнозите му се запазват.
-      // Deep merge на ниво мач: локалното е база, Firebase е отгоре (Firebase печели при съвпадение).
+      // Firebase Ðµ Ð°Ð²ÑÐ¾ÑÐ¸ÑÐµÑÐµÐ½ â Ð²ÐºÐ»ÑÑÐ¸ ÐÐ¡ÐÐ§ÐÐ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ Ð¾Ñ Firebase Ð±ÐµÐ· ÑÐ¸Ð»ÑÑÑ Ð¿Ð¾ validUsers.
+      // ÐÐ¾ÑÐ¸ Ð°ÐºÐ¾ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÑ Ð²ÑÐµ Ð¾ÑÐµ Ð½Ðµ Ðµ Ð² S.users (race condition), Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ Ð¼Ñ ÑÐµ Ð·Ð°Ð¿Ð°Ð·Ð²Ð°Ñ.
+      // Deep merge Ð½Ð° Ð½Ð¸Ð²Ð¾ Ð¼Ð°Ñ: Ð»Ð¾ÐºÐ°Ð»Ð½Ð¾ÑÐ¾ Ðµ Ð±Ð°Ð·Ð°, Firebase Ðµ Ð¾ÑÐ³Ð¾ÑÐµ (Firebase Ð¿ÐµÑÐµÐ»Ð¸ Ð¿ÑÐ¸ ÑÑÐ²Ð¿Ð°Ð´ÐµÐ½Ð¸Ðµ).
       Object.keys(data.predictions).forEach(u => {
         if (u === S.currentUser) {
-          // Текущият потребител: локалното побеждава — прогнозите му са само-що въведени
-          // и Firebase write може все още да е в ход (race condition).
+          // Ð¢ÐµÐºÑÑÐ¸ÑÑ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»: Ð»Ð¾ÐºÐ°Ð»Ð½Ð¾ÑÐ¾ Ð¿Ð¾Ð±ÐµÐ¶Ð´Ð°Ð²Ð° â Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ Ð¼Ñ ÑÐ° ÑÐ°Ð¼Ð¾-ÑÐ¾ Ð²ÑÐ²ÐµÐ´ÐµÐ½Ð¸
+          // Ð¸ Firebase write Ð¼Ð¾Ð¶Ðµ Ð²ÑÐµ Ð¾ÑÐµ Ð´Ð° Ðµ Ð² ÑÐ¾Ð´ (race condition).
           merged[u] = Object.assign({}, data.predictions[u], S.predictions[u] || {});
         } else {
-          // Останалите: Firebase е авторитетен
+          // ÐÑÑÐ°Ð½Ð°Ð»Ð¸ÑÐµ: Firebase Ðµ Ð°Ð²ÑÐ¾ÑÐ¸ÑÐµÑÐµÐ½
           merged[u] = Object.assign({}, S.predictions[u] || {}, data.predictions[u]);
         }
       });
-      // Добави локални прогнози за потребители, чиито данни още не са в Firebase
+      // ÐÐ¾Ð±Ð°Ð²Ð¸ Ð»Ð¾ÐºÐ°Ð»Ð½Ð¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ Ð·Ð° Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸, ÑÐ¸Ð¸ÑÐ¾ Ð´Ð°Ð½Ð½Ð¸ Ð¾ÑÐµ Ð½Ðµ ÑÐ° Ð² Firebase
       Object.keys(S.predictions).forEach(u => {
         if (!(u in merged)) merged[u] = S.predictions[u];
       });
     } else {
-      // GitHub/backup — филтрирай по validUsers за да не върнем изтрити потребители
+      // GitHub/backup â ÑÐ¸Ð»ÑÑÐ¸ÑÐ°Ð¹ Ð¿Ð¾ validUsers Ð·Ð° Ð´Ð° Ð½Ðµ Ð²ÑÑÐ½ÐµÐ¼ Ð¸Ð·ÑÑÐ¸ÑÐ¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸
       const validUsers = new Set(S.users.map(u => u.username));
       Object.keys(data.predictions).forEach(u => {
         if (!validUsers.has(u)) return;
@@ -604,10 +604,10 @@ function applyGHData(data, fromFirebase = false) {
   if (Array.isArray(data.sessionLog)) S.sessionLog = data.sessionLog;
   if (data.actualWinner !== undefined) S.actualWinner = data.actualWinner || null;
   if (!S.users.find(u => u.username === 'admin')) S.users.push({username:'admin',password:'admin2026'});
-  // Само ако НЕ дойде от Firebase listener — иначе правим безкраен цикъл
+  // Ð¡Ð°Ð¼Ð¾ Ð°ÐºÐ¾ ÐÐ Ð´Ð¾Ð¹Ð´Ðµ Ð¾Ñ Firebase listener â Ð¸Ð½Ð°ÑÐµ Ð¿ÑÐ°Ð²Ð¸Ð¼ Ð±ÐµÐ·ÐºÑÐ°ÐµÐ½ ÑÐ¸ÐºÑÐ»
   if (!fromFirebase) persist();
   else {
-    // Само localStorage — без Firebase push
+    // Ð¡Ð°Ð¼Ð¾ localStorage â Ð±ÐµÐ· Firebase push
     LS.set('wc26_users', S.users);
     LS.set('wc26_matches', S.matches);
     LS.set('wc26_preds', S.predictions);
@@ -618,7 +618,7 @@ function applyGHData(data, fromFirebase = false) {
 }
 
 
-// Dedup helper — винаги дедублицира по username
+// Dedup helper â Ð²Ð¸Ð½Ð°Ð³Ð¸ Ð´ÐµÐ´ÑÐ±Ð»Ð¸ÑÐ¸ÑÐ° Ð¿Ð¾ username
 function dedupeUsers(arr) {
   const seen = {};
   (arr || []).forEach(u => { if (u && u.username) seen[u.username] = u; });
@@ -631,7 +631,7 @@ let S = {
   matches: LS.get('wc26_matches') || generateMatches(),
   predictions: LS.get('wc26_preds') || {},
   champions: LS.get('wc26_champs') || {},
-  actualWinner: LS.get('wc26_winner') || null, // реалният победител на турнира (задава се от admin)
+  actualWinner: LS.get('wc26_winner') || null, // ÑÐµÐ°Ð»Ð½Ð¸ÑÑ Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ» Ð½Ð° ÑÑÑÐ½Ð¸ÑÐ° (Ð·Ð°Ð´Ð°Ð²Ð° ÑÐµ Ð¾Ñ admin)
   sessionLog: LS.get('wc26_log') || [],
   tab: 'predictions',
   authTab: 'login',
@@ -653,8 +653,8 @@ if (!S.matches.find(m => m.stage)) {
 }
 
 function persist() {
-  S.users = dedupeUsers(S.users); // предотвратява натрупване на дубликати в localStorage
-  // Изчисти невалидни prediction ключове (напр. стар id=0 когато IDs стартират от 1)
+  S.users = dedupeUsers(S.users); // Ð¿ÑÐµÐ´Ð¾ÑÐ²ÑÐ°ÑÑÐ²Ð° Ð½Ð°ÑÑÑÐ¿Ð²Ð°Ð½Ðµ Ð½Ð° Ð´ÑÐ±Ð»Ð¸ÐºÐ°ÑÐ¸ Ð² localStorage
+  // ÐÐ·ÑÐ¸ÑÑÐ¸ Ð½ÐµÐ²Ð°Ð»Ð¸Ð´Ð½Ð¸ prediction ÐºÐ»ÑÑÐ¾Ð²Ðµ (Ð½Ð°Ð¿Ñ. ÑÑÐ°Ñ id=0 ÐºÐ¾Ð³Ð°ÑÐ¾ IDs ÑÑÐ°ÑÑÐ¸ÑÐ°Ñ Ð¾Ñ 1)
   const _validIds = new Set(S.matches.map(m => String(m.id)));
   Object.keys(S.predictions).forEach(u => {
     Object.keys(S.predictions[u] || {}).forEach(mid => {
@@ -670,7 +670,7 @@ function persist() {
   else LS.del('wc26_winner');
   if (S.currentUser) LS.set('wc26_current', S.currentUser);
   else LS.del('wc26_current');
-  // Auto-sync to Firebase (ако е конфигуриран)
+  // Auto-sync to Firebase (Ð°ÐºÐ¾ Ðµ ÐºÐ¾Ð½ÑÐ¸Ð³ÑÑÐ¸ÑÐ°Ð½)
   if (FB.isReady()) {
     FB.push({
       users: S.users,
@@ -680,13 +680,13 @@ function persist() {
       actualWinner: S.actualWinner || null,
       sessionLog: S.sessionLog,
       _ts: Date.now(),
-      currentUser: S.currentUser, // само текущия потребител се записва в predictions/champions
-      _forceAll: S.currentUser === 'admin' // admin записва прогнозите на всички потребители
+      currentUser: S.currentUser, // ÑÐ°Ð¼Ð¾ ÑÐµÐºÑÑÐ¸Ñ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ» ÑÐµ Ð·Ð°Ð¿Ð¸ÑÐ²Ð° Ð² predictions/champions
+      _forceAll: S.currentUser === 'admin' // admin Ð·Ð°Ð¿Ð¸ÑÐ²Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ Ð½Ð° Ð²ÑÐ¸ÑÐºÐ¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸
     });
   }
 }
 
-// Migrate: нормализирай стари string резултати (напр. "2-1") към {s1,s2} обекти
+// Migrate: Ð½Ð¾ÑÐ¼Ð°Ð»Ð¸Ð·Ð¸ÑÐ°Ð¹ ÑÑÐ°ÑÐ¸ string ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ (Ð½Ð°Ð¿Ñ. "2-1") ÐºÑÐ¼ {s1,s2} Ð¾Ð±ÐµÐºÑÐ¸
 S.matches.forEach(m => {
   if (m.result && typeof m.result === 'string') {
     const parts = m.result.split('-');
@@ -701,7 +701,7 @@ if (!S.users.find(u => u.username === 'admin')) {
   persist();
 }
 
-// Firebase се инициализира след зареждане (вижте window.load по-долу)
+// Firebase ÑÐµ Ð¸Ð½Ð¸ÑÐ¸Ð°Ð»Ð¸Ð·Ð¸ÑÐ° ÑÐ»ÐµÐ´ Ð·Ð°ÑÐµÐ¶Ð´Ð°Ð½Ðµ (Ð²Ð¸Ð¶ÑÐµ window.load Ð¿Ð¾-Ð´Ð¾Ð»Ñ)
 
 // ===================== SCORING =====================
 
@@ -725,16 +725,23 @@ function userScore(username) {
     else if (outcome(ps1,ps2)===outcome(rs1,rs2) && (ps1-ps2)===(rs1-rs2)) { signDiff++; }
     else if (outcome(ps1,ps2)===outcome(rs1,rs2)) { sign++; }
     if (m.stage) {
-      if (m.etResult && typeof m.etResult === 'object' && m.etResult.s1 !== undefined &&
-          p.ets1 !== undefined && p.ets1 !== '' && p.ets2 !== undefined && p.ets2 !== '') {
-        const pets1 = parseInt(p.ets1), pets2 = parseInt(p.ets2);
-        const ets1 = m.etResult.s1, ets2 = m.etResult.s2;
-        if (!isNaN(pets1) && !isNaN(pets2) && pets1 === ets1 && pets2 === ets2) {
-          etBonus += (ets1 === ets2) ? 10 : 15;
+      if (m.id < 77) {
+        if (m.etResult && typeof m.etResult === 'object' && m.etResult.s1 !== undefined &&
+            p.ets1 !== undefined && p.ets1 !== '' && p.ets2 !== undefined && p.ets2 !== '') {
+          const pets1 = parseInt(p.ets1), pets2 = parseInt(p.ets2);
+          const ets1 = m.etResult.s1, ets2 = m.etResult.s2;
+          if (!isNaN(pets1) && !isNaN(pets2) && pets1 === ets1 && pets2 === ets2) {
+            etBonus += (ets1 === ets2) ? 10 : 15;
+          }
         }
-      }
-      if (m.penWinner && p.penWinner && parseInt(p.penWinner) === m.penWinner) {
-        penBonus += 20;
+        if (m.penWinner && p.penWinner && parseInt(p.penWinner) === m.penWinner) {
+          penBonus += 20;
+        }
+      } else {
+        var _ps1n = parseInt(p.s1), _ps2n = parseInt(p.s2);
+        if (!isNaN(_ps1n) && !isNaN(_ps2n) && _ps1n === _ps2n && m.koWinner && p.koWinner && parseInt(p.koWinner) === m.koWinner) {
+          etBonus += 30;
+        }
       }
     }
   }
@@ -752,11 +759,11 @@ function leaderboard() {
     const predCount = Object.keys(preds).filter(k => { const p = preds[k]; return p && p.s1 !== undefined && p.s1 !== '' && p.s2 !== undefined && p.s2 !== ''; }).length;
     return {username: u.username, ...sc, predCount};
   }).sort((a, b) =>
-    b.total - a.total ||                                    // 1. Общо точки
-    b.exact - a.exact ||                                    // 2. Точни резултати
-    b.sign - a.sign ||                                      // 3. Верни знаци (1X2)
-    (b.champCorrect ? 1 : 0) - (a.champCorrect ? 1 : 0) || // 4. Познал шампиона
-    b.predCount - a.predCount                               // 5. Брой въведени прогнози
+    b.total - a.total ||                                    // 1. ÐÐ±ÑÐ¾ ÑÐ¾ÑÐºÐ¸
+    b.exact - a.exact ||                                    // 2. Ð¢Ð¾ÑÐ½Ð¸ ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸
+    b.sign - a.sign ||                                      // 3. ÐÐµÑÐ½Ð¸ Ð·Ð½Ð°ÑÐ¸ (1X2)
+    (b.champCorrect ? 1 : 0) - (a.champCorrect ? 1 : 0) || // 4. ÐÐ¾Ð·Ð½Ð°Ð» ÑÐ°Ð¼Ð¿Ð¸Ð¾Ð½Ð°
+    b.predCount - a.predCount                               // 5. ÐÑÐ¾Ð¹ Ð²ÑÐ²ÐµÐ´ÐµÐ½Ð¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸
   );
 }
 
@@ -770,56 +777,56 @@ function render() {
 // --- AUTH ---
 function renderAuth() {
   return `<div class="auth-screen">
-    <div class="auth-logo">⚽</div>
+    <div class="auth-logo">â½</div>
     <div class="auth-title">WORLD CUP 2026</div>
-    <div class="auth-sub">🇨🇦 Canada &nbsp;·&nbsp; 🇲🇽 Mexico &nbsp;·&nbsp; 🇺🇸 USA · Платформа за прогнози</div>
+    <div class="auth-sub">ð¨ð¦ Canada &nbsp;Â·&nbsp; ð²ð½ Mexico &nbsp;Â·&nbsp; ðºð¸ USA Â· ÐÐ»Ð°ÑÑÐ¾ÑÐ¼Ð° Ð·Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</div>
     <div class="auth-card">
       ${S.authTab !== 'forgot' ? `
       <div class="auth-tabs">
-        <div class="auth-tab ${S.authTab==='login'?'active':''}" data-atab="login">Вход</div>
-        <div class="auth-tab ${S.authTab==='register'?'active':''}" data-atab="register">Регистрация</div>
+        <div class="auth-tab ${S.authTab==='login'?'active':''}" data-atab="login">ÐÑÐ¾Ð´</div>
+        <div class="auth-tab ${S.authTab==='register'?'active':''}" data-atab="register">Ð ÐµÐ³Ð¸ÑÑÑÐ°ÑÐ¸Ñ</div>
       </div>` : ''}
 
       ${S.authTab === 'login' ? `
-      <div class="form-group"><label>Потребителско име</label>
+      <div class="form-group"><label>ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ Ð¸Ð¼Ðµ</label>
         <input type="text" id="lu" placeholder="username" autocomplete="username"/></div>
-      <div class="form-group"><label>Парола</label>
-        <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')window._doLogin()"/></div>
-      <button class="btn btn-primary" onclick="window._doLogin()">🚀 Влез</button>
-      <button class="forgot-link" onclick="window._setAuthTab('forgot')">Забравена парола?</button>
+      <div class="form-group"><label>ÐÐ°ÑÐ¾Ð»Ð°</label>
+        <input type="password" id="lp" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢" autocomplete="current-password" onkeydown="if(event.key==='Enter')window._doLogin()"/></div>
+      <button class="btn btn-primary" onclick="window._doLogin()">ð ÐÐ»ÐµÐ·</button>
+      <button class="forgot-link" onclick="window._setAuthTab('forgot')">ÐÐ°Ð±ÑÐ°Ð²ÐµÐ½Ð° Ð¿Ð°ÑÐ¾Ð»Ð°?</button>
       ` : S.authTab === 'register' ? `
       <div id="regForm">
-        <div class="form-group"><label>Потребителско име</label>
-          <input type="text" id="ru" placeholder="избери username"/></div>
-        <div class="form-group"><label>Имейл <span style="color:rgba(255,255,255,.3);font-weight:400;font-size:11px">(по желание — за забравена парола)</span></label>
+        <div class="form-group"><label>ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ Ð¸Ð¼Ðµ</label>
+          <input type="text" id="ru" placeholder="Ð¸Ð·Ð±ÐµÑÐ¸ username"/></div>
+        <div class="form-group"><label>ÐÐ¼ÐµÐ¹Ð» <span style="color:rgba(255,255,255,.3);font-weight:400;font-size:11px">(Ð¿Ð¾ Ð¶ÐµÐ»Ð°Ð½Ð¸Ðµ â Ð·Ð° Ð·Ð°Ð±ÑÐ°Ð²ÐµÐ½Ð° Ð¿Ð°ÑÐ¾Ð»Ð°)</span></label>
           <input type="email" id="re" placeholder="example@mail.com" autocomplete="email"/></div>
-        <div class="form-group"><label>Парола</label>
-          <input type="password" id="rp" placeholder="минимум 4 символа"/></div>
-        <div class="form-group"><label>Потвърди парола</label>
-          <input type="password" id="rp2" placeholder="••••••••"/></div>
-        <button class="btn btn-primary" onclick="window._doRegister()">✅ Регистрирай се</button>
+        <div class="form-group"><label>ÐÐ°ÑÐ¾Ð»Ð°</label>
+          <input type="password" id="rp" placeholder="Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°"/></div>
+        <div class="form-group"><label>ÐÐ¾ÑÐ²ÑÑÐ´Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°</label>
+          <input type="password" id="rp2" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢"/></div>
+        <button class="btn btn-primary" onclick="window._doRegister()">â Ð ÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð¹ ÑÐµ</button>
       </div>
       ` : `
       <div style="text-align:center;margin-bottom:1.25rem">
-        <div style="font-size:1.5rem;margin-bottom:.4rem">🔐</div>
-        <div style="font-weight:800;font-size:1.1rem">Забравена парола</div>
-        <div style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.3rem">Въведи потребителско ime и имейл</div>
+        <div style="font-size:1.5rem;margin-bottom:.4rem">ð</div>
+        <div style="font-weight:800;font-size:1.1rem">ÐÐ°Ð±ÑÐ°Ð²ÐµÐ½Ð° Ð¿Ð°ÑÐ¾Ð»Ð°</div>
+        <div style="color:rgba(255,255,255,.4);font-size:.85rem;margin-top:.3rem">ÐÑÐ²ÐµÐ´Ð¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ ime Ð¸ Ð¸Ð¼ÐµÐ¹Ð»</div>
       </div>
       <div id="forgotForm">
-        <div class="form-group"><label>Потребителско име</label>
+        <div class="form-group"><label>ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ Ð¸Ð¼Ðµ</label>
           <input type="text" id="fu" placeholder="username"/></div>
-        <div class="form-group"><label>Имейл</label>
+        <div class="form-group"><label>ÐÐ¼ÐµÐ¹Ð»</label>
           <input type="email" id="fe" placeholder="example@mail.com"/></div>
-        <div class="form-group"><label>Нова парола</label>
-          <input type="password" id="fnp" placeholder="минимум 4 символа"/></div>
-        <div class="form-group"><label>Потвърди нова парола</label>
-          <input type="password" id="fnp2" placeholder="••••••••"/></div>
-        <button class="btn btn-primary" onclick="window._doForgot()">🔑 Смени паролата</button>
-      <button class="forgot-link" onclick="window._setAuthTab('login')" style="margin-top:.75rem">← Обратно към вход</button>
+        <div class="form-group"><label>ÐÐ¾Ð²Ð° Ð¿Ð°ÑÐ¾Ð»Ð°</label>
+          <input type="password" id="fnp" placeholder="Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°"/></div>
+        <div class="form-group"><label>ÐÐ¾ÑÐ²ÑÑÐ´Ð¸ Ð½Ð¾Ð²Ð° Ð¿Ð°ÑÐ¾Ð»Ð°</label>
+          <input type="password" id="fnp2" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢"/></div>
+        <button class="btn btn-primary" onclick="window._doForgot()">ð Ð¡Ð¼ÐµÐ½Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°ÑÐ°</button>
+      <button class="forgot-link" onclick="window._setAuthTab('login')" style="margin-top:.75rem">â ÐÐ±ÑÐ°ÑÐ½Ð¾ ÐºÑÐ¼ Ð²ÑÐ¾Ð´</button>
       </div>
       `}
-      ${S.authError ? `<div class="error-msg">⚠️ ${S.authError}</div>` : ''}
-      ${S.authSuccess ? `<div class="success-msg">✅ ${S.authSuccess}</div>` : ''}
+      ${S.authError ? `<div class="error-msg">â ï¸ ${S.authError}</div>` : ''}
+      ${S.authSuccess ? `<div class="success-msg">â ${S.authSuccess}</div>` : ''}
     </div>
   </div>`;
 }
@@ -828,24 +835,24 @@ function renderAuth() {
 function renderApp() {
   const isAdmin = S.currentUser === 'admin';
   const tabs = [
-    {id:'predictions',l:'🔮 Прогнози'},
-    {id:'leaderboard',l:'🏅 Класиране'},
-    {id:'groups',l:'🌍 Групи'},
-    {id:'champion',l:'🏆 Шампион'},
-    {id:'rules',l:'📋 Правила'},
-    {id:'profile',l:'👤 Профил'},
-    ...(isAdmin ? [{id:'admin',l:'⚙️ Админ'}] : []),
+    {id:'predictions',l:'ð® ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸'},
+    {id:'leaderboard',l:'ð ÐÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ'},
+    {id:'groups',l:'ð ÐÑÑÐ¿Ð¸'},
+    {id:'champion',l:'ð Ð¨Ð°Ð¼Ð¿Ð¸Ð¾Ð½'},
+    {id:'rules',l:'ð ÐÑÐ°Ð²Ð¸Ð»Ð°'},
+    {id:'profile',l:'ð¤ ÐÑÐ¾ÑÐ¸Ð»'},
+    ...(isAdmin ? [{id:'admin',l:'âï¸ ÐÐ´Ð¼Ð¸Ð½'}] : []),
   ];
   return `
   <div class="app-header">
-    <div class="app-logo">⚽ <span>WC</span> 2026</div>
+    <div class="app-logo">â½ <span>WC</span> 2026</div>
     <nav class="app-nav">
       ${tabs.map(t=>`<button class="nav-btn ${S.tab===t.id?'active':''}" data-tab="${t.id}">${t.l}</button>`).join('')}
     </nav>
     <div class="user-info">
       <div class="user-avatar" style="${(S.users.find(u=>u.username===S.currentUser)||{}).avatar?'font-size:18px;background:rgba(255,255,255,.08)':''}">${(S.users.find(u=>u.username===S.currentUser)||{}).avatar||S.currentUser[0].toUpperCase()}</div>
       <span class="user-name">${S.currentUser}</span>
-      <button class="logout-btn" id="logoutBtn">Изход</button>
+      <button class="logout-btn" id="logoutBtn">ÐÐ·ÑÐ¾Ð´</button>
     </div>
   </div>
   <div class="main-content">${renderTab()}</div>
@@ -857,120 +864,120 @@ function renderApp() {
 function renderBottomNav() {
   const isAdmin = S.currentUser === 'admin';
   const items = [
-    {id:'predictions', icon:'🔮', label:'Прогнози'},
-    {id:'leaderboard', icon:'🏅', label:'Класиране'},
-    {id:'groups', icon:'🌍', label:'Групи'},
-    {id:'champion', icon:'🏆', label:'Шампион'},
-    {id:'rules', icon:'📋', label:'Правила'},
-    {id:'profile', icon:'👤', label:'Профил'},
-    ...(isAdmin ? [{id:'admin', icon:'⚙️', label:'Админ'}] : []),
+    {id:'predictions', icon:'ð®', label:'ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸'},
+    {id:'leaderboard', icon:'ð', label:'ÐÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ'},
+    {id:'groups', icon:'ð', label:'ÐÑÑÐ¿Ð¸'},
+    {id:'champion', icon:'ð', label:'Ð¨Ð°Ð¼Ð¿Ð¸Ð¾Ð½'},
+    {id:'rules', icon:'ð', label:'ÐÑÐ°Ð²Ð¸Ð»Ð°'},
+    {id:'profile', icon:'ð¤', label:'ÐÑÐ¾ÑÐ¸Ð»'},
+    ...(isAdmin ? [{id:'admin', icon:'âï¸', label:'ÐÐ´Ð¼Ð¸Ð½'}] : []),
   ];
   return `<nav class="bottom-nav"><div class="bottom-nav-inner">${items.map(it=>`<button class="bnav-btn ${S.tab===it.id?'active':''}" data-tab="${it.id}"><span class="bnav-icon">${it.icon}</span><span class="bnav-label">${it.label}</span></button>`).join('')}</div></nav>`;
 }
 
 function renderRules() {
   return `
-  <div class="page-title">📋 Правила за точкуване</div>
+  <div class="page-title">ð ÐÑÐ°Ð²Ð¸Ð»Ð° Ð·Ð° ÑÐ¾ÑÐºÑÐ²Ð°Ð½Ðµ</div>
   <div style="max-width:580px;margin:0 auto">
 
     <div style="background:rgba(165,214,167,.08);border:1.5px solid rgba(165,214,167,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">🎯</div>
+      <div style="font-size:3rem;flex-shrink:0">ð¯</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#a5d6a7">20 точки</div>
-        <div style="font-weight:700;margin-bottom:.3rem">Точен резултат</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш точния брой голове и за двата отбора.</div>
-        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 2:1 ✓</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#a5d6a7">20 ÑÐ¾ÑÐºÐ¸</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Ð¢Ð¾ÑÐµÐ½ ÑÐµÐ·ÑÐ»ÑÐ°Ñ</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÑÐ¾ÑÐ½Ð¸Ñ Ð±ÑÐ¾Ð¹ Ð³Ð¾Ð»Ð¾Ð²Ðµ Ð¸ Ð·Ð° Ð´Ð²Ð°ÑÐ° Ð¾ÑÐ±Ð¾ÑÐ°.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">ÐÑÐ¸Ð¼ÐµÑ: ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð° 2:1 â Ð ÐµÐ°Ð»ÐµÐ½ 2:1 â</div>
       </div>
     </div>
 
     <div style="background:rgba(255,224,130,.06);border:1.5px solid rgba(249,168,37,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">📐</div>
+      <div style="font-size:3rem;flex-shrink:0">ð</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#ffe082">15 точки</div>
-        <div style="font-weight:700;margin-bottom:.3rem">Правилен знак + Голова разлика</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш кой побеждава (или равен) И точната разлика в голове.</div>
-        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 3:2 ✓ (победа с 1 гол)</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#ffe082">15 ÑÐ¾ÑÐºÐ¸</div>
+        <div style="font-weight:700;margin-bottom:.3rem">ÐÑÐ°Ð²Ð¸Ð»ÐµÐ½ Ð·Ð½Ð°Ðº + ÐÐ¾Ð»Ð¾Ð²Ð° ÑÐ°Ð·Ð»Ð¸ÐºÐ°</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÐºÐ¾Ð¹ Ð¿Ð¾Ð±ÐµÐ¶Ð´Ð°Ð²Ð° (Ð¸Ð»Ð¸ ÑÐ°Ð²ÐµÐ½) Ð ÑÐ¾ÑÐ½Ð°ÑÐ° ÑÐ°Ð·Ð»Ð¸ÐºÐ° Ð² Ð³Ð¾Ð»Ð¾Ð²Ðµ.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">ÐÑÐ¸Ð¼ÐµÑ: ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð° 2:1 â Ð ÐµÐ°Ð»ÐµÐ½ 3:2 â (Ð¿Ð¾Ð±ÐµÐ´Ð° Ñ 1 Ð³Ð¾Ð»)</div>
       </div>
     </div>
 
     <div style="background:rgba(144,202,249,.06);border:1.5px solid rgba(21,101,192,.3);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">✅</div>
+      <div style="font-size:3rem;flex-shrink:0">â</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#90caf9">10 точки</div>
-        <div style="font-weight:700;margin-bottom:.3rem">Правилен знак (1 / X / 2)</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш само знака — победа домакин, равен, или победа гост.</div>
-        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 2:1 → Реален 3:0 ✓ (и двете са победа)</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#90caf9">10 ÑÐ¾ÑÐºÐ¸</div>
+        <div style="font-weight:700;margin-bottom:.3rem">ÐÑÐ°Ð²Ð¸Ð»ÐµÐ½ Ð·Ð½Ð°Ðº (1 / X / 2)</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÑÐ°Ð¼Ð¾ Ð·Ð½Ð°ÐºÐ° â Ð¿Ð¾Ð±ÐµÐ´Ð° Ð´Ð¾Ð¼Ð°ÐºÐ¸Ð½, ÑÐ°Ð²ÐµÐ½, Ð¸Ð»Ð¸ Ð¿Ð¾Ð±ÐµÐ´Ð° Ð³Ð¾ÑÑ.</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">ÐÑÐ¸Ð¼ÐµÑ: ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð° 2:1 â Ð ÐµÐ°Ð»ÐµÐ½ 3:0 â (Ð¸ Ð´Ð²ÐµÑÐµ ÑÐ° Ð¿Ð¾Ð±ÐµÐ´Ð°)</div>
       </div>
     </div>
 
     <div style="background:rgba(249,168,37,.06);border:1.5px solid rgba(249,168,37,.2);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">🏆</div>
+      <div style="font-size:3rem;flex-shrink:0">ð</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#f9a825">60 точки</div>
-        <div style="font-weight:700;margin-bottom:.3rem">Победител на турнира</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш кой ще вдигне трофея. Добавят се след финала.</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#f9a825">60 ÑÐ¾ÑÐºÐ¸</div>
+        <div style="font-weight:700;margin-bottom:.3rem">ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ» Ð½Ð° ÑÑÑÐ½Ð¸ÑÐ°</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÐºÐ¾Ð¹ ÑÐµ Ð²Ð´Ð¸Ð³Ð½Ðµ ÑÑÐ¾ÑÐµÑ. ÐÐ¾Ð±Ð°Ð²ÑÑ ÑÐµ ÑÐ»ÐµÐ´ ÑÐ¸Ð½Ð°Ð»Ð°.</div>
       </div>
     </div>
 
     <div style="background:rgba(255,112,67,.08);border:1.5px solid rgba(255,112,67,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem">
-      <div style="font-size:3rem;flex-shrink:0">🔥</div>
+      <div style="font-size:3rem;flex-shrink:0">ð¥</div>
       <div style="flex:1">
-        <div style="font-size:1.4rem;font-weight:900;color:#ff7043">30 точки</div>
-        <div style="font-weight:700;margin-bottom:.3rem">Точен резултат с 5+ гола</div>
-        <div style="color:rgba(255,255,255,.55);font-size:.85rem">Познаваш точния резултат на мач с 5 или повече гола общо (напр. 3:3, 4:1, 3:2...).</div>
-        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">Пример: Прогноза 3:2 → Реален 3:2 и 5 гола ✓</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#ff7043">30 ÑÐ¾ÑÐºÐ¸</div>
+        <div style="font-weight:700;margin-bottom:.3rem">Ð¢Ð¾ÑÐµÐ½ ÑÐµÐ·ÑÐ»ÑÐ°Ñ Ñ 5+ Ð³Ð¾Ð»Ð°</div>
+        <div style="color:rgba(255,255,255,.55);font-size:.85rem">ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÑÐ¾ÑÐ½Ð¸Ñ ÑÐµÐ·ÑÐ»ÑÐ°Ñ Ð½Ð° Ð¼Ð°Ñ Ñ 5 Ð¸Ð»Ð¸ Ð¿Ð¾Ð²ÐµÑÐµ Ð³Ð¾Ð»Ð° Ð¾Ð±ÑÐ¾ (Ð½Ð°Ð¿Ñ. 3:3, 4:1, 3:2...).</div>
+        <div style="margin-top:.4rem;padding:.3rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;font-size:.8rem;color:rgba(255,255,255,.4)">ÐÑÐ¸Ð¼ÐµÑ: ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð° 3:2 â Ð ÐµÐ°Ð»ÐµÐ½ 3:2 Ð¸ 5 Ð³Ð¾Ð»Ð° â</div>
       </div>
     </div>
 
     <div style="background:rgba(198,40,40,.08);border:1px solid rgba(198,40,40,.2);border-radius:14px;padding:1rem;margin-bottom:.75rem">
-      <div style="font-weight:700;margin-bottom:.3rem">⏰ Краен срок</div>
-      <div style="color:rgba(255,255,255,.6);font-size:.9rem">Прогнозата се <strong>заключва автоматично 30 мин</strong> преди началото на всеки мач.</div>
+      <div style="font-weight:700;margin-bottom:.3rem">â° ÐÑÐ°ÐµÐ½ ÑÑÐ¾Ðº</div>
+      <div style="color:rgba(255,255,255,.6);font-size:.9rem">ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° ÑÐµ <strong>Ð·Ð°ÐºÐ»ÑÑÐ²Ð° Ð°Ð²ÑÐ¾Ð¼Ð°ÑÐ¸ÑÐ½Ð¾ 30 Ð¼Ð¸Ð½</strong> Ð¿ÑÐµÐ´Ð¸ Ð½Ð°ÑÐ°Ð»Ð¾ÑÐ¾ Ð½Ð° Ð²ÑÐµÐºÐ¸ Ð¼Ð°Ñ.</div>
     </div>
 
-    <!-- ⚔️ ЕЛИМИНАЦИИ -->
+    <!-- âï¸ ÐÐÐÐÐÐÐÐ¦ÐÐ -->
     <div style="background:linear-gradient(135deg,rgba(198,40,40,.12),rgba(136,14,79,.1));border:1.5px solid rgba(198,40,40,.3);border-radius:14px;padding:1.25rem;margin-bottom:.75rem">
-      <div style="font-weight:900;font-size:1.1rem;margin-bottom:1rem;color:#ef9a9a">⚔️ Елиминации — Допълнителни точки</div>
+      <div style="font-weight:900;font-size:1.1rem;margin-bottom:1rem;color:#ef9a9a">âï¸ ÐÐ»Ð¸Ð¼Ð¸Ð½Ð°ÑÐ¸Ð¸ â ÐÐ¾Ð¿ÑÐ»Ð½Ð¸ÑÐµÐ»Ð½Ð¸ ÑÐ¾ÑÐºÐ¸</div>
       <div style="color:rgba(255,255,255,.6);font-size:.86rem;margin-bottom:.85rem">
-        В елиминационната фаза прогнозираш на <strong>3 нива</strong>: редовно време, продължения и дузпи.
-        Точките за редовното време са <strong>същите</strong> като в груповата фаза.
+        Ð ÐµÐ»Ð¸Ð¼Ð¸Ð½Ð°ÑÐ¸Ð¾Ð½Ð½Ð°ÑÐ° ÑÐ°Ð·Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐ°Ñ Ð½Ð° <strong>3 Ð½Ð¸Ð²Ð°</strong>: ÑÐµÐ´Ð¾Ð²Ð½Ð¾ Ð²ÑÐµÐ¼Ðµ, Ð¿ÑÐ¾Ð´ÑÐ»Ð¶ÐµÐ½Ð¸Ñ Ð¸ Ð´ÑÐ·Ð¿Ð¸.
+        Ð¢Ð¾ÑÐºÐ¸ÑÐµ Ð·Ð° ÑÐµÐ´Ð¾Ð²Ð½Ð¾ÑÐ¾ Ð²ÑÐµÐ¼Ðµ ÑÐ° <strong>ÑÑÑÐ¸ÑÐµ</strong> ÐºÐ°ÑÐ¾ Ð² Ð³ÑÑÐ¿Ð¾Ð²Ð°ÑÐ° ÑÐ°Ð·Ð°.
       </div>
       <div style="display:flex;flex-direction:column;gap:.55rem">
         <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
-          <div style="font-size:1.5rem;flex-shrink:0">⏱️</div>
+          <div style="font-size:1.5rem;flex-shrink:0">â±ï¸</div>
           <div>
-            <div style="font-weight:800;font-size:.9rem">Продължения — Победител <span style="color:#ffe082">+15 точки</span></div>
-            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш точния резултат след 120 мин и мачът завършва с победа в продълженията.</div>
+            <div style="font-weight:800;font-size:.9rem">ÐÑÐ¾Ð´ÑÐ»Ð¶ÐµÐ½Ð¸Ñ â ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ» <span style="color:#ffe082">+15 ÑÐ¾ÑÐºÐ¸</span></div>
+            <div style="color:rgba(255,255,255,.45);font-size:.8rem">ÐÐ¾Ð·Ð½Ð°ÐµÑ ÑÐ¾ÑÐ½Ð¸Ñ ÑÐµÐ·ÑÐ»ÑÐ°Ñ ÑÐ»ÐµÐ´ 120 Ð¼Ð¸Ð½ Ð¸ Ð¼Ð°ÑÑÑ Ð·Ð°Ð²ÑÑÑÐ²Ð° Ñ Ð¿Ð¾Ð±ÐµÐ´Ð° Ð² Ð¿ÑÐ¾Ð´ÑÐ»Ð¶ÐµÐ½Ð¸ÑÑÐ°.</div>
           </div>
         </div>
         <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
-          <div style="font-size:1.5rem;flex-shrink:0">⏱️</div>
+          <div style="font-size:1.5rem;flex-shrink:0">â±ï¸</div>
           <div>
-            <div style="font-weight:800;font-size:.9rem">Продължения — Равен (→ Дузпи) <span style="color:#90caf9">+10 точки</span></div>
-            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш точния резултат след 120 мин и той завършва равен (отиват на дузпи).</div>
+            <div style="font-weight:800;font-size:.9rem">ÐÑÐ¾Ð´ÑÐ»Ð¶ÐµÐ½Ð¸Ñ â Ð Ð°Ð²ÐµÐ½ (â ÐÑÐ·Ð¿Ð¸) <span style="color:#90caf9">+10 ÑÐ¾ÑÐºÐ¸</span></div>
+            <div style="color:rgba(255,255,255,.45);font-size:.8rem">ÐÐ¾Ð·Ð½Ð°ÐµÑ ÑÐ¾ÑÐ½Ð¸Ñ ÑÐµÐ·ÑÐ»ÑÐ°Ñ ÑÐ»ÐµÐ´ 120 Ð¼Ð¸Ð½ Ð¸ ÑÐ¾Ð¹ Ð·Ð°Ð²ÑÑÑÐ²Ð° ÑÐ°Ð²ÐµÐ½ (Ð¾ÑÐ¸Ð²Ð°Ñ Ð½Ð° Ð´ÑÐ·Ð¿Ð¸).</div>
           </div>
         </div>
         <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.65rem .85rem">
-          <div style="font-size:1.5rem;flex-shrink:0">🎯</div>
+          <div style="font-size:1.5rem;flex-shrink:0">ð¯</div>
           <div>
-            <div style="font-weight:800;font-size:.9rem">Дузпи — Победител <span style="color:#a5d6a7">+20 точки</span></div>
-            <div style="color:rgba(255,255,255,.45);font-size:.8rem">Познаеш кой отбор печели дузпите.</div>
+            <div style="font-weight:800;font-size:.9rem">ÐÑÐ·Ð¿Ð¸ â ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ» <span style="color:#a5d6a7">+20 ÑÐ¾ÑÐºÐ¸</span></div>
+            <div style="color:rgba(255,255,255,.45);font-size:.8rem">ÐÐ¾Ð·Ð½Ð°ÐµÑ ÐºÐ¾Ð¹ Ð¾ÑÐ±Ð¾Ñ Ð¿ÐµÑÐµÐ»Ð¸ Ð´ÑÐ·Ð¿Ð¸ÑÐµ.</div>
           </div>
         </div>
       </div>
       <div style="margin-top:.85rem;background:rgba(0,0,0,.2);border-radius:8px;padding:.6rem .85rem;font-size:.8rem;color:rgba(255,255,255,.4)">
-        💡 Прогнозите за продължения и дузпи се <strong>виждат и попълват директно</strong> под всеки КО мач. Запазват се с бутона 💾.
+        ð¡ ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ Ð·Ð° Ð¿ÑÐ¾Ð´ÑÐ»Ð¶ÐµÐ½Ð¸Ñ Ð¸ Ð´ÑÐ·Ð¿Ð¸ ÑÐµ <strong>Ð²Ð¸Ð¶Ð´Ð°Ñ Ð¸ Ð¿Ð¾Ð¿ÑÐ»Ð²Ð°Ñ Ð´Ð¸ÑÐµÐºÑÐ½Ð¾</strong> Ð¿Ð¾Ð´ Ð²ÑÐµÐºÐ¸ ÐÐ Ð¼Ð°Ñ. ÐÐ°Ð¿Ð°Ð·Ð²Ð°Ñ ÑÐµ Ñ Ð±ÑÑÐ¾Ð½Ð° ð¾.
       </div>
     </div>
 
     <div style="background:rgba(156,39,176,.08);border:1.5px solid rgba(156,39,176,.25);border-radius:14px;padding:1.25rem;margin-bottom:.75rem">
-      <div style="font-weight:800;font-size:1rem;margin-bottom:.75rem">⚖️ Критерии при равен брой точки</div>
-      <div style="color:rgba(255,255,255,.55);font-size:.83rem;margin-bottom:.9rem">При равенство в крайното класиране, по-напред се нарежда участникът, който е по-добър по следния ред:</div>
+      <div style="font-weight:800;font-size:1rem;margin-bottom:.75rem">âï¸ ÐÑÐ¸ÑÐµÑÐ¸Ð¸ Ð¿ÑÐ¸ ÑÐ°Ð²ÐµÐ½ Ð±ÑÐ¾Ð¹ ÑÐ¾ÑÐºÐ¸</div>
+      <div style="color:rgba(255,255,255,.55);font-size:.83rem;margin-bottom:.9rem">ÐÑÐ¸ ÑÐ°Ð²ÐµÐ½ÑÑÐ²Ð¾ Ð² ÐºÑÐ°Ð¹Ð½Ð¾ÑÐ¾ ÐºÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ, Ð¿Ð¾-Ð½Ð°Ð¿ÑÐµÐ´ ÑÐµ Ð½Ð°ÑÐµÐ¶Ð´Ð° ÑÑÐ°ÑÑÐ½Ð¸ÐºÑÑ, ÐºÐ¾Ð¹ÑÐ¾ Ðµ Ð¿Ð¾-Ð´Ð¾Ð±ÑÑ Ð¿Ð¾ ÑÐ»ÐµÐ´Ð½Ð¸Ñ ÑÐµÐ´:</div>
       <div style="display:flex;flex-direction:column;gap:.5rem">
         ${[
-          ['1', '🎯', 'Повече точни резултати', 'Познаваш точния брой голове и на двата отбора'],
-          ['2', '✅', 'Повече верни знаци (1/X/2)', 'Познаваш кой побеждава, дори без точен резултат'],
-          ['3', '🏆', 'Познал шампиона на турнира', 'Дали си предвидил правилно победителя'],
-          ['4', '📝', 'Повече въведени прогнози', 'По-добросъвестен участник — въвел е прогноза за повече мачове'],
+          ['1', 'ð¯', 'ÐÐ¾Ð²ÐµÑÐµ ÑÐ¾ÑÐ½Ð¸ ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸', 'ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÑÐ¾ÑÐ½Ð¸Ñ Ð±ÑÐ¾Ð¹ Ð³Ð¾Ð»Ð¾Ð²Ðµ Ð¸ Ð½Ð° Ð´Ð²Ð°ÑÐ° Ð¾ÑÐ±Ð¾ÑÐ°'],
+          ['2', 'â', 'ÐÐ¾Ð²ÐµÑÐµ Ð²ÐµÑÐ½Ð¸ Ð·Ð½Ð°ÑÐ¸ (1/X/2)', 'ÐÐ¾Ð·Ð½Ð°Ð²Ð°Ñ ÐºÐ¾Ð¹ Ð¿Ð¾Ð±ÐµÐ¶Ð´Ð°Ð²Ð°, Ð´Ð¾ÑÐ¸ Ð±ÐµÐ· ÑÐ¾ÑÐµÐ½ ÑÐµÐ·ÑÐ»ÑÐ°Ñ'],
+          ['3', 'ð', 'ÐÐ¾Ð·Ð½Ð°Ð» ÑÐ°Ð¼Ð¿Ð¸Ð¾Ð½Ð° Ð½Ð° ÑÑÑÐ½Ð¸ÑÐ°', 'ÐÐ°Ð»Ð¸ ÑÐ¸ Ð¿ÑÐµÐ´Ð²Ð¸Ð´Ð¸Ð» Ð¿ÑÐ°Ð²Ð¸Ð»Ð½Ð¾ Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»Ñ'],
+          ['4', 'ð', 'ÐÐ¾Ð²ÐµÑÐµ Ð²ÑÐ²ÐµÐ´ÐµÐ½Ð¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸', 'ÐÐ¾-Ð´Ð¾Ð±ÑÐ¾ÑÑÐ²ÐµÑÑÐµÐ½ ÑÑÐ°ÑÑÐ½Ð¸Ðº â Ð²ÑÐ²ÐµÐ» Ðµ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð° Ð·Ð° Ð¿Ð¾Ð²ÐµÑÐµ Ð¼Ð°ÑÐ¾Ð²Ðµ'],
         ].map(([n,icon,title,desc]) => `
         <div style="display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.04);border-radius:9px;padding:.6rem .85rem">
           <div style="min-width:22px;height:22px;border-radius:50%;background:rgba(156,39,176,.4);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;flex-shrink:0;margin-top:1px">${n}</div>
@@ -982,61 +989,61 @@ function renderRules() {
         </div>`).join('')}
       </div>
       <div style="margin-top:.85rem;padding:.55rem .85rem;background:rgba(0,0,0,.2);border-radius:8px;font-size:.78rem;color:rgba(255,255,255,.35)">
-        Ако и след всичките критерии има пълно равенство — участниците заемат едно и също място.
+        ÐÐºÐ¾ Ð¸ ÑÐ»ÐµÐ´ Ð²ÑÐ¸ÑÐºÐ¸ÑÐµ ÐºÑÐ¸ÑÐµÑÐ¸Ð¸ Ð¸Ð¼Ð° Ð¿ÑÐ»Ð½Ð¾ ÑÐ°Ð²ÐµÐ½ÑÑÐ²Ð¾ â ÑÑÐ°ÑÑÐ½Ð¸ÑÐ¸ÑÐµ Ð·Ð°ÐµÐ¼Ð°Ñ ÐµÐ´Ð½Ð¾ Ð¸ ÑÑÑÐ¾ Ð¼ÑÑÑÐ¾.
       </div>
     </div>
 
     <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1rem">
-      <div style="font-weight:700;margin-bottom:.75rem;text-align:center">Бързо сравнение</div>
+      <div style="font-weight:700;margin-bottom:.75rem;text-align:center">ÐÑÑÐ·Ð¾ ÑÑÐ°Ð²Ð½ÐµÐ½Ð¸Ðµ</div>
       <table style="width:100%;border-collapse:collapse;font-size:.85rem">
         <thead><tr style="color:rgba(255,255,255,.4)">
-          <th style="padding:6px;text-align:left">Прогноза</th>
-          <th style="padding:6px;text-align:left">Реален</th>
-          <th style="padding:6px;text-align:right">Точки</th>
+          <th style="padding:6px;text-align:left">ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°</th>
+          <th style="padding:6px;text-align:left">Ð ÐµÐ°Ð»ÐµÐ½</th>
+          <th style="padding:6px;text-align:right">Ð¢Ð¾ÑÐºÐ¸</th>
         </tr></thead>
         <tbody>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">2:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20т</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15т</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:#90caf9;font-weight:700">+10т</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">0:1</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0т</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">1:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20т</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">2:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15т</td></tr>
-          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0т</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">2:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20Ñ</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15Ñ</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:#90caf9;font-weight:700">+10Ñ</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">2:1</td><td style="padding:6px">0:1</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0Ñ</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">1:1</td><td style="padding:6px;text-align:right;color:#a5d6a7;font-weight:700">+20Ñ</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">2:2</td><td style="padding:6px;text-align:right;color:#ffe082;font-weight:700">+15Ñ</td></tr>
+          <tr style="border-top:1px solid rgba(255,255,255,.06)"><td style="padding:6px">1:1</td><td style="padding:6px">3:0</td><td style="padding:6px;text-align:right;color:rgba(255,255,255,.35)">0Ñ</td></tr>
         </tbody>
 
       </table>
     </div>
 
     <div style="background:linear-gradient(135deg,rgba(249,168,37,.12),rgba(198,40,40,.08));border:1.5px solid rgba(249,168,37,.3);border-radius:14px;padding:1.25rem;margin-top:.75rem">
-      <div style="font-weight:800;font-size:1.05rem;margin-bottom:1rem;text-align:center;color:#f9a825">🏆 Награди</div>
+      <div style="font-weight:800;font-size:1.05rem;margin-bottom:1rem;text-align:center;color:#f9a825">ð ÐÐ°Ð³ÑÐ°Ð´Ð¸</div>
       <div style="display:flex;flex-direction:column;gap:.6rem">
         <div style="display:flex;align-items:center;gap:1rem;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);border-radius:10px;padding:.8rem 1rem">
-          <div style="font-size:2rem;flex-shrink:0">🥇</div>
+          <div style="font-size:2rem;flex-shrink:0">ð¥</div>
           <div style="flex:1">
-            <div style="font-weight:800;color:#ffd700;font-size:1rem">1-во място</div>
-            <div style="color:rgba(255,255,255,.5);font-size:.8rem">Победителят на турнира</div>
+            <div style="font-weight:800;color:#ffd700;font-size:1rem">1-Ð²Ð¾ Ð¼ÑÑÑÐ¾</div>
+            <div style="color:rgba(255,255,255,.5);font-size:.8rem">ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ»ÑÑ Ð½Ð° ÑÑÑÐ½Ð¸ÑÐ°</div>
           </div>
-          <div style="font-size:1.4rem;font-weight:900;color:#ffd700">160 €</div>
+          <div style="font-size:1.4rem;font-weight:900;color:#ffd700">160 â¬</div>
         </div>
         <div style="display:flex;align-items:center;gap:1rem;background:rgba(192,192,192,.06);border:1px solid rgba(192,192,192,.18);border-radius:10px;padding:.8rem 1rem">
-          <div style="font-size:2rem;flex-shrink:0">🥈</div>
+          <div style="font-size:2rem;flex-shrink:0">ð¥</div>
           <div style="flex:1">
-            <div style="font-weight:800;color:#c0c0c0;font-size:1rem">2-ро място</div>
-            <div style="color:rgba(255,255,255,.5);font-size:.8rem">Вторият в класирането</div>
+            <div style="font-weight:800;color:#c0c0c0;font-size:1rem">2-ÑÐ¾ Ð¼ÑÑÑÐ¾</div>
+            <div style="color:rgba(255,255,255,.5);font-size:.8rem">ÐÑÐ¾ÑÐ¸ÑÑ Ð² ÐºÐ»Ð°ÑÐ¸ÑÐ°Ð½ÐµÑÐ¾</div>
           </div>
-          <div style="font-size:1.4rem;font-weight:900;color:#c0c0c0">40 €</div>
+          <div style="font-size:1.4rem;font-weight:900;color:#c0c0c0">40 â¬</div>
         </div>
         <div style="display:flex;align-items:center;gap:1rem;background:rgba(205,127,50,.06);border:1px solid rgba(205,127,50,.2);border-radius:10px;padding:.8rem 1rem">
-          <div style="font-size:2rem;flex-shrink:0">🥉</div>
+          <div style="font-size:2rem;flex-shrink:0">ð¥</div>
           <div style="flex:1">
-            <div style="font-weight:800;color:#cd7f32;font-size:1rem">3-то място</div>
-            <div style="color:rgba(255,255,255,.5);font-size:.8rem">Третият в класирането</div>
+            <div style="font-weight:800;color:#cd7f32;font-size:1rem">3-ÑÐ¾ Ð¼ÑÑÑÐ¾</div>
+            <div style="color:rgba(255,255,255,.5);font-size:.8rem">Ð¢ÑÐµÑÐ¸ÑÑ Ð² ÐºÐ»Ð°ÑÐ¸ÑÐ°Ð½ÐµÑÐ¾</div>
           </div>
-          <div style="font-size:1.4rem;font-weight:900;color:#cd7f32">20 €</div>
+          <div style="font-size:1.4rem;font-weight:900;color:#cd7f32">20 â¬</div>
         </div>
       </div>
       <div style="margin-top:1rem;padding:.65rem 1rem;background:rgba(0,0,0,.25);border-radius:8px;text-align:center;font-size:.85rem;color:rgba(255,255,255,.45)">
-        🍺 <em>Победителят черпи другите с бирички!</em>
+        ðº <em>ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ»ÑÑ ÑÐµÑÐ¿Ð¸ Ð´ÑÑÐ³Ð¸ÑÐµ Ñ Ð±Ð¸ÑÐ¸ÑÐºÐ¸!</em>
       </div>
     </div>
 
@@ -1063,63 +1070,63 @@ function renderProfile() {
   const lastLoginTime = userLogins.length > 0 ? userLogins[userLogins.length - 1].time : null;
   const lastLoginStr = lastLoginTime
     ? new Date(lastLoginTime).toLocaleString('bg-BG', {timeZone:'Europe/Sofia', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'})
-    : '—';
+    : 'â';
   const registeredStr = user.registeredAt
     ? new Date(user.registeredAt).toLocaleDateString('bg-BG', {timeZone:'Europe/Sofia', day:'numeric', month:'long', year:'numeric'})
-    : '—';
+    : 'â';
 
-  // Recent form — last 10 played matches, newest first
+  // Recent form â last 10 played matches, newest first
   const formDots = playedMatches.slice(-10).reverse().map(m => {
     const p = preds[m.id];
-    if (!p || p.s1 === '' || p.s2 === '') return '<div title="Без прогноза" style="width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.25)">—</div>';
+    if (!p || p.s1 === '' || p.s2 === '') return '<div title="ÐÐµÐ· Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°" style="width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,.25)">â</div>';
     const ps1 = parseInt(p.s1), ps2 = parseInt(p.s2), rs1 = m.result.s1, rs2 = m.result.s2;
-    if (ps1===rs1 && ps2===rs2) return '<div title="🎯 Точен резултат!" style="width:24px;height:24px;border-radius:6px;background:rgba(27,94,32,.8);border:1px solid #4caf50;display:flex;align-items:center;justify-content:center;font-size:12px">🎯</div>';
-    if (outcome(ps1,ps2)===outcome(rs1,rs2) && (ps1-ps2)===(rs1-rs2)) return '<div title="📐 Верна разлика" style="width:24px;height:24px;border-radius:6px;background:rgba(249,168,37,.2);border:1px solid rgba(249,168,37,.5);display:flex;align-items:center;justify-content:center;font-size:12px">📐</div>';
-    if (outcome(ps1,ps2)===outcome(rs1,rs2)) return '<div title="✅ Верен знак" style="width:24px;height:24px;border-radius:6px;background:rgba(21,101,192,.3);border:1px solid rgba(33,150,243,.4);display:flex;align-items:center;justify-content:center;font-size:12px">✅</div>';
-    return '<div title="❌ Грешна прогноза" style="width:24px;height:24px;border-radius:6px;background:rgba(198,40,40,.25);border:1px solid rgba(244,67,54,.3);display:flex;align-items:center;justify-content:center;font-size:12px">❌</div>';
+    if (ps1===rs1 && ps2===rs2) return '<div title="ð¯ Ð¢Ð¾ÑÐµÐ½ ÑÐµÐ·ÑÐ»ÑÐ°Ñ!" style="width:24px;height:24px;border-radius:6px;background:rgba(27,94,32,.8);border:1px solid #4caf50;display:flex;align-items:center;justify-content:center;font-size:12px">ð¯</div>';
+    if (outcome(ps1,ps2)===outcome(rs1,rs2) && (ps1-ps2)===(rs1-rs2)) return '<div title="ð ÐÐµÑÐ½Ð° ÑÐ°Ð·Ð»Ð¸ÐºÐ°" style="width:24px;height:24px;border-radius:6px;background:rgba(249,168,37,.2);border:1px solid rgba(249,168,37,.5);display:flex;align-items:center;justify-content:center;font-size:12px">ð</div>';
+    if (outcome(ps1,ps2)===outcome(rs1,rs2)) return '<div title="â ÐÐµÑÐµÐ½ Ð·Ð½Ð°Ðº" style="width:24px;height:24px;border-radius:6px;background:rgba(21,101,192,.3);border:1px solid rgba(33,150,243,.4);display:flex;align-items:center;justify-content:center;font-size:12px">â</div>';
+    return '<div title="â ÐÑÐµÑÐ½Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°" style="width:24px;height:24px;border-radius:6px;background:rgba(198,40,40,.25);border:1px solid rgba(244,67,54,.3);display:flex;align-items:center;justify-content:center;font-size:12px">â</div>';
   }).join('');
 
   // Points breakdown
   const maxPts = Math.max(sc.total, 1);
   const breakdown = [
-    { label:'🎯 Точен резултат', count: sc.exact + sc.exact5, pts: sc.exact*20 + sc.exact5*30, color:'#4caf50' },
-    { label:'📐 Верна разлика',  count: sc.signDiff,          pts: sc.signDiff*15,              color:'#f9a825' },
-    { label:'✅ Верен знак',     count: sc.sign,              pts: sc.sign*10,                  color:'#42a5f5' },
-    { label:'🏆 Шампион',        count: sc.champCorrect?1:0,  pts: sc.champPts,                 color:'#ff8a65' },
+    { label:'ð¯ Ð¢Ð¾ÑÐµÐ½ ÑÐµÐ·ÑÐ»ÑÐ°Ñ', count: sc.exact + sc.exact5, pts: sc.exact*20 + sc.exact5*30, color:'#4caf50' },
+    { label:'ð ÐÐµÑÐ½Ð° ÑÐ°Ð·Ð»Ð¸ÐºÐ°',  count: sc.signDiff,          pts: sc.signDiff*15,              color:'#f9a825' },
+    { label:'â ÐÐµÑÐµÐ½ Ð·Ð½Ð°Ðº',     count: sc.sign,              pts: sc.sign*10,                  color:'#42a5f5' },
+    { label:'ð Ð¨Ð°Ð¼Ð¿Ð¸Ð¾Ð½',        count: sc.champCorrect?1:0,  pts: sc.champPts,                 color:'#ff8a65' },
   ];
 
-  // SVG donut (r=15.9, circumference≈100)
+  // SVG donut (r=15.9, circumferenceâ100)
   const donutFill = predPct;
 
   return `
-  <div class="page-title">👤 Профил</div>
+  <div class="page-title">ð¤ ÐÑÐ¾ÑÐ¸Ð»</div>
 
   <!-- HERO -->
   <div class="profile-card" style="text-align:center">
     <div class="profile-avatar-lg" style="${user.avatar?'font-size:3rem;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.12)':''}">${user.avatar||S.currentUser[0].toUpperCase()}</div>
     <div class="profile-username">${S.currentUser}</div>
-    <div class="profile-email-display">${user.email || '—'}</div>
+    <div class="profile-email-display">${user.email || 'â'}</div>
     <div style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap">
-      <div><div style="font-size:1.5rem;font-weight:900;color:#f9a825">${sc.total}</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Точки</div></div>
-      <div><div style="font-size:1.5rem;font-weight:900;color:#90caf9">${rank > 0 ? '#'+rank : '—'}</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Класиране</div></div>
-      <div><div style="font-size:1.5rem;font-weight:900;color:#4caf50">${hitRate}%</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Успеваемост</div></div>
-      <div><div style="font-size:1.5rem;font-weight:900;color:#ce93d8">${predCount}<span style="font-size:.9rem;color:rgba(255,255,255,.3)">/${totalMatches}</span></div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Прогнози</div></div>
+      <div><div style="font-size:1.5rem;font-weight:900;color:#f9a825">${sc.total}</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Ð¢Ð¾ÑÐºÐ¸</div></div>
+      <div><div style="font-size:1.5rem;font-weight:900;color:#90caf9">${rank > 0 ? '#'+rank : 'â'}</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">ÐÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ</div></div>
+      <div><div style="font-size:1.5rem;font-weight:900;color:#4caf50">${hitRate}%</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">Ð£ÑÐ¿ÐµÐ²Ð°ÐµÐ¼Ð¾ÑÑ</div></div>
+      <div><div style="font-size:1.5rem;font-weight:900;color:#ce93d8">${predCount}<span style="font-size:.9rem;color:rgba(255,255,255,.3)">/${totalMatches}</span></div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.35)">ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</div></div>
     </div>
   </div>
 
   <!-- AVATAR PICKER -->
   <div class="profile-card">
-    <div style="font-weight:800;margin-bottom:.3rem;font-size:1rem">🎨 Избери аватар</div>
-    <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:1rem">Натисни emoji за да го зададеш като профилна снимка</div>
+    <div style="font-weight:800;margin-bottom:.3rem;font-size:1rem">ð¨ ÐÐ·Ð±ÐµÑÐ¸ Ð°Ð²Ð°ÑÐ°Ñ</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:1rem">ÐÐ°ÑÐ¸ÑÐ½Ð¸ emoji Ð·Ð° Ð´Ð° Ð³Ð¾ Ð·Ð°Ð´Ð°Ð´ÐµÑ ÐºÐ°ÑÐ¾ Ð¿ÑÐ¾ÑÐ¸Ð»Ð½Ð° ÑÐ½Ð¸Ð¼ÐºÐ°</div>
     <div style="display:flex;flex-wrap:wrap;gap:7px">
-      ${['⚽','🏆','🥇','🎯','🏅','🎽','🥅','🏟️','🔥','💎','⚡','🌊','❄️','🌪️','☀️','🌙','🌈','🚀','👑','💪','🌟','🧠','😎','🤩','😈','👿','🤠','🥶','🥵','😤','🦁','🐯','🦅','🐺','🦊','🐻','🦈','🐉','🦄','🐆','🦋','🦂','🐊','🦬','🦏','🐘','🎭','🃏'].map(e=>`<div onclick="window._saveAvatar('${e}')" style="width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all .15s;background:${user.avatar===e?'rgba(21,101,192,.45)':'rgba(255,255,255,.05)'};border:1.5px solid ${user.avatar===e?'#1565c0':'rgba(255,255,255,.07)'};transform:${user.avatar===e?'scale(1.15)':'scale(1)'}" title="${e}">${e}</div>`).join('')}
+      ${['â½','ð','ð¥','ð¯','ð','ð½','ð¥','ðï¸','ð¥','ð','â¡','ð','âï¸','ðªï¸','âï¸','ð','ð','ð','ð','ðª','ð','ð§ ','ð','ð¤©','ð','ð¿','ð¤ ','ð¥¶','ð¥µ','ð¤','ð¦','ð¯','ð¦','ðº','ð¦','ð»','ð¦','ð','ð¦','ð','ð¦','ð¦','ð','ð¦¬','ð¦','ð','ð­','ð'].map(e=>`<div onclick="window._saveAvatar('${e}')" style="width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all .15s;background:${user.avatar===e?'rgba(21,101,192,.45)':'rgba(255,255,255,.05)'};border:1.5px solid ${user.avatar===e?'#1565c0':'rgba(255,255,255,.07)'};transform:${user.avatar===e?'scale(1.15)':'scale(1)'}" title="${e}">${e}</div>`).join('')}
     </div>
-    ${user.avatar?`<button onclick="window._saveAvatar('')" style="margin-top:.9rem;padding:5px 13px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer">✕ Премахни аватар</button>`:''}
+    ${user.avatar?`<button onclick="window._saveAvatar('')" style="margin-top:.9rem;padding:5px 13px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:7px;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer">â ÐÑÐµÐ¼Ð°ÑÐ½Ð¸ Ð°Ð²Ð°ÑÐ°Ñ</button>`:''}
   </div>
 
   <!-- STATISTICS -->
   <div class="profile-card">
-    <div style="font-weight:800;margin-bottom:1.25rem;font-size:1rem">📊 Статистика</div>
+    <div style="font-weight:800;margin-bottom:1.25rem;font-size:1rem">ð Ð¡ÑÐ°ÑÐ¸ÑÑÐ¸ÐºÐ°</div>
 
     <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem">
       <!-- Donut -->
@@ -1137,19 +1144,19 @@ function renderProfile() {
         </svg>
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
           <div style="font-size:1.15rem;font-weight:900;color:#90caf9">${predPct}%</div>
-          <div style="font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.3px">ЗАПЪЛНЕНИ</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.3px">ÐÐÐÐªÐÐÐÐÐ</div>
         </div>
       </div>
       <!-- Progress bars -->
       <div style="flex:1;min-width:0">
         <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:3px">
-          <span>Въведени прогнози</span><span style="color:#90caf9;font-weight:700">${predCount}/${totalMatches}</span>
+          <span>ÐÑÐ²ÐµÐ´ÐµÐ½Ð¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</span><span style="color:#90caf9;font-weight:700">${predCount}/${totalMatches}</span>
         </div>
         <div style="height:6px;background:rgba(255,255,255,.07);border-radius:3px;margin-bottom:10px">
           <div style="height:6px;background:linear-gradient(90deg,#1565c0,#42a5f5);border-radius:3px;width:${predPct}%"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.5);margin-bottom:3px">
-          <span>Точки от изиграни мачове</span><span style="color:#4caf50;font-weight:700">${scoredCount}/${playedMatches.length}</span>
+          <span>Ð¢Ð¾ÑÐºÐ¸ Ð¾Ñ Ð¸Ð·Ð¸Ð³ÑÐ°Ð½Ð¸ Ð¼Ð°ÑÐ¾Ð²Ðµ</span><span style="color:#4caf50;font-weight:700">${scoredCount}/${playedMatches.length}</span>
         </div>
         <div style="height:6px;background:rgba(255,255,255,.07);border-radius:3px">
           <div style="height:6px;background:linear-gradient(90deg,#2e7d32,#66bb6a);border-radius:3px;width:${playedMatches.length>0?Math.round(scoredCount/playedMatches.length*100):0}%"></div>
@@ -1162,7 +1169,7 @@ function renderProfile() {
     <div style="margin-bottom:.55rem">
       <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:3px">
         <span style="color:rgba(255,255,255,.6)">${b.label}</span>
-        <span style="color:${b.color};font-weight:700">${b.count>0 ? b.count+' × — = ' : ''}${b.pts} т.</span>
+        <span style="color:${b.color};font-weight:700">${b.count>0 ? b.count+' Ã â = ' : ''}${b.pts} Ñ.</span>
       </div>
       <div style="height:5px;background:rgba(255,255,255,.06);border-radius:3px">
         <div style="height:5px;border-radius:3px;background:${b.color};width:${b.pts>0?Math.round(b.pts/maxPts*100):0}%;opacity:.75"></div>
@@ -1172,57 +1179,57 @@ function renderProfile() {
     <!-- Recent form -->
     ${formDots ? `
     <div style="margin-top:1.1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.05)">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.55rem">Последна форма</div>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.55rem">ÐÐ¾ÑÐ»ÐµÐ´Ð½Ð° ÑÐ¾ÑÐ¼Ð°</div>
       <div style="display:flex;gap:4px;flex-wrap:wrap">${formDots}</div>
       <div style="margin-top:.5rem;display:flex;gap:.75rem;font-size:10px;color:rgba(255,255,255,.3)">
-        <span>🎯 Точен</span><span>📐 Разлика</span><span>✅ Знак</span><span>❌ Грешка</span>
+        <span>ð¯ Ð¢Ð¾ÑÐµÐ½</span><span>ð Ð Ð°Ð·Ð»Ð¸ÐºÐ°</span><span>â ÐÐ½Ð°Ðº</span><span>â ÐÑÐµÑÐºÐ°</span>
       </div>
     </div>` : ''}
   </div>
 
   <!-- ACTIVITY -->
   <div class="profile-card">
-    <div style="font-weight:800;margin-bottom:1rem;font-size:1rem">🕐 Активност</div>
+    <div style="font-weight:800;margin-bottom:1rem;font-size:1rem">ð ÐÐºÑÐ¸Ð²Ð½Ð¾ÑÑ</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem">
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Последен вход</div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">ÐÐ¾ÑÐ»ÐµÐ´ÐµÐ½ Ð²ÑÐ¾Ð´</div>
         <div style="font-size:13px;font-weight:700;color:#90caf9">${lastLoginStr}</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Влизания</div>
-        <div style="font-size:13px;font-weight:700;color:#ce93d8">${userLogins.length} пъти</div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">ÐÐ»Ð¸Ð·Ð°Ð½Ð¸Ñ</div>
+        <div style="font-size:13px;font-weight:700;color:#ce93d8">${userLogins.length} Ð¿ÑÑÐ¸</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Регистриран</div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Ð ÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð½</div>
         <div style="font-size:12px;font-weight:700;color:#a5d6a7">${registeredStr}</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Шампион 🏆</div>
-        <div style="font-size:13px;font-weight:700;color:#f9a825">${sc.champ || '—'}${sc.champCorrect ? ' ✨' : ''}</div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.3);margin-bottom:.3rem">Ð¨Ð°Ð¼Ð¿Ð¸Ð¾Ð½ ð</div>
+        <div style="font-size:13px;font-weight:700;color:#f9a825">${sc.champ || 'â'}${sc.champCorrect ? ' â¨' : ''}</div>
       </div>
     </div>
   </div>
 
   <!-- EMAIL -->
   <div class="profile-card">
-    <div style="font-weight:800;margin-bottom:1rem">✉️ Промени имейл</div>
-    <div class="form-group"><label>Нов имейл</label>
+    <div style="font-weight:800;margin-bottom:1rem">âï¸ ÐÑÐ¾Ð¼ÐµÐ½Ð¸ Ð¸Ð¼ÐµÐ¹Ð»</div>
+    <div class="form-group"><label>ÐÐ¾Ð² Ð¸Ð¼ÐµÐ¹Ð»</label>
       <input type="email" id="peEmail" placeholder="example@mail.com" value="${user.email || ''}"/></div>
-    <button class="btn btn-primary" onclick="window._saveProfileEmail()">💾 Запази имейл</button>
+    <button class="btn btn-primary" onclick="window._saveProfileEmail()">ð¾ ÐÐ°Ð¿Ð°Ð·Ð¸ Ð¸Ð¼ÐµÐ¹Ð»</button>
   </div>
 
   <!-- PASSWORD -->
   <div class="profile-card">
-    <div style="font-weight:800;margin-bottom:1rem">🔐 Промени парола</div>
-    <div class="form-group"><label>Текуща парола</label>
-      <input type="password" id="peCurPw" placeholder="••••••••"/></div>
-    <div class="form-group"><label>Нова парола</label>
-      <input type="password" id="peNewPw" placeholder="минимум 4 символа"/></div>
-    <div class="form-group"><label>Потвърди нова парола</label>
-      <input type="password" id="peNewPw2" placeholder="••••••••"/></div>
-    <button class="btn btn-primary" onclick="window._saveProfilePw()">🔑 Смени паролата</button>
-    ${S.profileError ? `<div class="error-msg" style="margin-top:.75rem">⚠️ ${S.profileError}</div>` : ''}
-    ${S.profileSuccess ? `<div class="success-msg" style="margin-top:.75rem">✅ ${S.profileSuccess}</div>` : ''}
+    <div style="font-weight:800;margin-bottom:1rem">ð ÐÑÐ¾Ð¼ÐµÐ½Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°</div>
+    <div class="form-group"><label>Ð¢ÐµÐºÑÑÐ° Ð¿Ð°ÑÐ¾Ð»Ð°</label>
+      <input type="password" id="peCurPw" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢"/></div>
+    <div class="form-group"><label>ÐÐ¾Ð²Ð° Ð¿Ð°ÑÐ¾Ð»Ð°</label>
+      <input type="password" id="peNewPw" placeholder="Ð¼Ð¸Ð½Ð¸Ð¼ÑÐ¼ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°"/></div>
+    <div class="form-group"><label>ÐÐ¾ÑÐ²ÑÑÐ´Ð¸ Ð½Ð¾Ð²Ð° Ð¿Ð°ÑÐ¾Ð»Ð°</label>
+      <input type="password" id="peNewPw2" placeholder="â¢â¢â¢â¢â¢â¢â¢â¢"/></div>
+    <button class="btn btn-primary" onclick="window._saveProfilePw()">ð Ð¡Ð¼ÐµÐ½Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°ÑÐ°</button>
+    ${S.profileError ? `<div class="error-msg" style="margin-top:.75rem">â ï¸ ${S.profileError}</div>` : ''}
+    ${S.profileSuccess ? `<div class="success-msg" style="margin-top:.75rem">â ${S.profileSuccess}</div>` : ''}
   </div>`;
 }
 
@@ -1257,7 +1264,7 @@ function renderPredictions() {
   const totalM = groupMatches.length + koMatches.length;
 
   const STAGE_ORDER = ['R32','R16','QF','SF','3P','F'];
-  const STAGE_LABELS = {R32:'1/32-финали',R16:'1/16-финали',QF:'Четвъртфинали',SF:'Полуфинали','3P':'Мач за 3-то място',F:'Финал'};
+  const STAGE_LABELS = {R32:'1/32-ÑÐ¸Ð½Ð°Ð»Ð¸',R16:'1/16-ÑÐ¸Ð½Ð°Ð»Ð¸',QF:'Ð§ÐµÑÐ²ÑÑÑÑÐ¸Ð½Ð°Ð»Ð¸',SF:'ÐÐ¾Ð»ÑÑÐ¸Ð½Ð°Ð»Ð¸','3P':'ÐÐ°Ñ Ð·Ð° 3-ÑÐ¾ Ð¼ÑÑÑÐ¾',F:'Ð¤Ð¸Ð½Ð°Ð»'};
 
   let content = '';
 
@@ -1277,7 +1284,7 @@ function renderPredictions() {
     for (const {label, matches} of Object.values(byDate)) {
       const allDone = matches.every(m => m.result !== null && typeof m.result === 'object' && m.result.s1 !== undefined);
       const cardsHtml = matches.map(m => {
-        const badge = `<span style="font-size:10px;background:rgba(255,255,255,.12);padding:2px 8px;border-radius:10px;color:rgba(255,255,255,.7)">Гр. ${m.group}</span>`;
+        const badge = `<span style="font-size:10px;background:rgba(255,255,255,.12);padding:2px 8px;border-radius:10px;color:rgba(255,255,255,.7)">ÐÑ. ${m.group}</span>`;
         return renderMatchCard(m, preds[m.id], false, badge);
       }).join('');
       if (allDone) {
@@ -1297,23 +1304,23 @@ function renderPredictions() {
           <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;
             padding:7px 12px;border-radius:10px;background:rgba(255,255,255,.04);
             color:rgba(255,255,255,.38);font-size:12px;user-select:none;margin-bottom:2px">
-            <span style="font-size:10px;color:rgba(255,255,255,.2)">▶</span>
-            📅 ${label}
-            <span style="margin-left:auto;color:#81c784;font-size:11px">✓ ${matches.length} прикл. · +${pts}т</span>
+            <span style="font-size:10px;color:rgba(255,255,255,.2)">â¶</span>
+            ð ${label}
+            <span style="margin-left:auto;color:#81c784;font-size:11px">â ${matches.length} Ð¿ÑÐ¸ÐºÐ». Â· +${pts}Ñ</span>
           </summary>
           ${cardsHtml}
         </details>`;
       } else {
-        content += `<div class="matchday-label">📅 ${label}</div>`;
+        content += `<div class="matchday-label">ð ${label}</div>`;
         content += cardsHtml;
       }
     }
   } else {
-    // KO view — grouped by stage, then by date within stage
+    // KO view â grouped by stage, then by date within stage
     for (const stage of STAGE_ORDER) {
       const sm = koMatches.filter(m => m.stage === stage);
       if (!sm.length) continue;
-      content += `<div class="matchday-label" style="background:linear-gradient(90deg,rgba(198,40,40,.15),transparent)">⚔️ ${STAGE_LABELS[stage]}</div>`;
+      content += `<div class="matchday-label" style="background:linear-gradient(90deg,rgba(198,40,40,.15),transparent)">âï¸ ${STAGE_LABELS[stage]}</div>`;
       const byDate = {};
       for (const m of sm) {
         const dk = matchDateKey(m);
@@ -1321,7 +1328,7 @@ function renderPredictions() {
         byDate[dk].matches.push(m);
       }
       for (const {label, matches} of Object.values(byDate)) {
-        if (label) content += `<div style="padding:6px 0 4px 1rem;font-size:12px;color:rgba(255,255,255,.4)">📅 ${label}</div>`;
+        if (label) content += `<div style="padding:6px 0 4px 1rem;font-size:12px;color:rgba(255,255,255,.4)">ð ${label}</div>`;
         content += matches.map(m => {
           const badge = `<span style="font-size:10px;background:rgba(198,40,40,.2);padding:2px 8px;border-radius:10px;color:#ef9a9a">${m.stageLabel} #${m.matchNum}</span>`;
           return renderMatchCard(m, preds[m.id], false, badge);
@@ -1331,16 +1338,16 @@ function renderPredictions() {
   }
 
   return `
-  <div class="page-title">🔮 Моите прогнози</div>
+  <div class="page-title">ð® ÐÐ¾Ð¸ÑÐµ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</div>
   <div class="info-bar">
-    ⏰ Заключва 15 мин преди мача &nbsp;·&nbsp; 🔥<strong style="color:#ff7043">+30т</strong> точен 5+ &nbsp;·&nbsp; 💡<strong style="color:#a5d6a7">+20т</strong> точен &nbsp;·&nbsp; <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp; ⏱️<strong style="color:#80deea">+15т</strong> ET победа &nbsp;·&nbsp; ⏱️<strong style="color:#80deea">+10т</strong> ET равен &nbsp;·&nbsp; 🎯<strong style="color:#ce93d8">+20т</strong> дузпи &nbsp;·&nbsp; Прогнозирал: <strong>${totalPred}/${totalM}</strong>
+    â° ÐÐ°ÐºÐ»ÑÑÐ²Ð° 15 Ð¼Ð¸Ð½ Ð¿ÑÐµÐ´Ð¸ Ð¼Ð°ÑÐ° &nbsp;Â·&nbsp; ð¥<strong style="color:#ff7043">+30Ñ</strong> ÑÐ¾ÑÐµÐ½ 5+ &nbsp;Â·&nbsp; ð¡<strong style="color:#a5d6a7">+20Ñ</strong> ÑÐ¾ÑÐµÐ½ &nbsp;Â·&nbsp; <strong style="color:#90caf9">10Ñ</strong> Ð·Ð½Ð°Ðº &nbsp;Â·&nbsp; â±ï¸<strong style="color:#80deea">+15Ñ</strong> ET Ð¿Ð¾Ð±ÐµÐ´Ð° &nbsp;Â·&nbsp; â±ï¸<strong style="color:#80deea">+10Ñ</strong> ET ÑÐ°Ð²ÐµÐ½ &nbsp;Â·&nbsp; ð¯<strong style="color:#ce93d8">+20Ñ</strong> Ð´ÑÐ·Ð¿Ð¸ &nbsp;Â·&nbsp; ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐ°Ð»: <strong>${totalPred}/${totalM}</strong>
   </div>
   <div class="group-tabs">
-    <div class="group-tab ${view==='group'?'active':''}" data-predview="group">📅 Групова фаза</div>
-    <div class="group-tab ${view==='ko'?'active':''}" data-predview="ko">⚔️ Елиминации</div>
+    <div class="group-tab ${view==='group'?'active':''}" data-predview="group">ð ÐÑÑÐ¿Ð¾Ð²Ð° ÑÐ°Ð·Ð°</div>
+    <div class="group-tab ${view==='ko'?'active':''}" data-predview="ko">âï¸ ÐÐ»Ð¸Ð¼Ð¸Ð½Ð°ÑÐ¸Ð¸</div>
   </div>
   ${content}
-  <div><button class="save-btn" id="savePreds">💾 Запази прогнозите</button></div>`;
+  <div><button class="save-btn" id="savePreds">ð¾ ÐÐ°Ð¿Ð°Ð·Ð¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ</button></div>`;
 }
 
 function renderMatchCard(m, pred, isAdmin, badge = '') {
@@ -1353,83 +1360,109 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
   if (hasPred && hasResult && !isAdmin) {
     const ps1 = parseInt(pred.s1), ps2 = parseInt(pred.s2);
     const rs1 = m.result.s1, rs2 = m.result.s2;
-    if(ps1===rs1&&ps2===rs2) pts=(rs1+rs2>=5)?`<span class="pts-badge pts-5">🔥 +30т</span>`:`<span class="pts-badge pts-3">🎯 +20т</span>`;
-    else if(outcome(ps1,ps2)===outcome(rs1,rs2)&&(ps1-ps2)===(rs1-rs2)) pts=`<span class="pts-badge pts-2">📐 +15т</span>`;
-    else if(outcome(ps1,ps2)===outcome(rs1,rs2)) pts=`<span class="pts-badge pts-1">✓ +10т</span>`;
-    else pts=`<span class="pts-badge pts-0">✗ 0т</span>`;
+    if(ps1===rs1&&ps2===rs2) pts=(rs1+rs2>=5)?`<span class="pts-badge pts-5">ð¥ +30Ñ</span>`:`<span class="pts-badge pts-3">ð¯ +20Ñ</span>`;
+    else if(outcome(ps1,ps2)===outcome(rs1,rs2)&&(ps1-ps2)===(rs1-rs2)) pts=`<span class="pts-badge pts-2">ð +15Ñ</span>`;
+    else if(outcome(ps1,ps2)===outcome(rs1,rs2)) pts=`<span class="pts-badge pts-1">â +10Ñ</span>`;
+    else pts=`<span class="pts-badge pts-0">â 0Ñ</span>`;
   }
   const prefix = isAdmin ? 'adm' : 'pr';
   const t1name = isTBD && !isAdmin ? (m.slotDesc || 'TBD') : m.team1;
   const t2name = isTBD && !isAdmin ? '' : m.team2;
 
-  // КО допълнителни прогнози: продължения + дузпи
+  // ÐÐ Ð´Ð¾Ð¿ÑÐ»Ð½Ð¸ÑÐµÐ»Ð½Ð¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸: Ð¿ÑÐ¾Ð´ÑÐ»Ð¶ÐµÐ½Ð¸Ñ + Ð´ÑÐ·Ð¿Ð¸
   let koExtra = '';
-  if (isKO && !isAdmin && !isTBD) {
+  if (isKO && !isAdmin && !isTBD && m.id < 77) {
     const hasEtResult = m.etResult && typeof m.etResult === 'object' && m.etResult.s1 !== undefined;
     const hasPenResult = m.penWinner;
     const ets1v = pred ? (pred.ets1 ?? '') : '';
     const ets2v = pred ? (pred.ets2 ?? '') : '';
     const penWv = pred ? (pred.penWinner ?? '') : '';
-    // ET бонус точки
+    // ET Ð±Ð¾Ð½ÑÑ ÑÐ¾ÑÐºÐ¸
     let etPts = '';
     if (hasEtResult && ets1v !== '' && ets2v !== '') {
       const pets1 = parseInt(ets1v), pets2 = parseInt(ets2v);
       const ets1 = m.etResult.s1, ets2 = m.etResult.s2;
       if (pets1 === ets1 && pets2 === ets2) {
         etPts = (ets1 === ets2)
-          ? `<span class="pts-badge pts-1">⏱️ +10т</span>`
-          : `<span class="pts-badge pts-2">⏱️ +15т</span>`;
+          ? `<span class="pts-badge pts-1">â±ï¸ +10Ñ</span>`
+          : `<span class="pts-badge pts-2">â±ï¸ +15Ñ</span>`;
       } else {
-        etPts = `<span class="pts-badge pts-0">⏱️ 0т</span>`;
+        etPts = `<span class="pts-badge pts-0">â±ï¸ 0Ñ</span>`;
       }
     }
-    // Дузпи бонус точки
+    // ÐÑÐ·Ð¿Ð¸ Ð±Ð¾Ð½ÑÑ ÑÐ¾ÑÐºÐ¸
     let penPts = '';
     if (hasPenResult && penWv !== '') {
       penPts = parseInt(penWv) === m.penWinner
-        ? `<span class="pts-badge pts-3">🎯 +20т</span>`
-        : `<span class="pts-badge pts-0">🎯 0т</span>`;
+        ? `<span class="pts-badge pts-3">ð¯ +20Ñ</span>`
+        : `<span class="pts-badge pts-0">ð¯ 0Ñ</span>`;
     }
     koExtra = `
     <div style="flex:0 0 100%;width:100%;border-top:1px dashed rgba(255,255,255,.1);margin-top:.6rem;padding-top:.6rem">
-      <div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:4px;letter-spacing:.3px">⏱️ ПРОДЪЛЖЕНИЯ — само голове в ET (ако равен след 90 мин)</div>
+      <div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:4px;letter-spacing:.3px">â±ï¸ ÐÐ ÐÐÐªÐÐÐÐÐÐ¯ â ÑÐ°Ð¼Ð¾ Ð³Ð¾Ð»Ð¾Ð²Ðµ Ð² ET (Ð°ÐºÐ¾ ÑÐ°Ð²ÐµÐ½ ÑÐ»ÐµÐ´ 90 Ð¼Ð¸Ð½)</div>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <span style="font-size:11px;color:rgba(255,255,255,.4);min-width:90px">${FLAGS[m.team1]||'🏳️'} ${m.team1}</span>
+        <span style="font-size:11px;color:rgba(255,255,255,.4);min-width:90px">${FLAGS[m.team1]||'ð³ï¸'} ${m.team1}</span>
         <input class="score-input" type="number" min="0" max="20" style="width:44px;font-size:14px"
           data-pr="${m.id}" data-side="ets1"
-          value="${ets1v}" placeholder="–" ${locked?'disabled':''}>
+          value="${ets1v}" placeholder="â" ${locked?'disabled':''}>
         <span class="score-sep">:</span>
         <input class="score-input" type="number" min="0" max="20" style="width:44px;font-size:14px"
           data-pr="${m.id}" data-side="ets2"
-          value="${ets2v}" placeholder="–" ${locked?'disabled':''}>
-        <span style="font-size:11px;color:rgba(255,255,255,.4)">${FLAGS[m.team2]||'🏳️'} ${m.team2}</span>
-        ${hasEtResult ? `<span style="font-size:11px;color:rgba(255,255,255,.4)">→ ${m.etResult.s1}:${m.etResult.s2}</span>` : ''}
+          value="${ets2v}" placeholder="â" ${locked?'disabled':''}>
+        <span style="font-size:11px;color:rgba(255,255,255,.4)">${FLAGS[m.team2]||'ð³ï¸'} ${m.team2}</span>
+        ${hasEtResult ? `<span style="font-size:11px;color:rgba(255,255,255,.4)">â ${m.etResult.s1}:${m.etResult.s2}</span>` : ''}
         ${etPts}
       </div>
-      <div style="font-size:10px;color:rgba(255,255,255,.35);margin:6px 0 4px;letter-spacing:.3px">🎯 ДУЗПИ (ако равен след продължения)</div>
+      <div style="font-size:10px;color:rgba(255,255,255,.35);margin:6px 0 4px;letter-spacing:.3px">ð¯ ÐÐ£ÐÐÐ (Ð°ÐºÐ¾ ÑÐ°Ð²ÐµÐ½ ÑÐ»ÐµÐ´ Ð¿ÑÐ¾Ð´ÑÐ»Ð¶ÐµÐ½Ð¸Ñ)</div>
       <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         ${locked ? `
-        <span style="font-size:12px;color:rgba(255,255,255,.4)">${penWv === '1' ? `${FLAGS[m.team1]||'🏳️'} ${m.team1}` : penWv === '2' ? `${FLAGS[m.team2]||'🏳️'} ${m.team2}` : '—'}</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.4)">${penWv === '1' ? `${FLAGS[m.team1]||'ð³ï¸'} ${m.team1}` : penWv === '2' ? `${FLAGS[m.team2]||'ð³ï¸'} ${m.team2}` : 'â'}</span>
         ` : `
         <button id="pen1_${m.id}" onclick="window._setPenWinner(${m.id},1)"
           style="border:1.5px solid ${penWv=='1'?'#a5d6a7':'rgba(255,255,255,.2)'};background:${penWv=='1'?'rgba(165,214,167,.15)':'rgba(255,255,255,.05)'};
           color:${penWv=='1'?'#a5d6a7':'rgba(255,255,255,.6)'};border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s">
-          ${FLAGS[m.team1]||'🏳️'} ${m.team1}
+          ${FLAGS[m.team1]||'ð³ï¸'} ${m.team1}
         </button>
         <button id="pen2_${m.id}" onclick="window._setPenWinner(${m.id},2)"
           style="border:1.5px solid ${penWv=='2'?'#a5d6a7':'rgba(255,255,255,.2)'};background:${penWv=='2'?'rgba(165,214,167,.15)':'rgba(255,255,255,.05)'};
           color:${penWv=='2'?'#a5d6a7':'rgba(255,255,255,.6)'};border-radius:8px;padding:4px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s">
-          ${FLAGS[m.team2]||'🏳️'} ${m.team2}
+          ${FLAGS[m.team2]||'ð³ï¸'} ${m.team2}
         </button>
         `}
-        ${hasPenResult ? `<span style="font-size:11px;color:rgba(255,255,255,.4)">→ ${m.penWinner===1?m.team1:m.team2}</span>` : ''}
+        ${hasPenResult ? `<span style="font-size:11px;color:rgba(255,255,255,.4)">â ${m.penWinner===1?m.team1:m.team2}</span>` : ''}
         ${penPts}
       </div>
     </div>`;
   }
-  // Админ КО: ET резултат + дузпи
+  // ÐÐ´Ð¼Ð¸Ð½ ÐÐ: ET ÑÐµÐ·ÑÐ»ÑÐ°Ñ + Ð´ÑÐ·Ð¿Ð¸
+  if (isKO && !isAdmin && !isTBD && m.id >= 77) {
+    var isPredDraw = pred && !isNaN(parseInt(pred.s1)) && !isNaN(parseInt(pred.s2)) && parseInt(pred.s1) === parseInt(pred.s2);
+    var koW77 = pred && pred.koWinner != null ? String(pred.koWinner) : '';
+    var hasKoResult77 = !!m.koWinner;
+    var koWPts77 = '';
+    if (hasKoResult77 && koW77 !== '') {
+      koWPts77 = parseInt(koW77) === m.koWinner
+        ? '<span class="pts-badge pts-3">🎯 +30т</span>'
+        : '<span class="pts-badge pts-0">❌ +0т</span>';
+    }
+    var team1_77 = m.team1 || 'Тим А';
+    var team2_77 = m.team2 || 'Тим Б';
+    var canPick77 = isPredDraw && !locked;
+    var grayNote77 = !isPredDraw ? '<span style="font-size:10px;opacity:.5;margin-left:4px">(само при равен)</span>' : '';
+    var dimStyle77 = canPick77 ? '' : 'pointer-events:none;opacity:.4;';
+    var bg1_77 = koW77 === '1' ? '#2563eb' : 'rgba(255,255,255,.08)';
+    var bg2_77 = koW77 === '2' ? '#2563eb' : 'rgba(255,255,255,.08)';
+    var oc1_77 = canPick77 ? 'window._setKoWinner(' + m.id + ',1)' : '';
+    var oc2_77 = canPick77 ? 'window._setKoWinner(' + m.id + ',2)' : '';
+    koExtra = '<div style="flex:0 0 100%;width:100%;border-top:1px dashed rgba(255,255,255,.1);margin-top:.6rem;padding-top:.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:6px">' +
+      '<span style="font-size:11px;color:rgba(255,255,255,.6)">🏆 Победител (прод./дузпи)' + grayNote77 + '</span>' + koWPts77 +
+      '<div style="display:flex;gap:6px;margin-top:4px;width:100%;' + dimStyle77 + '">' +
+      '<button id="kow1_' + m.id + '" onclick="' + oc1_77 + '" style="flex:1;padding:5px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:' + bg1_77 + ';color:#fff;font-size:12px;cursor:pointer">⚽ ' + team1_77 + '</button>' +
+      '<button id="kow2_' + m.id + '" onclick="' + oc2_77 + '" style="flex:1;padding:5px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.2);background:' + bg2_77 + ';color:#fff;font-size:12px;cursor:pointer">⚽ ' + team2_77 + '</button>' +
+      '</div></div>';
+  }
   let adminKoExtra = '';
-  if (isAdmin && isKO && !isTBD) {
+  if (isAdmin && isKO && !isTBD && m.id < 77) {
     const etS1 = m.etResult ? m.etResult.s1 : '';
     const etS2 = m.etResult ? m.etResult.s2 : '';
     const penW = m.penWinner || '';
@@ -1437,67 +1470,80 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
     <div style="flex:0 0 100%;width:100%;border-top:1px dashed rgba(255,255,255,.1);margin-top:.6rem;padding-top:.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:4px">
       <span style="font-size:10px;color:rgba(255,255,255,.4)">ET:</span>
       <input class="score-input" type="number" min="0" max="20" style="width:38px;font-size:13px"
-        data-adm-et="${m.id}" data-side="s1" value="${etS1}" placeholder="–">
+        data-adm-et="${m.id}" data-side="s1" value="${etS1}" placeholder="â">
       <span style="color:rgba(255,255,255,.4)">:</span>
       <input class="score-input" type="number" min="0" max="20" style="width:38px;font-size:13px"
-        data-adm-et="${m.id}" data-side="s2" value="${etS2}" placeholder="–">
-      <span style="font-size:10px;color:rgba(255,255,255,.4);margin-left:6px">Дузпи:</span>
+        data-adm-et="${m.id}" data-side="s2" value="${etS2}" placeholder="â">
+      <span style="font-size:10px;color:rgba(255,255,255,.4);margin-left:6px">ÐÑÐ·Ð¿Ð¸:</span>
       <select data-adm-pen="${m.id}" style="background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:3px 6px;font-size:11px">
-        <option value="" ${!penW?'selected':''}>—</option>
+        <option value="" ${!penW?'selected':''}>â</option>
         <option value="1" ${penW===1?'selected':''}>${m.team1}</option>
         <option value="2" ${penW===2?'selected':''}>${m.team2}</option>
       </select>
     </div>`;
   }
 
+  if (isAdmin && isKO && !isTBD && m.id >= 77) {
+    var koWadm = m.koWinner ? String(m.koWinner) : '';
+    adminKoExtra =
+      '<div style="flex:0 0 100%;width:100%;border-top:1px dashed rgba(255,255,255,.1);margin-top:.6rem;padding-top:.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:4px">' +
+      '<span style="font-size:10px;color:rgba(255,255,255,.5)">🏆 Победител (прод./дузпи)</span>' +
+      '<select data-adm-kow="' + m.id + '" style="background:#1a1a1a;color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:2px 6px;font-size:12px">' +
+      '<option value="">-- никой --</option>' +
+      '<option value="1"' + (koWadm === '1' ? ' selected' : '') + '>' + m.team1 + '</option>' +
+      '<option value="2"' + (koWadm === '2' ? ' selected' : '') + '>' + m.team2 + '</option>' +
+      '</select></div>';
+  }
+
+
   return `
   <div style="display:flex;align-items:center;gap:6px;padding:${badge?'6px 0 2px':'2px 0'}">
     ${badge}
-    ${MATCH_TIMES[m.id] ? `<span style="font-size:11px;color:rgba(255,255,255,.35)">${fmtBG(m.id)}${!hasResult&&isLocked(m.id)?' 🔒':''}</span>` : ''}
+    ${MATCH_TIMES[m.id] ? `<span style="font-size:11px;color:rgba(255,255,255,.35)">${fmtBG(m.id)}${!hasResult&&isLocked(m.id)?' ð':''}</span>` : ''}
   </div>
   ${isTBD && !isAdmin ? `
   <div class="match-card locked" style="opacity:.6">
-    <div class="team"><span class="team-name" style="font-size:13px;color:rgba(255,255,255,.45)">⏳ Отборите ще бъдат определени след груповата фаза</span></div>
+    <div class="team"><span class="team-name" style="font-size:13px;color:rgba(255,255,255,.45)">â³ ÐÑÐ±Ð¾ÑÐ¸ÑÐµ ÑÐµ Ð±ÑÐ´Ð°Ñ Ð¾Ð¿ÑÐµÐ´ÐµÐ»ÐµÐ½Ð¸ ÑÐ»ÐµÐ´ Ð³ÑÑÐ¿Ð¾Ð²Ð°ÑÐ° ÑÐ°Ð·Ð°</span></div>
   </div>` : `
   <div class="match-card ${hasPred&&!isAdmin?'predicted':''} ${locked?'locked':''}">
     <div class="team">
-      <span class="team-flag">${FLAGS[m.team1]||'🏳️'}</span>
+      <span class="team-flag">${FLAGS[m.team1]||'ð³ï¸'}</span>
       <span class="team-name">${m.team1}</span>
     </div>
     <div class="score-wrap">
       <input class="score-input" type="number" min="0" max="30"
         data-${prefix}="${m.id}" data-side="s1"
         value="${isAdmin ? (m.result?m.result.s1:'') : (pred?pred.s1:'')}"
-        placeholder="–" ${locked?'disabled':''}>
+        placeholder="â" ${locked?'disabled':''}>
       <span class="score-sep">:</span>
       <input class="score-input" type="number" min="0" max="30"
         data-${prefix}="${m.id}" data-side="s2"
         value="${isAdmin ? (m.result?m.result.s2:'') : (pred?pred.s2:'')}"
-        placeholder="–" ${locked?'disabled':''}>
+        placeholder="â" ${locked?'disabled':''}>
     </div>
     ${!isAdmin && !locked ? `<button id="sp_${m.id}" onclick="window._savePred(${m.id})"
       style="flex-shrink:0;border:none;cursor:pointer;border-radius:8px;padding:6px 10px;font-size:13px;font-weight:700;transition:all .2s;
       ${hasPred ? 'background:#1b5e20;color:#a5d6a7' : 'background:#c62828;color:#ffcdd2'}">
-      ${hasPred ? '✓' : '💾'}</button>` : ''}
+      ${hasPred ? 'â' : 'ð¾'}</button>` : ''}
     <div class="team right">
-      <span class="team-flag">${FLAGS[m.team2]||'🏳️'}</span>
+      <span class="team-flag">${FLAGS[m.team2]||'ð³ï¸'}</span>
       <span class="team-name">${m.team2}</span>
     </div>
     ${hasResult && !isAdmin ? `
     <div class="result-wrap">
-      <div class="result-label">Резултат</div>
+      <div class="result-label">Ð ÐµÐ·ÑÐ»ÑÐ°Ñ</div>
       <div class="result-score">${m.result.s1}:${m.result.s2}</div>
       ${pts}
       <button onclick="event.stopPropagation();window._showMatchStats(${m.id})"
-        title="Вижте как всички са заложили този мач"
-        style="margin-left:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;font-size:12px;padding:3px 7px;cursor:pointer;flex-shrink:0">📊</button>
+        title="ÐÐ¸Ð¶ÑÐµ ÐºÐ°Ðº Ð²ÑÐ¸ÑÐºÐ¸ ÑÐ° Ð·Ð°Ð»Ð¾Ð¶Ð¸Ð»Ð¸ ÑÐ¾Ð·Ð¸ Ð¼Ð°Ñ"
+        style="margin-left:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;font-size:12px;padding:3px 7px;cursor:pointer;flex-shrink:0">ð</button>
     </div>` : !hasResult && isLocked(m.id) && !isAdmin ? `
     <div class="result-wrap">
       <button onclick="event.stopPropagation();window._showMatchStats(${m.id})"
-        title="Вижте прогнозите на всички участници"
-        style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;font-size:12px;padding:3px 9px;cursor:pointer;flex-shrink:0">📊 Прогнози</button>
+        title="ÐÐ¸Ð¶ÑÐµ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ Ð½Ð° Ð²ÑÐ¸ÑÐºÐ¸ ÑÑÐ°ÑÑÐ½Ð¸ÑÐ¸"
+        style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;font-size:12px;padding:3px 9px;cursor:pointer;flex-shrink:0">ð ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</button>
     </div>` : ''}
-    ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">✓</span>` : ''}
+    ${isAdmin && hasResult ? `<span class="pts-badge pts-3" style="flex-shrink:0">â</span>` : ''}
     ${koExtra}
     ${adminKoExtra}
   </div>`}`;
@@ -1507,31 +1553,31 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
 function lastSeenStatus(username) {
   const fbTs = (S.lastSeen && S.lastSeen[username]) || 0;
   const entries = S.sessionLog.filter(e => e.username === username);
-  if (!entries.length && !fbTs) return {color:'rgba(255,255,255,.18)', title:'Никога не е влизал'};
+  if (!entries.length && !fbTs) return {color:'rgba(255,255,255,.18)', title:'ÐÐ¸ÐºÐ¾Ð³Ð° Ð½Ðµ Ðµ Ð²Ð»Ð¸Ð·Ð°Ð»'};
   const last = Math.max(fbTs, ...(entries.length ? entries.map(e => e.time) : [0]));
   const diff = Date.now() - last;
   const timeStr = new Date(last).toLocaleString('bg-BG', {timeZone:'Europe/Sofia'});
-  if (diff < 30 * 60 * 1000) return {color:'#4caf50', title:'🟢 Онлайн · ' + timeStr};
-  return {color:'#ef5350', title:'🔴 Последно: ' + timeStr};
+  if (diff < 30 * 60 * 1000) return {color:'#4caf50', title:'ð¢ ÐÐ½Ð»Ð°Ð¹Ð½ Â· ' + timeStr};
+  return {color:'#ef5350', title:'ð´ ÐÐ¾ÑÐ»ÐµÐ´Ð½Ð¾: ' + timeStr};
 }
 
 function renderLeaderboard() {
   const lb = leaderboard();
-  const medals = ['🥇','🥈','🥉'];
+  const medals = ['ð¥','ð¥','ð¥'];
   return `
-  <div class="page-title">🏅 Класиране</div>
-  <div style="display:flex;gap:1rem;align-items:center;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:.5rem"><span title="Познал шампиона (+60т)" style="cursor:help"><b style="color:#4caf50">✓</b> +60т</span><span title="Има прогноза, чакаме резултата" style="cursor:help"><b style="color:#f9a825">?</b> изч.</span><span title="Няма прогноза за шампион" style="cursor:help"><b style="color:rgba(255,255,255,.25)">—</b> без</span></div>
+  <div class="page-title">ð ÐÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ</div>
+  <div style="display:flex;gap:1rem;align-items:center;font-size:11px;color:rgba(255,255,255,.35);margin-bottom:.5rem"><span title="ÐÐ¾Ð·Ð½Ð°Ð» ÑÐ°Ð¼Ð¿Ð¸Ð¾Ð½Ð° (+60Ñ)" style="cursor:help"><b style="color:#4caf50">â</b> +60Ñ</span><span title="ÐÐ¼Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°, ÑÐ°ÐºÐ°Ð¼Ðµ ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ°" style="cursor:help"><b style="color:#f9a825">?</b> Ð¸Ð·Ñ.</span><span title="ÐÑÐ¼Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð° Ð·Ð° ÑÐ°Ð¼Ð¿Ð¸Ð¾Ð½" style="cursor:help"><b style="color:rgba(255,255,255,.25)">â</b> Ð±ÐµÐ·</span></div>
   <div class="lb-wrap">
     <div class="lb-head">
-      <div>#</div><div style="display:flex;justify-content:space-between;align-items:center">Потребител</div>
-      <div style="text-align:center;font-size:10px">Знак<br><span style="color:#90caf9">10т</span></div>
-      <div style="text-align:center;font-size:10px">+Разл.<br><span style="color:#ffe082">15т</span></div>
-      <div style="text-align:center;font-size:10px">Точен<br><span style="color:#a5d6a7">20т</span></div>
-      <div style="text-align:center;font-size:10px">🔥5+<br><span style="color:#ff7043">30т</span></div>
-      <div style="text-align:center;font-size:10px">🏆<br><span style="color:#f9a825">60т</span></div>
-      <div style="text-align:center">Общо</div>
+      <div>#</div><div style="display:flex;justify-content:space-between;align-items:center">ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»</div>
+      <div style="text-align:center;font-size:10px">ÐÐ½Ð°Ðº<br><span style="color:#90caf9">10Ñ</span></div>
+      <div style="text-align:center;font-size:10px">+Ð Ð°Ð·Ð».<br><span style="color:#ffe082">15Ñ</span></div>
+      <div style="text-align:center;font-size:10px">Ð¢Ð¾ÑÐµÐ½<br><span style="color:#a5d6a7">20Ñ</span></div>
+      <div style="text-align:center;font-size:10px">ð¥5+<br><span style="color:#ff7043">30Ñ</span></div>
+      <div style="text-align:center;font-size:10px">ð<br><span style="color:#f9a825">60Ñ</span></div>
+      <div style="text-align:center">ÐÐ±ÑÐ¾</div>
     </div>
-    ${lb.length === 0 ? `<div class="lb-empty">Все още няма регистрирани потребители</div>` :
+    ${lb.length === 0 ? `<div class="lb-empty">ÐÑÐµ Ð¾ÑÐµ Ð½ÑÐ¼Ð° ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð½Ð¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸</div>` :
       lb.map((u,i) => {
         const ls = lastSeenStatus(u.username);
         return `
@@ -1539,15 +1585,15 @@ function renderLeaderboard() {
         <div class="lb-rank ${i<3?'rank-'+(i+1):''}">${i<3?medals[i]:i+1}</div>
         <div class="lb-user">
           <div class="user-avatar" style="width:28px;height:28px;font-size:${(S.users.find(x=>x.username===u.username)||{}).avatar?'16px':'12px'};${(S.users.find(x=>x.username===u.username)||{}).avatar?'background:rgba(255,255,255,.08)':''}">${(S.users.find(x=>x.username===u.username)||{}).avatar||u.username[0].toUpperCase()}</div>
-          <span>${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(аз)</span>':''}</span>
-          ${u.champ ? `<span title="${u.champ}" style="font-size:18px;line-height:1;margin-left:4px">${FLAGS[u.champ]||'🏳️'}</span>` : ''}
+          <span>${u.username}${u.username===S.currentUser?'<span class="lb-me-tag">(Ð°Ð·)</span>':''}</span>
+          ${u.champ ? `<span title="${u.champ}" style="font-size:18px;line-height:1;margin-left:4px">${FLAGS[u.champ]||'ð³ï¸'}</span>` : ''}
           <span style="width:12px;height:12px;border-radius:50%;background:${ls.color};display:inline-block;margin-left:auto;flex-shrink:0;cursor:pointer" title="${ls.title}" onclick="event.stopPropagation();toast(this.title)"></span>
         </div>
         <div class="lb-stat" style="color:#90caf9">${u.sign||0}</div>
         <div class="lb-stat" style="color:#ffe082">${u.signDiff||0}</div>
         <div class="lb-stat" style="color:#a5d6a7">${u.exact||0}</div>
         <div class="lb-stat" style="color:#ff7043">${u.exact5||0}</div>
-        <div class="lb-stat" style="color:#f9a825" ${u.champCorrect ? `title="${u.champ}"` : ''}>${u.champCorrect ? '✓' : (u.champ ? '?' : '—')}</div>
+        <div class="lb-stat" style="color:#f9a825" ${u.champCorrect ? `title="${u.champ}"` : ''}>${u.champCorrect ? 'â' : (u.champ ? '?' : 'â')}</div>
         <div class="lb-total">${u.total}</div>
       </div>`;
       }).join('')}
@@ -1555,19 +1601,19 @@ function renderLeaderboard() {
       const ls = lastSeenStatus('admin');
       return `
       <div class="lb-row" style="opacity:.55;border-top:1px solid rgba(255,255,255,.1)">
-        <div class="lb-rank" style="color:rgba(255,255,255,.25)">⚙️</div>
+        <div class="lb-rank" style="color:rgba(255,255,255,.25)">âï¸</div>
         <div class="lb-user">
           <div class="user-avatar" style="width:28px;height:28px;font-size:12px;background:rgba(198,40,40,.2)">A</div>
-          <span style="color:rgba(255,255,255,.5)">admin${S.currentUser==='admin'?'<span class="lb-me-tag">(аз)</span>':''}</span>
-          <span style="font-size:10px;background:rgba(255,255,255,.06);border-radius:10px;padding:1px 7px;color:rgba(255,255,255,.3);margin-left:4px">не участва</span>
+          <span style="color:rgba(255,255,255,.5)">admin${S.currentUser==='admin'?'<span class="lb-me-tag">(Ð°Ð·)</span>':''}</span>
+          <span style="font-size:10px;background:rgba(255,255,255,.06);border-radius:10px;padding:1px 7px;color:rgba(255,255,255,.3);margin-left:4px">Ð½Ðµ ÑÑÐ°ÑÑÐ²Ð°</span>
           <span style="width:12px;height:12px;border-radius:50%;background:${ls.color};display:inline-block;margin-left:auto;flex-shrink:0;cursor:pointer" title="${ls.title}" onclick="event.stopPropagation();toast(this.title)"></span>
         </div>
-        <div class="lb-stat" style="color:rgba(255,255,255,.2)">—</div>
-        <div class="lb-stat" style="color:rgba(255,255,255,.2)">—</div>
-        <div class="lb-stat" style="color:rgba(255,255,255,.2)">—</div>
-        <div class="lb-stat" style="color:rgba(255,255,255,.2)">—</div>
-        <div class="lb-stat" style="color:rgba(255,255,255,.2)">—</div>
-        <div class="lb-total" style="color:rgba(255,255,255,.2)">—</div>
+        <div class="lb-stat" style="color:rgba(255,255,255,.2)">â</div>
+        <div class="lb-stat" style="color:rgba(255,255,255,.2)">â</div>
+        <div class="lb-stat" style="color:rgba(255,255,255,.2)">â</div>
+        <div class="lb-stat" style="color:rgba(255,255,255,.2)">â</div>
+        <div class="lb-stat" style="color:rgba(255,255,255,.2)">â</div>
+        <div class="lb-total" style="color:rgba(255,255,255,.2)">â</div>
       </div>`;
     })()}
   </div>`;
@@ -1576,8 +1622,8 @@ function renderLeaderboard() {
 // --- GROUPS ---
 function renderGroups() {
   return `
-  <div class="page-title">🌍 Групова фаза — Таблици</div>
-  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:1rem">✓ = директна квалификация (топ 2 от всяка група + 8 най-добри трети места)</div>
+  <div class="page-title">ð ÐÑÑÐ¿Ð¾Ð²Ð° ÑÐ°Ð·Ð° â Ð¢Ð°Ð±Ð»Ð¸ÑÐ¸</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:1rem">â = Ð´Ð¸ÑÐµÐºÑÐ½Ð° ÐºÐ²Ð°Ð»Ð¸ÑÐ¸ÐºÐ°ÑÐ¸Ñ (ÑÐ¾Ð¿ 2 Ð¾Ñ Ð²ÑÑÐºÐ° Ð³ÑÑÐ¿Ð° + 8 Ð½Ð°Ð¹-Ð´Ð¾Ð±ÑÐ¸ ÑÑÐµÑÐ¸ Ð¼ÐµÑÑÐ°)</div>
   <div class="groups-grid">${Object.entries(GROUPS).map(([g,t])=>renderGroupCard(g,t)).join('')}</div>`;
 }
 
@@ -1601,9 +1647,9 @@ function renderGroupCard(gName, teams) {
   });
   return `
   <div class="group-card">
-    <div class="group-card-hd">ГРУПА ${gName}</div>
+    <div class="group-card-hd">ÐÐ Ð£ÐÐ ${gName}</div>
     <table class="g-table">
-      <thead><tr><th>Отбор</th><th>И</th><th>П</th><th>Р</th><th>З</th><th>Т.</th></tr></thead>
+      <thead><tr><th>ÐÑÐ±Ð¾Ñ</th><th>Ð</th><th>Ð</th><th>Ð </th><th>Ð</th><th>Ð¢.</th></tr></thead>
       <tbody>${sorted.map((t,i) => `
         <tr class="${i<2?'qualify-row':''}">
           <td>${FLAGS[t]||''} ${t}</td>
@@ -1621,19 +1667,19 @@ function renderChampion() {
   const locked = isChampLocked() && S.currentUser !== 'admin';
   return `
   <div class="champ-wrap">
-    <div class="champ-icon">🏆</div>
-    <div class="champ-title">Победител на турнира</div>
-    <div class="champ-sub">Кой ще вдигне трофея? Правилна прогноза = <strong style="color:#f9a825">+60 точки</strong></div>
-    ${locked ? `<div style="background:rgba(198,40,40,.12);border:1px solid rgba(198,40,40,.3);border-radius:10px;padding:.6rem 1rem;margin-bottom:1rem;font-size:13px;color:#ef9a9a">🔒 Прогнозата е заключена — турнирът е започнал</div>` : ''}
+    <div class="champ-icon">ð</div>
+    <div class="champ-title">ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ» Ð½Ð° ÑÑÑÐ½Ð¸ÑÐ°</div>
+    <div class="champ-sub">ÐÐ¾Ð¹ ÑÐµ Ð²Ð´Ð¸Ð³Ð½Ðµ ÑÑÐ¾ÑÐµÑ? ÐÑÐ°Ð²Ð¸Ð»Ð½Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð° = <strong style="color:#f9a825">+60 ÑÐ¾ÑÐºÐ¸</strong></div>
+    ${locked ? `<div style="background:rgba(198,40,40,.12);border:1px solid rgba(198,40,40,.3);border-radius:10px;padding:.6rem 1rem;margin-bottom:1rem;font-size:13px;color:#ef9a9a">ð ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ðµ Ð·Ð°ÐºÐ»ÑÑÐµÐ½Ð° â ÑÑÑÐ½Ð¸ÑÑÑ Ðµ Ð·Ð°Ð¿Ð¾ÑÐ½Ð°Ð»</div>` : ''}
     ${my ? `<div class="champ-current">
-      <div style="font-size:2.5rem">${FLAGS[my]||'🏳️'}</div>
+      <div style="font-size:2.5rem">${FLAGS[my]||'ð³ï¸'}</div>
       <div style="font-weight:800;font-size:18px;margin-top:8px">${my}</div>
-      <div style="color:rgba(255,255,255,.4);font-size:12px;margin-top:4px">Твоята прогноза</div>
-    </div>` : `<div style="color:rgba(255,255,255,.35);margin-bottom:1.5rem;font-size:14px">⚠️ Не си избрал победител</div>`}
+      <div style="color:rgba(255,255,255,.4);font-size:12px;margin-top:4px">Ð¢Ð²Ð¾ÑÑÐ° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°</div>
+    </div>` : `<div style="color:rgba(255,255,255,.35);margin-bottom:1.5rem;font-size:14px">â ï¸ ÐÐµ ÑÐ¸ Ð¸Ð·Ð±ÑÐ°Ð» Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»</div>`}
     ${!locked ? `<div class="champ-grid">
       ${ALL_TEAMS.map(t => `
       <button class="champ-btn ${my===t?'selected':''}" data-champ="${t}">
-        <span class="champ-flag">${FLAGS[t]||'🏳️'}</span>${t}
+        <span class="champ-flag">${FLAGS[t]||'ð³ï¸'}</span>${t}
       </button>`).join('')}
     </div>` : ''}
   </div>`;
@@ -1643,15 +1689,15 @@ function renderChampion() {
 function renderAdmin() {
   return `
   <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem">
-    <div class="page-title">⚙️ Администрация</div>
-    <button class="save-btn" id="autoFetchBtn" onclick="autoFetchResults()" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);margin-top:0"> Авто-резултати от FIFA/ESPN</button>
-    <button class="save-btn" onclick="window._downloadBackup()" style="background:linear-gradient(135deg,#1565c0,#0d47a1);margin-top:0">&#x1F4E5; Изтегли бекъп</button>
-    <button class="save-btn" onclick="window._showSyncDiag()" style="background:linear-gradient(135deg,#6a1b9a,#4a148c);margin-top:0">🔍 Sync диагностика</button>
-    <button class="save-btn" onclick="window._fbWriteTest()" style="background:linear-gradient(135deg,#1565c0,#0d47a1);margin-top:0">🧪 Тест запис/четене</button>
-    <button class="save-btn" id="saveResults" style="background:linear-gradient(135deg,#e65100,#bf360c);margin-top:0">💾 Запази резултати</button>
-    <button class="save-btn" id="saveKOResults" style="background:linear-gradient(135deg,#880e4f,#6a1b9a);margin-top:0">⚔️ Запази КО+ДВ/Нак</button>
-    <span id="fbStatusBadge" style="font-size:12px;cursor:default" title="Firebase статус"></span>
-    <span id="autoRefreshBadge" style="font-size:12px;color:rgba(76,175,80,.8);display:none"> Авто-обновяване на 5 мин</span>
+    <div class="page-title">âï¸ ÐÐ´Ð¼Ð¸Ð½Ð¸ÑÑÑÐ°ÑÐ¸Ñ</div>
+    <button class="save-btn" id="autoFetchBtn" onclick="autoFetchResults()" style="background:linear-gradient(135deg,#1b5e20,#2e7d32);margin-top:0">ï ÐÐ²ÑÐ¾-ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ Ð¾Ñ FIFA/ESPN</button>
+    <button class="save-btn" onclick="window._downloadBackup()" style="background:linear-gradient(135deg,#1565c0,#0d47a1);margin-top:0">&#x1F4E5; ÐÐ·ÑÐµÐ³Ð»Ð¸ Ð±ÐµÐºÑÐ¿</button>
+    <button class="save-btn" onclick="window._showSyncDiag()" style="background:linear-gradient(135deg,#6a1b9a,#4a148c);margin-top:0">ð Sync Ð´Ð¸Ð°Ð³Ð½Ð¾ÑÑÐ¸ÐºÐ°</button>
+    <button class="save-btn" onclick="window._fbWriteTest()" style="background:linear-gradient(135deg,#1565c0,#0d47a1);margin-top:0">ð§ª Ð¢ÐµÑÑ Ð·Ð°Ð¿Ð¸Ñ/ÑÐµÑÐµÐ½Ðµ</button>
+    <button class="save-btn" id="saveResults" style="background:linear-gradient(135deg,#e65100,#bf360c);margin-top:0">ð¾ ÐÐ°Ð¿Ð°Ð·Ð¸ ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸</button>
+    <button class="save-btn" id="saveKOResults" style="background:linear-gradient(135deg,#880e4f,#6a1b9a);margin-top:0">âï¸ ÐÐ°Ð¿Ð°Ð·Ð¸ ÐÐ+ÐÐ/ÐÐ°Ðº</button>
+    <span id="fbStatusBadge" style="font-size:12px;cursor:default" title="Firebase ÑÑÐ°ÑÑÑ"></span>
+    <span id="autoRefreshBadge" style="font-size:12px;color:rgba(76,175,80,.8);display:none">ï¢ ÐÐ²ÑÐ¾-Ð¾Ð±Ð½Ð¾Ð²ÑÐ²Ð°Ð½Ðµ Ð½Ð° 5 Ð¼Ð¸Ð½</span>
   <span id="lastAutoSave" style="font-size:11px;color:rgba(76,175,80,.75);margin-left:auto;display:none"></span>
   </div>
     <div class="admin-box" style="margin-top:0">
@@ -1694,8 +1740,8 @@ function renderAdmin() {
             <td style="padding:8px 10px;color:#f9a825;font-weight:700">${predCount}/72</td>
             <td style="padding:8px 10px">
               <button data-reset-user="${u.username}" style="padding:4px 10px;font-size:12px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.3);border-radius:6px;color:#ef9a9a;cursor:pointer;font-weight:600">\ud83d\udd11 \u0420\u0435\u0441\u0435\u0442 \u043f\u0430\u0440\u043e\u043b\u0430</button>
-              <span style="margin-left:6px;padding:4px 10px;font-size:12px;color:rgba(249,168,37,.7)">🏆 ${S.champions[u.username]||'—'}</span>
-              <button onclick="window._deleteUser('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(198,40,40,.35);border:1px solid rgba(198,40,40,.5);border-radius:6px;color:#ff8a80;cursor:pointer;font-weight:600">🗑️ Изтрий</button>
+              <span style="margin-left:6px;padding:4px 10px;font-size:12px;color:rgba(249,168,37,.7)">ð ${S.champions[u.username]||'â'}</span>
+              <button onclick="window._deleteUser('${u.username}')" style="margin-left:6px;padding:4px 10px;font-size:12px;background:rgba(198,40,40,.35);border:1px solid rgba(198,40,40,.5);border-radius:6px;color:#ff8a80;cursor:pointer;font-weight:600">ðï¸ ÐÐ·ÑÑÐ¸Ð¹</button>
             </td>
           </tr>`;
         }).join('')}
@@ -1714,44 +1760,44 @@ function renderAdmin() {
       </div>
     </div>
     <div class="admin-box" style="margin-top:1.5rem;background:rgba(249,168,37,.04);border:1px solid rgba(249,168,37,.2);border-radius:12px;padding:1rem 1.25rem">
-      <div style="font-weight:700;margin-bottom:.75rem">🏆 Реален победител на турнира <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.4)">(задай след финала за 60т бонус)</span></div>
+      <div style="font-weight:700;margin-bottom:.75rem">ð Ð ÐµÐ°Ð»ÐµÐ½ Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ» Ð½Ð° ÑÑÑÐ½Ð¸ÑÐ° <span style="font-size:12px;font-weight:400;color:rgba(255,255,255,.4)">(Ð·Ð°Ð´Ð°Ð¹ ÑÐ»ÐµÐ´ ÑÐ¸Ð½Ð°Ð»Ð° Ð·Ð° 60Ñ Ð±Ð¾Ð½ÑÑ)</span></div>
       <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap">
-        <input type="text" id="actualWinnerInput" placeholder="Напр. Argentina" value="${S.actualWinner||''}"
+        <input type="text" id="actualWinnerInput" placeholder="ÐÐ°Ð¿Ñ. Argentina" value="${S.actualWinner||''}"
           style="flex:1;min-width:180px;padding:8px 12px;background:rgba(0,0,0,.3);border:1px solid rgba(249,168,37,.3);border-radius:8px;color:#fff;font-size:14px"/>
         <button onclick="window._setActualWinner()" style="padding:8px 18px;background:linear-gradient(135deg,#f57f17,#e65100);border:none;border-radius:8px;color:#fff;font-weight:700;font-size:13px;cursor:pointer">
-          💾 Запази победителя
+          ð¾ ÐÐ°Ð¿Ð°Ð·Ð¸ Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»Ñ
         </button>
-        ${S.actualWinner ? `<span style="color:#f9a825;font-size:13px">✓ Текущ: <strong>${S.actualWinner}</strong></span>` : '<span style="color:rgba(255,255,255,.3);font-size:12px">Не е зададен</span>'}
+        ${S.actualWinner ? `<span style="color:#f9a825;font-size:13px">â Ð¢ÐµÐºÑÑ: <strong>${S.actualWinner}</strong></span>` : '<span style="color:rgba(255,255,255,.3);font-size:12px">ÐÐµ Ðµ Ð·Ð°Ð´Ð°Ð´ÐµÐ½</span>'}
       </div>
     </div>
 
     <div class="admin-box" style="margin-top:1.5rem;border:1px solid ${FB.isReady() ? 'rgba(76,175,80,.4)' : 'rgba(255,152,0,.35)'};background:${FB.isReady() ? 'rgba(76,175,80,.05)' : 'rgba(255,152,0,.04)'}">
       <div class="admin-note">
-        <strong>☁️ Firebase Синхронизация</strong>
-        <span style="margin-left:.75rem;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;${FB.isReady() ? 'background:rgba(76,175,80,.2);color:#a5d6a7' : 'background:rgba(255,152,0,.2);color:#ffcc80'}">${FB.isReady() ? '● СВЪРЗАН' : '○ НЕ Е НАСТРОЕН'}</span>
+        <strong>âï¸ Firebase Ð¡Ð¸Ð½ÑÑÐ¾Ð½Ð¸Ð·Ð°ÑÐ¸Ñ</strong>
+        <span style="margin-left:.75rem;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;${FB.isReady() ? 'background:rgba(76,175,80,.2);color:#a5d6a7' : 'background:rgba(255,152,0,.2);color:#ffcc80'}">${FB.isReady() ? 'â Ð¡ÐÐªÐ ÐÐÐ' : 'â ÐÐ Ð ÐÐÐ¡Ð¢Ð ÐÐÐ'}</span>
       </div>
 
       ${FB.isReady() ? `
       <div style="padding:.75rem 1rem;background:rgba(76,175,80,.1);border-radius:8px;font-size:13px;color:#a5d6a7;margin-top:.75rem">
-        ✅ Автоматична синхронизация е активна. Всеки потребител вижда данните на другите в реално време.
+        â ÐÐ²ÑÐ¾Ð¼Ð°ÑÐ¸ÑÐ½Ð° ÑÐ¸Ð½ÑÑÐ¾Ð½Ð¸Ð·Ð°ÑÐ¸Ñ Ðµ Ð°ÐºÑÐ¸Ð²Ð½Ð°. ÐÑÐµÐºÐ¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ» Ð²Ð¸Ð¶Ð´Ð° Ð´Ð°Ð½Ð½Ð¸ÑÐµ Ð½Ð° Ð´ÑÑÐ³Ð¸ÑÐµ Ð² ÑÐµÐ°Ð»Ð½Ð¾ Ð²ÑÐµÐ¼Ðµ.
       </div>
       ` : `
       <div style="padding:.75rem 1rem;background:rgba(0,0,0,.25);border-radius:8px;font-size:12px;color:rgba(255,255,255,.5);line-height:1.9;margin-top:.75rem">
-        <strong style="color:rgba(255,204,128,.8)">⚡ Настройка (еднократно, ~5 мин):</strong><br>
-        1. Отиди на <a href="https://console.firebase.google.com" target="_blank" style="color:#90caf9">console.firebase.google.com</a> → <em>Add project</em><br>
-        2. Пропусни Google Analytics → <em>Create project</em><br>
-        3. Щракни <em>Realtime Database</em> (от лявото меню) → <em>Create database</em> → <em>Start in test mode</em><br>
-        4. Щракни <em>Project settings</em> (⚙️) → <em>Your apps</em> → иконата <strong>&lt;/&gt;</strong> (Web) → регистрирай приложение<br>
-        5. Копирай показания <code>firebaseConfig</code> обект<br>
-        6. В GitHub, отвори <code>index.html</code> → намери <code>const FB_CONFIG = &#123;</code> → попълни стойностите → Commit
+        <strong style="color:rgba(255,204,128,.8)">â¡ ÐÐ°ÑÑÑÐ¾Ð¹ÐºÐ° (ÐµÐ´Ð½Ð¾ÐºÑÐ°ÑÐ½Ð¾, ~5 Ð¼Ð¸Ð½):</strong><br>
+        1. ÐÑÐ¸Ð´Ð¸ Ð½Ð° <a href="https://console.firebase.google.com" target="_blank" style="color:#90caf9">console.firebase.google.com</a> â <em>Add project</em><br>
+        2. ÐÑÐ¾Ð¿ÑÑÐ½Ð¸ Google Analytics â <em>Create project</em><br>
+        3. Ð©ÑÐ°ÐºÐ½Ð¸ <em>Realtime Database</em> (Ð¾Ñ Ð»ÑÐ²Ð¾ÑÐ¾ Ð¼ÐµÐ½Ñ) â <em>Create database</em> â <em>Start in test mode</em><br>
+        4. Ð©ÑÐ°ÐºÐ½Ð¸ <em>Project settings</em> (âï¸) â <em>Your apps</em> â Ð¸ÐºÐ¾Ð½Ð°ÑÐ° <strong>&lt;/&gt;</strong> (Web) â ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð¹ Ð¿ÑÐ¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ<br>
+        5. ÐÐ¾Ð¿Ð¸ÑÐ°Ð¹ Ð¿Ð¾ÐºÐ°Ð·Ð°Ð½Ð¸Ñ <code>firebaseConfig</code> Ð¾Ð±ÐµÐºÑ<br>
+        6. Ð GitHub, Ð¾ÑÐ²Ð¾ÑÐ¸ <code>index.html</code> â Ð½Ð°Ð¼ÐµÑÐ¸ <code>const FB_CONFIG = &#123;</code> â Ð¿Ð¾Ð¿ÑÐ»Ð½Ð¸ ÑÑÐ¾Ð¹Ð½Ð¾ÑÑÐ¸ÑÐµ â Commit
       </div>
       `}
 
       <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:1rem;margin-top:1rem">
-        <div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">Резервна опция (ако Firebase не работи)</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">Ð ÐµÐ·ÐµÑÐ²Ð½Ð° Ð¾Ð¿ÑÐ¸Ñ (Ð°ÐºÐ¾ Firebase Ð½Ðµ ÑÐ°Ð±Ð¾ÑÐ¸)</div>
         <div style="display:flex;gap:.75rem;flex-wrap:wrap">
-          <button class="save-btn" id="exportDataBtn" style="background:linear-gradient(135deg,#37474f,#455a64);font-size:13px">📥 Свали data.json</button>
-          <button class="save-btn" id="importDataBtn" style="background:linear-gradient(135deg,#37474f,#455a64);font-size:13px">📤 Зареди data.json</button>
+          <button class="save-btn" id="exportDataBtn" style="background:linear-gradient(135deg,#37474f,#455a64);font-size:13px">ð¥ Ð¡Ð²Ð°Ð»Ð¸ data.json</button>
+          <button class="save-btn" id="importDataBtn" style="background:linear-gradient(135deg,#37474f,#455a64);font-size:13px">ð¤ ÐÐ°ÑÐµÐ´Ð¸ data.json</button>
           <input type="file" id="importFileInput" accept=".json" style="display:none">
         </div>
       </div>
@@ -1773,13 +1819,13 @@ function normalizeTeam(name) {
     'bosnia and herzegovina':'bosnia-herzegovina',
     'dr congo':'congo dr','democratic republic of congo':'congo dr',
     'democratic republic of the congo':'congo dr',
-    "cote d'ivoire":'ivory coast',"côte d'ivoire":'ivory coast',
+    "cote d'ivoire":'ivory coast',"cÃ´te d'ivoire":'ivory coast',
     'ivory coast':'ivory coast',
     'cape verde islands':'cape verde','cabo verde':'cape verde',
     'curacao':'curacao','cura\u00e7ao':'curacao',
     'usa':'united states','united states of america':'united states',
     'u.s.a.':'united states','u.s.':'united states',
-    'türkiye':'turkey','turkiye':'turkey','turkey':'turkey',
+    'tÃ¼rkiye':'turkey','turkiye':'turkey','turkey':'turkey',
     'south africa':'south africa',
     'saudi arabia':'saudi arabia',
     'new zealand':'new zealand',
@@ -1811,12 +1857,12 @@ async function autoFetchResults(silent=false) {
         const r = await fetch(url);
         const d = await r.json();
         if(d.events && d.events.length) {
-          // Спираме само ако има поне един ЗАВЪРШЕН мач.
-          // Ако URL-ът връща само предстоящи мачове (напр. само днешни),
-          // продължаваме към следващия URL с по-широк диапазон от дати.
+          // Ð¡Ð¿Ð¸ÑÐ°Ð¼Ðµ ÑÐ°Ð¼Ð¾ Ð°ÐºÐ¾ Ð¸Ð¼Ð° Ð¿Ð¾Ð½Ðµ ÐµÐ´Ð¸Ð½ ÐÐÐÐªÐ Ð¨ÐÐ Ð¼Ð°Ñ.
+          // ÐÐºÐ¾ URL-ÑÑ Ð²ÑÑÑÐ° ÑÐ°Ð¼Ð¾ Ð¿ÑÐµÐ´ÑÑÐ¾ÑÑÐ¸ Ð¼Ð°ÑÐ¾Ð²Ðµ (Ð½Ð°Ð¿Ñ. ÑÐ°Ð¼Ð¾ Ð´Ð½ÐµÑÐ½Ð¸),
+          // Ð¿ÑÐ¾Ð´ÑÐ»Ð¶Ð°Ð²Ð°Ð¼Ðµ ÐºÑÐ¼ ÑÐ»ÐµÐ´Ð²Ð°ÑÐ¸Ñ URL Ñ Ð¿Ð¾-ÑÐ¸ÑÐ¾Ðº Ð´Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½ Ð¾Ñ Ð´Ð°ÑÐ¸.
           const hasCompleted = d.events.some(ev => ev.status && ev.status.type && ev.status.type.completed);
           if (hasCompleted) { events = d.events; break; }
-          // Запазваме като fallback, но продължаваме да търсим
+          // ÐÐ°Ð¿Ð°Ð·Ð²Ð°Ð¼Ðµ ÐºÐ°ÑÐ¾ fallback, Ð½Ð¾ Ð¿ÑÐ¾Ð´ÑÐ»Ð¶Ð°Ð²Ð°Ð¼Ðµ Ð´Ð° ÑÑÑÑÐ¸Ð¼
           if (!events.length) events = d.events;
         }
       } catch(e) {}
@@ -1914,7 +1960,7 @@ function bind() {
     const p = document.getElementById('lp').value;
     const user = S.users.find(x => x.username === u && x.password === p);
     if (user) { S.currentUser = u; S.authError = ''; S.sessionLog.push({username: u, action:'login', time: Date.now()}); persist(); render(); }
-    else { S.authError = 'Грешно потребителско име или парола'; render(); }
+    else { S.authError = 'ÐÑÐµÑÐ½Ð¾ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ Ð¸Ð¼Ðµ Ð¸Ð»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°'; render(); }
   });
 
   // Register
@@ -1925,11 +1971,11 @@ function bind() {
     const em = (document.getElementById('re').value || '').trim().toLowerCase();
     const p = document.getElementById('rp').value;
     const p2 = document.getElementById('rp2').value;
-    if (u.length < 3) S.authError = 'Потребителското име трябва да е поне 3 символа';
-    else if (S.users.find(x => x.username === u)) S.authError = 'Потребителското име е заето';
-    else if (em && S.users.find(x => x.email && x.email === em)) S.authError = 'Имейлът вече е регистриран';
-    else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
-    else if (p !== p2) S.authError = 'Паролите не съвпадат';
+    if (u.length < 3) S.authError = 'ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ÑÐ¾ Ð¸Ð¼Ðµ ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 3 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°';
+    else if (S.users.find(x => x.username === u)) S.authError = 'ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ÑÐ¾ Ð¸Ð¼Ðµ Ðµ Ð·Ð°ÐµÑÐ¾';
+    else if (em && S.users.find(x => x.email && x.email === em)) S.authError = 'ÐÐ¼ÐµÐ¹Ð»ÑÑ Ð²ÐµÑÐµ Ðµ ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð½';
+    else if (p.length < 4) S.authError = 'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°';
+    else if (p !== p2) S.authError = 'ÐÐ°ÑÐ¾Ð»Ð¸ÑÐµ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°Ñ';
     else {
       S.users.push({username: u, password: p, email: em || null, registeredAt: Date.now()});
       S.sessionLog.push({username: u, action:'register', time: Date.now()});
@@ -1947,13 +1993,13 @@ function bind() {
     const np = document.getElementById('fnp').value;
     const np2 = document.getElementById('fnp2').value;
     const user = S.users.find(x => x.username === u);
-    if (!user) { S.authError = 'Потребителят не е намерен'; render(); return; }
-    if (!user.email) { S.authError = 'Няма регистриран имейл — свържи се с администратора'; render(); return; }
-    if (user.email !== em) { S.authError = 'Имейлът не съвпада'; render(); return; }
-    if (np.length < 4) { S.authError = 'Паролата трябва да е поне 4 символа'; render(); return; }
-    if (np !== np2) { S.authError = 'Паролите не съвпадат'; render(); return; }
+    if (!user) { S.authError = 'ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÑ Ð½Ðµ Ðµ Ð½Ð°Ð¼ÐµÑÐµÐ½'; render(); return; }
+    if (!user.email) { S.authError = 'ÐÑÐ¼Ð° ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð½ Ð¸Ð¼ÐµÐ¹Ð» â ÑÐ²ÑÑÐ¶Ð¸ ÑÐµ Ñ Ð°Ð´Ð¼Ð¸Ð½Ð¸ÑÑÑÐ°ÑÐ¾ÑÐ°'; render(); return; }
+    if (user.email !== em) { S.authError = 'ÐÐ¼ÐµÐ¹Ð»ÑÑ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°'; render(); return; }
+    if (np.length < 4) { S.authError = 'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°'; render(); return; }
+    if (np !== np2) { S.authError = 'ÐÐ°ÑÐ¾Ð»Ð¸ÑÐµ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°Ñ'; render(); return; }
     user.password = np;
-    S.authError = ''; S.authSuccess = 'Паролата е сменена! Влез с новата си парола.';
+    S.authError = ''; S.authSuccess = 'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° Ðµ ÑÐ¼ÐµÐ½ÐµÐ½Ð°! ÐÐ»ÐµÐ· Ñ Ð½Ð¾Ð²Ð°ÑÐ° ÑÐ¸ Ð¿Ð°ÑÐ¾Ð»Ð°.';
     persist(); render();
   });
 
@@ -1971,7 +2017,7 @@ function bind() {
     S.activeGroup = el.dataset.group; render();
   }));
 
-  // Prediction view tabs (Групова фаза / Елиминации)
+  // Prediction view tabs (ÐÑÑÐ¿Ð¾Ð²Ð° ÑÐ°Ð·Ð° / ÐÐ»Ð¸Ð¼Ð¸Ð½Ð°ÑÐ¸Ð¸)
   document.querySelectorAll('[data-predview]').forEach(el => el.addEventListener('click', () => {
     S.predView = el.dataset.predview; render();
   }));
@@ -1981,7 +2027,7 @@ function bind() {
     S.adminView = el.dataset.adminview; render();
   }));
 
-  // Save predictions — reads ALL [data-pr] inputs on page
+  // Save predictions â reads ALL [data-pr] inputs on page
   const sp = document.getElementById('savePreds');
   if (sp) sp.addEventListener('click', () => {
     if (!S.predictions[S.currentUser]) S.predictions[S.currentUser] = {};
@@ -1990,15 +2036,15 @@ function bind() {
       if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
       S.predictions[S.currentUser][mid][inp.dataset.side] = inp.value;
     });
-    persist(); toast('✅ Прогнозите са запазени!');
+    persist(); toast('â ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ ÑÐ° Ð·Ð°Ð¿Ð°Ð·ÐµÐ½Ð¸!');
   });
 
-  // При промяна на прогноза → иконката на бутона се сменя на незапазена (червена)
+  // ÐÑÐ¸ Ð¿ÑÐ¾Ð¼ÑÐ½Ð° Ð½Ð° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð° â Ð¸ÐºÐ¾Ð½ÐºÐ°ÑÐ° Ð½Ð° Ð±ÑÑÐ¾Ð½Ð° ÑÐµ ÑÐ¼ÐµÐ½Ñ Ð½Ð° Ð½ÐµÐ·Ð°Ð¿Ð°Ð·ÐµÐ½Ð° (ÑÐµÑÐ²ÐµÐ½Ð°)
   document.querySelectorAll('[data-pr]').forEach(inp => {
     inp.addEventListener('input', () => {
       const mid = inp.dataset.pr;
       const btn = document.getElementById('sp_' + mid);
-      if (btn) { btn.textContent = '💾'; btn.style.background = '#c62828'; btn.style.color = '#ffcdd2'; }
+      if (btn) { btn.textContent = 'ð¾'; btn.style.background = '#c62828'; btn.style.color = '#ffcdd2'; }
     });
   });
 
@@ -2019,26 +2065,26 @@ function bind() {
       if (m.result && (m.result.s1 === undefined || m.result.s2 === undefined ||
           isNaN(m.result.s1) || isNaN(m.result.s2))) m.result = null;
     });
-    persist(); toast('✅ Резултатите за Група ' + S.activeGroup + ' са запазени!'); render();
+    persist(); toast('â Ð ÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ÑÐµ Ð·Ð° ÐÑÑÐ¿Ð° ' + S.activeGroup + ' ÑÐ° Ð·Ð°Ð¿Ð°Ð·ÐµÐ½Ð¸!'); render();
   });
 
   // Champion
   document.querySelectorAll('[data-champ]').forEach(btn => btn.addEventListener('click', () => {
-    if (isChampLocked() && S.currentUser !== 'admin') { toast('🔒 Прогнозата за шампион е заключена!'); return; }
+    if (isChampLocked() && S.currentUser !== 'admin') { toast('ð ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ð·Ð° ÑÐ°Ð¼Ð¿Ð¸Ð¾Ð½ Ðµ Ð·Ð°ÐºÐ»ÑÑÐµÐ½Ð°!'); return; }
     S.champions[S.currentUser] = btn.dataset.champ;
-    persist(); toast('🏆 ' + btn.dataset.champ + ' — прогнозата е запазена!'); render();
+    persist(); toast('ð ' + btn.dataset.champ + ' â Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ðµ Ð·Ð°Ð¿Ð°Ð·ÐµÐ½Ð°!'); render();
   }));
 
-  // Profile — change email
+  // Profile â change email
   // Profile forms handled via window._saveProfileEmail / window._saveProfilePw
 
-  // Admin — reset user password
+  // Admin â reset user password
   document.querySelectorAll('[data-reset-user]').forEach(btn => btn.addEventListener('click', () => {
     const uname = btn.dataset.resetUser;
-    const newPw = prompt(`Нова парола за "${uname}":`, '');
-    if (!newPw || newPw.length < 4) { alert('Паролата трябва да е поне 4 символа.'); return; }
+    const newPw = prompt(`ÐÐ¾Ð²Ð° Ð¿Ð°ÑÐ¾Ð»Ð° Ð·Ð° "${uname}":`, '');
+    if (!newPw || newPw.length < 4) { alert('ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°.'); return; }
     const user = S.users.find(x => x.username === uname);
-    if (user) { user.password = newPw; persist(); toast(`✅ Паролата на ${uname} е ресетната!`); }
+    if (user) { user.password = newPw; persist(); toast(`â ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° Ð½Ð° ${uname} Ðµ ÑÐµÑÐµÑÐ½Ð°ÑÐ°!`); }
   }));
 
   // Save KO results + team names
@@ -2082,8 +2128,16 @@ function bind() {
       if (!m) return;
       m.penWinner = sel.value ? parseInt(sel.value) : null;
     });
-    persist(); render(); toast('✅ Елиминациите са запазени!');
-    // Синхронизира ET/pen резултати към Firebase
+
+    // Save ko winner (id >= 77)
+    document.querySelectorAll('[data-adm-kow]').forEach(sel => {
+      const mid = parseInt(sel.dataset.admKow);
+      const m = S.matches.find(x => x.id === mid);
+      if (!m) return;
+      m.koWinner = sel.value ? parseInt(sel.value) : null;
+    });
+    persist(); render(); toast('â ÐÐ»Ð¸Ð¼Ð¸Ð½Ð°ÑÐ¸Ð¸ÑÐµ ÑÐ° Ð·Ð°Ð¿Ð°Ð·ÐµÐ½Ð¸!');
+    // Ð¡Ð¸Ð½ÑÑÐ¾Ð½Ð¸Ð·Ð¸ÑÐ° ET/pen ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸ ÐºÑÐ¼ Firebase
     if (typeof FB !== 'undefined' && FB && FB.db) {
       S.matches.forEach(function(m) {
         if (m.etResult != null || m.penWinner != null) {
@@ -2106,11 +2160,11 @@ function bind() {
     const u = (document.getElementById('adminNewUser').value || '').trim();
     const p = (document.getElementById('adminNewPw').value || '');
     const em = (document.getElementById('adminNewEmail').value || '').trim().toLowerCase();
-    if (u.length < 3) { toast('❌ Потребителското ime трябва да е поне 3 символа'); return; }
-    if (S.users.find(x => x.username === u)) { toast('❌ Потребителското ime е заето'); return; }
-    if (p.length < 4) { toast('❌ Паролата трябва да е поне 4 символа'); return; }
+    if (u.length < 3) { toast('â ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ÑÐ¾ ime ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 3 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°'); return; }
+    if (S.users.find(x => x.username === u)) { toast('â ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ÑÐ¾ ime Ðµ Ð·Ð°ÐµÑÐ¾'); return; }
+    if (p.length < 4) { toast('â ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°'); return; }
     S.users.push({username: u, password: p, email: em || null, registeredAt: Date.now()});
-    persist(); render(); toast('✅ Потребител "' + u + '" е добавен!');
+    persist(); render(); toast('â ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ» "' + u + '" Ðµ Ð´Ð¾Ð±Ð°Ð²ÐµÐ½!');
   });
 
   // Export data.json
@@ -2128,7 +2182,7 @@ function bind() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href = url; a.download = 'data.json'; a.click();
     URL.revokeObjectURL(url);
-    toast('✅ data.json свален!');
+    toast('â data.json ÑÐ²Ð°Ð»ÐµÐ½!');
   });
 
   // Import data.json
@@ -2142,8 +2196,8 @@ function bind() {
       reader.onload = ev => {
         try {
           const data = JSON.parse(ev.target.result);
-          applyGHData(data); render(); toast('✅ Данните са заредени от ' + file.name + '!');
-        } catch { toast('❌ Невалиден JSON файл'); }
+          applyGHData(data); render(); toast('â ÐÐ°Ð½Ð½Ð¸ÑÐµ ÑÐ° Ð·Ð°ÑÐµÐ´ÐµÐ½Ð¸ Ð¾Ñ ' + file.name + '!');
+        } catch { toast('â ÐÐµÐ²Ð°Ð»Ð¸Ð´ÐµÐ½ JSON ÑÐ°Ð¹Ð»'); }
         impFile.value = '';
       };
       reader.readAsText(file);
@@ -2155,20 +2209,20 @@ function bind() {
   if (ghSave) ghSave.addEventListener('click', () => {
     const tok = (document.getElementById('ghTokInput')||{}).value || '';
     GH.setTok(tok.trim());
-    toast(tok.trim() ? '✅ Sync Key запазен!' : '🗑️ Sync Key изтрит');
+    toast(tok.trim() ? 'â Sync Key Ð·Ð°Ð¿Ð°Ð·ÐµÐ½!' : 'ðï¸ Sync Key Ð¸Ð·ÑÑÐ¸Ñ');
   });
   const ghPush = document.getElementById('ghPushBtn');
   if (ghPush) ghPush.addEventListener('click', () => {
-    ghPush.disabled = true; ghPush.textContent = '⏳ Качване...';
-    GH.push().finally(() => { ghPush.disabled = false; ghPush.textContent = '☁️ Качи на GitHub'; });
+    ghPush.disabled = true; ghPush.textContent = 'â³ ÐÐ°ÑÐ²Ð°Ð½Ðµ...';
+    GH.push().finally(() => { ghPush.disabled = false; ghPush.textContent = 'âï¸ ÐÐ°ÑÐ¸ Ð½Ð° GitHub'; });
   });
   const ghPull = document.getElementById('ghPullBtn');
   if (ghPull) ghPull.addEventListener('click', () => {
-    ghPull.disabled = true; ghPull.textContent = '⏳ Изтегляне...';
+    ghPull.disabled = true; ghPull.textContent = 'â³ ÐÐ·ÑÐµÐ³Ð»ÑÐ½Ðµ...';
     GH.pull().then(data => {
-      if (data) { applyGHData(data); render(); toast('✅ Данните са обновени!'); }
-      else toast('❌ Не може да се изтегли от GitHub');
-      ghPull.disabled = false; ghPull.textContent = '⬇️ Изтегли от GitHub';
+      if (data) { applyGHData(data); render(); toast('â ÐÐ°Ð½Ð½Ð¸ÑÐµ ÑÐ° Ð¾Ð±Ð½Ð¾Ð²ÐµÐ½Ð¸!'); }
+      else toast('â ÐÐµ Ð¼Ð¾Ð¶Ðµ Ð´Ð° ÑÐµ Ð¸Ð·ÑÐµÐ³Ð»Ð¸ Ð¾Ñ GitHub');
+      ghPull.disabled = false; ghPull.textContent = 'â¬ï¸ ÐÐ·ÑÐµÐ³Ð»Ð¸ Ð¾Ñ GitHub';
     });
   });
 }
@@ -2180,7 +2234,7 @@ function toast(msg) {
 }
 
 // ===================== GLOBAL AUTH HANDLERS =====================
-// Директни onclick функции — по-надеждни от form submit listener
+// ÐÐ¸ÑÐµÐºÑÐ½Ð¸ onclick ÑÑÐ½ÐºÑÐ¸Ð¸ â Ð¿Ð¾-Ð½Ð°Ð´ÐµÐ¶Ð´Ð½Ð¸ Ð¾Ñ form submit listener
 window._setAuthTab = function(tab) {
   S.authTab = tab; S.authError = ''; S.authSuccess = ''; render();
 };
@@ -2188,14 +2242,14 @@ window._setAuthTab = function(tab) {
 window._doLogin = function() {
   const u = (document.getElementById('lu') || {}).value;
   const p = (document.getElementById('lp') || {}).value;
-  if (!u || !p) { S.authError = 'Попълни потребителско име и парола'; render(); return; }
+  if (!u || !p) { S.authError = 'ÐÐ¾Ð¿ÑÐ»Ð½Ð¸ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ Ð¸Ð¼Ðµ Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°'; render(); return; }
   const user = S.users.find(x => x.username === u.trim() && x.password === p);
   if (user) {
     S.currentUser = u.trim(); S.authError = '';
     S.sessionLog.push({username: u.trim(), action:'login', time: Date.now()});
     persist(); render();
   } else {
-    S.authError = 'Грешно потребителско ime или парола'; render();
+    S.authError = 'ÐÑÐµÑÐ½Ð¾ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ ime Ð¸Ð»Ð¸ Ð¿Ð°ÑÐ¾Ð»Ð°'; render();
   }
 };
 
@@ -2204,11 +2258,11 @@ window._doRegister = function() {
   const em = ((document.getElementById('re') || {}).value || '').trim().toLowerCase();
   const p = (document.getElementById('rp') || {}).value || '';
   const p2 = (document.getElementById('rp2') || {}).value || '';
-  if (u.trim().length < 3) S.authError = 'Потребителското ime трябва да е поне 3 символа';
-  else if (S.users.find(x => x.username === u.trim())) S.authError = 'Потребителското ime е заето';
-  else if (em && S.users.find(x => x.email && x.email === em)) S.authError = 'Имейлът вече е регистриран';
-  else if (p.length < 4) S.authError = 'Паролата трябва да е поне 4 символа';
-  else if (p !== p2) S.authError = 'Паролите не съвпадат';
+  if (u.trim().length < 3) S.authError = 'ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ÑÐ¾ ime ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 3 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°';
+  else if (S.users.find(x => x.username === u.trim())) S.authError = 'ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÐºÐ¾ÑÐ¾ ime Ðµ Ð·Ð°ÐµÑÐ¾';
+  else if (em && S.users.find(x => x.email && x.email === em)) S.authError = 'ÐÐ¼ÐµÐ¹Ð»ÑÑ Ð²ÐµÑÐµ Ðµ ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð½';
+  else if (p.length < 4) S.authError = 'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°';
+  else if (p !== p2) S.authError = 'ÐÐ°ÑÐ¾Ð»Ð¸ÑÐµ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°Ñ';
   else {
     S.users.push({username: u.trim(), password: p, email: em || null, registeredAt: Date.now()});
     S.sessionLog.push({username: u.trim(), action:'register', time: Date.now()});
@@ -2223,13 +2277,13 @@ window._doForgot = function() {
   const np = (document.getElementById('fnp') || {}).value || '';
   const np2 = (document.getElementById('fnp2') || {}).value || '';
   const user = S.users.find(x => x.username === u);
-  if (!user) { S.authError = 'Потребителят не е намерен'; render(); return; }
-  if (!user.email) { S.authError = 'Няма регистриран имейл — свържи се с администратора'; render(); return; }
-  if (user.email !== em) { S.authError = 'Имейлът не съвпада'; render(); return; }
-  if (np.length < 4) { S.authError = 'Паролата трябва да е поне 4 символа'; render(); return; }
-  if (np !== np2) { S.authError = 'Паролите не съвпадат'; render(); return; }
+  if (!user) { S.authError = 'ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÑ Ð½Ðµ Ðµ Ð½Ð°Ð¼ÐµÑÐµÐ½'; render(); return; }
+  if (!user.email) { S.authError = 'ÐÑÐ¼Ð° ÑÐµÐ³Ð¸ÑÑÑÐ¸ÑÐ°Ð½ Ð¸Ð¼ÐµÐ¹Ð» â ÑÐ²ÑÑÐ¶Ð¸ ÑÐµ Ñ Ð°Ð´Ð¼Ð¸Ð½Ð¸ÑÑÑÐ°ÑÐ¾ÑÐ°'; render(); return; }
+  if (user.email !== em) { S.authError = 'ÐÐ¼ÐµÐ¹Ð»ÑÑ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°'; render(); return; }
+  if (np.length < 4) { S.authError = 'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°'; render(); return; }
+  if (np !== np2) { S.authError = 'ÐÐ°ÑÐ¾Ð»Ð¸ÑÐµ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°Ñ'; render(); return; }
   user.password = np;
-  S.authError = ''; S.authSuccess = 'Паролата е сменена! Влез с новата си парола.';
+  S.authError = ''; S.authSuccess = 'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° Ðµ ÑÐ¼ÐµÐ½ÐµÐ½Ð°! ÐÐ»ÐµÐ· Ñ Ð½Ð¾Ð²Ð°ÑÐ° ÑÐ¸ Ð¿Ð°ÑÐ¾Ð»Ð°.';
   persist(); render();
 };
 
@@ -2239,10 +2293,10 @@ window._saveProfileEmail = function() {
   const user = S.users.find(x => x.username === S.currentUser);
   if (!user) return;
   if (em && S.users.find(x => x.username !== S.currentUser && x.email && x.email === em)) {
-    S.profileError = 'Имейлът вече се използва от друг потребител'; S.profileSuccess = ''; render(); return;
+    S.profileError = 'ÐÐ¼ÐµÐ¹Ð»ÑÑ Ð²ÐµÑÐµ ÑÐµ Ð¸Ð·Ð¿Ð¾Ð»Ð·Ð²Ð° Ð¾Ñ Ð´ÑÑÐ³ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»'; S.profileSuccess = ''; render(); return;
   }
   user.email = em || null;
-  S.profileError = ''; S.profileSuccess = 'Имейлът е запазен!';
+  S.profileError = ''; S.profileSuccess = 'ÐÐ¼ÐµÐ¹Ð»ÑÑ Ðµ Ð·Ð°Ð¿Ð°Ð·ÐµÐ½!';
   persist(); render();
 };
 
@@ -2252,11 +2306,11 @@ window._saveProfilePw = function() {
   const np2 = (document.getElementById('peNewPw2') || {}).value || '';
   const user = S.users.find(x => x.username === S.currentUser);
   if (!user) return;
-  if (user.password !== cur) { S.profileError = 'Грешна текуща парола'; S.profileSuccess = ''; render(); return; }
-  if (np.length < 4) { S.profileError = 'Новата парола трябва да е поне 4 символа'; S.profileSuccess = ''; render(); return; }
-  if (np !== np2) { S.profileError = 'Паролите не съвпадат'; S.profileSuccess = ''; render(); return; }
+  if (user.password !== cur) { S.profileError = 'ÐÑÐµÑÐ½Ð° ÑÐµÐºÑÑÐ° Ð¿Ð°ÑÐ¾Ð»Ð°'; S.profileSuccess = ''; render(); return; }
+  if (np.length < 4) { S.profileError = 'ÐÐ¾Ð²Ð°ÑÐ° Ð¿Ð°ÑÐ¾Ð»Ð° ÑÑÑÐ±Ð²Ð° Ð´Ð° Ðµ Ð¿Ð¾Ð½Ðµ 4 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°'; S.profileSuccess = ''; render(); return; }
+  if (np !== np2) { S.profileError = 'ÐÐ°ÑÐ¾Ð»Ð¸ÑÐµ Ð½Ðµ ÑÑÐ²Ð¿Ð°Ð´Ð°Ñ'; S.profileSuccess = ''; render(); return; }
   user.password = np;
-  S.profileError = ''; S.profileSuccess = 'Паролата е сменена успешно!';
+  S.profileError = ''; S.profileSuccess = 'ÐÐ°ÑÐ¾Ð»Ð°ÑÐ° Ðµ ÑÐ¼ÐµÐ½ÐµÐ½Ð° ÑÑÐ¿ÐµÑÐ½Ð¾!';
   persist(); render();
 };
 
@@ -2265,7 +2319,7 @@ window._savePred = function(mid) {
   const inp1 = document.querySelector('[data-pr="'+mid+'"][data-side="s1"]');
   const inp2 = document.querySelector('[data-pr="'+mid+'"][data-side="s2"]');
   if (!inp1 || !inp2) return;
-  if (inp1.value === '' || inp2.value === '') { toast('⚠️ Въведи и двата резултата'); return; }
+  if (inp1.value === '' || inp2.value === '') { toast('â ï¸ ÐÑÐ²ÐµÐ´Ð¸ Ð¸ Ð´Ð²Ð°ÑÐ° ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ°'); return; }
   if (!S.predictions[S.currentUser]) S.predictions[S.currentUser] = {};
   if (!S.predictions[S.currentUser][mid]) S.predictions[S.currentUser][mid] = {s1:'',s2:''};
   S.predictions[S.currentUser][mid].s1 = inp1.value;
@@ -2278,7 +2332,7 @@ window._savePred = function(mid) {
   if(!_draw90){S.predictions[S.currentUser][mid].penWinner='';}else{const _e1=parseInt(inpEt1&&inpEt1.value||''),_e2=parseInt(inpEt2&&inpEt2.value||'');if(!_draw90||(!isNaN(_e1)&&!isNaN(_e2)&&_e1!==_e2))S.predictions[S.currentUser][mid].penWinner='';}
   persist();
   const btn = document.getElementById('sp_'+mid);
-  if (btn) { btn.textContent = '✓'; btn.style.background = '#1b5e20'; btn.style.color = '#a5d6a7'; }
+  if (btn) { btn.textContent = 'â'; btn.style.background = '#1b5e20'; btn.style.color = '#a5d6a7'; }
 };
 
 window._setPenWinner = function(mid, which) {
@@ -2302,7 +2356,23 @@ window._setPenWinner = function(mid, which) {
     btn.style.background = sel ? 'rgba(165,214,167,.15)' : 'rgba(255,255,255,.05)';
     btn.style.color = sel ? '#a5d6a7' : 'rgba(255,255,255,.6)';
   });
-};
+}
+window._setKoWinner = function(mid, which) {
+  var _s1e = document.querySelector('[data-pr="'+mid+'"][data-side="s1"]');
+  var _s2e = document.querySelector('[data-pr="'+mid+'"][data-side="s2"]');
+  var _s1 = parseInt(_s1e && _s1e.value || ''), _s2 = parseInt(_s2e && _s2e.value || '');
+  if (isNaN(_s1) || isNaN(_s2) || _s1 !== _s2) return;
+  if (!S.predictions[S.currentUser] || !S.predictions[S.currentUser][mid]) return;
+  var cur = S.predictions[S.currentUser][mid].koWinner;
+  S.predictions[S.currentUser][mid].koWinner = (cur == which) ? null : which;
+  persist();
+  var koW = S.predictions[S.currentUser][mid].koWinner;
+  [1,2].forEach(function(n) {
+    var btn = document.getElementById('kow' + n + '_' + mid);
+    if (!btn) return;
+    btn.style.background = (koW == n) ? '#2563eb' : 'rgba(255,255,255,.08)';
+  });
+};;
 
 window._updateKoViz = function(mid) {
   var s1e=document.querySelector('[data-pr="'+mid+'"][data-side="s1"]');
@@ -2338,11 +2408,11 @@ new MutationObserver(function(){
 
 window._setActualWinner = function() {
   const val = ((document.getElementById('actualWinnerInput') || {}).value || '').trim();
-  if (!val) { toast('⚠️ Въведи името на победителя'); return; }
+  if (!val) { toast('â ï¸ ÐÑÐ²ÐµÐ´Ð¸ Ð¸Ð¼ÐµÑÐ¾ Ð½Ð° Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»Ñ'); return; }
   S.actualWinner = val;
   persist();
   render();
-  toast('🏆 Победителят е записан: ' + val + '. 60т бонус раздадени!');
+  toast('ð ÐÐ¾Ð±ÐµÐ´Ð¸ÑÐµÐ»ÑÑ Ðµ Ð·Ð°Ð¿Ð¸ÑÐ°Ð½: ' + val + '. 60Ñ Ð±Ð¾Ð½ÑÑ ÑÐ°Ð·Ð´Ð°Ð´ÐµÐ½Ð¸!');
 };
 
 window._downloadBackup = function() {
@@ -2363,14 +2433,14 @@ window._downloadBackup = function() {
   document.body.appendChild(a);
   a.click();
   setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
-  toast('✅ Бекъпът е изтеглен!');
+  toast('â ÐÐµÐºÑÐ¿ÑÑ Ðµ Ð¸Ð·ÑÐµÐ³Ð»ÐµÐ½!');
 };
 
-const PROFILE_EMOJIS = ['⚽','🏆','🥇','🎯','🏅','🎽','🥅','🏟️','🔥','💎','⚡','🌊','❄️','🌪️','☀️','🌙','🌈','🚀','👑','💪','🌟','🧠','😎','🤩','😈','👿','🤠','🥶','🥵','😤','🦁','🐯','🦅','🐺','🦊','🐻','🦈','🐉','🦄','🐆','🦋','🦂','🐊','🦬','🦏','🐘','🎭','🃏'];
+const PROFILE_EMOJIS = ['â½','ð','ð¥','ð¯','ð','ð½','ð¥','ðï¸','ð¥','ð','â¡','ð','âï¸','ðªï¸','âï¸','ð','ð','ð','ð','ðª','ð','ð§ ','ð','ð¤©','ð','ð¿','ð¤ ','ð¥¶','ð¥µ','ð¤','ð¦','ð¯','ð¦','ðº','ð¦','ð»','ð¦','ð','ð¦','ð','ð¦','ð¦','ð','ð¦¬','ð¦','ð','ð­','ð'];
 
 // ===================== SYNC DIAGNOSTICS =====================
 window._syncTest = async function(verbose = true) {
-  if (!FB.ref) { console.log('❌ Firebase не е свързан'); return {ok:[], issues:[{user:'—', problems:['Firebase не е свързан']}]}; }
+  if (!FB.ref) { console.log('â Firebase Ð½Ðµ Ðµ ÑÐ²ÑÑÐ·Ð°Ð½'); return {ok:[], issues:[{user:'â', problems:['Firebase Ð½Ðµ Ðµ ÑÐ²ÑÑÐ·Ð°Ð½']}]}; }
   const snap = await FB.ref.once('value');
   const fbData = snap.val() || {};
   const fbPreds = fbData.predictions || {};
@@ -2389,29 +2459,29 @@ window._syncTest = async function(verbose = true) {
     const rKeys  = Object.keys(remote);
     const userProblems = [];
 
-    // Помощна: label на мач
+    // ÐÐ¾Ð¼Ð¾ÑÐ½Ð°: label Ð½Ð° Ð¼Ð°Ñ
     const matchLabel = mid => {
       const m = S.matches.find(x => String(x.id) === String(mid));
-      return m ? (m.team1 + ' - ' + m.team2) : ('мач ' + mid + ' (невалиден ID)');
+      return m ? (m.team1 + ' - ' + m.team2) : ('Ð¼Ð°Ñ ' + mid + ' (Ð½ÐµÐ²Ð°Ð»Ð¸Ð´ÐµÐ½ ID)');
     };
     const validMatchIds = new Set(S.matches.map(m => String(m.id)));
 
-    // Локално но не в Firebase (пропуска невалидни ключове)
+    // ÐÐ¾ÐºÐ°Ð»Ð½Ð¾ Ð½Ð¾ Ð½Ðµ Ð² Firebase (Ð¿ÑÐ¾Ð¿ÑÑÐºÐ° Ð½ÐµÐ²Ð°Ð»Ð¸Ð´Ð½Ð¸ ÐºÐ»ÑÑÐ¾Ð²Ðµ)
     lKeys.forEach(mid => {
-      if (!validMatchIds.has(String(mid))) return; // стар/невалиден ключ — игнорира
+      if (!validMatchIds.has(String(mid))) return; // ÑÑÐ°Ñ/Ð½ÐµÐ²Ð°Ð»Ð¸Ð´ÐµÐ½ ÐºÐ»ÑÑ â Ð¸Ð³Ð½Ð¾ÑÐ¸ÑÐ°
       if (!remote[mid]) {
-        userProblems.push(matchLabel(mid) + ': ЛИПСВА в Firebase');
+        userProblems.push(matchLabel(mid) + ': ÐÐÐÐ¡ÐÐ Ð² Firebase');
       } else if (String(local[mid].s1) !== String(remote[mid].s1) || String(local[mid].s2) !== String(remote[mid].s2)) {
-        userProblems.push(matchLabel(mid) + ': local=' + local[mid].s1 + ':' + local[mid].s2 + ' ≠ Firebase=' + remote[mid].s1 + ':' + remote[mid].s2);
+        userProblems.push(matchLabel(mid) + ': local=' + local[mid].s1 + ':' + local[mid].s2 + ' â  Firebase=' + remote[mid].s1 + ':' + remote[mid].s2);
       }
     });
-    // В Firebase но не локално
+    // Ð Firebase Ð½Ð¾ Ð½Ðµ Ð»Ð¾ÐºÐ°Ð»Ð½Ð¾
     rKeys.forEach(mid => {
       if (!validMatchIds.has(String(mid))) return;
-      if (!local[mid]) userProblems.push(matchLabel(mid) + ': в Firebase, ЛИПСВА в local');
+      if (!local[mid]) userProblems.push(matchLabel(mid) + ': Ð² Firebase, ÐÐÐÐ¡ÐÐ Ð² local');
     });
-    // Потребителят в Firebase users?
-    if (!fbUserSet.has(u.username)) userProblems.push('потребителят НЕ Е в Firebase /users');
+    // ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÑ Ð² Firebase users?
+    if (!fbUserSet.has(u.username)) userProblems.push('Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»ÑÑ ÐÐ Ð Ð² Firebase /users');
 
     const validLc = lKeys.filter(mid => validMatchIds.has(String(mid))).length;
     const validRc = rKeys.filter(mid => validMatchIds.has(String(mid))).length;
@@ -2421,15 +2491,15 @@ window._syncTest = async function(verbose = true) {
 
   if (verbose) {
     const ts = new Date().toLocaleTimeString('bg-BG');
-    console.log('\n🔍 Firebase Sync Test — ' + ts);
-    if (ok.length) console.log('✅ OK (' + ok.length + '):', ok.map(u => u.user+'('+u.count+')').join(', '));
+    console.log('\nð Firebase Sync Test â ' + ts);
+    if (ok.length) console.log('â OK (' + ok.length + '):', ok.map(u => u.user+'('+u.count+')').join(', '));
     if (issues.length) {
-      console.log('❌ ПРОБЛЕМИ (' + issues.length + ' потребители):');
+      console.log('â ÐÐ ÐÐÐÐÐÐ (' + issues.length + ' Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸):');
       issues.forEach(i => {
-        console.log('  👤', i.user, '— local:'+i.lc, 'Firebase:'+i.rc);
-        i.problems.forEach(p => console.log('    ⚠️', p));
+        console.log('  ð¤', i.user, 'â local:'+i.lc, 'Firebase:'+i.rc);
+        i.problems.forEach(p => console.log('    â ï¸', p));
       });
-    } else { console.log('🎉 Всичко е синхронизирано!'); }
+    } else { console.log('ð ÐÑÐ¸ÑÐºÐ¾ Ðµ ÑÐ¸Ð½ÑÑÐ¾Ð½Ð¸Ð·Ð¸ÑÐ°Ð½Ð¾!'); }
   }
   return {ok, issues};
 };
@@ -2488,10 +2558,10 @@ window._showMatchStats = function(matchId) {
   const wrong = hasRes ? rows.filter(r => r.pts === 0).length : 0;
 
   function ptsLabel(pts) {
-    if (pts === null || pts === undefined) return '<span style="color:rgba(255,255,255,.3)">—</span>';
-    if (pts === 0) return '<span style="color:#ef5350;font-weight:700">0т</span>';
+    if (pts === null || pts === undefined) return '<span style="color:rgba(255,255,255,.3)">â</span>';
+    if (pts === 0) return '<span style="color:#ef5350;font-weight:700">0Ñ</span>';
     const c = pts >= 40 ? '#ff6f00' : pts >= 30 ? '#ff9800' : pts >= 20 ? '#4caf50' : pts >= 10 ? '#29b6f6' : '#ab47bc';
-    return '<span style="color:' + c + ';font-weight:700">+' + pts + 'т</span>';
+    return '<span style="color:' + c + ';font-weight:700">+' + pts + 'Ñ</span>';
   }
 
   const existing = document.getElementById('matchStatsModal');
@@ -2505,24 +2575,24 @@ window._showMatchStats = function(matchId) {
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
         <div>
           <div style="font-size:16px;font-weight:700;color:#fff">
-            ${FLAGS[m.team1]||'🏳️'} ${m.team1} vs ${m.team2} ${FLAGS[m.team2]||'🏳️'}
+            ${FLAGS[m.team1]||'ð³ï¸'} ${m.team1} vs ${m.team2} ${FLAGS[m.team2]||'ð³ï¸'}
           </div>
           <div style="font-size:${hasRes ? '26' : '14'}px;font-weight:700;color:${hasRes ? '#f9a825' : '#ff7043'};margin-top:.25rem">
-            ${hasRes ? `${rs1} : ${rs2}` : '🔴 Мачът е в ход — точките ще се изчислят след финалния резултат'}
+            ${hasRes ? `${rs1} : ${rs2}` : 'ð´ ÐÐ°ÑÑÑ Ðµ Ð² ÑÐ¾Ð´ â ÑÐ¾ÑÐºÐ¸ÑÐµ ÑÐµ ÑÐµ Ð¸Ð·ÑÐ¸ÑÐ»ÑÑ ÑÐ»ÐµÐ´ ÑÐ¸Ð½Ð°Ð»Ð½Ð¸Ñ ÑÐµÐ·ÑÐ»ÑÐ°Ñ'}
           </div>
         </div>
         <button onclick="document.getElementById('matchStatsModal').remove()"
-          style="background:none;border:none;color:#aaa;font-size:22px;cursor:pointer;line-height:1;padding:0 4px">✕</button>
+          style="background:none;border:none;color:#aaa;font-size:22px;cursor:pointer;line-height:1;padding:0 4px">â</button>
       </div>
 
       <div style="display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap">
-        <span style="background:rgba(255,255,255,.07);border-radius:20px;padding:3px 10px;font-size:12px;color:rgba(255,255,255,.6)">👥 ${total} прогнози</span>
+        <span style="background:rgba(255,255,255,.07);border-radius:20px;padding:3px 10px;font-size:12px;color:rgba(255,255,255,.6)">ð¥ ${total} Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</span>
         ${hasRes ? `
-        <span style="background:rgba(76,175,80,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#81c784">🎯 ${exact} точни</span>
-        <span style="background:rgba(171,71,188,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#ce93d8">✓ ${winner} победител</span>
-        <span style="background:rgba(239,83,80,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#ef9a9a">✗ ${wrong} грешни</span>
+        <span style="background:rgba(76,175,80,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#81c784">ð¯ ${exact} ÑÐ¾ÑÐ½Ð¸</span>
+        <span style="background:rgba(171,71,188,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#ce93d8">â ${winner} Ð¿Ð¾Ð±ÐµÐ´Ð¸ÑÐµÐ»</span>
+        <span style="background:rgba(239,83,80,.15);border-radius:20px;padding:3px 10px;font-size:12px;color:#ef9a9a">â ${wrong} Ð³ÑÐµÑÐ½Ð¸</span>
         ` : `
-        <span style="background:rgba(255,112,67,.12);border-radius:20px;padding:3px 10px;font-size:12px;color:#ff8a65">⏳ Прогнозите са видими от началото за пълна прозрачност</span>
+        <span style="background:rgba(255,112,67,.12);border-radius:20px;padding:3px 10px;font-size:12px;color:#ff8a65">â³ ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ ÑÐ° Ð²Ð¸Ð´Ð¸Ð¼Ð¸ Ð¾Ñ Ð½Ð°ÑÐ°Ð»Ð¾ÑÐ¾ Ð·Ð° Ð¿ÑÐ»Ð½Ð° Ð¿ÑÐ¾Ð·ÑÐ°ÑÐ½Ð¾ÑÑ</span>
         `}
       </div>
 
@@ -2530,10 +2600,10 @@ window._showMatchStats = function(matchId) {
         <thead>
           <tr style="color:rgba(255,255,255,.35);font-size:11px;text-transform:uppercase;letter-spacing:.05em">
             <th style="padding:5px 6px;text-align:left;font-weight:500">#</th>
-            <th style="padding:5px 6px;text-align:left;font-weight:500">Потребител</th>
-            <th style="padding:5px 6px;text-align:center;font-weight:500">Прогноза</th>
-            <th style="padding:5px 6px;text-align:center;font-weight:500">ДВ/Нак</th>
-            ${hasRes ? '<th style="padding:5px 6px;text-align:right;font-weight:500">Точки</th>' : ''}
+            <th style="padding:5px 6px;text-align:left;font-weight:500">ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ»</th>
+            <th style="padding:5px 6px;text-align:center;font-weight:500">ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°</th>
+            <th style="padding:5px 6px;text-align:center;font-weight:500">ÐÐ/ÐÐ°Ðº</th>
+            ${hasRes ? '<th style="padding:5px 6px;text-align:right;font-weight:500">Ð¢Ð¾ÑÐºÐ¸</th>' : ''}
           </tr>
         </thead>
         <tbody>
@@ -2541,13 +2611,13 @@ window._showMatchStats = function(matchId) {
             <tr style="border-top:1px solid rgba(255,255,255,.06);${r.username === S.currentUser ? 'background:rgba(255,255,255,.05);' : ''}">
               <td style="padding:8px 6px;color:rgba(255,255,255,.3);font-size:12px">${i+1}</td>
               <td style="padding:8px 6px;color:#fff;font-weight:${r.username === S.currentUser ? '700' : '400'}">
-                ${r.username === S.currentUser ? '👤 ' : ''}${r.username}
+                ${r.username === S.currentUser ? 'ð¤ ' : ''}${r.username}
               </td>
               <td style="padding:8px 6px;text-align:center;font-family:monospace;font-size:16px;font-weight:700;color:${r.hasPred ? '#fff' : 'rgba(255,255,255,.2)'}">
-                ${r.hasPred ? `${r.pred.s1} : ${r.pred.s2}` : '—'}
+                ${r.hasPred ? `${r.pred.s1} : ${r.pred.s2}` : 'â'}
               </td>
               <td style="padding:8px 6px;text-align:center;font-family:monospace;font-size:13px;color:rgba(255,255,255,.75)">
-                ${r.hasPred && r.pred && r.pred.ets1 != null && r.pred.ets1 !== '' ? r.pred.ets1 + ':' + r.pred.ets2 + (r.pred.penWinner ? '/' + (Number(r.pred.penWinner) === 1 ? (m.team1||'').slice(0,3).toUpperCase() : (m.team2||'').slice(0,3).toUpperCase()) : '') : '–'}
+                ${r.hasPred && r.pred && r.pred.ets1 != null && r.pred.ets1 !== '' ? r.pred.ets1 + ':' + r.pred.ets2 + (r.pred.penWinner ? '/' + (Number(r.pred.penWinner) === 1 ? (m.team1||'').slice(0,3).toUpperCase() : (m.team2||'').slice(0,3).toUpperCase()) : '') : 'â'}
               </td>
               ${hasRes ? `<td style="padding:8px 6px;text-align:right">${ptsLabel(r.pts)}</td>` : ''}
             </tr>
@@ -2561,15 +2631,15 @@ window._showMatchStats = function(matchId) {
 };
 
 window._syncRepair = async function() {
-  if (!FB.ref) { toast('❌ Firebase не е свързан'); return; }
-  toast('🔄 Записва всички прогнози към Firebase...');
+  if (!FB.ref) { toast('â Firebase Ð½Ðµ Ðµ ÑÐ²ÑÑÐ·Ð°Ð½'); return; }
+  toast('ð ÐÐ°Ð¿Ð¸ÑÐ²Ð° Ð²ÑÐ¸ÑÐºÐ¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ ÐºÑÐ¼ Firebase...');
   await FB.push({
     users: S.users, matches: S.matches, predictions: S.predictions,
     champions: S.champions, actualWinner: S.actualWinner||null,
     sessionLog: S.sessionLog, _ts: Date.now(),
-    _forceAll: true // записва ВСИЧКИ потребители — само при ръчен repair
+    _forceAll: true // Ð·Ð°Ð¿Ð¸ÑÐ²Ð° ÐÐ¡ÐÐ§ÐÐ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸ â ÑÐ°Ð¼Ð¾ Ð¿ÑÐ¸ ÑÑÑÐµÐ½ repair
   });
-  toast('✅ Force sync завършен!');
+  toast('â Force sync Ð·Ð°Ð²ÑÑÑÐµÐ½!');
 };
 
 window._showSyncDiag = async function() {
@@ -2579,11 +2649,11 @@ window._showSyncDiag = async function() {
   modal.id = 'syncDiagModal';
   modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem';
   modal.innerHTML = `<div style="background:#1a1a2e;border:1.5px solid rgba(255,255,255,.12);border-radius:16px;padding:1.5rem;max-width:560px;width:100%;max-height:80vh;overflow-y:auto">
-    <div style="font-weight:800;font-size:1.1rem;margin-bottom:1rem">🔍 Firebase Sync Диагностика</div>
-    <div id="syncDiagBody" style="color:rgba(255,255,255,.5);font-size:.9rem">⏳ Четене от Firebase...</div>
+    <div style="font-weight:800;font-size:1.1rem;margin-bottom:1rem">ð Firebase Sync ÐÐ¸Ð°Ð³Ð½Ð¾ÑÑÐ¸ÐºÐ°</div>
+    <div id="syncDiagBody" style="color:rgba(255,255,255,.5);font-size:.9rem">â³ Ð§ÐµÑÐµÐ½Ðµ Ð¾Ñ Firebase...</div>
     <div style="display:flex;gap:.5rem;margin-top:1.25rem">
-      <button onclick="window._syncRepair().then(()=>window._showSyncDiag())" style="flex:1;padding:8px;background:rgba(21,101,192,.3);border:1px solid rgba(21,101,192,.5);border-radius:8px;color:#90caf9;cursor:pointer;font-weight:700">🔧 Force Sync всичко</button>
-      <button onclick="document.getElementById('syncDiagModal').remove()" style="padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.5);cursor:pointer">Затвори</button>
+      <button onclick="window._syncRepair().then(()=>window._showSyncDiag())" style="flex:1;padding:8px;background:rgba(21,101,192,.3);border:1px solid rgba(21,101,192,.5);border-radius:8px;color:#90caf9;cursor:pointer;font-weight:700">ð§ Force Sync Ð²ÑÐ¸ÑÐºÐ¾</button>
+      <button onclick="document.getElementById('syncDiagModal').remove()" style="padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:rgba(255,255,255,.5);cursor:pointer">ÐÐ°ÑÐ²Ð¾ÑÐ¸</button>
     </div>
   </div>`;
   document.body.appendChild(modal);
@@ -2591,28 +2661,28 @@ window._showSyncDiag = async function() {
 
   const {ok, issues} = await window._syncTest(false);
   const ts = new Date().toLocaleTimeString('bg-BG');
-  let html = '<div style="font-size:.78rem;color:rgba(255,255,255,.3);margin-bottom:.75rem">Проверка в ' + ts + '</div>';
+  let html = '<div style="font-size:.78rem;color:rgba(255,255,255,.3);margin-bottom:.75rem">ÐÑÐ¾Ð²ÐµÑÐºÐ° Ð² ' + ts + '</div>';
 
   if (issues.length === 0 && ok.length === 0) {
-    html += '<div style="color:#a5d6a7;font-weight:700">✅ Няма потребители за проверка</div>';
+    html += '<div style="color:#a5d6a7;font-weight:700">â ÐÑÐ¼Ð° Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸ Ð·Ð° Ð¿ÑÐ¾Ð²ÐµÑÐºÐ°</div>';
   } else {
-    // OK потребители
+    // OK Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ð¸
     if (ok.length > 0) {
-      html += '<div style="font-weight:700;margin-bottom:.4rem;color:#a5d6a7">✅ Синхронизирани (' + ok.length + ')</div>';
+      html += '<div style="font-weight:700;margin-bottom:.4rem;color:#a5d6a7">â Ð¡Ð¸Ð½ÑÑÐ¾Ð½Ð¸Ð·Ð¸ÑÐ°Ð½Ð¸ (' + ok.length + ')</div>';
       html += '<div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.9rem">';
       ok.forEach(u => {
         html += `<span style="background:rgba(165,214,167,.1);border:1px solid rgba(165,214,167,.25);border-radius:6px;padding:2px 8px;font-size:.78rem;color:#a5d6a7">${u.user} (${u.count})</span>`;
       });
       html += '</div>';
     }
-    // Проблемни
+    // ÐÑÐ¾Ð±Ð»ÐµÐ¼Ð½Ð¸
     if (issues.length > 0) {
-      html += '<div style="font-weight:700;margin-bottom:.5rem;color:#ef9a9a">❌ Проблеми (' + issues.length + ')</div>';
+      html += '<div style="font-weight:700;margin-bottom:.5rem;color:#ef9a9a">â ÐÑÐ¾Ð±Ð»ÐµÐ¼Ð¸ (' + issues.length + ')</div>';
       issues.forEach(i => {
         html += `<div style="background:rgba(198,40,40,.1);border:1px solid rgba(198,40,40,.25);border-radius:9px;padding:.6rem .9rem;margin-bottom:.5rem">`;
-        html += `<div style="font-weight:700;margin-bottom:.3rem">👤 ${i.user} — local: ${i.lc} прогнози, Firebase: ${i.rc}</div>`;
+        html += `<div style="font-weight:700;margin-bottom:.3rem">ð¤ ${i.user} â local: ${i.lc} Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸, Firebase: ${i.rc}</div>`;
         i.problems.forEach(p => {
-          html += `<div style="font-size:.78rem;color:rgba(255,150,150,.7);margin-top:.2rem">⚠️ ${p}</div>`;
+          html += `<div style="font-size:.78rem;color:rgba(255,150,150,.7);margin-top:.2rem">â ï¸ ${p}</div>`;
         });
         html += '</div>';
       });
@@ -2627,7 +2697,7 @@ window._saveAvatar = function(emoji) {
   if (emoji) { userObj.avatar = emoji; } else { delete userObj.avatar; }
   persist();
   render();
-  toast(emoji ? '✅ Аватарът е сменен на ' + emoji : '✅ Аватарът е премахнат.');
+  toast(emoji ? 'â ÐÐ²Ð°ÑÐ°ÑÑÑ Ðµ ÑÐ¼ÐµÐ½ÐµÐ½ Ð½Ð° ' + emoji : 'â ÐÐ²Ð°ÑÐ°ÑÑÑ Ðµ Ð¿ÑÐµÐ¼Ð°ÑÐ½Ð°Ñ.');
 };
 
 window._editPrediction = function(username) {
@@ -2639,10 +2709,10 @@ window._editPrediction = function(username) {
   const matchOptions = S.matches.map((m, idx) => {
     const mid = idx + 1;
     const p = preds[mid];
-    const predStr = (p && p.s1 !== '' && p.s2 !== '') ? (p.s1 + ':' + p.s2) : '—';
+    const predStr = (p && p.s1 !== '' && p.s2 !== '') ? (p.s1 + ':' + p.s2) : 'â';
     const resStr = m.result ? (m.result.s1 + '-' + m.result.s2) : '';
-    const locked = resStr ? ' 🔒' : '';
-    return '<option value="' + mid + '">' + mid + '. ' + m.team1 + ' vs ' + m.team2 + locked + '  (прогноза: ' + predStr + ')</option>';
+    const locked = resStr ? ' ð' : '';
+    return '<option value="' + mid + '">' + mid + '. ' + m.team1 + ' vs ' + m.team2 + locked + '  (Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°: ' + predStr + ')</option>';
   }).join('');
 
   const modal = document.createElement('div');
@@ -2650,26 +2720,26 @@ window._editPrediction = function(username) {
   modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1rem';
   modal.innerHTML =
     '<div style="background:#0d1b2a;border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:1.5rem;width:100%;max-width:440px;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.6)">' +
-      '<div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem">✏️ Редактирай прогноза — <span style="color:#90caf9">' + username + '</span></div>' +
+      '<div style="font-size:1.05rem;font-weight:800;margin-bottom:1.1rem">âï¸ Ð ÐµÐ´Ð°ÐºÑÐ¸ÑÐ°Ð¹ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð° â <span style="color:#90caf9">' + username + '</span></div>' +
       '<div style="margin-bottom:1rem">' +
-        '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">Избери мач</label>' +
+        '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">ÐÐ·Ð±ÐµÑÐ¸ Ð¼Ð°Ñ</label>' +
         '<select id="epMatchSel" style="width:100%;padding:10px 12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:12px;outline:none">' + matchOptions + '</select>' +
       '</div>' +
       '<div style="display:flex;align-items:flex-end;gap:1rem;margin-bottom:1.25rem">' +
         '<div style="flex:1">' +
-          '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">Домакин</label>' +
-          '<input id="epS1" type="number" min="0" max="30" placeholder="—" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:22px;font-weight:800;text-align:center;outline:none;-moz-appearance:textfield">' +
+          '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">ÐÐ¾Ð¼Ð°ÐºÐ¸Ð½</label>' +
+          '<input id="epS1" type="number" min="0" max="30" placeholder="â" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:22px;font-weight:800;text-align:center;outline:none;-moz-appearance:textfield">' +
         '</div>' +
         '<div style="padding-bottom:12px;font-size:1.6rem;font-weight:800;color:rgba(255,255,255,.25)">:</div>' +
         '<div style="flex:1">' +
-          '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">Гост</label>' +
-          '<input id="epS2" type="number" min="0" max="30" placeholder="—" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:22px;font-weight:800;text-align:center;outline:none;-moz-appearance:textfield">' +
+          '<label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">ÐÐ¾ÑÑ</label>' +
+          '<input id="epS2" type="number" min="0" max="30" placeholder="â" style="width:100%;padding:10px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:22px;font-weight:800;text-align:center;outline:none;-moz-appearance:textfield">' +
         '</div>' +
       '</div>' +
       '<div style="display:flex;gap:.6rem">' +
-        '<button id="epSaveBtn" style="flex:1;padding:11px;background:linear-gradient(135deg,#1565c0,#0d47a1);border:none;border-radius:9px;color:#fff;font-size:14px;font-weight:700;cursor:pointer">💾 Запази</button>' +
-        '<button id="epDelBtn" title="Изтрий прогнозата за този мач" style="padding:11px 13px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.35);border-radius:9px;color:#ef9a9a;font-size:14px;cursor:pointer">🗑️</button>' +
-        '<button id="epCancelBtn" style="padding:11px 13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer">✕</button>' +
+        '<button id="epSaveBtn" style="flex:1;padding:11px;background:linear-gradient(135deg,#1565c0,#0d47a1);border:none;border-radius:9px;color:#fff;font-size:14px;font-weight:700;cursor:pointer">ð¾ ÐÐ°Ð¿Ð°Ð·Ð¸</button>' +
+        '<button id="epDelBtn" title="ÐÐ·ÑÑÐ¸Ð¹ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ð·Ð° ÑÐ¾Ð·Ð¸ Ð¼Ð°Ñ" style="padding:11px 13px;background:rgba(198,40,40,.2);border:1px solid rgba(198,40,40,.35);border-radius:9px;color:#ef9a9a;font-size:14px;cursor:pointer">ðï¸</button>' +
+        '<button id="epCancelBtn" style="padding:11px 13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer">â</button>' +
       '</div>' +
     '</div>';
   document.body.appendChild(modal);
@@ -2690,22 +2760,22 @@ window._editPrediction = function(username) {
   document.getElementById('epDelBtn').addEventListener('click', function() {
     const mid = parseInt(document.getElementById('epMatchSel').value);
     const m = S.matches[mid - 1];
-    const label = m ? (m.team1 + ' vs ' + m.team2) : ('Мач ' + mid);
-    if (!confirm('Изтрий прогнозата на "' + username + '" за ' + label + '?')) return;
+    const label = m ? (m.team1 + ' vs ' + m.team2) : ('ÐÐ°Ñ ' + mid);
+    if (!confirm('ÐÐ·ÑÑÐ¸Ð¹ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ð½Ð° "' + username + '" Ð·Ð° ' + label + '?')) return;
     if (!S.predictions[username]) S.predictions[username] = {};
     delete S.predictions[username][mid];
     LS.set('wc26_preds', S.predictions);
     if (FB.isReady()) {
       FB.db.ref('wc26/predictions/' + username + '/' + mid).set(null)
-        .then(() => toast('🗑️ Прогнозата е изтрита!'))
-        .catch(function(e) { toast('❌ Грешка: ' + e.message); });
+        .then(() => toast('ðï¸ ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ° Ðµ Ð¸Ð·ÑÑÐ¸ÑÐ°!'))
+        .catch(function(e) { toast('â ÐÑÐµÑÐºÐ°: ' + e.message); });
       FB.db.ref('wc26/_ts').set(Date.now());
-    } else { toast('🗑️ Изтрита локално.'); }
+    } else { toast('ðï¸ ÐÐ·ÑÑÐ¸ÑÐ° Ð»Ð¾ÐºÐ°Ð»Ð½Ð¾.'); }
     document.getElementById('epS1').value = '';
     document.getElementById('epS2').value = '';
-    // Обнови label в select-а
+    // ÐÐ±Ð½Ð¾Ð²Ð¸ label Ð² select-Ð°
     const sel = document.getElementById('epMatchSel');
-    if (sel) { const opt = sel.options[sel.selectedIndex]; if (opt) opt.text = opt.text.replace(/\(прогноза:.*?\)/, '(прогноза: —)'); }
+    if (sel) { const opt = sel.options[sel.selectedIndex]; if (opt) opt.text = opt.text.replace(/\(Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°:.*?\)/, '(Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°: â)'); }
     render();
   });
 
@@ -2713,20 +2783,20 @@ window._editPrediction = function(username) {
     const mid = parseInt(document.getElementById('epMatchSel').value);
     const s1v = document.getElementById('epS1').value.trim();
     const s2v = document.getElementById('epS2').value.trim();
-    if (s1v === '' || s2v === '') { toast('❌ Въведи двата резултата!'); return; }
+    if (s1v === '' || s2v === '') { toast('â ÐÑÐ²ÐµÐ´Ð¸ Ð´Ð²Ð°ÑÐ° ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ°!'); return; }
     const n1 = parseInt(s1v), n2 = parseInt(s2v);
-    if (isNaN(n1) || isNaN(n2) || n1 < 0 || n2 < 0) { toast('❌ Невалидни стойности!'); return; }
+    if (isNaN(n1) || isNaN(n2) || n1 < 0 || n2 < 0) { toast('â ÐÐµÐ²Ð°Ð»Ð¸Ð´Ð½Ð¸ ÑÑÐ¾Ð¹Ð½Ð¾ÑÑÐ¸!'); return; }
     if (!S.predictions[username]) S.predictions[username] = {};
     S.predictions[username][mid] = { s1: String(n1), s2: String(n2) };
     LS.set('wc26_preds', S.predictions);
     const m = S.matches[mid - 1];
-    const label = m ? (m.team1 + ' vs ' + m.team2) : ('Мач ' + mid);
+    const label = m ? (m.team1 + ' vs ' + m.team2) : ('ÐÐ°Ñ ' + mid);
     if (FB.isReady()) {
       FB.db.ref('wc26/predictions/' + username + '/' + mid).set({ s1: String(n1), s2: String(n2) })
-        .then(() => toast('✅ ' + username + ': ' + label + ' → ' + n1 + ':' + n2))
-        .catch(function(e) { toast('❌ Грешка: ' + e.message); });
+        .then(() => toast('â ' + username + ': ' + label + ' â ' + n1 + ':' + n2))
+        .catch(function(e) { toast('â ÐÑÐµÑÐºÐ°: ' + e.message); });
       FB.db.ref('wc26/_ts').set(Date.now());
-    } else { toast('✅ Записано локално. Firebase не е свързан.'); }
+    } else { toast('â ÐÐ°Ð¿Ð¸ÑÐ°Ð½Ð¾ Ð»Ð¾ÐºÐ°Ð»Ð½Ð¾. Firebase Ð½Ðµ Ðµ ÑÐ²ÑÑÐ·Ð°Ð½.'); }
     render();
     closeModal();
   });
@@ -2734,55 +2804,55 @@ window._editPrediction = function(username) {
 
 window._editChampion = function(username) {
   const current = S.champions[username] || '';
-  const val = prompt('🏆 Шампионска прогноза за "' + username + '":\n(остави празно за да изтриеш прогнозата)', current);
-  if (val === null) return; // отказ
+  const val = prompt('ð Ð¨Ð°Ð¼Ð¿Ð¸Ð¾Ð½ÑÐºÐ° Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð° Ð·Ð° "' + username + '":\n(Ð¾ÑÑÐ°Ð²Ð¸ Ð¿ÑÐ°Ð·Ð½Ð¾ Ð·Ð° Ð´Ð° Ð¸Ð·ÑÑÐ¸ÐµÑ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð°ÑÐ°)', current);
+  if (val === null) return; // Ð¾ÑÐºÐ°Ð·
   const trimmed = val.trim();
   if (trimmed) {
     S.champions[username] = trimmed;
   } else {
     delete S.champions[username];
   }
-  // Запази в localStorage
+  // ÐÐ°Ð¿Ð°Ð·Ð¸ Ð² localStorage
   LS.set('wc26_champs', S.champions);
-  // Запази path-specific в Firebase (не презаписва останалите)
+  // ÐÐ°Ð¿Ð°Ð·Ð¸ path-specific Ð² Firebase (Ð½Ðµ Ð¿ÑÐµÐ·Ð°Ð¿Ð¸ÑÐ²Ð° Ð¾ÑÑÐ°Ð½Ð°Ð»Ð¸ÑÐµ)
   if (FB.isReady()) {
     FB.db.ref('wc26/champions/' + username).set(trimmed || null)
-      .then(() => toast('🏆 Шампион за "' + username + '" ' + (trimmed ? 'е сменен на ' + trimmed : 'е изтрит') + '!'))
-      .catch(e => toast('❌ Грешка: ' + e.message));
+      .then(() => toast('ð Ð¨Ð°Ð¼Ð¿Ð¸Ð¾Ð½ Ð·Ð° "' + username + '" ' + (trimmed ? 'Ðµ ÑÐ¼ÐµÐ½ÐµÐ½ Ð½Ð° ' + trimmed : 'Ðµ Ð¸Ð·ÑÑÐ¸Ñ') + '!'))
+      .catch(e => toast('â ÐÑÐµÑÐºÐ°: ' + e.message));
     FB.db.ref('wc26/_ts').set(Date.now());
   } else {
-    toast('🏆 Записано локално. Firebase не е свързан.');
+    toast('ð ÐÐ°Ð¿Ð¸ÑÐ°Ð½Ð¾ Ð»Ð¾ÐºÐ°Ð»Ð½Ð¾. Firebase Ð½Ðµ Ðµ ÑÐ²ÑÑÐ·Ð°Ð½.');
   }
   render();
 };
 
 window._deleteUser = function(username) {
-  if (username === 'admin') { toast('❌ Не може да изтриеш admin!'); return; }
-  if (!confirm('Сигурен ли си, че искаш да изтриеш потребител "' + username + '"?\n\nВсички прогнози на потребителя ще бъдат изтрити!')) return;
+  if (username === 'admin') { toast('â ÐÐµ Ð¼Ð¾Ð¶Ðµ Ð´Ð° Ð¸Ð·ÑÑÐ¸ÐµÑ admin!'); return; }
+  if (!confirm('Ð¡Ð¸Ð³ÑÑÐµÐ½ Ð»Ð¸ ÑÐ¸, ÑÐµ Ð¸ÑÐºÐ°Ñ Ð´Ð° Ð¸Ð·ÑÑÐ¸ÐµÑ Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ» "' + username + '"?\n\nÐÑÐ¸ÑÐºÐ¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ Ð½Ð° Ð¿Ð¾ÑÑÐµÐ±Ð¸ÑÐµÐ»Ñ ÑÐµ Ð±ÑÐ´Ð°Ñ Ð¸Ð·ÑÑÐ¸ÑÐ¸!')) return;
   S.users = S.users.filter(u => u.username !== username);
   delete S.predictions[username];
   delete S.champions[username];
   persist();
-  FB.deleteUserData(username); // Изрично изтрий от Firebase пътищата predictions/X и champions/X
+  FB.deleteUserData(username); // ÐÐ·ÑÐ¸ÑÐ½Ð¾ Ð¸Ð·ÑÑÐ¸Ð¹ Ð¾Ñ Firebase Ð¿ÑÑÐ¸ÑÐ°ÑÐ° predictions/X Ð¸ champions/X
   render();
-  toast('🗑️ Потребител "' + username + '" е изтрит.');
+  toast('ðï¸ ÐÐ¾ÑÑÐµÐ±Ð¸ÑÐµÐ» "' + username + '" Ðµ Ð¸Ð·ÑÑÐ¸Ñ.');
 };
 
 // ===================== INIT =====================
-// render() веднага — страницата се показва без да чака Firebase/GitHub
+// render() Ð²ÐµÐ´Ð½Ð°Ð³Ð° â ÑÑÑÐ°Ð½Ð¸ÑÐ°ÑÐ° ÑÐµ Ð¿Ð¾ÐºÐ°Ð·Ð²Ð° Ð±ÐµÐ· Ð´Ð° ÑÐ°ÐºÐ° Firebase/GitHub
 try {
   render();
 } catch(e) {
   document.getElementById('root').innerHTML =
     '<div style="color:white;background:#c0392b;padding:2rem;font-family:monospace;font-size:0.9rem">' +
-    '<b>❌ JavaScript грешка при зареждане:</b><br><br>' + e.message + '<br><br>' + (e.stack||'').replace(/\n/g,'<br>') + '</div>';
+    '<b>â JavaScript Ð³ÑÐµÑÐºÐ° Ð¿ÑÐ¸ Ð·Ð°ÑÐµÐ¶Ð´Ð°Ð½Ðµ:</b><br><br>' + e.message + '<br><br>' + (e.stack||'').replace(/\n/g,'<br>') + '</div>';
   throw e;
 }
 
-// ─── renderKnockout: самостоятелен таб Елиминации ───────────────────────────
+// âââ renderKnockout: ÑÐ°Ð¼Ð¾ÑÑÐ¾ÑÑÐµÐ»ÐµÐ½ ÑÐ°Ð± ÐÐ»Ð¸Ð¼Ð¸Ð½Ð°ÑÐ¸Ð¸ âââââââââââââââââââââââââââ
 function renderKnockout() {
   const STAGE_ORDER = ['R32','R16','QF','SF','3P','F'];
-  const STAGE_LABELS = {R32:'1/32-финали',R16:'1/16-финали',QF:'Четвъртфинали',SF:'Полуфинали','3P':'Мач за 3-то място',F:'Финал'};
+  const STAGE_LABELS = {R32:'1/32-ÑÐ¸Ð½Ð°Ð»Ð¸',R16:'1/16-ÑÐ¸Ð½Ð°Ð»Ð¸',QF:'Ð§ÐµÑÐ²ÑÑÑÑÐ¸Ð½Ð°Ð»Ð¸',SF:'ÐÐ¾Ð»ÑÑÐ¸Ð½Ð°Ð»Ð¸','3P':'ÐÐ°Ñ Ð·Ð° 3-ÑÐ¾ Ð¼ÑÑÑÐ¾',F:'Ð¤Ð¸Ð½Ð°Ð»'};
   fetchKOPairings().then(() => autoFetchResults(true));
   const preds = S.predictions[S.currentUser] || {};
   const koMatches = S.matches.filter(m => m.stage);
@@ -2792,7 +2862,7 @@ function renderKnockout() {
   for (const stage of STAGE_ORDER) {
     const sm = koMatches.filter(m => m.stage === stage);
     if (!sm.length) continue;
-    content += `<div class="matchday-label" style="background:linear-gradient(90deg,rgba(198,40,40,.15),transparent)">⚔️ ${STAGE_LABELS[stage]}</div>`;
+    content += `<div class="matchday-label" style="background:linear-gradient(90deg,rgba(198,40,40,.15),transparent)">âï¸ ${STAGE_LABELS[stage]}</div>`;
     const byDate = {};
     for (const m of sm) {
       const dk = matchDateKey(m);
@@ -2800,7 +2870,7 @@ function renderKnockout() {
       byDate[dk].matches.push(m);
     }
     for (const {label, matches} of Object.values(byDate)) {
-      if (label) content += `<div style="padding:6px 0 4px 1rem;font-size:12px;color:rgba(255,255,255,.4)">📅 ${label}</div>`;
+      if (label) content += `<div style="padding:6px 0 4px 1rem;font-size:12px;color:rgba(255,255,255,.4)">ð ${label}</div>`;
       content += matches.map(m => {
         const badge = `<span style="font-size:10px;background:rgba(198,40,40,.2);padding:2px 8px;border-radius:10px;color:#ef9a9a">${m.stageLabel} #${m.matchNum}</span>`;
         return renderMatchCard(m, preds[m.id], false, badge);
@@ -2808,22 +2878,22 @@ function renderKnockout() {
     }
   }
   return `
-  <div class="page-title">⚔️ Елиминации</div>
+  <div class="page-title">âï¸ ÐÐ»Ð¸Ð¼Ð¸Ð½Ð°ÑÐ¸Ð¸</div>
   <div class="info-bar">
-    ⏰ Заключва 15 мин преди мача &nbsp;·&nbsp;
-    🔥<strong style="color:#ff7043">30т</strong> точен 5+ &nbsp;·&nbsp;
-    💡<strong style="color:#a5d6a7">20т</strong> точен &nbsp;·&nbsp;
-    <strong style="color:#90caf9">10т</strong> знак &nbsp;·&nbsp;
-    ⏱️<strong style="color:#ffe082">+15т</strong> ET победа &nbsp;·&nbsp;
-    ⏱️<strong style="color:#64b5f6">+10т</strong> ET равен &nbsp;·&nbsp;
-    🎯<strong style="color:#a5d6a7">+20т</strong> дузпи &nbsp;·&nbsp;
-    Прогнозирал: <strong>${predKO}/${totalKO}</strong>
+    â° ÐÐ°ÐºÐ»ÑÑÐ²Ð° 15 Ð¼Ð¸Ð½ Ð¿ÑÐµÐ´Ð¸ Ð¼Ð°ÑÐ° &nbsp;Â·&nbsp;
+    ð¥<strong style="color:#ff7043">30Ñ</strong> ÑÐ¾ÑÐµÐ½ 5+ &nbsp;Â·&nbsp;
+    ð¡<strong style="color:#a5d6a7">20Ñ</strong> ÑÐ¾ÑÐµÐ½ &nbsp;Â·&nbsp;
+    <strong style="color:#90caf9">10Ñ</strong> Ð·Ð½Ð°Ðº &nbsp;Â·&nbsp;
+    â±ï¸<strong style="color:#ffe082">+15Ñ</strong> ET Ð¿Ð¾Ð±ÐµÐ´Ð° &nbsp;Â·&nbsp;
+    â±ï¸<strong style="color:#64b5f6">+10Ñ</strong> ET ÑÐ°Ð²ÐµÐ½ &nbsp;Â·&nbsp;
+    ð¯<strong style="color:#a5d6a7">+20Ñ</strong> Ð´ÑÐ·Ð¿Ð¸ &nbsp;Â·&nbsp;
+    ÐÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐ°Ð»: <strong>${predKO}/${totalKO}</strong>
   </div>
   ${content}
-  <div><button class="save-btn" id="savePreds">💾 Запази прогнозите</button></div>`;
+  <div><button class="save-btn" id="savePreds">ð¾ ÐÐ°Ð¿Ð°Ð·Ð¸ Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸ÑÐµ</button></div>`;
 }
 
-// Автоматично изтегляне на КО двойките от ESPN API
+// ÐÐ²ÑÐ¾Ð¼Ð°ÑÐ¸ÑÐ½Ð¾ Ð¸Ð·ÑÐµÐ³Ð»ÑÐ½Ðµ Ð½Ð° ÐÐ Ð´Ð²Ð¾Ð¹ÐºÐ¸ÑÐµ Ð¾Ñ ESPN API
 async function fetchKOPairings() {
   const BASE = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
   // Fetch ESPN day-by-day for R32 + one range call
@@ -2861,7 +2931,7 @@ async function fetchKOPairings() {
         m.kickoff && Math.abs(new Date(m.kickoff).getTime() - evDate.getTime()) < 3600000
       );
       if (!koMatch) continue;
-      // Приемаме само реални имена на отбори (не "Round of 32 X Winner")
+      // ÐÑÐ¸ÐµÐ¼Ð°Ð¼Ðµ ÑÐ°Ð¼Ð¾ ÑÐµÐ°Ð»Ð½Ð¸ Ð¸Ð¼ÐµÐ½Ð° Ð½Ð° Ð¾ÑÐ±Ð¾ÑÐ¸ (Ð½Ðµ "Round of 32 X Winner")
       const isReal = n => n && !n.includes('Winner') && !n.includes('Loser') && !n.includes('Runner') && n !== 'TBD';
       if (koMatch.team1 === 'TBD' && isReal(name1)) { koMatch.team1 = name1; changed = true; }
       if (koMatch.team2 === 'TBD' && isReal(name2)) { koMatch.team2 = name2; changed = true; }
@@ -2874,28 +2944,28 @@ async function fetchKOPairings() {
       }
     }
   }
-  if (changed) { persist(); render(); console.log('ESPN: КО двойките обновени'); }
+  if (changed) { persist(); render(); console.log('ESPN: ÐÐ Ð´Ð²Ð¾Ð¹ÐºÐ¸ÑÐµ Ð¾Ð±Ð½Ð¾Ð²ÐµÐ½Ð¸'); }
   return changed;
 }
 
 // ===================== POST-LOAD INIT =====================
-// Firebase SDK е зареден накрая в <body> — трябва да изчакаме window.load
+// Firebase SDK Ðµ Ð·Ð°ÑÐµÐ´ÐµÐ½ Ð½Ð°ÐºÑÐ°Ñ Ð² <body> â ÑÑÑÐ±Ð²Ð° Ð´Ð° Ð¸Ð·ÑÐ°ÐºÐ°Ð¼Ðµ window.load
 window.addEventListener('load', function() {
-  // Инициализирай Firebase (SDK е заредено вече)
+  // ÐÐ½Ð¸ÑÐ¸Ð°Ð»Ð¸Ð·Ð¸ÑÐ°Ð¹ Firebase (SDK Ðµ Ð·Ð°ÑÐµÐ´ÐµÐ½Ð¾ Ð²ÐµÑÐµ)
   FB.init();
 
-  // Auto-pull от GitHub само ако Firebase НЕ е конфигуриран
+  // Auto-pull Ð¾Ñ GitHub ÑÐ°Ð¼Ð¾ Ð°ÐºÐ¾ Firebase ÐÐ Ðµ ÐºÐ¾Ð½ÑÐ¸Ð³ÑÑÐ¸ÑÐ°Ð½
   if (!FB_CONFIG.databaseURL) {
     GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
   }
 
-  // ESPN КО sync след 3 секунди
+  // ESPN ÐÐ sync ÑÐ»ÐµÐ´ 3 ÑÐµÐºÑÐ½Ð´Ð¸
   setTimeout(fetchKOPairings, 3000);
 
   // ===================== AUTO REFRESH =====================
   const WC_START = new Date('2026-06-11T00:00:00+03:00').getTime();
-  const WC_END   = new Date('2026-07-21T23:59:00+03:00').getTime(); // +2 дни след финала
-  const INTERVAL = 2 * 60 * 1000; // 2 минути — по-бързо обновяване на резултати
+  const WC_END   = new Date('2026-07-21T23:59:00+03:00').getTime(); // +2 Ð´Ð½Ð¸ ÑÐ»ÐµÐ´ ÑÐ¸Ð½Ð°Ð»Ð°
+  const INTERVAL = 2 * 60 * 1000; // 2 Ð¼Ð¸Ð½ÑÑÐ¸ â Ð¿Ð¾-Ð±ÑÑÐ·Ð¾ Ð¾Ð±Ð½Ð¾Ð²ÑÐ²Ð°Ð½Ðµ Ð½Ð° ÑÐµÐ·ÑÐ»ÑÐ°ÑÐ¸
 
   function tryAutoFetch() {
     const now = Date.now();
@@ -2914,7 +2984,7 @@ window.addEventListener('load', function() {
 });
 
 </script>
-<!-- Firebase SDK — зарежда се накрая за да не блокира страницата -->
+<!-- Firebase SDK â Ð·Ð°ÑÐµÐ¶Ð´Ð° ÑÐµ Ð½Ð°ÐºÑÐ°Ñ Ð·Ð° Ð´Ð° Ð½Ðµ Ð±Ð»Ð¾ÐºÐ¸ÑÐ° ÑÑÑÐ°Ð½Ð¸ÑÐ°ÑÐ° -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js">
 window._showProfile = function(uname) {
@@ -2924,11 +2994,11 @@ window._showProfile = function(uname) {
   const lu = lb.find(function(x){return x.username===uname;})||{};
   const av = uname.slice(0,1).toUpperCase();
   const statRows = [
-    ['ЗНАК','#90caf9',lu.sign||0,(lu.sign||0)*10],
-    ['+РАЗЛ','#ffe082',lu.signDiff||0,(lu.signDiff||0)*15],
-    ['ТОЧЕН','#a5d6a7',lu.exact||0,(lu.exact||0)*20],
+    ['ÐÐÐÐ','#90caf9',lu.sign||0,(lu.sign||0)*10],
+    ['+Ð ÐÐÐ','#ffe082',lu.signDiff||0,(lu.signDiff||0)*15],
+    ['Ð¢ÐÐ§ÐÐ','#a5d6a7',lu.exact||0,(lu.exact||0)*20],
     ['5+','#ff7043',lu.exact5||0,(lu.exact5||0)*30],
-    ['\u{1F3C6}',lu.champCorrect?'#f9a825':'rgba(255,255,255,.35)',lu.champ?'?':'—',lu.champPts||0],
+    ['\u{1F3C6}',lu.champCorrect?'#f9a825':'rgba(255,255,255,.35)',lu.champ?'?':'â',lu.champPts||0],
   ];
   const matchList = (S.matches||[]).filter(function(m){
     const p=preds[m.id];
@@ -2940,9 +3010,9 @@ window._showProfile = function(uname) {
     const signOk=sg(ps1-ps2)===sg(rs1-rs2);
     const diffOk=signOk&&(ps1-ps2===rs1-rs2);
     const exactOk=ps1===rs1&&ps2===rs2;
-    const badge=exactOk?'<b style="color:#a5d6a7">✔✔+20</b>':diffOk?'<b style="color:#ffe082">≈+15</b>':signOk?'<b style="color:#90caf9">~+10</b>':'<span style="color:rgba(255,255,255,.25)">✗</span>';
+    const badge=exactOk?'<b style="color:#a5d6a7">ââ+20</b>':diffOk?'<b style="color:#ffe082">â+15</b>':signOk?'<b style="color:#90caf9">~+10</b>':'<span style="color:rgba(255,255,255,.25)">â</span>';
     return '<div style="display:grid;grid-template-columns:1fr 38px 38px 60px;gap:4px;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px">'
-      +'<span style="color:rgba(255,255,255,.5);overflow:hidden;white-space:nowrap">'+m.home+' – '+m.away+'</span>'
+      +'<span style="color:rgba(255,255,255,.5);overflow:hidden;white-space:nowrap">'+m.home+' â '+m.away+'</span>'
       +'<span style="color:rgba(255,255,255,.3);text-align:center">'+p.s1+':'+p.s2+'</span>'
       +'<span style="font-weight:600;text-align:center">'+r.s1+':'+r.s2+'</span>'
       +badge+'</div>';
@@ -2952,18 +3022,18 @@ window._showProfile = function(uname) {
     '<div style="display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:14px">'
     +'<div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1565c0,#0d47a1);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0">'+av+'</div>'
     +'<div style="flex:1"><div style="font-size:16px;font-weight:700">'+uname+'</div>'
-    +'<div style="font-size:11px;color:rgba(255,255,255,.4)">#'+rank+' класиране · '+predCount+' прогнози</div></div>'
-    +'<div style="font-size:24px;font-weight:800;color:#ffd54f">'+(lu.total||0)+'<span style="font-size:12px">т</span></div></div>'
+    +'<div style="font-size:11px;color:rgba(255,255,255,.4)">#'+rank+' ÐºÐ»Ð°ÑÐ¸ÑÐ°Ð½Ðµ Â· '+predCount+' Ð¿ÑÐ¾Ð³Ð½Ð¾Ð·Ð¸</div></div>'
+    +'<div style="font-size:24px;font-weight:800;color:#ffd54f">'+(lu.total||0)+'<span style="font-size:12px">Ñ</span></div></div>'
     +'<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:16px">'
-    +statRows.map(function(s){return '<div style="background:rgba(255,255,255,.07);border-radius:8px;padding:8px 4px;text-align:center"><div style="font-size:8px;color:rgba(255,255,255,.35);margin-bottom:2px">'+s[0]+'</div><div style="font-size:17px;font-weight:800;color:'+s[1]+';line-height:1">'+s[2]+'</div><div style="font-size:8px;color:rgba(255,255,255,.25);margin-top:2px">'+s[3]+'т</div></div>';}).join('')+'</div>'
+    +statRows.map(function(s){return '<div style="background:rgba(255,255,255,.07);border-radius:8px;padding:8px 4px;text-align:center"><div style="font-size:8px;color:rgba(255,255,255,.35);margin-bottom:2px">'+s[0]+'</div><div style="font-size:17px;font-weight:800;color:'+s[1]+';line-height:1">'+s[2]+'</div><div style="font-size:8px;color:rgba(255,255,255,.25);margin-top:2px">'+s[3]+'Ñ</div></div>';}).join('')+'</div>'
     +(matchList.length
-      ?'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:4px">Изиграни ('+matchList.length+'):</div>'+matchList.join('')
-      :'<div style="color:rgba(255,255,255,.3);font-size:12px;padding:8px 0">Все още няма изиграни мачове</div>');
+      ?'<div style="font-size:10px;color:rgba(255,255,255,.35);margin-bottom:4px">ÐÐ·Ð¸Ð³ÑÐ°Ð½Ð¸ ('+matchList.length+'):</div>'+matchList.join('')
+      :'<div style="color:rgba(255,255,255,.3);font-size:12px;padding:8px 0">ÐÑÐµ Ð¾ÑÐµ Ð½ÑÐ¼Ð° Ð¸Ð·Ð¸Ð³ÑÐ°Ð½Ð¸ Ð¼Ð°ÑÐ¾Ð²Ðµ</div>');
   const mod=document.getElementById('prof-modal');
   mod.style.display='block';
   mod.scrollTop=0;
 };
 </script>
-<div id="prof-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9900;background:rgba(0,0,0,.88);overflow-y:auto;-webkit-overflow-scrolling:touch"><div style="max-width:460px;margin:0 auto;padding:16px 12px 80px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:12px;color:rgba(255,255,255,.4)">👤 Профил</span><button onclick="document.getElementById('prof-modal').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);border-radius:16px;padding:4px 12px;cursor:pointer;font-size:12px">✕</button></div><div id="prof-inner" style="background:#0d1b2a;border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.08)"></div></div></div>
+<div id="prof-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9900;background:rgba(0,0,0,.88);overflow-y:auto;-webkit-overflow-scrolling:touch"><div style="max-width:460px;margin:0 auto;padding:16px 12px 80px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:12px;color:rgba(255,255,255,.4)">ð¤ ÐÑÐ¾ÑÐ¸Ð»</span><button onclick="document.getElementById('prof-modal').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.7);border-radius:16px;padding:4px 12px;cursor:pointer;font-size:12px">â</button></div><div id="prof-inner" style="background:#0d1b2a;border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.08)"></div></div></div>
 </body>
 </html>
