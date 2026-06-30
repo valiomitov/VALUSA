@@ -372,7 +372,7 @@ const FB = {
 
       // ── Споделени данни (matches, actualWinner, sessionLog) ──
       // Тук admin е единственият писател, OK е да заменяме целия обект.
-      if (data.matches)      update['matches']      = data.matches;
+      if (data.matches && data._forceAll)      update['matches']      = data.matches;
       if (data.sessionLog)   update['sessionLog']   = data.sessionLog;
       update['actualWinner'] = data.actualWinner ?? null;
       update['_ts']          = data._ts;
