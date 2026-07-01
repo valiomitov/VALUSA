@@ -1398,7 +1398,7 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
     }
     var team1_77 = m.team1 || 'Тим А';
     var team2_77 = m.team2 || 'Тим Б';
-    var canPick77 = isPredDraw && !locked;
+    var canPick77 = !locked;
     var grayNote77 = !isPredDraw ? '<span style="font-size:10px;opacity:.5;margin-left:4px">(само при равен)</span>' : '';
     var dimStyle77 = canPick77 ? '' : 'pointer-events:none;opacity:.4;';
     var bg1_77 = koW77 === '1' ? '#2563eb' : 'rgba(255,255,255,.08)';
@@ -2340,7 +2340,7 @@ window._updateKoViz = function(mid) {
   if(!etOK){if(et1)et1.value='';if(et2)et2.value='';}
   var e1=parseInt(et1&&et1.value||''),e2=parseInt(et2&&et2.value||'');
   var hasET=!isNaN(e1)&&!isNaN(e2),drawET=hasET&&e1===e2;
-  var penOK=etOK&&(!hasET||drawET);
+  var penOK=draw90;
   [p1,p2].forEach(function(el){if(el){el.style.opacity=penOK?'':'0.3';el.style.pointerEvents=penOK?'':'none';}});
 };
 
@@ -2568,7 +2568,7 @@ window._showMatchStats = function(matchId) {
                 ${r.hasPred ? `${r.pred.s1} : ${r.pred.s2}` : '—'}
               </td>
               <td style="padding:8px 6px;text-align:center;font-family:monospace;font-size:13px;color:rgba(255,255,255,.75)">
-                ${r.hasPred && r.pred && r.pred.ets1 != null && r.pred.ets1 !== '' ? r.pred.ets1 + ':' + r.pred.ets2 + (r.pred.penWinner ? '/' + (Number(r.pred.penWinner) === 1 ? (m.team1||'').slice(0,3).toUpperCase() : (m.team2||'').slice(0,3).toUpperCase()) : '') : '–'}
+                ${m.id >= 77 ? (r.hasPred && r.pred && r.pred.koWinner ? (Number(r.pred.koWinner) === 1 ? (m.team1||'').slice(0,3).toUpperCase() : (m.team2||'').slice(0,3).toUpperCase()) : '–') : (r.hasPred && r.pred && r.pred.penWinner ? (Number(r.pred.penWinner) === 1 ? (m.team1||'').slice(0,3).toUpperCase() : (m.team2||'').slice(0,3).toUpperCase()) : '–')}
               </td>
               ${hasRes ? `<td style="padding:8px 6px;text-align:right">${ptsLabel(r.pts)}</td>` : ''}
             </tr>
