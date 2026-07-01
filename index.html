@@ -2488,6 +2488,7 @@ window._showMatchStats = function(matchId) {
         else if (es1 !== es2 && (pe1 > pe2) === (es1 > es2)) etBonus = 15;
       }
       if (m.penWinner != null && pred.penWinner != null && pred.penWinner !== '' && Number(pred.penWinner) === Number(m.penWinner)) penBonus = 20;
+      if (m.id >= 77 && m.koWinner != null && pred.koWinner != null && !isNaN(Number(pred.s1)) && !isNaN(Number(pred.s2)) && Number(pred.s1) === Number(pred.s2) && Number(pred.koWinner) === Number(m.koWinner)) etBonus = 30;
       if (pts !== null) pts = pts + etBonus + penBonus;
     }
     return { username: u.username, pred, hasPred, pts, etBonus, penBonus };
@@ -2570,7 +2571,7 @@ window._showMatchStats = function(matchId) {
               <td style="padding:8px 6px;text-align:center;font-family:monospace;font-size:13px;color:rgba(255,255,255,.75)">
                 ${m.id >= 77 ? (r.hasPred && r.pred && r.pred.koWinner ? (Number(r.pred.koWinner) === 1 ? (m.team1||'').slice(0,3).toUpperCase() : (m.team2||'').slice(0,3).toUpperCase()) : '–') : (r.hasPred && r.pred && r.pred.penWinner ? (Number(r.pred.penWinner) === 1 ? (m.team1||'').slice(0,3).toUpperCase() : (m.team2||'').slice(0,3).toUpperCase()) : '–')}
               </td>
-              ${hasRes ? `<td style="padding:8px 6px;text-align:right">${ptsLabel(r.pts)}</td>` : ''}
+              ${hasRes ? `<td style="padding:8px 6px;text-align:right">${ptsLabel(r.pts)}${(r.etBonus||0)+(r.penBonus||0)>0?'<br><span style="font-size:10px;color:#a78bfa">+'+((r.etBonus||0)+(r.penBonus||0))+' бон</span>':''}</td>` : ''}
             </tr>
           `).join('')}
         </tbody>
