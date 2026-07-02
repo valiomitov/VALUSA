@@ -615,6 +615,7 @@ function applyGHData(data, fromFirebase = false) {
     LS.set('wc26_log', S.sessionLog);
     if (S.actualWinner) LS.set('wc26_winner', S.actualWinner); else LS.del('wc26_winner');
   }
+  if (fromFirebase && typeof renderLeaderboard === 'function') renderLeaderboard();
 }
 
 
@@ -2932,6 +2933,12 @@ window.addEventListener('load', function() {
     if(badge) badge.style.display = 'inline';
     setTimeout(tryAutoFetch, 3000);
     setInterval(fetchKOPairings, INTERVAL);
+  }
+});
+
+document.addEventListener('visibilitychange', function() {
+  if (!document.hidden && typeof renderLeaderboard === 'function') {
+    renderLeaderboard();
   }
 });
 
