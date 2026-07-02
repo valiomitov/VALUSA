@@ -1836,7 +1836,7 @@ async function autoFetchResults(silent=false) {
         const t1 = normalizeTeam(m.team1), t2 = normalizeTeam(m.team2);
         return (t1===hn && t2===an) || (t1===an && t2===hn);
       });
-      if(match) {
+      if(match && !match.koWinner) {
         const t1isHome = normalizeTeam(match.team1) === hn;
         match.result = { s1: t1isHome ? hs : as2, s2: t1isHome ? as2 : hs };
         updated++;
