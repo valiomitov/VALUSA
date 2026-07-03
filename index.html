@@ -522,7 +522,7 @@ function applyGHData(data, fromFirebase = false) {
     // Дедублиране по username (Firebase може да има и стари числови ключове И нови path ключове едновременно)
     const _seenUsernames = {};
     _rawUsers.forEach(u => { if (u && u.username) _seenUsernames[u.username] = u; });
-    const fbUsersArr = Object.values(_seenUsernames);
+    const fbUsersArr = Object.values(_seenUsernames).filter(u => u && u.username && !Array.from(u.username).some(c => c.charCodeAt(0) >= 0x80 && c.charCodeAt(0) <= 0xFF));
     if (fromFirebase) {
       // Deep-merge на ниво user: Firebase е авторитетен за своите полета,
       // но запазва локални полета (напр. avatar) ако Firebase все още ги няма.
@@ -758,7 +758,7 @@ function userScore(username) {
 }
 
 function leaderboard() {
-  return dedupeUsers(S.users).filter(u => u.username !== 'admin').map(u => {
+  return dedupeUsers(S.users).filter(u => u.username !== 'admin' && !Array.from(u.username).some(c => c.charCodeAt(0) >= 0x80 && c.charCodeAt(0) <= 0xFF)).map(u => {
     const sc = userScore(u.username);
     const preds = S.predictions[u.username] || {};
     const predCount = Object.keys(preds).filter(k => { const p = preds[k]; return p && p.s1 !== undefined && p.s1 !== '' && p.s2 !== undefined && p.s2 !== ''; }).length;
