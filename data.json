@@ -1,1 +1,1237 @@
-{"users":[{"username":"admin","password":"admin2026"},{"username":"Ð¡Ð°ÑÐºÐ¾-ÐÐºÑÐ»Ð°ÑÐ°"}],"matches":[{"id":1,"group":"A","matchday":1,"team1":"Mexico","team2":"South Africa","result":{"s1":2,"s2":0},"kickoff":"2026-06-11T22:00+03:00"},{"id":2,"group":"A","matchday":1,"team1":"South Korea","team2":"Czechia","result":{"s1":2,"s2":1},"kickoff":"2026-06-12T05:00+03:00"},{"id":3,"group":"A","matchday":2,"team1":"Mexico","team2":"South Korea","result":{"s1":1,"s2":0},"kickoff":"2026-06-19T04:00+03:00"},{"id":4,"group":"A","matchday":2,"team1":"South Africa","team2":"Czechia","result":{"s1":1,"s2":1},"kickoff":"2026-06-18T19:00+03:00"},{"id":5,"group":"A","matchday":3,"team1":"Mexico","team2":"Czechia","result":{"s1":3,"s2":0},"kickoff":"2026-06-25T04:00+03:00"},{"id":6,"group":"A","matchday":3,"team1":"South Africa","team2":"South Korea","result":{"s1":1,"s2":0},"kickoff":"2026-06-25T04:00+03:00"},{"id":7,"group":"B","matchday":1,"team1":"Canada","team2":"Bosnia-Herzegovina","result":{"s1":1,"s2":1},"kickoff":"2026-06-12T22:00+03:00"},{"id":8,"group":"B","matchday":1,"team1":"Qatar","team2":"Switzerland","result":{"s1":1,"s2":1},"kickoff":"2026-06-13T22:00+03:00"},{"id":9,"group":"B","matchday":2,"team1":"Canada","team2":"Qatar","result":{"s1":6,"s2":0},"kickoff":"2026-06-19T01:00+03:00"},{"id":10,"group":"B","matchday":2,"team1":"Bosnia-Herzegovina","team2":"Switzerland","result":{"s1":1,"s2":4},"kickoff":"2026-06-18T22:00+03:00"},{"id":11,"group":"B","matchday":3,"team1":"Canada","team2":"Switzerland","result":{"s1":1,"s2":2},"kickoff":"2026-06-24T22:00+03:00"},{"id":12,"group":"B","matchday":3,"team1":"Bosnia-Herzegovina","team2":"Qatar","result":{"s1":3,"s2":1},"kickoff":"2026-06-24T22:00+03:00"},{"id":13,"group":"C","matchday":1,"team1":"Brazil","team2":"Morocco","result":{"s1":1,"s2":1},"kickoff":"2026-06-14T01:00+03:00"},{"id":14,"group":"C","matchday":1,"team1":"Haiti","team2":"Scotland","result":{"s1":0,"s2":1},"kickoff":"2026-06-14T04:00+03:00"},{"id":15,"group":"C","matchday":2,"team1":"Brazil","team2":"Haiti","result":{"s1":3,"s2":0},"kickoff":"2026-06-20T04:00+03:00"},{"id":16,"group":"C","matchday":2,"team1":"Morocco","team2":"Scotland","result":{"s1":1,"s2":0},"kickoff":"2026-06-20T01:00+03:00"},{"id":17,"group":"C","matchday":3,"team1":"Brazil","team2":"Scotland","result":{"s1":3,"s2":0},"kickoff":"2026-06-25T01:00+03:00"},{"id":18,"group":"C","matchday":3,"team1":"Morocco","team2":"Haiti","result":{"s1":4,"s2":2},"kickoff":"2026-06-25T01:00+03:00"},{"id":19,"group":"D","matchday":1,"team1":"United States","team2":"Paraguay","result":{"s1":4,"s2":1},"kickoff":"2026-06-13T04:00+03:00"},{"id":20,"group":"D","matchday":1,"team1":"Australia","team2":"Turkey","result":{"s1":2,"s2":0},"kickoff":"2026-06-14T07:00+03:00"},{"id":21,"group":"D","matchday":2,"team1":"United States","team2":"Australia","result":{"s1":2,"s2":0},"kickoff":"2026-06-19T22:00+03:00"},{"id":22,"group":"D","matchday":2,"team1":"Paraguay","team2":"Turkey","result":{"s1":1,"s2":0},"kickoff":"2026-06-20T07:00+03:00"},{"id":23,"group":"D","matchday":3,"team1":"United States","team2":"Turkey","result":{"s1":2,"s2":3},"kickoff":"2026-06-26T05:00+03:00"},{"id":24,"group":"D","matchday":3,"team1":"Paraguay","team2":"Australia","result":{"s1":0,"s2":0},"kickoff":"2026-06-26T05:00+03:00"},{"id":25,"group":"E","matchday":1,"team1":"Germany","team2":"Curacao","result":{"s1":7,"s2":1},"kickoff":"2026-06-14T20:00+03:00"},{"id":26,"group":"E","matchday":1,"team1":"Ivory Coast","team2":"Ecuador","result":{"s1":1,"s2":0},"kickoff":"2026-06-15T02:00+03:00"},{"id":27,"group":"E","matchday":2,"team1":"Germany","team2":"Ivory Coast","result":{"s1":2,"s2":1},"kickoff":"2026-06-20T23:00+03:00"},{"id":28,"group":"E","matchday":2,"team1":"Curacao","team2":"Ecuador","result":{"s1":0,"s2":0},"kickoff":"2026-06-21T03:00+03:00"},{"id":29,"group":"E","matchday":3,"team1":"Germany","team2":"Ecuador","result":{"s1":1,"s2":2},"kickoff":"2026-06-25T23:00+03:00"},{"id":30,"group":"E","matchday":3,"team1":"Curacao","team2":"Ivory Coast","result":{"s1":0,"s2":2},"kickoff":"2026-06-25T23:00+03:00"},{"id":31,"group":"F","matchday":1,"team1":"Netherlands","team2":"Japan","result":{"s1":2,"s2":2},"kickoff":"2026-06-14T23:00+03:00"},{"id":32,"group":"F","matchday":1,"team1":"Sweden","team2":"Tunisia","result":{"s1":5,"s2":1},"kickoff":"2026-06-15T05:00+03:00"},{"id":33,"group":"F","matchday":2,"team1":"Netherlands","team2":"Sweden","result":{"s1":5,"s2":1},"kickoff":"2026-06-20T20:00+03:00"},{"id":34,"group":"F","matchday":2,"team1":"Japan","team2":"Tunisia","result":{"s1":4,"s2":0},"kickoff":"2026-06-21T07:00+03:00"},{"id":35,"group":"F","matchday":3,"team1":"Netherlands","team2":"Tunisia","result":{"s1":3,"s2":1},"kickoff":"2026-06-26T02:00+03:00"},{"id":36,"group":"F","matchday":3,"team1":"Japan","team2":"Sweden","result":{"s1":1,"s2":1},"kickoff":"2026-06-26T02:00+03:00"},{"id":37,"group":"G","matchday":1,"team1":"Belgium","team2":"Egypt","result":{"s1":1,"s2":1},"kickoff":"2026-06-15T22:00+03:00"},{"id":38,"group":"G","matchday":1,"team1":"Iran","team2":"New Zealand","result":{"s1":2,"s2":2},"kickoff":"2026-06-16T04:00+03:00"},{"id":39,"group":"G","matchday":2,"team1":"Belgium","team2":"Iran","result":{"s1":0,"s2":0},"kickoff":"2026-06-21T22:00+03:00"},{"id":40,"group":"G","matchday":2,"team1":"Egypt","team2":"New Zealand","result":{"s1":3,"s2":1},"kickoff":"2026-06-22T04:00+03:00"},{"id":41,"group":"G","matchday":3,"team1":"Belgium","team2":"New Zealand","result":{"s1":5,"s2":1},"kickoff":"2026-06-27T06:00+03:00"},{"id":42,"group":"G","matchday":3,"team1":"Egypt","team2":"Iran","result":{"s1":1,"s2":1},"kickoff":"2026-06-27T06:00+03:00"},{"id":43,"group":"H","matchday":1,"team1":"Spain","team2":"Cape Verde","result":{"s1":0,"s2":0},"kickoff":"2026-06-15T19:00+03:00"},{"id":44,"group":"H","matchday":1,"team1":"Saudi Arabia","team2":"Uruguay","result":{"s1":1,"s2":1},"kickoff":"2026-06-16T01:00+03:00"},{"id":45,"group":"H","matchday":2,"team1":"Spain","team2":"Saudi Arabia","result":{"s1":4,"s2":0},"kickoff":"2026-06-21T19:00+03:00"},{"id":46,"group":"H","matchday":2,"team1":"Cape Verde","team2":"Uruguay","result":{"s1":2,"s2":2},"kickoff":"2026-06-22T01:00+03:00"},{"id":47,"group":"H","matchday":3,"team1":"Spain","team2":"Uruguay","result":{"s1":1,"s2":0},"kickoff":"2026-06-27T03:00+03:00"},{"id":48,"group":"H","matchday":3,"team1":"Cape Verde","team2":"Saudi Arabia","result":{"s1":0,"s2":0},"kickoff":"2026-06-27T03:00+03:00"},{"id":49,"group":"I","matchday":1,"team1":"France","team2":"Senegal","result":{"s1":3,"s2":1},"kickoff":"2026-06-16T22:00+03:00"},{"id":50,"group":"I","matchday":1,"team1":"Iraq","team2":"Norway","result":{"s1":1,"s2":4},"kickoff":"2026-06-17T01:00+03:00"},{"id":51,"group":"I","matchday":2,"team1":"France","team2":"Iraq","result":{"s1":3,"s2":0},"kickoff":"2026-06-23T00:00+03:00"},{"id":52,"group":"I","matchday":2,"team1":"Senegal","team2":"Norway","result":{"s1":2,"s2":3},"kickoff":"2026-06-23T03:00+03:00"},{"id":53,"group":"I","matchday":3,"team1":"France","team2":"Norway","result":{"s1":4,"s2":1},"kickoff":"2026-06-26T22:00+03:00"},{"id":54,"group":"I","matchday":3,"team1":"Senegal","team2":"Iraq","result":{"s1":5,"s2":0},"kickoff":"2026-06-26T22:00+03:00"},{"id":55,"group":"J","matchday":1,"team1":"Argentina","team2":"Algeria","result":{"s1":3,"s2":0},"kickoff":"2026-06-17T04:00+03:00"},{"id":56,"group":"J","matchday":1,"team1":"Austria","team2":"Jordan","result":{"s1":3,"s2":1},"kickoff":"2026-06-17T07:00+03:00"},{"id":57,"group":"J","matchday":2,"team1":"Argentina","team2":"Austria","result":{"s1":2,"s2":0},"kickoff":"2026-06-22T20:00+03:00"},{"id":58,"group":"J","matchday":2,"team1":"Algeria","team2":"Jordan","result":{"s1":2,"s2":1},"kickoff":"2026-06-23T06:00+03:00"},{"id":59,"group":"J","matchday":3,"team1":"Argentina","team2":"Jordan","result":{"s1":3,"s2":1},"kickoff":"2026-06-28T05:00+03:00"},{"id":60,"group":"J","matchday":3,"team1":"Algeria","team2":"Austria","result":{"s1":3,"s2":3},"kickoff":"2026-06-28T05:00+03:00"},{"id":61,"group":"K","matchday":1,"team1":"Portugal","team2":"Congo DR","result":{"s1":1,"s2":1},"kickoff":"2026-06-17T20:00+03:00"},{"id":62,"group":"K","matchday":1,"team1":"Uzbekistan","team2":"Colombia","result":{"s1":1,"s2":3},"kickoff":"2026-06-18T05:00+03:00"},{"id":63,"group":"K","matchday":2,"team1":"Portugal","team2":"Uzbekistan","result":{"s1":5,"s2":0},"kickoff":"2026-06-23T20:00+03:00"},{"id":64,"group":"K","matchday":2,"team1":"Congo DR","team2":"Colombia","result":{"s1":0,"s2":1},"kickoff":"2026-06-24T05:00+03:00"},{"id":65,"group":"K","matchday":3,"team1":"Portugal","team2":"Colombia","result":{"s1":0,"s2":0},"kickoff":"2026-06-28T02:30+03:00"},{"id":66,"group":"K","matchday":3,"team1":"Congo DR","team2":"Uzbekistan","result":{"s1":3,"s2":1},"kickoff":"2026-06-28T02:30+03:00"},{"id":67,"group":"L","matchday":1,"team1":"England","team2":"Croatia","result":{"s1":4,"s2":2},"kickoff":"2026-06-17T23:00+03:00"},{"id":68,"group":"L","matchday":1,"team1":"Ghana","team2":"Panama","result":{"s1":1,"s2":0},"kickoff":"2026-06-18T02:00+03:00"},{"id":69,"group":"L","matchday":2,"team1":"England","team2":"Ghana","result":{"s1":0,"s2":0},"kickoff":"2026-06-23T23:00+03:00"},{"id":70,"group":"L","matchday":2,"team1":"Croatia","team2":"Panama","result":{"s1":1,"s2":0},"kickoff":"2026-06-24T02:00+03:00"},{"id":71,"group":"L","matchday":3,"team1":"England","team2":"Panama","result":{"s1":2,"s2":0},"kickoff":"2026-06-28T00:00+03:00"},{"id":72,"group":"L","matchday":3,"team1":"Croatia","team2":"Ghana","result":{"s1":2,"s2":1},"kickoff":"2026-06-28T00:00+03:00"},{"id":73,"kickoff":"2026-06-28T22:00+03:00","matchNum":1,"result":{"s1":0,"s2":1},"stage":"R32","stageLabel":"1/32-финал","team1":"South Africa","team2":"Canada"},{"id":74,"kickoff":"2026-06-29T20:00+03:00","matchNum":2,"result":{"s1":2,"s2":1},"stage":"R32","stageLabel":"1/32-финал","team1":"Brazil","team2":"Japan"},{"id":75,"kickoff":"2026-06-29T23:30+03:00","matchNum":3,"result":{"s1":1,"s2":1},"stage":"R32","stageLabel":"1/32-финал","team1":"Germany","team2":"Paraguay"},{"id":76,"kickoff":"2026-06-30T04:00+03:00","matchNum":4,"result":{"s1":1,"s2":1},"stage":"R32","stageLabel":"1/32-финал","team1":"Netherlands","team2":"Morocco"},{"id":77,"kickoff":"2026-06-30T20:00+03:00","matchNum":5,"result":{"s1":1,"s2":2},"stage":"R32","stageLabel":"1/32-финал","team1":"Ivory Coast","team2":"Norway"},{"id":78,"kickoff":"2026-07-01T00:00+03:00","matchNum":6,"result":{"s1":3,"s2":0},"stage":"R32","stageLabel":"1/32-финал","team1":"France","team2":"Sweden"},{"id":79,"kickoff":"2026-07-01T04:00+03:00","matchNum":7,"result":{"s1":2,"s2":0},"stage":"R32","stageLabel":"1/32-финал","team1":"Mexico","team2":"Ecuador"},{"id":80,"kickoff":"2026-07-01T19:00+03:00","matchNum":8,"result":{"s1":2,"s2":1},"stage":"R32","stageLabel":"1/32-финал","team1":"England","team2":"Congo DR"},{"id":81,"kickoff":"2026-07-01T23:00+03:00","koWinner":1,"matchNum":9,"result":{"s1":1,"s2":1},"stage":"R32","stageLabel":"1/32-финал","team1":"Belgium","team2":"Senegal"},{"id":82,"kickoff":"2026-07-02T03:00+03:00","matchNum":10,"result":{"s1":2,"s2":0},"stage":"R32","stageLabel":"1/32-финал","team1":"United States","team2":"Bosnia-Herzegovina"},{"id":83,"kickoff":"2026-07-02T22:00+03:00","matchNum":11,"stage":"R32","stageLabel":"1/32-финал","team1":"Spain","team2":"Austria"},{"id":84,"kickoff":"2026-07-03T02:00+03:00","matchNum":12,"stage":"R32","stageLabel":"1/32-финал","team1":"Portugal","team2":"Croatia"},{"id":85,"kickoff":"2026-07-03T06:00+03:00","matchNum":13,"stage":"R32","stageLabel":"1/32-финал","team1":"Switzerland","team2":"Algeria"},{"id":86,"kickoff":"2026-07-03T21:00+03:00","matchNum":14,"stage":"R32","stageLabel":"1/32-финал","team1":"Australia","team2":"Egypt"},{"id":87,"kickoff":"2026-07-04T01:00+03:00","matchNum":15,"stage":"R32","stageLabel":"1/32-финал","team1":"Argentina","team2":"Cape Verde"},{"id":88,"kickoff":"2026-07-04T04:30+03:00","matchNum":16,"stage":"R32","stageLabel":"1/32-финал","team1":"Colombia","team2":"Ghana"},{"id":89,"kickoff":"2026-07-08T01:00+03:00","matchNum":1,"stage":"R16","stageLabel":"1/16-финал","team1":"TBD","team2":"TBD"},{"id":90,"kickoff":"2026-07-08T04:00+03:00","matchNum":2,"stage":"R16","stageLabel":"1/16-финал","team1":"TBD","team2":"TBD"},{"id":91,"kickoff":"2026-07-09T01:00+03:00","matchNum":3,"stage":"R16","stageLabel":"1/16-финал","team1":"TBD","team2":"TBD"},{"id":92,"kickoff":"2026-07-09T04:00+03:00","matchNum":4,"stage":"R16","stageLabel":"1/16-финал","team1":"TBD","team2":"TBD"},{"id":93,"kickoff":"2026-07-10T01:00+03:00","matchNum":5,"stage":"R16","stageLabel":"1/16-финал","team1":"TBD","team2":"TBD"},{"id":94,"kickoff":"2026-07-10T04:00+03:00","matchNum":6,"stage":"R16","stageLabel":"1/16-финал","team1":"TBD","team2":"TBD"},{"id":95,"kickoff":"2026-07-11T01:00+03:00","matchNum":7,"stage":"R16","stageLabel":"1/16-финал","team1":"TBD","team2":"TBD"},{"id":96,"kickoff":"2026-07-11T04:00+03:00","matchNum":8,"stage":"R16","stageLabel":"1/16-финал","team1":"TBD","team2":"TBD"},{"id":97,"kickoff":"2026-07-13T22:00+03:00","matchNum":1,"stage":"QF","stageLabel":"Четвъртфинал","team1":"TBD","team2":"TBD"},{"id":98,"kickoff":"2026-07-14T01:00+03:00","matchNum":2,"stage":"QF","stageLabel":"Четвъртфинал","team1":"TBD","team2":"TBD"},{"id":99,"kickoff":"2026-07-14T22:00+03:00","matchNum":3,"stage":"QF","stageLabel":"Четвъртфинал","team1":"TBD","team2":"TBD"},{"id":100,"kickoff":"2026-07-15T01:00+03:00","matchNum":4,"stage":"QF","stageLabel":"Четвъртфинал","team1":"TBD","team2":"TBD"},{"id":101,"kickoff":"2026-07-17T01:00+03:00","matchNum":1,"stage":"SF","stageLabel":"Полуфинал","team1":"TBD","team2":"TBD"},{"id":102,"kickoff":"2026-07-18T01:00+03:00","matchNum":2,"stage":"SF","stageLabel":"Полуфинал","team1":"TBD","team2":"TBD"},{"id":103,"kickoff":"2026-07-19T21:00+03:00","matchNum":1,"stage":"3P","stageLabel":"3-то място","team1":"TBD","team2":"TBD"},{"id":104,"kickoff":"2026-07-20T01:00+03:00","matchNum":1,"stage":"F","stageLabel":"Финал","team1":"TBD","team2":"TBD"}],"predictions":{"Ð¡Ð°ÑÐºÐ¾-ÐÐºÑÐ»Ð°ÑÐ°":{"23":{"s1":1,"s2":1},"24":{"s1":1,"s2":1},"35":{"s1":2,"s2":2},"36":{"s1":2,"s2":2},"53":{"s1":2,"s2":3},"54":{"s1":2,"s2":0}}},"champions":{},"sessionLog":[],"_ts":1783012860978}
+{
+  "users": [
+    {
+      "username": "admin",
+      "password": "admin2026"
+    },
+    {
+      "username": "Ð¡Ð°ÑÐºÐ¾-ÐÐºÑÐ»Ð°ÑÐ°"
+    }
+  ],
+  "matches": [
+    {
+      "id": 1,
+      "group": "A",
+      "matchday": 1,
+      "team1": "Mexico",
+      "team2": "South Africa",
+      "result": {
+        "s1": 2,
+        "s2": 0
+      },
+      "kickoff": "2026-06-11T22:00+03:00"
+    },
+    {
+      "id": 2,
+      "group": "A",
+      "matchday": 1,
+      "team1": "South Korea",
+      "team2": "Czechia",
+      "result": {
+        "s1": 2,
+        "s2": 1
+      },
+      "kickoff": "2026-06-12T05:00+03:00"
+    },
+    {
+      "id": 3,
+      "group": "A",
+      "matchday": 2,
+      "team1": "Mexico",
+      "team2": "South Korea",
+      "result": {
+        "s1": 1,
+        "s2": 0
+      },
+      "kickoff": "2026-06-19T04:00+03:00"
+    },
+    {
+      "id": 4,
+      "group": "A",
+      "matchday": 2,
+      "team1": "South Africa",
+      "team2": "Czechia",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-18T19:00+03:00"
+    },
+    {
+      "id": 5,
+      "group": "A",
+      "matchday": 3,
+      "team1": "Mexico",
+      "team2": "Czechia",
+      "result": {
+        "s1": 3,
+        "s2": 0
+      },
+      "kickoff": "2026-06-25T04:00+03:00"
+    },
+    {
+      "id": 6,
+      "group": "A",
+      "matchday": 3,
+      "team1": "South Africa",
+      "team2": "South Korea",
+      "result": {
+        "s1": 1,
+        "s2": 0
+      },
+      "kickoff": "2026-06-25T04:00+03:00"
+    },
+    {
+      "id": 7,
+      "group": "B",
+      "matchday": 1,
+      "team1": "Canada",
+      "team2": "Bosnia-Herzegovina",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-12T22:00+03:00"
+    },
+    {
+      "id": 8,
+      "group": "B",
+      "matchday": 1,
+      "team1": "Qatar",
+      "team2": "Switzerland",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-13T22:00+03:00"
+    },
+    {
+      "id": 9,
+      "group": "B",
+      "matchday": 2,
+      "team1": "Canada",
+      "team2": "Qatar",
+      "result": {
+        "s1": 6,
+        "s2": 0
+      },
+      "kickoff": "2026-06-19T01:00+03:00"
+    },
+    {
+      "id": 10,
+      "group": "B",
+      "matchday": 2,
+      "team1": "Bosnia-Herzegovina",
+      "team2": "Switzerland",
+      "result": {
+        "s1": 1,
+        "s2": 4
+      },
+      "kickoff": "2026-06-18T22:00+03:00"
+    },
+    {
+      "id": 11,
+      "group": "B",
+      "matchday": 3,
+      "team1": "Canada",
+      "team2": "Switzerland",
+      "result": {
+        "s1": 1,
+        "s2": 2
+      },
+      "kickoff": "2026-06-24T22:00+03:00"
+    },
+    {
+      "id": 12,
+      "group": "B",
+      "matchday": 3,
+      "team1": "Bosnia-Herzegovina",
+      "team2": "Qatar",
+      "result": {
+        "s1": 3,
+        "s2": 1
+      },
+      "kickoff": "2026-06-24T22:00+03:00"
+    },
+    {
+      "id": 13,
+      "group": "C",
+      "matchday": 1,
+      "team1": "Brazil",
+      "team2": "Morocco",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-14T01:00+03:00"
+    },
+    {
+      "id": 14,
+      "group": "C",
+      "matchday": 1,
+      "team1": "Haiti",
+      "team2": "Scotland",
+      "result": {
+        "s1": 0,
+        "s2": 1
+      },
+      "kickoff": "2026-06-14T04:00+03:00"
+    },
+    {
+      "id": 15,
+      "group": "C",
+      "matchday": 2,
+      "team1": "Brazil",
+      "team2": "Haiti",
+      "result": {
+        "s1": 3,
+        "s2": 0
+      },
+      "kickoff": "2026-06-20T04:00+03:00"
+    },
+    {
+      "id": 16,
+      "group": "C",
+      "matchday": 2,
+      "team1": "Morocco",
+      "team2": "Scotland",
+      "result": {
+        "s1": 1,
+        "s2": 0
+      },
+      "kickoff": "2026-06-20T01:00+03:00"
+    },
+    {
+      "id": 17,
+      "group": "C",
+      "matchday": 3,
+      "team1": "Brazil",
+      "team2": "Scotland",
+      "result": {
+        "s1": 3,
+        "s2": 0
+      },
+      "kickoff": "2026-06-25T01:00+03:00"
+    },
+    {
+      "id": 18,
+      "group": "C",
+      "matchday": 3,
+      "team1": "Morocco",
+      "team2": "Haiti",
+      "result": {
+        "s1": 4,
+        "s2": 2
+      },
+      "kickoff": "2026-06-25T01:00+03:00"
+    },
+    {
+      "id": 19,
+      "group": "D",
+      "matchday": 1,
+      "team1": "United States",
+      "team2": "Paraguay",
+      "result": {
+        "s1": 4,
+        "s2": 1
+      },
+      "kickoff": "2026-06-13T04:00+03:00"
+    },
+    {
+      "id": 20,
+      "group": "D",
+      "matchday": 1,
+      "team1": "Australia",
+      "team2": "Turkey",
+      "result": {
+        "s1": 2,
+        "s2": 0
+      },
+      "kickoff": "2026-06-14T07:00+03:00"
+    },
+    {
+      "id": 21,
+      "group": "D",
+      "matchday": 2,
+      "team1": "United States",
+      "team2": "Australia",
+      "result": {
+        "s1": 2,
+        "s2": 0
+      },
+      "kickoff": "2026-06-19T22:00+03:00"
+    },
+    {
+      "id": 22,
+      "group": "D",
+      "matchday": 2,
+      "team1": "Paraguay",
+      "team2": "Turkey",
+      "result": {
+        "s1": 1,
+        "s2": 0
+      },
+      "kickoff": "2026-06-20T07:00+03:00"
+    },
+    {
+      "id": 23,
+      "group": "D",
+      "matchday": 3,
+      "team1": "United States",
+      "team2": "Turkey",
+      "result": {
+        "s1": 2,
+        "s2": 3
+      },
+      "kickoff": "2026-06-26T05:00+03:00"
+    },
+    {
+      "id": 24,
+      "group": "D",
+      "matchday": 3,
+      "team1": "Paraguay",
+      "team2": "Australia",
+      "result": {
+        "s1": 0,
+        "s2": 0
+      },
+      "kickoff": "2026-06-26T05:00+03:00"
+    },
+    {
+      "id": 25,
+      "group": "E",
+      "matchday": 1,
+      "team1": "Germany",
+      "team2": "Curacao",
+      "result": {
+        "s1": 7,
+        "s2": 1
+      },
+      "kickoff": "2026-06-14T20:00+03:00"
+    },
+    {
+      "id": 26,
+      "group": "E",
+      "matchday": 1,
+      "team1": "Ivory Coast",
+      "team2": "Ecuador",
+      "result": {
+        "s1": 1,
+        "s2": 0
+      },
+      "kickoff": "2026-06-15T02:00+03:00"
+    },
+    {
+      "id": 27,
+      "group": "E",
+      "matchday": 2,
+      "team1": "Germany",
+      "team2": "Ivory Coast",
+      "result": {
+        "s1": 2,
+        "s2": 1
+      },
+      "kickoff": "2026-06-20T23:00+03:00"
+    },
+    {
+      "id": 28,
+      "group": "E",
+      "matchday": 2,
+      "team1": "Curacao",
+      "team2": "Ecuador",
+      "result": {
+        "s1": 0,
+        "s2": 0
+      },
+      "kickoff": "2026-06-21T03:00+03:00"
+    },
+    {
+      "id": 29,
+      "group": "E",
+      "matchday": 3,
+      "team1": "Germany",
+      "team2": "Ecuador",
+      "result": {
+        "s1": 1,
+        "s2": 2
+      },
+      "kickoff": "2026-06-25T23:00+03:00"
+    },
+    {
+      "id": 30,
+      "group": "E",
+      "matchday": 3,
+      "team1": "Curacao",
+      "team2": "Ivory Coast",
+      "result": {
+        "s1": 0,
+        "s2": 2
+      },
+      "kickoff": "2026-06-25T23:00+03:00"
+    },
+    {
+      "id": 31,
+      "group": "F",
+      "matchday": 1,
+      "team1": "Netherlands",
+      "team2": "Japan",
+      "result": {
+        "s1": 2,
+        "s2": 2
+      },
+      "kickoff": "2026-06-14T23:00+03:00"
+    },
+    {
+      "id": 32,
+      "group": "F",
+      "matchday": 1,
+      "team1": "Sweden",
+      "team2": "Tunisia",
+      "result": {
+        "s1": 5,
+        "s2": 1
+      },
+      "kickoff": "2026-06-15T05:00+03:00"
+    },
+    {
+      "id": 33,
+      "group": "F",
+      "matchday": 2,
+      "team1": "Netherlands",
+      "team2": "Sweden",
+      "result": {
+        "s1": 5,
+        "s2": 1
+      },
+      "kickoff": "2026-06-20T20:00+03:00"
+    },
+    {
+      "id": 34,
+      "group": "F",
+      "matchday": 2,
+      "team1": "Japan",
+      "team2": "Tunisia",
+      "result": {
+        "s1": 4,
+        "s2": 0
+      },
+      "kickoff": "2026-06-21T07:00+03:00"
+    },
+    {
+      "id": 35,
+      "group": "F",
+      "matchday": 3,
+      "team1": "Netherlands",
+      "team2": "Tunisia",
+      "result": {
+        "s1": 3,
+        "s2": 1
+      },
+      "kickoff": "2026-06-26T02:00+03:00"
+    },
+    {
+      "id": 36,
+      "group": "F",
+      "matchday": 3,
+      "team1": "Japan",
+      "team2": "Sweden",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-26T02:00+03:00"
+    },
+    {
+      "id": 37,
+      "group": "G",
+      "matchday": 1,
+      "team1": "Belgium",
+      "team2": "Egypt",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-15T22:00+03:00"
+    },
+    {
+      "id": 38,
+      "group": "G",
+      "matchday": 1,
+      "team1": "Iran",
+      "team2": "New Zealand",
+      "result": {
+        "s1": 2,
+        "s2": 2
+      },
+      "kickoff": "2026-06-16T04:00+03:00"
+    },
+    {
+      "id": 39,
+      "group": "G",
+      "matchday": 2,
+      "team1": "Belgium",
+      "team2": "Iran",
+      "result": {
+        "s1": 0,
+        "s2": 0
+      },
+      "kickoff": "2026-06-21T22:00+03:00"
+    },
+    {
+      "id": 40,
+      "group": "G",
+      "matchday": 2,
+      "team1": "Egypt",
+      "team2": "New Zealand",
+      "result": {
+        "s1": 3,
+        "s2": 1
+      },
+      "kickoff": "2026-06-22T04:00+03:00"
+    },
+    {
+      "id": 41,
+      "group": "G",
+      "matchday": 3,
+      "team1": "Belgium",
+      "team2": "New Zealand",
+      "result": {
+        "s1": 5,
+        "s2": 1
+      },
+      "kickoff": "2026-06-27T06:00+03:00"
+    },
+    {
+      "id": 42,
+      "group": "G",
+      "matchday": 3,
+      "team1": "Egypt",
+      "team2": "Iran",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-27T06:00+03:00"
+    },
+    {
+      "id": 43,
+      "group": "H",
+      "matchday": 1,
+      "team1": "Spain",
+      "team2": "Cape Verde",
+      "result": {
+        "s1": 0,
+        "s2": 0
+      },
+      "kickoff": "2026-06-15T19:00+03:00"
+    },
+    {
+      "id": 44,
+      "group": "H",
+      "matchday": 1,
+      "team1": "Saudi Arabia",
+      "team2": "Uruguay",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-16T01:00+03:00"
+    },
+    {
+      "id": 45,
+      "group": "H",
+      "matchday": 2,
+      "team1": "Spain",
+      "team2": "Saudi Arabia",
+      "result": {
+        "s1": 4,
+        "s2": 0
+      },
+      "kickoff": "2026-06-21T19:00+03:00"
+    },
+    {
+      "id": 46,
+      "group": "H",
+      "matchday": 2,
+      "team1": "Cape Verde",
+      "team2": "Uruguay",
+      "result": {
+        "s1": 2,
+        "s2": 2
+      },
+      "kickoff": "2026-06-22T01:00+03:00"
+    },
+    {
+      "id": 47,
+      "group": "H",
+      "matchday": 3,
+      "team1": "Spain",
+      "team2": "Uruguay",
+      "result": {
+        "s1": 1,
+        "s2": 0
+      },
+      "kickoff": "2026-06-27T03:00+03:00"
+    },
+    {
+      "id": 48,
+      "group": "H",
+      "matchday": 3,
+      "team1": "Cape Verde",
+      "team2": "Saudi Arabia",
+      "result": {
+        "s1": 0,
+        "s2": 0
+      },
+      "kickoff": "2026-06-27T03:00+03:00"
+    },
+    {
+      "id": 49,
+      "group": "I",
+      "matchday": 1,
+      "team1": "France",
+      "team2": "Senegal",
+      "result": {
+        "s1": 3,
+        "s2": 1
+      },
+      "kickoff": "2026-06-16T22:00+03:00"
+    },
+    {
+      "id": 50,
+      "group": "I",
+      "matchday": 1,
+      "team1": "Iraq",
+      "team2": "Norway",
+      "result": {
+        "s1": 1,
+        "s2": 4
+      },
+      "kickoff": "2026-06-17T01:00+03:00"
+    },
+    {
+      "id": 51,
+      "group": "I",
+      "matchday": 2,
+      "team1": "France",
+      "team2": "Iraq",
+      "result": {
+        "s1": 3,
+        "s2": 0
+      },
+      "kickoff": "2026-06-23T00:00+03:00"
+    },
+    {
+      "id": 52,
+      "group": "I",
+      "matchday": 2,
+      "team1": "Senegal",
+      "team2": "Norway",
+      "result": {
+        "s1": 2,
+        "s2": 3
+      },
+      "kickoff": "2026-06-23T03:00+03:00"
+    },
+    {
+      "id": 53,
+      "group": "I",
+      "matchday": 3,
+      "team1": "France",
+      "team2": "Norway",
+      "result": {
+        "s1": 4,
+        "s2": 1
+      },
+      "kickoff": "2026-06-26T22:00+03:00"
+    },
+    {
+      "id": 54,
+      "group": "I",
+      "matchday": 3,
+      "team1": "Senegal",
+      "team2": "Iraq",
+      "result": {
+        "s1": 5,
+        "s2": 0
+      },
+      "kickoff": "2026-06-26T22:00+03:00"
+    },
+    {
+      "id": 55,
+      "group": "J",
+      "matchday": 1,
+      "team1": "Argentina",
+      "team2": "Algeria",
+      "result": {
+        "s1": 3,
+        "s2": 0
+      },
+      "kickoff": "2026-06-17T04:00+03:00"
+    },
+    {
+      "id": 56,
+      "group": "J",
+      "matchday": 1,
+      "team1": "Austria",
+      "team2": "Jordan",
+      "result": {
+        "s1": 3,
+        "s2": 1
+      },
+      "kickoff": "2026-06-17T07:00+03:00"
+    },
+    {
+      "id": 57,
+      "group": "J",
+      "matchday": 2,
+      "team1": "Argentina",
+      "team2": "Austria",
+      "result": {
+        "s1": 2,
+        "s2": 0
+      },
+      "kickoff": "2026-06-22T20:00+03:00"
+    },
+    {
+      "id": 58,
+      "group": "J",
+      "matchday": 2,
+      "team1": "Algeria",
+      "team2": "Jordan",
+      "result": {
+        "s1": 2,
+        "s2": 1
+      },
+      "kickoff": "2026-06-23T06:00+03:00"
+    },
+    {
+      "id": 59,
+      "group": "J",
+      "matchday": 3,
+      "team1": "Argentina",
+      "team2": "Jordan",
+      "result": {
+        "s1": 3,
+        "s2": 1
+      },
+      "kickoff": "2026-06-28T05:00+03:00"
+    },
+    {
+      "id": 60,
+      "group": "J",
+      "matchday": 3,
+      "team1": "Algeria",
+      "team2": "Austria",
+      "result": {
+        "s1": 3,
+        "s2": 3
+      },
+      "kickoff": "2026-06-28T05:00+03:00"
+    },
+    {
+      "id": 61,
+      "group": "K",
+      "matchday": 1,
+      "team1": "Portugal",
+      "team2": "Congo DR",
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "kickoff": "2026-06-17T20:00+03:00"
+    },
+    {
+      "id": 62,
+      "group": "K",
+      "matchday": 1,
+      "team1": "Uzbekistan",
+      "team2": "Colombia",
+      "result": {
+        "s1": 1,
+        "s2": 3
+      },
+      "kickoff": "2026-06-18T05:00+03:00"
+    },
+    {
+      "id": 63,
+      "group": "K",
+      "matchday": 2,
+      "team1": "Portugal",
+      "team2": "Uzbekistan",
+      "result": {
+        "s1": 5,
+        "s2": 0
+      },
+      "kickoff": "2026-06-23T20:00+03:00"
+    },
+    {
+      "id": 64,
+      "group": "K",
+      "matchday": 2,
+      "team1": "Congo DR",
+      "team2": "Colombia",
+      "result": {
+        "s1": 0,
+        "s2": 1
+      },
+      "kickoff": "2026-06-24T05:00+03:00"
+    },
+    {
+      "id": 65,
+      "group": "K",
+      "matchday": 3,
+      "team1": "Portugal",
+      "team2": "Colombia",
+      "result": {
+        "s1": 0,
+        "s2": 0
+      },
+      "kickoff": "2026-06-28T02:30+03:00"
+    },
+    {
+      "id": 66,
+      "group": "K",
+      "matchday": 3,
+      "team1": "Congo DR",
+      "team2": "Uzbekistan",
+      "result": {
+        "s1": 3,
+        "s2": 1
+      },
+      "kickoff": "2026-06-28T02:30+03:00"
+    },
+    {
+      "id": 67,
+      "group": "L",
+      "matchday": 1,
+      "team1": "England",
+      "team2": "Croatia",
+      "result": {
+        "s1": 4,
+        "s2": 2
+      },
+      "kickoff": "2026-06-17T23:00+03:00"
+    },
+    {
+      "id": 68,
+      "group": "L",
+      "matchday": 1,
+      "team1": "Ghana",
+      "team2": "Panama",
+      "result": {
+        "s1": 1,
+        "s2": 0
+      },
+      "kickoff": "2026-06-18T02:00+03:00"
+    },
+    {
+      "id": 69,
+      "group": "L",
+      "matchday": 2,
+      "team1": "England",
+      "team2": "Ghana",
+      "result": {
+        "s1": 0,
+        "s2": 0
+      },
+      "kickoff": "2026-06-23T23:00+03:00"
+    },
+    {
+      "id": 70,
+      "group": "L",
+      "matchday": 2,
+      "team1": "Croatia",
+      "team2": "Panama",
+      "result": {
+        "s1": 1,
+        "s2": 0
+      },
+      "kickoff": "2026-06-24T02:00+03:00"
+    },
+    {
+      "id": 71,
+      "group": "L",
+      "matchday": 3,
+      "team1": "England",
+      "team2": "Panama",
+      "result": {
+        "s1": 2,
+        "s2": 0
+      },
+      "kickoff": "2026-06-28T00:00+03:00"
+    },
+    {
+      "id": 72,
+      "group": "L",
+      "matchday": 3,
+      "team1": "Croatia",
+      "team2": "Ghana",
+      "result": {
+        "s1": 2,
+        "s2": 1
+      },
+      "kickoff": "2026-06-28T00:00+03:00"
+    },
+    {
+      "id": 73,
+      "kickoff": "2026-06-28T22:00+03:00",
+      "matchNum": 1,
+      "result": {
+        "s1": 0,
+        "s2": 1
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "South Africa",
+      "team2": "Canada"
+    },
+    {
+      "id": 74,
+      "kickoff": "2026-06-29T20:00+03:00",
+      "matchNum": 2,
+      "result": {
+        "s1": 2,
+        "s2": 1
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Brazil",
+      "team2": "Japan"
+    },
+    {
+      "id": 75,
+      "kickoff": "2026-06-29T23:30+03:00",
+      "matchNum": 3,
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Germany",
+      "team2": "Paraguay"
+    },
+    {
+      "id": 76,
+      "kickoff": "2026-06-30T04:00+03:00",
+      "matchNum": 4,
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Netherlands",
+      "team2": "Morocco"
+    },
+    {
+      "id": 77,
+      "kickoff": "2026-06-30T20:00+03:00",
+      "matchNum": 5,
+      "result": {
+        "s1": 1,
+        "s2": 2
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Ivory Coast",
+      "team2": "Norway"
+    },
+    {
+      "id": 78,
+      "kickoff": "2026-07-01T00:00+03:00",
+      "matchNum": 6,
+      "result": {
+        "s1": 3,
+        "s2": 0
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "France",
+      "team2": "Sweden"
+    },
+    {
+      "id": 79,
+      "kickoff": "2026-07-01T04:00+03:00",
+      "matchNum": 7,
+      "result": {
+        "s1": 2,
+        "s2": 0
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Mexico",
+      "team2": "Ecuador"
+    },
+    {
+      "id": 80,
+      "kickoff": "2026-07-01T19:00+03:00",
+      "matchNum": 8,
+      "result": {
+        "s1": 2,
+        "s2": 1
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "England",
+      "team2": "Congo DR"
+    },
+    {
+      "id": 81,
+      "kickoff": "2026-07-01T23:00+03:00",
+      "koWinner": 1,
+      "matchNum": 9,
+      "result": {
+        "s1": 1,
+        "s2": 1
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Belgium",
+      "team2": "Senegal"
+    },
+    {
+      "id": 82,
+      "kickoff": "2026-07-02T03:00+03:00",
+      "matchNum": 10,
+      "result": {
+        "s1": 2,
+        "s2": 0
+      },
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "United States",
+      "team2": "Bosnia-Herzegovina"
+    },
+    {
+      "id": 83,
+      "kickoff": "2026-07-02T22:00+03:00",
+      "matchNum": 11,
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Spain",
+      "team2": "Austria"
+    },
+    {
+      "id": 84,
+      "kickoff": "2026-07-03T02:00+03:00",
+      "matchNum": 12,
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Portugal",
+      "team2": "Croatia"
+    },
+    {
+      "id": 85,
+      "kickoff": "2026-07-03T06:00+03:00",
+      "matchNum": 13,
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Switzerland",
+      "team2": "Algeria"
+    },
+    {
+      "id": 86,
+      "kickoff": "2026-07-03T21:00+03:00",
+      "matchNum": 14,
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Australia",
+      "team2": "Egypt"
+    },
+    {
+      "id": 87,
+      "kickoff": "2026-07-04T01:00+03:00",
+      "matchNum": 15,
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Argentina",
+      "team2": "Cape Verde"
+    },
+    {
+      "id": 88,
+      "kickoff": "2026-07-04T04:30+03:00",
+      "matchNum": 16,
+      "stage": "R32",
+      "stageLabel": "1/32-финал",
+      "team1": "Colombia",
+      "team2": "Ghana"
+    },
+    {
+      "id": 89,
+      "kickoff": "2026-07-04T20:00+03:00",
+      "matchNum": 1,
+      "stage": "R16",
+      "stageLabel": "1/16-финал",
+      "team1": "Canada",
+      "team2": "Morocco"
+    },
+    {
+      "id": 90,
+      "kickoff": "2026-07-05T00:00+03:00",
+      "matchNum": 2,
+      "stage": "R16",
+      "stageLabel": "1/16-финал",
+      "team1": "Paraguay",
+      "team2": "France"
+    },
+    {
+      "id": 91,
+      "kickoff": "2026-07-05T23:00+03:00",
+      "matchNum": 3,
+      "stage": "R16",
+      "stageLabel": "1/16-финал",
+      "team1": "Brazil",
+      "team2": "Norway"
+    },
+    {
+      "id": 92,
+      "kickoff": "2026-07-06T03:00+03:00",
+      "matchNum": 4,
+      "stage": "R16",
+      "stageLabel": "1/16-финал",
+      "team1": "Mexico",
+      "team2": "England"
+    },
+    {
+      "id": 93,
+      "kickoff": "2026-07-06T22:00+03:00",
+      "matchNum": 5,
+      "stage": "R16",
+      "stageLabel": "1/16-финал",
+      "team1": "Portugal",
+      "team2": "Spain"
+    },
+    {
+      "id": 94,
+      "kickoff": "2026-07-07T03:00+03:00",
+      "matchNum": 6,
+      "stage": "R16",
+      "stageLabel": "1/16-финал",
+      "team1": "USA",
+      "team2": "Belgium"
+    },
+    {
+      "id": 95,
+      "kickoff": "2026-07-07T19:00+03:00",
+      "matchNum": 7,
+      "stage": "R16",
+      "stageLabel": "1/16-финал",
+      "team1": "TBD",
+      "team2": "TBD"
+    },
+    {
+      "id": 96,
+      "kickoff": "2026-07-07T23:00+03:00",
+      "matchNum": 8,
+      "stage": "R16",
+      "stageLabel": "1/16-финал",
+      "team1": "Switzerland",
+      "team2": "TBD"
+    },
+    {
+      "id": 97,
+      "kickoff": "2026-07-13T22:00+03:00",
+      "matchNum": 1,
+      "stage": "QF",
+      "stageLabel": "Четвъртфинал",
+      "team1": "TBD",
+      "team2": "TBD"
+    },
+    {
+      "id": 98,
+      "kickoff": "2026-07-14T01:00+03:00",
+      "matchNum": 2,
+      "stage": "QF",
+      "stageLabel": "Четвъртфинал",
+      "team1": "TBD",
+      "team2": "TBD"
+    },
+    {
+      "id": 99,
+      "kickoff": "2026-07-14T22:00+03:00",
+      "matchNum": 3,
+      "stage": "QF",
+      "stageLabel": "Четвъртфинал",
+      "team1": "TBD",
+      "team2": "TBD"
+    },
+    {
+      "id": 100,
+      "kickoff": "2026-07-15T01:00+03:00",
+      "matchNum": 4,
+      "stage": "QF",
+      "stageLabel": "Четвъртфинал",
+      "team1": "TBD",
+      "team2": "TBD"
+    },
+    {
+      "id": 101,
+      "kickoff": "2026-07-17T01:00+03:00",
+      "matchNum": 1,
+      "stage": "SF",
+      "stageLabel": "Полуфинал",
+      "team1": "TBD",
+      "team2": "TBD"
+    },
+    {
+      "id": 102,
+      "kickoff": "2026-07-18T01:00+03:00",
+      "matchNum": 2,
+      "stage": "SF",
+      "stageLabel": "Полуфинал",
+      "team1": "TBD",
+      "team2": "TBD"
+    },
+    {
+      "id": 103,
+      "kickoff": "2026-07-19T21:00+03:00",
+      "matchNum": 1,
+      "stage": "3P",
+      "stageLabel": "3-то място",
+      "team1": "TBD",
+      "team2": "TBD"
+    },
+    {
+      "id": 104,
+      "kickoff": "2026-07-20T01:00+03:00",
+      "matchNum": 1,
+      "stage": "F",
+      "stageLabel": "Финал",
+      "team1": "TBD",
+      "team2": "TBD"
+    }
+  ],
+  "predictions": {
+    "Ð¡Ð°ÑÐºÐ¾-ÐÐºÑÐ»Ð°ÑÐ°": {
+      "23": {
+        "s1": 1,
+        "s2": 1
+      },
+      "24": {
+        "s1": 1,
+        "s2": 1
+      },
+      "35": {
+        "s1": 2,
+        "s2": 2
+      },
+      "36": {
+        "s1": 2,
+        "s2": 2
+      },
+      "53": {
+        "s1": 2,
+        "s2": 3
+      },
+      "54": {
+        "s1": 2,
+        "s2": 0
+      }
+    }
+  },
+  "champions": {},
+  "sessionLog": [],
+  "_ts": 1783012860978
+}
