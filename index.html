@@ -2890,7 +2890,7 @@ async function fetchKOPairings() {
       if (koMatch.team2 === 'TBD' && isReal(name2)) { koMatch.team2 = name2; changed = true; }
       if (comp.status?.type?.completed) {
         const s1 = parseInt(t1.score), s2 = parseInt(t2.score);
-        if (!isNaN(s1) && !isNaN(s2) && !koMatch.result) {
+        if (!isNaN(s1) && !isNaN(s2) && !koMatch.result && !koMatch.koWinner) {
           koMatch.result = {s1, s2};
           changed = true;
         }
@@ -2908,9 +2908,7 @@ window.addEventListener('load', function() {
   FB.init();
 
   // Auto-pull от GitHub само ако Firebase НЕ е конфигуриран
-  if (!FB_CONFIG.databaseURL) {
-    GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
-  }
+  GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
 
   // ESPN КО sync след 3 секунди
   setTimeout(fetchKOPairings, 3000);
