@@ -1406,8 +1406,8 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
     var canPick77 = !locked;
     var grayNote77 = !isPredDraw ? '<span style="font-size:10px;opacity:.5;margin-left:4px">(само при равен)</span>' : '';
     var dimStyle77 = canPick77 ? '' : 'pointer-events:none;opacity:.4;';
-    var bg1_77 = koW77 === '1' ? '#2563eb' : 'rgba(255,255,255,.08)';
-    var bg2_77 = koW77 === '2' ? '#2563eb' : 'rgba(255,255,255,.08)';
+    var bg1_77 = (koW77 === '1' && isPredDraw) ? '#2563eb' : 'rgba(255,255,255,.08)';
+    var bg2_77 = (koW77 === '2' && isPredDraw) ? '#2563eb' : 'rgba(255,255,255,.08)';
     var oc1_77 = canPick77 ? 'window._setKoWinner(' + m.id + ',1)' : '';
     var oc2_77 = canPick77 ? 'window._setKoWinner(' + m.id + ',2)' : '';
     koExtra = '<div style="flex:0 0 100%;width:100%;border-top:1px dashed rgba(255,255,255,.1);margin-top:.6rem;padding-top:.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:6px">' +
@@ -2820,7 +2820,7 @@ function renderKOMiniCard(m, pred, badge) {
   let koWPts = '';
   if (m.koWinner && pred) {
     const kw = String(pred.koWinner ?? '');
-    if (kw !== '') koWPts = parseInt(kw)===m.koWinner ? '<span class="pts-badge pts-3">🎯 +30т</span>' : '<span class="pts-badge pts-0">❌ 0т</span>';
+    if (kw !== '' && hasPred && parseInt(pred.s1) === parseInt(pred.s2)) koWPts = parseInt(kw)===m.koWinner ? '<span class="pts-badge pts-3">🎯 +30т</span>' : '<span class="pts-badge pts-0">❌ 0т</span>';
   }
   const winner = m.koWinner ? (m.koWinner===1 ? m.team1 : m.team2) : null;
   const predScore = hasPred ? pred.s1+':'+pred.s2 : '–';
