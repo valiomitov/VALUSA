@@ -1276,7 +1276,11 @@ function renderPredictions() {
     for (const stage of STAGE_ORDER) {
       const sm = koMatches.filter(m => m.stage === stage);
       if (!sm.length) continue;
-      content += `<div class="matchday-label" style="background:linear-gradient(90deg,rgba(198,40,40,.15),transparent)">⚔️ ${STAGE_LABELS[stage]}</div>`;
+      if (stage === 'R32') {
+        content += '<details id="r32-collapse" style="margin-bottom:0"><summary class="ko-r32-summary"><div class="matchday-label" style="cursor:pointer;background:linear-gradient(90deg,rgba(198,40,40,.15),transparent);display:flex;justify-content:space-between;align-items:center">⚔️ 1/32-финали (' + sm.length + ' мача)<span style="font-size:12px;opacity:.7;margin-left:8px">▸ виж мачовете</span></div></summary>';
+      } else {
+        content += `<div class="matchday-label" style="background:linear-gradient(90deg,rgba(198,40,40,.15),transparent)">⚔️ ${STAGE_LABELS[stage]}</div>`;
+      }
       const byDate = {};
       for (const m of sm) {
         const dk = matchDateKey(m);
@@ -1290,6 +1294,7 @@ function renderPredictions() {
           return renderMatchCard(m, preds[m.id], false, badge);
         }).join('');
       }
+      if (stage === 'R32') content += '</details>';
     }
   }
 
