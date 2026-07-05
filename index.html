@@ -1904,8 +1904,8 @@ async function autoFetchResults(silent=false) {
       }
     }
 
-    persist(); render();
     if(updated > 0) {
+      persist(); render();
       const _las = document.getElementById('lastAutoSave');
       if(_las) {
         const _d = new Date();
