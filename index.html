@@ -346,7 +346,7 @@ const FB = {
         applyGHData(data, true); // true = дойде от Firebase, не записвай обратно
         if (data.lastSeen) S.lastSeen = data.lastSeen;
         if (S.currentUser && FB.ref && !window._visitLogged) { window._visitLogged = true; FB.ref.child('lastSeen').child(S.currentUser).set(Date.now()).catch(function(){}); }
-        if (typeof render === 'function') render();
+        clearTimeout(window._fbRenderTimer); window._fbRenderTimer = setTimeout(() => { if (typeof render === 'function') render(); }, 1500);
       });
       // Monitor connection state for status badge
       FB.db.ref('.info/connected').on('value', snap => {
