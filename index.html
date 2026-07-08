@@ -567,7 +567,7 @@ function applyGHData(data, fromFirebase = false) {
       // Винаги синхронизирай kickoff от MATCH_TIMES (покрива коригираните R32 времена)
       if (MATCH_TIMES[m.id]) m.kickoff = MATCH_TIMES[m.id];
       // R32: винаги enforce хардкоднати двойки (override TBD/ESPN placeholders от Firebase)
-      if (m.stage === 'R32' && R32_TEAMS[m.id]) {
+      if (R32_TEAMS[m.id]) {
         m.team1 = R32_TEAMS[m.id][0];
         m.team2 = R32_TEAMS[m.id][1];
       }
