@@ -349,7 +349,12 @@ const FB = {
         applyGHData(data, true); // true = дойде от Firebase, не записвай обратно
         if (data.lastSeen) S.lastSeen = data.lastSeen;
         if (S.currentUser && FB.ref && !window._visitLogged) { window._visitLogged = true; FB.ref.child('lastSeen').child(S.currentUser).set(Date.now()).catch(function(){}); }
-        clearTimeout(window._fbRenderTimer); window._fbRenderTimer = setTimeout(() => { if (typeof render === 'function') render(); }, 8000);
+        window._fbLive = true;
+        clearTimeout(window._fbRenderTimer); window._fbRenderTimer = setTimeout(() => {
+          const _ae = document.activeElement;
+          if (_ae && (_ae.tagName === 'INPUT' || _ae.tagName === 'SELECT' || _ae.tagName === 'TEXTAREA')) return; // не прекъсвай въвеждане
+          if (typeof render === 'function') render();
+        }, 300);
       });
       // Monitor connection state for status badge
       FB.db.ref('.info/connected').on('value', snap => {
@@ -1543,6 +1548,18 @@ function lastSeenStatus(username) {
 }
 
 function renderLeaderboard() {
+  // Изчакай първия Firebase snapshot — не показвай кеширани точки (fallback 5s за офлайн)
+  if (typeof FB !== 'undefined' && FB && FB.ref && !window._fbLive) {
+    clearTimeout(window._lbWaitTimer);
+    window._lbWaitTimer = setTimeout(function(){ if (!window._fbLive) { window._fbLive = true; render(); } }, 5000);
+    return `
+  <div class="page-title">🏅 Класиране</div>
+  <div style="text-align:center;padding:3rem 1rem;color:rgba(255,255,255,.5)">
+    <style>@keyframes lbspin{to{transform:rotate(360deg)}}</style>
+    <div style="font-size:34px;display:inline-block;animation:lbspin 1.2s linear infinite">⚽</div>
+    <div style="margin-top:10px;font-size:13px">Зареждане на актуалното класиране…</div>
+  </div>`;
+  }
   const lb = leaderboard();
   const medals = ['🥇','🥈','🥉'];
   return `
