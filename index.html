@@ -2120,11 +2120,12 @@ function bind() {
     // Синхронизира ET/pen резултати към Firebase
     if (typeof FB !== 'undefined' && FB && FB.db) {
       S.matches.forEach(function(m) {
-        if (m.etResult != null || m.penWinner != null) {
+        if (m.etResult != null || m.penWinner != null || m.koWinner != null) {
           FB.db.ref('wc26/matches/' + (m.id - 1)).update({
             result: m.result || null,
             etResult: m.etResult || null,
             penWinner: m.penWinner != null ? m.penWinner : null,
+            koWinner: m.koWinner != null ? m.koWinner : null,
             team1: m.team1 || '',
             team2: m.team2 || ''
           }).catch(function(){});
