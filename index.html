@@ -3001,7 +3001,9 @@ window.addEventListener('load', function() {
   FB.init();
 
   // Auto-pull от GitHub само ако Firebase НЕ е конфигуриран
-  GH.pull().then(data => { if (data) { applyGHData(data); render(); } });
+  if (!FB.ref) {
+    GH.pull().then(data => { if (data && !window._fbLive) { applyGHData(data); render(); } });
+  }
 
   // ESPN КО sync след 3 секунди
   setTimeout(fetchKOPairings, 3000);
