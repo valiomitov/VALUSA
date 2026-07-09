@@ -1434,7 +1434,7 @@ function renderMatchCard(m, pred, isAdmin, badge = '') {
     }
     var team1_77 = m.team1 || 'Тим А';
     var team2_77 = m.team2 || 'Тим Б';
-    var canPick77 = !locked;
+    var canPick77 = !locked && isPredDraw;
     var grayNote77 = !isPredDraw ? '<span style="font-size:10px;opacity:.5;margin-left:4px">(само при равен)</span>' : '';
     var dimStyle77 = canPick77 ? '' : 'pointer-events:none;opacity:.4;';
     var bg1_77 = (koW77 === '1' && isPredDraw) ? '#2563eb' : 'rgba(255,255,255,.08)';
@@ -2382,7 +2382,7 @@ window._updateKoViz = function(mid) {
   var s1=parseInt(s1e&&s1e.value||''),s2=parseInt(s2e&&s2e.value||'');
   var has90=!isNaN(s1)&&!isNaN(s2),draw90=has90&&s1===s2;
   var _kw=document.getElementById('kow1_'+mid);if(_kw&&_kw.parentElement){_kw.parentElement.style.opacity=draw90?'':'0.4';_kw.parentElement.style.pointerEvents=draw90?'':'none';}
-  if(!draw90){[1,2].forEach(function(n){var b=document.getElementById('kow'+n+'_'+mid);if(b)b.style.background='rgba(255,255,255,.08)';});try{var _p=window.S&&S.predictions&&S.predictions[S.currentUser];if(_p&&_p[mid])_p[mid].koWinner=null;}catch(e){}}
+  if(!draw90){[1,2].forEach(function(n){var b=document.getElementById('kow'+n+'_'+mid);if(b)b.style.background='rgba(255,255,255,.08)';});try{var _p=window.S&&S.predictions&&S.predictions[S.currentUser];if(_p&&_p[mid]&&_p[mid].koWinner!=null){_p[mid].koWinner=null;if(typeof persist==='function')persist();}}catch(e){}}
   if(!et1)return;
   var etOK=!has90||draw90;
   [et1,et2].forEach(function(el){if(el){el.disabled=!etOK;el.style.opacity=etOK?'':'0.3';}});
