@@ -1888,6 +1888,24 @@ async function autoFetchResults(silent=false) {
       if(match && !match.koWinner) {
         const t1isHome = normalizeTeam(match.team1) === hn;
         match.result = { s1: t1isHome ? hs : as2, s2: t1isHome ? as2 : hs };
+        // Мач, решен в продължения: ESPN дава резултата СЛЕД продълженията,
+        // а точките се смятат по редовното време (90 мин.)
+        var _stTxt = ((status && status.name) || '') + '|' + ((status && status.detail) || '') + '|' + ((status && status.shortDetail) || '');
+        if (match.stage && match.result.s1 !== match.result.s2 && /AET|PEN|SHOOTOUT|EXTRA/i.test(_stTxt)) {
+          // 1) победителят продължава напред
+          if (match.id >= 77 && match.koWinner == null) {
+            match.koWinner = match.result.s1 > match.result.s2 ? 1 : 2;
+          }
+          // 2) възстанови резултата от редовното време — от linescores (1-во + 2-ро полувреме),
+          //    иначе приеми равенство с по-малкия брой голове (напр. 1:2 -> 1:1)
+          var _h90 = NaN, _a90 = NaN;
+          if (home.linescores && home.linescores.length >= 2 && away.linescores && away.linescores.length >= 2) {
+            _h90 = Number(home.linescores[0].value) + Number(home.linescores[1].value);
+            _a90 = Number(away.linescores[0].value) + Number(away.linescores[1].value);
+          }
+          if (isNaN(_h90) || isNaN(_a90) || _h90 !== _a90) { _h90 = _a90 = Math.min(hs, as2); }
+          match.result = { s1: t1isHome ? _h90 : _a90, s2: t1isHome ? _a90 : _h90 };
+        }
         updated++;
         // Авто-победител при равенство в КО — от ESPN дузпи (shootout)
         if (match.stage && match.id >= 77 && match.result.s1 === match.result.s2 && match.koWinner == null) {
